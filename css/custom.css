@@ -1,0 +1,55 @@
+/* ===================================================== */
+/* 1. 基础文字排版优化（保留原有优质排版） */
+/* ===================================================== */
+/* 放大字体并加粗 */
+.category-lists .category-list a {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+.category-lists .category-list .category-list-count {
+    font-size: 1.1rem;
+}
+
+/* 瘦身：缩小包围字体的框，拉开间距增加透气感 */
+.category-lists .category-list .category-list-item {
+    line-height: 1.5 !important; 
+    margin-bottom: 8px !important; 
+}
+/* ===================================================== */
+/* 2. 终极 UI 重构：IDE 沉浸式树状文件夹目录 */
+/* ===================================================== */
+
+/* 全局斩首：干掉所有的默认蓝色空心圆圈 */
+.category-lists .category-list-item::before,
+#aside-content .card-categories .card-category-list-item::before {
+    display: none !important;
+}
+
+/* 父级目录：开启的文件夹（主题蓝） */
+.category-lists .category-list > .category-list-item > a::before,
+#aside-content .card-categories ul > .card-category-list-item > a::before {
+    content: '\f07c' !important;                         /* FontAwesome 开启文件夹 */
+    font-family: 'Font Awesome 5 Free', 'Font Awesome 6 Free', 'FontAwesome' !important;
+    font-weight: 900 !important;
+    margin-right: 8px !important;
+    color: #49b1f5 !important;
+}
+
+/* 子级目录：闭合的文件夹（高级灰），干掉反人类的折角箭头 */
+.category-lists .category-list-child .category-list-item > a::before,
+#aside-content .card-categories ul .child .card-category-list-item > a::before {
+    content: '\f07b' !important;                         /* FontAwesome 闭合文件夹 */
+    font-family: 'Font Awesome 5 Free', 'Font Awesome 6 Free', 'FontAwesome' !important;
+    font-weight: 900 !important;
+    margin-right: 8px !important;
+    color: #888 !important;                              /* 颜色调沉稳一点 */
+}
+
+/* 【灵魂注入】层级缩进与垂直引导线 (Tree Guide) */
+.category-lists .category-list-child,
+#aside-content .card-categories ul .child {
+    padding-left: 15px !important;                       /* 文字向右缩进 */
+    margin-top: 6px !important;
+    margin-left: 6px !important;                         /* 将整块子目录向右推，对准父图标中心 */
+    border-left: 2px solid #e4e7ed !important;           /* 核心：画一条极简的浅灰色垂直树状线 */
+}
