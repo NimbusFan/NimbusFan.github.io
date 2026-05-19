@@ -320,6 +320,36 @@ body,
     box-shadow: 0 12px 30px rgba(31, 41, 55, 0.06) !important;
 }
 
+/* ===================================================== */
+/* 作者头像：从圆形头像改为 3:4 方角照片 */
+/* ===================================================== */
+
+#aside-content .card-info .avatar-img,
+#aside-content .card-info img.avatar-img {
+    width: 126px !important;
+    height: 168px !important;
+    border-radius: 16px !important;
+    object-fit: cover !important;
+    box-shadow: 0 10px 24px rgba(47, 42, 38, 0.14) !important;
+    border: 3px solid rgba(255, 253, 248, 0.9) !important;
+}
+
+/* 去掉 Butterfly 默认圆形头像效果 */
+#aside-content .card-info .avatar-img img {
+    border-radius: 16px !important;
+    object-fit: cover !important;
+}
+
+/* 鼠标悬浮时不旋转，只轻微放大 */
+#aside-content .card-info .avatar-img:hover,
+#aside-content .card-info img.avatar-img:hover,
+#aside-content .card-info .avatar-img:hover img,
+#aside-content .card-info img.avatar-img:hover img {
+    transform: scale(1.02) !important;
+    rotate: 0deg !important;
+}
+
+
 /* 右侧栏标题颜色统一 */
 .card-widget .item-headline span,
 .card-widget .item-headline i {
