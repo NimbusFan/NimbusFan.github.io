@@ -63,139 +63,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Python 循环结构：while 与 for 的使用</title>
-    <url>/2026/03/14/python-learning/Stage1_Core_Basics/python-s1-03-loop-statement/</url>
-    <content><![CDATA[<h1 id="While-循环"><a href="#While-循环" class="headerlink" title="While 循环"></a>While 循环</h1><p><code>while</code> 循环适用于“只要条件满足，就一直执行”的场景。</p>
-<h2 id="基础应用"><a href="#基础应用" class="headerlink" title="基础应用"></a>基础应用</h2><p><code>while</code> 循环的基础语法如下：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> 条件:</span><br><span class="line">	满足条件时要做的事情<span class="number">1</span></span><br><span class="line">    满足条件时要做的事情<span class="number">2</span></span><br><span class="line">    ...</span><br><span class="line">    满足条件时要做的事情N</span><br></pre></td></tr></table></figure>
-
-<p><strong>⚠️ 注意事项：</strong></p>
-<p><strong>条件类型：</strong> 条件的结果一定要是 <code>bool</code> 类型 。<br><strong>防止死循环：</strong> 必须要设置循环的终止条件 。<br><strong>层级关系：</strong> 严格通过空格缩进来判断代码的归属 。</p>
-<h2 id="While-循环嵌套"><a href="#While-循环嵌套" class="headerlink" title="While 循环嵌套"></a>While 循环嵌套</h2><p>在复杂的逻辑中，我们可以在循环内部再嵌套循环：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> 条件<span class="number">1</span>:</span><br><span class="line">    满足条件<span class="number">1</span>时要做的事情<span class="number">1</span></span><br><span class="line">    ... </span><br><span class="line">    <span class="keyword">while</span> 条件<span class="number">2</span>:</span><br><span class="line">        满足条件<span class="number">2</span>时要做的事情<span class="number">1</span></span><br><span class="line">        ... </span><br></pre></td></tr></table></figure>
-
-<p>注意：</p>
-<ul>
-<li>需要设置循环的终止条件</li>
-<li>通过空格缩进来判断归属</li>
-</ul>
-<hr>
-<h1 id="For-循环"><a href="#For-循环" class="headerlink" title="For 循环"></a>For 循环</h1><h2 id="基础语法"><a href="#基础语法" class="headerlink" title="基础语法"></a>基础语法</h2><p><code>for</code> 循环主要用于遍历（依次取出）数据集中的元素。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> 临时变量 <span class="keyword">in</span> 待处理数据集(序列):</span><br><span class="line">    循环满足条件时执行的代码</span><br></pre></td></tr></table></figure>
-
-<p>这里的“待处理数据集”，严格来说称之为<strong>序列类型</strong> 。</p>
-<p>序列类型是指其内容可以一个个依次取出的一种数据类型，包括：字符串、列表、元组等 。</p>
-<p><strong>⚠️ 注意事项：</strong></p>
-<ul>
-<li><p>无法像 <code>while</code> 那样自定义循环条件，只能被动取出数据处理 。</p>
-</li>
-<li><p>需要通过空格缩进来判断归属 。</p>
-</li>
-</ul>
-<h2 id="range-语句"><a href="#range-语句" class="headerlink" title="range 语句"></a>range 语句</h2><p><code>range</code> 函数是 <code>for</code> 循环的最佳拍档，用于快速生成数字序列：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">range</span>(num)：		<span class="comment">#获得一个从 0 开始，到 num-1 结束的数字序列 </span></span><br><span class="line"><span class="built_in">range</span>(num1, num2)：		<span class="comment">#获得一个从 num1 开始，到 num2-1 结束的数字序列 </span></span><br><span class="line"><span class="built_in">range</span>(num1, num2, step)：  <span class="comment">#获得一个从 num1 开始，到 num2-1 结束的数字序列，步长为 step (默认为 1) </span></span><br></pre></td></tr></table></figure>
-
-<h2 id="变量作用域"><a href="#变量作用域" class="headerlink" title="变量作用域"></a>变量作用域</h2><p><code>for</code> 循环中临时变量的作用域只被限定在循环内。<br><strong>⚠️ 注意事项：</strong></p>
-<ul>
-<li><p>虽然在 Python 中，你可以在作用域外访问临时变量，但极其不推荐这样做，这破坏了代码的封装性 。</p>
-</li>
-<li><p>如需访问临时变量，可以预先在循环外定义它</p>
-</li>
-</ul>
-<h2 id="For-循环的嵌套"><a href="#For-循环的嵌套" class="headerlink" title="For 循环的嵌套"></a>For 循环的嵌套</h2><p>与 <code>while</code> 类似，<code>for</code> 循环也支持嵌套：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> 临时变量 <span class="keyword">in</span> 待处理数据集(序列):</span><br><span class="line">    满足条件时要做的事情<span class="number">1</span></span><br><span class="line">    ... </span><br><span class="line">    <span class="keyword">for</span> 临时变量 <span class="keyword">in</span> 待处理数据集(序列):</span><br><span class="line">        满足条件时要做的事情<span class="number">1</span></span><br><span class="line">        ...</span><br></pre></td></tr></table></figure>
-
-<h2 id="Continue-和-Break"><a href="#Continue-和-Break" class="headerlink" title="Continue 和 Break"></a>Continue 和 Break</h2><h3 id="continue"><a href="#continue" class="headerlink" title="continue"></a>continue</h3><p><code>continue</code> 的作用是：<strong>中断本次循环，直接进入下一次循环</strong> 。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">100</span>): </span><br><span class="line">    语句<span class="number">1</span> </span><br><span class="line">    <span class="keyword">continue</span></span><br><span class="line">    语句<span class="number">2</span> 	<span class="comment"># 此行命令会被跳过</span></span><br></pre></td></tr></table></figure>
-
-<p><code>continue</code> 可用于 <code>for</code> 循环和 <code>while</code> 循环，效果一致 。</p>
-<h3 id="break"><a href="#break" class="headerlink" title="break"></a>break</h3><p><code>break</code> 的作用更加坚决：<strong>直接结束整个循环</strong> 。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">100</span>):</span><br><span class="line">    语句<span class="number">1</span></span><br><span class="line">    <span class="keyword">break</span> <span class="comment"># 跳出整个循环</span></span><br><span class="line">    语句<span class="number">2</span></span><br><span class="line">语句<span class="number">3</span></span><br></pre></td></tr></table></figure>
-
-<p><code>break</code> 同样可用于 <code>for</code> 循环和 <code>while</code> 循环，效果完全一致 。</p>
-<blockquote>
-<p><strong>💡 Break 的底层作用规则：</strong><br>在 Python 以及绝大多数编程语言中，<code>break</code> 遵循以下逻辑：</p>
-<ol>
-<li><strong>寻找上级：</strong> 当程序运行到 <code>break</code> 时，向外层寻找最近的一个 <code>for/while</code> 循环 。</li>
-<li><strong>无视障碍：</strong> 在寻找的过程中，它会穿透所有的 <code>if</code>, <code>elif</code>, <code>else</code> 。</li>
-</ol>
-</blockquote>
-<hr>
-<div class="note info modern"><p><strong>💻 获取完整源码</strong><br>本文涉及的所有基础概念测试与完整可运行示例，均已分类归档至我的专属代码仓库。<br>👉 <strong><a href="https://github.com/fanbyteio/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/03_Loop_Statements">点击前往 GitHub 获取本章完整示例代码</a></strong><br><em>(欢迎 Star ⭐️ 或直接 Clone 到本地运行调试)</em></p>
-</div>]]></content>
-      <categories>
-        <category>Python 技术笔记</category>
-        <category>核心基础篇</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>基础语法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python 函数基础：定义、参数与返回值</title>
-    <url>/2026/03/15/python-learning/Stage1_Core_Basics/python-s1-04-function-basics/</url>
-    <content><![CDATA[<h1 id="函数的基础定义"><a href="#函数的基础定义" class="headerlink" title="函数的基础定义"></a>函数的基础定义</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">函数名</span>(<span class="params">传入参数</span>):</span><br><span class="line">    函数体</span><br><span class="line">    <span class="keyword">return</span> 返回值</span><br></pre></td></tr></table></figure>
-
-<p>注意：</p>
-<ul>
-<li>参数&#x2F;返回值如不需要，可以省略</li>
-<li>如果不使用return，函数会返回None，类型是：&lt;class ‘NoneType’&gt;</li>
-<li>函数必须先定义后使用</li>
-</ul>
-<hr>
-<h1 id="函数的传入参数"><a href="#函数的传入参数" class="headerlink" title="函数的传入参数"></a>函数的传入参数</h1><ul>
-<li>函数定义中的参数为<strong>形式参数</strong></li>
-<li>函数调用中的参数为<strong>实际参数</strong></li>
-<li>函数的参数数量不限(0~N)，使用逗号分隔开</li>
-<li>传入参数的时候，要和形式参数一一对应，逗号隔开?</li>
-</ul>
-<hr>
-<h1 id="函数返回值"><a href="#函数返回值" class="headerlink" title="函数返回值"></a>函数返回值</h1><h2 id="函数返回值的定义"><a href="#函数返回值的定义" class="headerlink" title="函数返回值的定义"></a>函数返回值的定义</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">函数</span>(<span class="params">参数...</span>):</span><br><span class="line">    函数体</span><br><span class="line">    <span class="keyword">return</span>返回值</span><br><span class="line"></span><br><span class="line"><span class="comment"># 通过return关键字向调用者返回数据</span></span><br><span class="line">变量=函数(参数)</span><br></pre></td></tr></table></figure>
-
-<p>函数体在遇到return后就结束，写在return后的代码不会执行</p>
-<h2 id="None类型"><a href="#None类型" class="headerlink" title="None类型"></a>None类型</h2><h3 id="什么是None"><a href="#什么是None" class="headerlink" title="什么是None"></a>什么是None</h3><p>None是类型’NoneType’的字面量，用于表示:空的、无意义的</p>
-<h3 id="函数如何返回None"><a href="#函数如何返回None" class="headerlink" title="函数如何返回None"></a>函数如何返回None</h3><ul>
-<li>不使用return语句即返回None</li>
-<li>主动return None</li>
-</ul>
-<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><ul>
-<li><p>用在函数无返回值上</p>
-</li>
-<li><p>用在if判断上：在if判断中，None等同于False；一般用于在函数中主动返回None，配合if判断做相关处理</p>
-</li>
-<li><p>用于声明无内容的变量上:定义变量但暂时不需要变量有具体值，可以用None来代替</p>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">• <span class="comment">#暂不赋予变量具体值</span></span><br><span class="line">• name = <span class="literal">None</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="函数说明文档"><a href="#函数说明文档" class="headerlink" title="函数说明文档"></a>函数说明文档</h1><h2 id="函数说明文档的作用："><a href="#函数说明文档的作用：" class="headerlink" title="函数说明文档的作用："></a>函数说明文档的作用：</h2><p>对函数进行说明解释，帮助更好理解函数的功能</p>
-<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">func</span>(<span class="params">x,y</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    函数说明</span></span><br><span class="line"><span class="string">    :param x:参数x的说明</span></span><br><span class="line"><span class="string">    :param x:参数y的说明</span></span><br><span class="line"><span class="string">    :return:返回值的说明</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    函数体</span><br><span class="line">    <span class="keyword">return</span> 返回值</span><br></pre></td></tr></table></figure>
-
-<p>:param用于解释参数（parameter，参数）</p>
-<p>:return用于解释返回值</p>
-<hr>
-<h1 id="函数的嵌套调用"><a href="#函数的嵌套调用" class="headerlink" title="函数的嵌套调用"></a>函数的嵌套调用</h1><p>函数A中执行到调用函数B的语句，会将函数B全部执行完成后，继续执行函数A的剩余内容</p>
-<hr>
-<h1 id="变量的作用域"><a href="#变量的作用域" class="headerlink" title="变量的作用域"></a>变量的作用域</h1><h2 id="变量作用域"><a href="#变量作用域" class="headerlink" title="变量作用域"></a>变量作用域</h2><p>变量作用域指的是变量的作用范围</p>
-<p>变量主要分为两类:<strong>局部变量</strong>和<strong>全局变量</strong></p>
-<p><strong>局部变量</strong>是定义在函数体内部的变量，只在函数体内部生效</p>
-<p><strong>全局变量</strong>是在函数体内、外都能生效的变量</p>
-<h2 id="global关键字"><a href="#global关键字" class="headerlink" title="global关键字"></a>global关键字</h2><p><code>global</code> 用于在函数内部声明某个变量来自全局作用域，从而允许在函数内部修改该全局变量。</p>
-<hr>
-<div class="note info modern"><p><strong>💻 获取完整源码</strong><br>本文涉及的所有基础概念测试与完整可运行示例，均已分类归档至我的专属代码仓库。<br>👉 <strong><a href="https://github.com/fanbyteio/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/04_Functions">点击前往 GitHub 获取本章完整示例代码</a></strong><br><em>(欢迎 Star ⭐️ 或直接 Clone 到本地运行调试)</em></p>
-</div>]]></content>
-      <categories>
-        <category>Python 技术笔记</category>
-        <category>核心基础篇</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>基础语法</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Python 条件判断与逻辑控制</title>
     <url>/2026/03/13/python-learning/Stage1_Core_Basics/python-s1-02-condition-statement/</url>
     <content><![CDATA[<h1 id="布尔类型和比较运算符"><a href="#布尔类型和比较运算符" class="headerlink" title="布尔类型和比较运算符"></a>布尔类型和比较运算符</h1><h2 id="布尔类型"><a href="#布尔类型" class="headerlink" title="布尔类型"></a>布尔类型</h2><p>在 Python 中，布尔类型的字面量用 <code>True</code> 表示真，<code>False</code> 表示假。</p>
@@ -268,7 +135,7 @@
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> 条件<span class="number">1</span>:</span><br><span class="line">    满足条件<span class="number">1</span>时要做的事情<span class="number">1</span></span><br><span class="line">    ...</span><br><span class="line">    满足条件<span class="number">1</span>时要做的事情N</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> 条件<span class="number">2</span>:</span><br><span class="line">        满足条件<span class="number">2</span>时要做的事情<span class="number">1</span></span><br><span class="line">        ...</span><br><span class="line">        满足条件<span class="number">2</span>时要做的事情N</span><br></pre></td></tr></table></figure>
 
 <p><strong>层级法则：</strong> Python 完全通过缩进来确定层级的包含关系 。内层嵌套的 <code>if</code> 需要叠加缩进。</p>
-<div class="note info modern"><p><strong>💻 获取完整源码</strong><br>本文涉及的所有基础概念测试与完整可运行示例，均已分类归档至我的专属代码仓库。<br>👉 <strong><a href="https://github.com/fanbyteio/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/02_Condition_Statements">点击前往 GitHub 获取本章完整示例代码</a></strong><br><em>(欢迎 Star ⭐️ 或直接 Clone 到本地运行调试)</em></p>
+<div class="note info modern"><p><strong>💻 获取完整源码</strong><br>本文涉及的所有基础概念测试与完整可运行示例，均已分类归档至我的专属代码仓库。<br>👉 <strong><a href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/02_Condition_Statements">点击前往 GitHub 获取本章完整示例代码</a></strong><br><em>(欢迎 Star ⭐️ 或直接 Clone 到本地运行调试)</em></p>
 </div>]]></content>
       <categories>
         <category>Python 技术笔记</category>
@@ -281,82 +148,203 @@
       </tags>
   </entry>
   <entry>
-    <title>Python 函数进阶：作用域、参数与匿名函数</title>
-    <url>/2026/03/17/python-learning/Stage1_Core_Basics/python-s1-06-advanced-functions/</url>
-    <content><![CDATA[<h1 id="函数多返回值"><a href="#函数多返回值" class="headerlink" title="函数多返回值"></a>函数多返回值</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test_return</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>, <span class="string">&quot;Hello&quot;</span>, <span class="literal">True</span></span><br><span class="line">x, y, z = test_return()</span><br><span class="line"><span class="built_in">print</span>(x, y, z)</span><br></pre></td></tr></table></figure>
+    <title>Python 基础语法：变量、类型与表达式</title>
+    <url>/2026/03/12/python-learning/Stage1_Core_Basics/python-s1-01-basic-syntax/</url>
+    <content><![CDATA[<h1 id="字面量"><a href="#字面量" class="headerlink" title="字面量"></a>字面量</h1><p>常用的值的类型：<br><img src="https://cdn.jsdelivr.net/gh/NimbusFan/blog-images@main/assets/%E5%B8%B8%E7%94%A8%E7%9A%84%E5%80%BC%E7%9A%84%E7%B1%BB%E5%9E%8B.png" alt="image.png"></p>
+<hr>
+<h1 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h1><p>单行注释：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 单行注释</span></span><br></pre></td></tr></table></figure>
 
-<h1 id="函数多种传参方式"><a href="#函数多种传参方式" class="headerlink" title="函数多种传参方式"></a>函数多种传参方式</h1><h2 id="位置参数"><a href="#位置参数" class="headerlink" title="位置参数"></a>位置参数</h2><p>调用函数时根据函数定义的参数位置来传递参数</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">user_info</span>(<span class="params">name, age, gender</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;姓名是：<span class="subst">&#123;name&#125;</span>,年龄是：<span class="subst">&#123;age&#125;</span>,性别是：<span class="subst">&#123;gender&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 位置参数</span></span><br><span class="line">user_info(<span class="string">&#x27;小明&#x27;</span>, <span class="number">20</span>, <span class="string">&#x27;男&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>多行注释：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    多行注释</span></span><br><span class="line"><span class="string">    使用一对三个双引号引起来</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="关键字参数"><a href="#关键字参数" class="headerlink" title="关键字参数"></a>关键字参数</h2><p>调用函数时通过“键 &#x3D; 值”的形式传递参数，消除参数的顺序需求</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">user_info</span>(<span class="params">name, age, gender</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;您的名字是:<span class="subst">&#123;name&#125;</span>，年龄是:<span class="subst">&#123;age&#125;</span>,性别是:<span class="subst">&#123;gender&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#关键字传参</span></span><br><span class="line">user_info(name=<span class="string">&quot;小明&quot;</span>,age=<span class="number">20</span>,gender=<span class="string">&quot;男&quot;</span>)</span><br><span class="line"><span class="comment"># 可以不按照固定顺序</span></span><br><span class="line">user_info(age=<span class="number">20</span>,gender=<span class="string">&quot;男&quot;</span>,name=<span class="string">&quot;小明&quot;</span>)</span><br><span class="line"><span class="comment">#可以和位置参数混用，位置参数必须在前，且匹配参数顺序</span></span><br><span class="line">user_info(<span class="string">&quot;小明&quot;</span>,age=<span class="number">20</span>,gender=<span class="string">&quot;男&quot;</span>)</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = <span class="number">10</span>   <span class="comment"># 赋值</span></span><br><span class="line">a = a - <span class="number">10</span>  <span class="comment">#运算</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="不定长参数"><a href="#不定长参数" class="headerlink" title="不定长参数"></a>不定长参数</h2><p>不定长参数也叫可变参数.用于不确定调用的时候会传递多少个参数(不传参也可以)的场景</p>
-<p>不定长参数的类型:</p>
-<h3 id="（1）位置传递"><a href="#（1）位置传递" class="headerlink" title="（1）位置传递"></a>（1）位置传递</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">user_info</span>(<span class="params">*args</span>):</span><br><span class="line">    <span class="built_in">print</span>(args)</span><br><span class="line"></span><br><span class="line"><span class="comment"># (&#x27;TOM&#x27;,)</span></span><br><span class="line">user_info(<span class="string">&#x27;TOM&#x27;</span>)</span><br><span class="line"><span class="comment"># (&#x27;TOM&#x27;, 18)</span></span><br><span class="line">user_info(<span class="string">&#x27;TOM&#x27;</span>, <span class="number">18</span>)</span><br></pre></td></tr></table></figure>
+<p>print语句可以输出多份数据</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(内容<span class="number">1</span>，内容<span class="number">2</span>，......，内容N)</span><br></pre></td></tr></table></figure>
 
-<p>注意:传进的所有参数都会被args变量收集，它会根据传进参数的位置合并为一个元组(tuple)，args是元组类型</p>
-<h3 id="（2）关键字传递"><a href="#（2）关键字传递" class="headerlink" title="（2）关键字传递"></a>（2）关键字传递</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">user_info</span>(<span class="params">**kwargs</span>):</span><br><span class="line">    <span class="built_in">print</span>(kwargs)</span><br><span class="line"></span><br><span class="line"><span class="comment"># &#123;&#x27;name&#x27; : &#x27;TOM&#x27;, &#x27;age&#x27; : 18, &#x27;id&#x27; : 110&#125;</span></span><br><span class="line">user_info(name=<span class="string">&#x27;TOM&#x27;</span>, age=<span class="number">18</span>, <span class="built_in">id</span>=<span class="number">110</span>)</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 直接查看数据类型</span></span><br><span class="line">string_type = <span class="built_in">type</span>(<span class="string">&quot;fanyunfei&quot;</span>)  </span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看变量的数据类型</span></span><br><span class="line">name = <span class="string">&quot;fanyunfei&quot;</span></span><br><span class="line">name_type = <span class="built_in">type</span>(name)  </span><br></pre></td></tr></table></figure>
 
-<p>传入的参数是“键&#x3D;值”格式，被kwargs接收后根据“键&#x3D;值”组成字典</p>
-<h2 id="缺省参数"><a href="#缺省参数" class="headerlink" title="缺省参数"></a>缺省参数</h2><p>缺省参数也叫默认参数，调用函数时可不传该默认参数的值,如果传入该参数的值，则修改默认参数值</p>
-<p>注意:<strong>函数定义和调用时，所有位置参数必须出现在默认参数前</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">user_info</span>(<span class="params">name,age,gender = <span class="string">&#x27;男&#x27;</span></span>):</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&#x27;您的名字是<span class="subst">&#123;name&#125;</span>，年龄是<span class="subst">&#123;age&#125;</span>，性别是<span class="subst">&#123;gender&#125;</span>&#x27;</span>)</span><br><span class="line">user_info(<span class="string">&#x27;TOM&#x27;</span>, <span class="number">20</span>)</span><br><span class="line">user_info(<span class="string">&#x27;Rose&#x27;</span>, <span class="number">18</span>, <span class="string">&#x27;女&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="数据类型转换"><a href="#数据类型转换" class="headerlink" title="数据类型转换"></a>数据类型转换</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">int</span>()   <span class="comment"># 转整数</span></span><br><span class="line"><span class="built_in">float</span>()  <span class="comment"># 转浮点数</span></span><br><span class="line"><span class="built_in">str</span>()   <span class="comment"># 转字符串</span></span><br></pre></td></tr></table></figure>
 
-<h1 id="匿名函数"><a href="#匿名函数" class="headerlink" title="匿名函数"></a>匿名函数</h1><h2 id="函数作为参数传递"><a href="#函数作为参数传递" class="headerlink" title="函数作为参数传递"></a>函数作为参数传递</h2><p>函数本身作为参数，传入另一个函数中进行使用。</p>
-<p>将函数传入的作用在于:传入计算逻辑，而非传入数据。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test_func</span>(<span class="params">func</span>):</span><br><span class="line">    result = func(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;func参数的类型是”：<span class="subst">&#123;func&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;计算结果：<span class="subst">&#123;result&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">compute</span>(<span class="params">x, y</span>):</span><br><span class="line">    <span class="keyword">return</span> x + y</span><br><span class="line"></span><br><span class="line">test_func(compute)</span><br></pre></td></tr></table></figure>
+<p>注意：只含有数字的字符串才可转为整数&#x2F;浮点数，但浮点数形式的字符串无法直接转整数</p>
+<hr>
+<h1 id="标识符"><a href="#标识符" class="headerlink" title="标识符"></a>标识符</h1><h2 id="标识符命名规则："><a href="#标识符命名规则：" class="headerlink" title="标识符命名规则："></a>标识符命名规则：</h2><p>（1）内容限定：</p>
+<p>​    只允许出现中文、字母、数字、下划线。</p>
+<p>​    不推荐使用中文，不能以数字作为开头</p>
+<p>（2）大小写敏感</p>
+<p>（3）不可使用关键字</p>
+<h2 id="Python所有关键字"><a href="#Python所有关键字" class="headerlink" title="Python所有关键字"></a>Python所有关键字</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> keyword</span><br><span class="line"><span class="built_in">print</span>(keyword.kwlist)</span><br></pre></td></tr></table></figure>
 
-<h2 id="lambda匿名函数"><a href="#lambda匿名函数" class="headerlink" title="lambda匿名函数"></a>lambda匿名函数</h2><p>函数的定义中:</p>
-<ul>
-<li>def关键字，可以定义带有名称的函数,可以基于名称<strong>重复使用</strong></li>
-<li>lambda关键字，可以定义匿名函数(无名称),只可<strong>临时使用一次</strong>。</li>
-</ul>
-<p>匿名函数定义语法:</p>
-<p>1ambda 传入参数:函数体(一行代码)</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test_func</span>(<span class="params">compute</span>):</span><br><span class="line">    result = compute(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">    <span class="built_in">print</span>(result)</span><br><span class="line"></span><br><span class="line">test_func(<span class="keyword">lambda</span> x, y: x + y)        <span class="comment">#结果:3</span></span><br></pre></td></tr></table></figure>
+<p>python所有的关键字：</p>
+<p>‘False’, ‘None’, ‘True’, ‘and’, ‘as’, ‘assert’, ‘async’, ‘await’, ‘break’, ‘class’, ‘continue’, ‘def’, ‘del’, ‘elif’, ‘else’, ‘except’, ‘finally’, ‘for’, ‘from’, ‘global’, ‘if’, ‘import’, ‘in’, ‘is’, ‘lambda’, ‘nonlocal’, ‘not’, ‘or’, ‘pass’, ‘raise’, ‘return’, ‘try’, ‘while’, ‘with’, ‘yield’</p>
+<hr>
+<h1 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h1><h2 id="基础运算符"><a href="#基础运算符" class="headerlink" title="基础运算符"></a>基础运算符</h2><table>
+<thead>
+<tr>
+<th align="center">+</th>
+<th align="center">加</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">-</td>
+<td align="center">减</td>
+</tr>
+<tr>
+<td align="center">*</td>
+<td align="center">乘</td>
+</tr>
+<tr>
+<td align="center">&#x2F;</td>
+<td align="center">除</td>
+</tr>
+<tr>
+<td align="center">&#x2F;&#x2F;</td>
+<td align="center">整除</td>
+</tr>
+<tr>
+<td align="center">%</td>
+<td align="center">取余</td>
+</tr>
+<tr>
+<td align="center">**</td>
+<td align="center">指数</td>
+</tr>
+</tbody></table>
+<h2 id="复合赋值运算符"><a href="#复合赋值运算符" class="headerlink" title="复合赋值运算符"></a>复合赋值运算符</h2><table>
+<thead>
+<tr>
+<th align="center">+&#x3D;</th>
+<th align="center">c +&#x3D; a等效于c &#x3D; c + a</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">-&#x3D;</td>
+<td align="center">c -&#x3D; a等效于c &#x3D; c - a</td>
+</tr>
+<tr>
+<td align="center">*&#x3D;</td>
+<td align="center">c *&#x3D; a等效于c &#x3D; c * a</td>
+</tr>
+<tr>
+<td align="center">&#x2F;&#x3D;</td>
+<td align="center">c &#x2F;&#x3D; a等效于c &#x3D; c &#x2F; a</td>
+</tr>
+<tr>
+<td align="center">&#x2F;&#x2F;&#x3D;</td>
+<td align="center">c &#x2F;&#x2F;&#x3D; a等效于c &#x3D; c &#x2F;&#x2F; a</td>
+</tr>
+<tr>
+<td align="center">%&#x3D;</td>
+<td align="center">c %&#x3D; a等效于c &#x3D; c % a</td>
+</tr>
+<tr>
+<td align="center">**&#x3D;</td>
+<td align="center">c **&#x3D; a等效于c &#x3D; c ** a</td>
+</tr>
+</tbody></table>
+<hr>
+<h1 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h1><h2 id="字符串的三种定义方式"><a href="#字符串的三种定义方式" class="headerlink" title="字符串的三种定义方式"></a>字符串的三种定义方式</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">name = <span class="string">&#x27;fanyunfei&#x27;</span>  <span class="comment"># 单引号定义法</span></span><br><span class="line">name = <span class="string">&quot;fanyunfei&quot;</span>  <span class="comment">#双引号定义法</span></span><br><span class="line">name = <span class="string">&quot;&quot;&quot;fanyunfei&quot;&quot;&quot;</span>  <span class="comment">#三引号定义法，如果被变量接受，就作为字符串，如果不被接受就作为注释</span></span><br></pre></td></tr></table></figure>
 
-<p>注意事项：</p>
-<ul>
-<li>匿名函数用于临时构建一个函数，只用一次的场景</li>
-<li>匿名函数的定义中，函数体只能写一行代码，如果函数体要写多行代码，不可用lambda匿名函数，应使用def定义带名函数</li>
-</ul>
-<div class="note info modern"><p><strong>💻 获取完整源码</strong><br>本文涉及的所有基础概念测试与完整可运行示例，均已分类归档至我的专属代码仓库。<br>👉 <strong><a href="https://github.com/fanbyteio/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/06_Advanced_Functions">点击前往 GitHub 获取本章完整示例代码</a></strong><br><em>(欢迎 Star ⭐️ 或直接 Clone 到本地运行调试)</em></p>
+<p>引号的嵌套：（1）可以使用\进行转义，解除引号作用，变成普通字符串（2）单引号内可以写双引号，双引号内可以写单引号</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Hello\nWorld&quot;</span>)    <span class="comment"># \n,换行符</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Hello\tWorld&quot;</span>)    <span class="comment"># \t,制表符</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Hello&quot;</span>，end = <span class="string">&#x27;&#x27;</span>)  <span class="comment"># print输出后不换行</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="字符串拼接"><a href="#字符串拼接" class="headerlink" title="字符串拼接"></a>字符串拼接</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;fanyunfei&quot;</span> + <span class="string">&quot;英俊潇洒风流倜傥有钱多金智商高&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>注意：此方法无法和非字符串类型进行拼接</p>
+<h2 id="字符串格式化"><a href="#字符串格式化" class="headerlink" title="字符串格式化"></a>字符串格式化</h2><p>通过占位的形式拼接字符串。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">name = <span class="string">&quot;pitejingji&quot;</span></span><br><span class="line">set_up_year = <span class="number">2026</span></span><br><span class="line">stock_price = <span class="number">19.99</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;%s成立于 %d年，今天的股价是%f&quot;</span> %(name,set_up_year,stock_price))</span><br></pre></td></tr></table></figure>
+
+<h2 id="字符串格式化的精度控制"><a href="#字符串格式化的精度控制" class="headerlink" title="字符串格式化的精度控制"></a>字符串格式化的精度控制</h2><p>使用辅助符号”m.n”来控制数据的宽度和精度</p>
+<p>m，控制宽度，要求是数字(很少使用)，如果设置的宽度小于数字自身，不生效</p>
+<p>.n，控制小数点精度，要求是数字，会进行小数的四舍五入</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">num1 = <span class="number">12.3456</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;数字12.34宽度限制7，小数精度3，结果是：%7.3f&quot;</span> %num1)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;数字12.34宽度限制10，小数精度6，结果是：%10.6f&quot;</span> %num1)</span><br></pre></td></tr></table></figure>
+
+<h2 id="快速字符串格式化"><a href="#快速字符串格式化" class="headerlink" title="快速字符串格式化"></a>快速字符串格式化</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;name&#125;</span>成立于<span class="subst">&#123;set_up_year&#125;</span>年，今天的股价是<span class="subst">&#123;stock_price&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>注意：此方法不会做精度控制。</p>
+<h2 id="对表达式进行格式化"><a href="#对表达式进行格式化" class="headerlink" title="对表达式进行格式化"></a>对表达式进行格式化</h2><p>表达式指一个具有明确结果的代码语句。如1+1，type(“fanyunfei”)。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;1 + 1的结果是：%d&quot;</span> %(<span class="number">1</span> + <span class="number">1</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;1 + 1的结果是：<span class="subst">&#123;<span class="number">1</span> +<span class="number">1</span>&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;字符串在python中的类型是：%s&quot;</span> %<span class="built_in">type</span>(<span class="string">&quot;fanyunfei&quot;</span>))</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="数据输入"><a href="#数据输入" class="headerlink" title="数据输入"></a>数据输入</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">input</span>()    <span class="comment">#获取键盘输入的数据</span></span><br><span class="line"><span class="built_in">input</span>(提示信息)    <span class="comment"># 在使用者输入内容之前显示提示信息</span></span><br></pre></td></tr></table></figure>
+
+<p>注意：input得到的数据永远都是字符串类型。</p>
+<div class="note info modern"><p><strong>💻 获取完整源码</strong><br>本文涉及的所有基础概念测试与完整可运行示例，均已分类归档至我的专属代码仓库。<br>👉 <strong><a href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/01_Data_Type">点击前往 GitHub 获取本章完整示例代码</a></strong><br><em>(欢迎 Star ⭐️ 或直接 Clone 到本地运行调试)</em></p>
 </div>]]></content>
       <categories>
         <category>Python 技术笔记</category>
-        <category>核心基础篇</category>
+        <category>基础语法与数据结构</category>
       </categories>
       <tags>
         <tag>Python</tag>
-        <tag>进阶语法</tag>
-        <tag>函数</tag>
-        <tag>Lambda</tag>
+        <tag>基础语法</tag>
+        <tag>编程入门</tag>
       </tags>
   </entry>
   <entry>
-    <title>Python 数据处理：JSON 解析与 Pyecharts 可视化</title>
-    <url>/2026/03/26/python-learning/Stage1_Core_Basics/python-s1-09-basic-comprehensive-Case/</url>
-    <content><![CDATA[<h1 id="JSON数据格式"><a href="#JSON数据格式" class="headerlink" title="JSON数据格式"></a>JSON数据格式</h1><h2 id="什么是JSON"><a href="#什么是JSON" class="headerlink" title="什么是JSON"></a>什么是JSON</h2><p>一种在各个编程语言中流通的数据格式，负责不同编程语言中的数据传递和交互。<br>JSON无非就是一个单独的字典或一个内部元素都是字典的列表。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># json数据的格式可以是：</span></span><br><span class="line">	&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;admin&quot;</span>, <span class="string">&quot;age&quot;</span>:<span class="number">18</span>&#125;</span><br><span class="line">	</span><br><span class="line"><span class="comment"># 也可以是：</span></span><br><span class="line">	[(<span class="string">&quot;name&quot;</span>:<span class="string">&quot;admin&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">18</span>&#125;,(<span class="string">&quot;name&quot;</span>:<span class="string">&quot;root&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">16</span>&#125;,(<span class="string">&quot;name&quot;</span>:<span class="string">&quot;张三&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">20</span>]]</span><br></pre></td></tr></table></figure>
-<h2 id="对JSON进行数据转换"><a href="#对JSON进行数据转换" class="headerlink" title="对JSON进行数据转换"></a>对JSON进行数据转换</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 导入json模块</span></span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line"><span class="comment"># 准备符合json格式要求的python数据</span></span><br><span class="line">data=[&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;老王&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">16</span>&#125;, &#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;张三&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">20</span>&#125;]</span><br><span class="line"></span><br><span class="line"><span class="comment"># json.dumps(data)方法把python数据转化为json数据</span></span><br><span class="line">data = json.dumps(data)</span><br><span class="line"><span class="comment"># 显示出中文</span></span><br><span class="line">data = json.dumps(data，ensure_ascii=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># json.loads(data)方法把json数据转化为python数据</span></span><br><span class="line">data =json.loads(data)</span><br></pre></td></tr></table></figure>
-<hr>
-<h1 id="pyecharts模块介绍"><a href="#pyecharts模块介绍" class="headerlink" title="pyecharts模块介绍"></a>pyecharts模块介绍</h1><ol>
-<li>开发可视化图表使用的技术栈是:<br> Echarts框架的Python版本:PyEcharts包</li>
-<li>如何安装PyEcharts包:<br> pip install pyecharts</li>
-<li>如何查看官方示例<br> 打开官方画廊:<a href="https://gallery.pyecharts.org/#/README">https://gallery.pyecharts.org/#/README</a></li>
-</ol>
-<hr>
-<h1 id="pyecharts快速入门"><a href="#pyecharts快速入门" class="headerlink" title="pyecharts快速入门"></a>pyecharts快速入门</h1><h2 id="构建基础折线图"><a href="#构建基础折线图" class="headerlink" title="构建基础折线图"></a>构建基础折线图</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 导包，导入Line功能构建折线图对象</span></span><br><span class="line"><span class="keyword">from</span> pyecharts.charts <span class="keyword">import</span> Line</span><br><span class="line"></span><br><span class="line"><span class="comment"># 得到折线图对象</span></span><br><span class="line">line = Line()</span><br><span class="line"><span class="comment"># 添加x轴数据</span></span><br><span class="line">line.add_xaxis([<span class="string">&quot;中国&quot;</span>，<span class="string">&quot;美国&quot;</span>,<span class="string">&quot;英国&quot;</span>])</span><br><span class="line"><span class="comment"># 添加y轴数据</span></span><br><span class="line">line.add_yaxis(<span class="string">&quot;GDP&quot;</span>, [<span class="number">30</span>, <span class="number">20</span> ,<span class="number">10</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment">#生成图表</span></span><br><span class="line">line.renderO</span><br></pre></td></tr></table></figure>
-<h2 id="使用全局配置项设置属性"><a href="#使用全局配置项设置属性" class="headerlink" title="使用全局配置项设置属性"></a>使用全局配置项设置属性</h2><p>pyecharts模块中有很多的配置选项，常用到2个类别的选项: </p>
-<ul>
-<li><strong>全局配置选项</strong></li>
-<li><strong>系列配置选项</strong></li>
-</ul>
-<p>全局配置选项可以通过<strong>set_global_opts</strong>方法来进行配置，相应的选项和选项的功能如下:<br><img src="https://cdn.jsdelivr.net/gh/fanbyteio/blog-images@main/assets/pyecharts%E5%85%A8%E5%B1%80%E9%85%8D%E7%BD%AE.png" alt="image.png"></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 通过全局配置项设置属性</span></span><br><span class="line">line.set_global_opts(</span><br><span class="line">	title_opts=TitleOpts(<span class="string">&quot;测试&quot;</span>,pos_left=<span class="string">&quot;center&quot;</span>,pos_bottom=<span class="string">&quot;1%&quot;</span>),</span><br><span class="line">	legend_opts=Legendopts(is_show=<span class="literal">True</span>),</span><br><span class="line">	toolbox_opts=ToolboxOpts(is_show=<span class="literal">True</span>),</span><br><span class="line">	visualmap_opts=VisualMapOpts(is_show=<span class="literal">True</span>),</span><br><span class="line">	tooltip_opts=TooltipOpts(is_show=<span class="literal">True</span>),</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+    <title>Python 循环结构：while 与 for 的使用</title>
+    <url>/2026/03/14/python-learning/Stage1_Core_Basics/python-s1-03-loop-statement/</url>
+    <content><![CDATA[<h1 id="While-循环"><a href="#While-循环" class="headerlink" title="While 循环"></a>While 循环</h1><p><code>while</code> 循环适用于“只要条件满足，就一直执行”的场景。</p>
+<h2 id="基础应用"><a href="#基础应用" class="headerlink" title="基础应用"></a>基础应用</h2><p><code>while</code> 循环的基础语法如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> 条件:</span><br><span class="line">	满足条件时要做的事情<span class="number">1</span></span><br><span class="line">    满足条件时要做的事情<span class="number">2</span></span><br><span class="line">    ...</span><br><span class="line">    满足条件时要做的事情N</span><br></pre></td></tr></table></figure>
 
-<div class="note info modern"><p><strong>💻 获取完整源码</strong><br>本文涉及的所有基础概念测试与完整可运行示例，均已分类归档至我的专属代码仓库。<br>👉 <strong><a href="https://github.com/fanbyteio/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/09_Basic_Comprehensive_Case">点击前往 GitHub 获取本章完整示例代码</a></strong><br><em>(欢迎 Star ⭐️ 或直接 Clone 到本地运行调试)</em></p>
+<p><strong>⚠️ 注意事项：</strong></p>
+<p><strong>条件类型：</strong> 条件的结果一定要是 <code>bool</code> 类型 。<br><strong>防止死循环：</strong> 必须要设置循环的终止条件 。<br><strong>层级关系：</strong> 严格通过空格缩进来判断代码的归属 。</p>
+<h2 id="While-循环嵌套"><a href="#While-循环嵌套" class="headerlink" title="While 循环嵌套"></a>While 循环嵌套</h2><p>在复杂的逻辑中，我们可以在循环内部再嵌套循环：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> 条件<span class="number">1</span>:</span><br><span class="line">    满足条件<span class="number">1</span>时要做的事情<span class="number">1</span></span><br><span class="line">    ... </span><br><span class="line">    <span class="keyword">while</span> 条件<span class="number">2</span>:</span><br><span class="line">        满足条件<span class="number">2</span>时要做的事情<span class="number">1</span></span><br><span class="line">        ... </span><br></pre></td></tr></table></figure>
+
+<p>注意：</p>
+<ul>
+<li>需要设置循环的终止条件</li>
+<li>通过空格缩进来判断归属</li>
+</ul>
+<hr>
+<h1 id="For-循环"><a href="#For-循环" class="headerlink" title="For 循环"></a>For 循环</h1><h2 id="基础语法"><a href="#基础语法" class="headerlink" title="基础语法"></a>基础语法</h2><p><code>for</code> 循环主要用于遍历（依次取出）数据集中的元素。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> 临时变量 <span class="keyword">in</span> 待处理数据集(序列):</span><br><span class="line">    循环满足条件时执行的代码</span><br></pre></td></tr></table></figure>
+
+<p>这里的“待处理数据集”，严格来说称之为<strong>序列类型</strong> 。</p>
+<p>序列类型是指其内容可以一个个依次取出的一种数据类型，包括：字符串、列表、元组等 。</p>
+<p><strong>⚠️ 注意事项：</strong></p>
+<ul>
+<li><p>无法像 <code>while</code> 那样自定义循环条件，只能被动取出数据处理 。</p>
+</li>
+<li><p>需要通过空格缩进来判断归属 。</p>
+</li>
+</ul>
+<h2 id="range-语句"><a href="#range-语句" class="headerlink" title="range 语句"></a>range 语句</h2><p><code>range</code> 函数是 <code>for</code> 循环的最佳拍档，用于快速生成数字序列：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">range</span>(num)：		<span class="comment">#获得一个从 0 开始，到 num-1 结束的数字序列 </span></span><br><span class="line"><span class="built_in">range</span>(num1, num2)：		<span class="comment">#获得一个从 num1 开始，到 num2-1 结束的数字序列 </span></span><br><span class="line"><span class="built_in">range</span>(num1, num2, step)：  <span class="comment">#获得一个从 num1 开始，到 num2-1 结束的数字序列，步长为 step (默认为 1) </span></span><br></pre></td></tr></table></figure>
+
+<h2 id="变量作用域"><a href="#变量作用域" class="headerlink" title="变量作用域"></a>变量作用域</h2><p><code>for</code> 循环中临时变量的作用域只被限定在循环内。<br><strong>⚠️ 注意事项：</strong></p>
+<ul>
+<li><p>虽然在 Python 中，你可以在作用域外访问临时变量，但极其不推荐这样做，这破坏了代码的封装性 。</p>
+</li>
+<li><p>如需访问临时变量，可以预先在循环外定义它</p>
+</li>
+</ul>
+<h2 id="For-循环的嵌套"><a href="#For-循环的嵌套" class="headerlink" title="For 循环的嵌套"></a>For 循环的嵌套</h2><p>与 <code>while</code> 类似，<code>for</code> 循环也支持嵌套：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> 临时变量 <span class="keyword">in</span> 待处理数据集(序列):</span><br><span class="line">    满足条件时要做的事情<span class="number">1</span></span><br><span class="line">    ... </span><br><span class="line">    <span class="keyword">for</span> 临时变量 <span class="keyword">in</span> 待处理数据集(序列):</span><br><span class="line">        满足条件时要做的事情<span class="number">1</span></span><br><span class="line">        ...</span><br></pre></td></tr></table></figure>
+
+<h2 id="Continue-和-Break"><a href="#Continue-和-Break" class="headerlink" title="Continue 和 Break"></a>Continue 和 Break</h2><h3 id="continue"><a href="#continue" class="headerlink" title="continue"></a>continue</h3><p><code>continue</code> 的作用是：<strong>中断本次循环，直接进入下一次循环</strong> 。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">100</span>): </span><br><span class="line">    语句<span class="number">1</span> </span><br><span class="line">    <span class="keyword">continue</span></span><br><span class="line">    语句<span class="number">2</span> 	<span class="comment"># 此行命令会被跳过</span></span><br></pre></td></tr></table></figure>
+
+<p><code>continue</code> 可用于 <code>for</code> 循环和 <code>while</code> 循环，效果一致 。</p>
+<h3 id="break"><a href="#break" class="headerlink" title="break"></a>break</h3><p><code>break</code> 的作用更加坚决：<strong>直接结束整个循环</strong> 。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">100</span>):</span><br><span class="line">    语句<span class="number">1</span></span><br><span class="line">    <span class="keyword">break</span> <span class="comment"># 跳出整个循环</span></span><br><span class="line">    语句<span class="number">2</span></span><br><span class="line">语句<span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+<p><code>break</code> 同样可用于 <code>for</code> 循环和 <code>while</code> 循环，效果完全一致 。</p>
+<blockquote>
+<p><strong>💡 Break 的底层作用规则：</strong><br>在 Python 以及绝大多数编程语言中，<code>break</code> 遵循以下逻辑：</p>
+<ol>
+<li><strong>寻找上级：</strong> 当程序运行到 <code>break</code> 时，向外层寻找最近的一个 <code>for/while</code> 循环 。</li>
+<li><strong>无视障碍：</strong> 在寻找的过程中，它会穿透所有的 <code>if</code>, <code>elif</code>, <code>else</code> 。</li>
+</ol>
+</blockquote>
+<hr>
+<div class="note info modern"><p><strong>💻 获取完整源码</strong><br>本文涉及的所有基础概念测试与完整可运行示例，均已分类归档至我的专属代码仓库。<br>👉 <strong><a href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/03_Loop_Statements">点击前往 GitHub 获取本章完整示例代码</a></strong><br><em>(欢迎 Star ⭐️ 或直接 Clone 到本地运行调试)</em></p>
 </div>]]></content>
       <categories>
         <category>Python 技术笔记</category>
@@ -364,9 +352,70 @@
       </categories>
       <tags>
         <tag>Python</tag>
-        <tag>JSON</tag>
-        <tag>数据可视化</tag>
-        <tag>PyEcharts</tag>
+        <tag>基础语法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python 函数基础：定义、参数与返回值</title>
+    <url>/2026/03/15/python-learning/Stage1_Core_Basics/python-s1-04-function-basics/</url>
+    <content><![CDATA[<h1 id="函数的基础定义"><a href="#函数的基础定义" class="headerlink" title="函数的基础定义"></a>函数的基础定义</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">函数名</span>(<span class="params">传入参数</span>):</span><br><span class="line">    函数体</span><br><span class="line">    <span class="keyword">return</span> 返回值</span><br></pre></td></tr></table></figure>
+
+<p>注意：</p>
+<ul>
+<li>参数&#x2F;返回值如不需要，可以省略</li>
+<li>如果不使用return，函数会返回None，类型是：&lt;class ‘NoneType’&gt;</li>
+<li>函数必须先定义后使用</li>
+</ul>
+<hr>
+<h1 id="函数的传入参数"><a href="#函数的传入参数" class="headerlink" title="函数的传入参数"></a>函数的传入参数</h1><ul>
+<li>函数定义中的参数为<strong>形式参数</strong></li>
+<li>函数调用中的参数为<strong>实际参数</strong></li>
+<li>函数的参数数量不限(0~N)，使用逗号分隔开</li>
+<li>传入参数的时候，要和形式参数一一对应，逗号隔开?</li>
+</ul>
+<hr>
+<h1 id="函数返回值"><a href="#函数返回值" class="headerlink" title="函数返回值"></a>函数返回值</h1><h2 id="函数返回值的定义"><a href="#函数返回值的定义" class="headerlink" title="函数返回值的定义"></a>函数返回值的定义</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">函数</span>(<span class="params">参数...</span>):</span><br><span class="line">    函数体</span><br><span class="line">    <span class="keyword">return</span>返回值</span><br><span class="line"></span><br><span class="line"><span class="comment"># 通过return关键字向调用者返回数据</span></span><br><span class="line">变量=函数(参数)</span><br></pre></td></tr></table></figure>
+
+<p>函数体在遇到return后就结束，写在return后的代码不会执行</p>
+<h2 id="None类型"><a href="#None类型" class="headerlink" title="None类型"></a>None类型</h2><h3 id="什么是None"><a href="#什么是None" class="headerlink" title="什么是None"></a>什么是None</h3><p>None是类型’NoneType’的字面量，用于表示:空的、无意义的</p>
+<h3 id="函数如何返回None"><a href="#函数如何返回None" class="headerlink" title="函数如何返回None"></a>函数如何返回None</h3><ul>
+<li>不使用return语句即返回None</li>
+<li>主动return None</li>
+</ul>
+<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><ul>
+<li><p>用在函数无返回值上</p>
+</li>
+<li><p>用在if判断上：在if判断中，None等同于False；一般用于在函数中主动返回None，配合if判断做相关处理</p>
+</li>
+<li><p>用于声明无内容的变量上:定义变量但暂时不需要变量有具体值，可以用None来代替</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">• <span class="comment">#暂不赋予变量具体值</span></span><br><span class="line">• name = <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="函数说明文档"><a href="#函数说明文档" class="headerlink" title="函数说明文档"></a>函数说明文档</h1><h2 id="函数说明文档的作用："><a href="#函数说明文档的作用：" class="headerlink" title="函数说明文档的作用："></a>函数说明文档的作用：</h2><p>对函数进行说明解释，帮助更好理解函数的功能</p>
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">func</span>(<span class="params">x,y</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    函数说明</span></span><br><span class="line"><span class="string">    :param x:参数x的说明</span></span><br><span class="line"><span class="string">    :param x:参数y的说明</span></span><br><span class="line"><span class="string">    :return:返回值的说明</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    函数体</span><br><span class="line">    <span class="keyword">return</span> 返回值</span><br></pre></td></tr></table></figure>
+
+<p>:param用于解释参数（parameter，参数）</p>
+<p>:return用于解释返回值</p>
+<hr>
+<h1 id="函数的嵌套调用"><a href="#函数的嵌套调用" class="headerlink" title="函数的嵌套调用"></a>函数的嵌套调用</h1><p>函数A中执行到调用函数B的语句，会将函数B全部执行完成后，继续执行函数A的剩余内容</p>
+<hr>
+<h1 id="变量的作用域"><a href="#变量的作用域" class="headerlink" title="变量的作用域"></a>变量的作用域</h1><h2 id="变量作用域"><a href="#变量作用域" class="headerlink" title="变量作用域"></a>变量作用域</h2><p>变量作用域指的是变量的作用范围</p>
+<p>变量主要分为两类:<strong>局部变量</strong>和<strong>全局变量</strong></p>
+<p><strong>局部变量</strong>是定义在函数体内部的变量，只在函数体内部生效</p>
+<p><strong>全局变量</strong>是在函数体内、外都能生效的变量</p>
+<h2 id="global关键字"><a href="#global关键字" class="headerlink" title="global关键字"></a>global关键字</h2><p><code>global</code> 用于在函数内部声明某个变量来自全局作用域，从而允许在函数内部修改该全局变量。</p>
+<hr>
+<div class="note info modern"><p><strong>💻 获取完整源码</strong><br>本文涉及的所有基础概念测试与完整可运行示例，均已分类归档至我的专属代码仓库。<br>👉 <strong><a href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/04_Functions">点击前往 GitHub 获取本章完整示例代码</a></strong><br><em>(欢迎 Star ⭐️ 或直接 Clone 到本地运行调试)</em></p>
+</div>]]></content>
+      <categories>
+        <category>Python 技术笔记</category>
+        <category>核心基础篇</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>基础语法</tag>
       </tags>
   </entry>
   <entry>
@@ -386,12 +435,12 @@
 <li>支持嵌套</li>
 </ul>
 <h2 id="列表的下标（索引）"><a href="#列表的下标（索引）" class="headerlink" title="列表的下标（索引）"></a>列表的下标（索引）</h2><p>通过下标索引可取出列表中特定位置的数据</p>
-<h3 id="正向索引"><a href="#正向索引" class="headerlink" title="正向索引"></a>正向索引</h3><p><img src="https://cdn.jsdelivr.net/gh/fanbyteio/blog-images@main/assets/%E6%AD%A3%E5%90%91%E7%B4%A2%E5%BC%95.png"></p>
+<h3 id="正向索引"><a href="#正向索引" class="headerlink" title="正向索引"></a>正向索引</h3><p><img src="https://cdn.jsdelivr.net/gh/NimbusFan/blog-images@main/assets/%E6%AD%A3%E5%90%91%E7%B4%A2%E5%BC%95.png"></p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">my_list = [<span class="string">&quot;fanyunfei&quot;</span>, <span class="string">&quot;dashuaibi&quot;</span>, <span class="string">&quot;youqianduojin&quot;</span>]</span><br><span class="line"><span class="built_in">print</span>(my_list[<span class="number">0</span>])    <span class="comment"># 输出fanyunfei</span></span><br><span class="line"><span class="built_in">print</span>(my_list[<span class="number">1</span>])    <span class="comment"># 输出dashuaibi</span></span><br><span class="line"><span class="built_in">print</span>(my_list[<span class="number">2</span>])    <span class="comment"># 输出youqianduojin</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="反向索引"><a href="#反向索引" class="headerlink" title="反向索引"></a>反向索引</h3><p>从后向前：从-1开始，依次递减（-1，-2，-3……）<br><img src="https://cdn.jsdelivr.net/gh/fanbyteio/blog-images@main/assets/%E5%8F%8D%E5%90%91%E7%B4%A2%E5%BC%95.png" alt="image.png|77"></p>
+<h3 id="反向索引"><a href="#反向索引" class="headerlink" title="反向索引"></a>反向索引</h3><p>从后向前：从-1开始，依次递减（-1，-2，-3……）<br><img src="https://cdn.jsdelivr.net/gh/NimbusFan/blog-images@main/assets/%E5%8F%8D%E5%90%91%E7%B4%A2%E5%BC%95.png" alt="image.png|77"></p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">my_list = [<span class="string">&quot;fanyunfei&quot;</span>, <span class="string">&quot;dashuaibi&quot;</span>, <span class="string">&quot;youqianduojin&quot;</span>]</span><br><span class="line"><span class="built_in">print</span>(my_list[-<span class="number">1</span>])    <span class="comment"># 输出youqianduojin</span></span><br><span class="line"><span class="built_in">print</span>(my_list[-<span class="number">2</span>])    <span class="comment"># 输出dashuaibi</span></span><br><span class="line"><span class="built_in">print</span>(my_list[-<span class="number">3</span>])    <span class="comment"># 输出fanyunfei</span></span><br></pre></td></tr></table></figure>
-<h3 id="嵌套列表的索引"><a href="#嵌套列表的索引" class="headerlink" title="嵌套列表的索引"></a>嵌套列表的索引</h3><p><img src="https://cdn.jsdelivr.net/gh/fanbyteio/blog-images@main/assets/%E5%B5%8C%E5%A5%97%E5%88%97%E8%A1%A8%E7%9A%84%E7%B4%A2%E5%BC%95.png" alt="image.png|98"></p>
+<h3 id="嵌套列表的索引"><a href="#嵌套列表的索引" class="headerlink" title="嵌套列表的索引"></a>嵌套列表的索引</h3><p><img src="https://cdn.jsdelivr.net/gh/NimbusFan/blog-images@main/assets/%E5%B5%8C%E5%A5%97%E5%88%97%E8%A1%A8%E7%9A%84%E7%B4%A2%E5%BC%95.png" alt="image.png|98"></p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">my_list = [[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]]</span><br><span class="line"><span class="built_in">print</span>(my_list[<span class="number">0</span>])    <span class="comment"># 输出[1, 2, 3]</span></span><br><span class="line"><span class="built_in">print</span>(my_list[<span class="number">0</span>][<span class="number">1</span>])    <span class="comment"># 输出2</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="列表的常用操作"><a href="#列表的常用操作" class="headerlink" title="列表的常用操作"></a>列表的常用操作</h2><p>如下所述常用操作（除len外）是列表对象(变量)内置的方法(函数)</p>
@@ -836,7 +885,7 @@
 <p>从头到尾，一位位进行比较，其中一位大，后面就无需比较了。</p>
 <p>2.单个字符之间如何确定大小?</p>
 <p>通过ASCII码表，根据字符对应的码值数字来确定大小</p>
-<div class="note info modern"><p><strong>💻 获取完整源码</strong><br>本文涉及的所有基础概念测试与完整可运行示例，均已分类归档至我的专属代码仓库。<br>👉 <strong><a href="https://github.com/fanbyteio/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/05_Data_Containers">点击前往 GitHub 获取本章完整示例代码</a></strong><br><em>(欢迎 Star ⭐️ 或直接 Clone 到本地运行调试)</em></p>
+<div class="note info modern"><p><strong>💻 获取完整源码</strong><br>本文涉及的所有基础概念测试与完整可运行示例，均已分类归档至我的专属代码仓库。<br>👉 <strong><a href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/05_Data_Containers">点击前往 GitHub 获取本章完整示例代码</a></strong><br><em>(欢迎 Star ⭐️ 或直接 Clone 到本地运行调试)</em></p>
 </div>
 
 ]]></content>
@@ -848,6 +897,60 @@
         <tag>Python</tag>
         <tag>基础语法</tag>
         <tag>数据结构</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python 函数进阶：作用域、参数与匿名函数</title>
+    <url>/2026/03/17/python-learning/Stage1_Core_Basics/python-s1-06-advanced-functions/</url>
+    <content><![CDATA[<h1 id="函数多返回值"><a href="#函数多返回值" class="headerlink" title="函数多返回值"></a>函数多返回值</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test_return</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>, <span class="string">&quot;Hello&quot;</span>, <span class="literal">True</span></span><br><span class="line">x, y, z = test_return()</span><br><span class="line"><span class="built_in">print</span>(x, y, z)</span><br></pre></td></tr></table></figure>
+
+<h1 id="函数多种传参方式"><a href="#函数多种传参方式" class="headerlink" title="函数多种传参方式"></a>函数多种传参方式</h1><h2 id="位置参数"><a href="#位置参数" class="headerlink" title="位置参数"></a>位置参数</h2><p>调用函数时根据函数定义的参数位置来传递参数</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">user_info</span>(<span class="params">name, age, gender</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;姓名是：<span class="subst">&#123;name&#125;</span>,年龄是：<span class="subst">&#123;age&#125;</span>,性别是：<span class="subst">&#123;gender&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 位置参数</span></span><br><span class="line">user_info(<span class="string">&#x27;小明&#x27;</span>, <span class="number">20</span>, <span class="string">&#x27;男&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="关键字参数"><a href="#关键字参数" class="headerlink" title="关键字参数"></a>关键字参数</h2><p>调用函数时通过“键 &#x3D; 值”的形式传递参数，消除参数的顺序需求</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">user_info</span>(<span class="params">name, age, gender</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;您的名字是:<span class="subst">&#123;name&#125;</span>，年龄是:<span class="subst">&#123;age&#125;</span>,性别是:<span class="subst">&#123;gender&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#关键字传参</span></span><br><span class="line">user_info(name=<span class="string">&quot;小明&quot;</span>,age=<span class="number">20</span>,gender=<span class="string">&quot;男&quot;</span>)</span><br><span class="line"><span class="comment"># 可以不按照固定顺序</span></span><br><span class="line">user_info(age=<span class="number">20</span>,gender=<span class="string">&quot;男&quot;</span>,name=<span class="string">&quot;小明&quot;</span>)</span><br><span class="line"><span class="comment">#可以和位置参数混用，位置参数必须在前，且匹配参数顺序</span></span><br><span class="line">user_info(<span class="string">&quot;小明&quot;</span>,age=<span class="number">20</span>,gender=<span class="string">&quot;男&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="不定长参数"><a href="#不定长参数" class="headerlink" title="不定长参数"></a>不定长参数</h2><p>不定长参数也叫可变参数.用于不确定调用的时候会传递多少个参数(不传参也可以)的场景</p>
+<p>不定长参数的类型:</p>
+<h3 id="（1）位置传递"><a href="#（1）位置传递" class="headerlink" title="（1）位置传递"></a>（1）位置传递</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">user_info</span>(<span class="params">*args</span>):</span><br><span class="line">    <span class="built_in">print</span>(args)</span><br><span class="line"></span><br><span class="line"><span class="comment"># (&#x27;TOM&#x27;,)</span></span><br><span class="line">user_info(<span class="string">&#x27;TOM&#x27;</span>)</span><br><span class="line"><span class="comment"># (&#x27;TOM&#x27;, 18)</span></span><br><span class="line">user_info(<span class="string">&#x27;TOM&#x27;</span>, <span class="number">18</span>)</span><br></pre></td></tr></table></figure>
+
+<p>注意:传进的所有参数都会被args变量收集，它会根据传进参数的位置合并为一个元组(tuple)，args是元组类型</p>
+<h3 id="（2）关键字传递"><a href="#（2）关键字传递" class="headerlink" title="（2）关键字传递"></a>（2）关键字传递</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">user_info</span>(<span class="params">**kwargs</span>):</span><br><span class="line">    <span class="built_in">print</span>(kwargs)</span><br><span class="line"></span><br><span class="line"><span class="comment"># &#123;&#x27;name&#x27; : &#x27;TOM&#x27;, &#x27;age&#x27; : 18, &#x27;id&#x27; : 110&#125;</span></span><br><span class="line">user_info(name=<span class="string">&#x27;TOM&#x27;</span>, age=<span class="number">18</span>, <span class="built_in">id</span>=<span class="number">110</span>)</span><br></pre></td></tr></table></figure>
+
+<p>传入的参数是“键&#x3D;值”格式，被kwargs接收后根据“键&#x3D;值”组成字典</p>
+<h2 id="缺省参数"><a href="#缺省参数" class="headerlink" title="缺省参数"></a>缺省参数</h2><p>缺省参数也叫默认参数，调用函数时可不传该默认参数的值,如果传入该参数的值，则修改默认参数值</p>
+<p>注意:<strong>函数定义和调用时，所有位置参数必须出现在默认参数前</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">user_info</span>(<span class="params">name,age,gender = <span class="string">&#x27;男&#x27;</span></span>):</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&#x27;您的名字是<span class="subst">&#123;name&#125;</span>，年龄是<span class="subst">&#123;age&#125;</span>，性别是<span class="subst">&#123;gender&#125;</span>&#x27;</span>)</span><br><span class="line">user_info(<span class="string">&#x27;TOM&#x27;</span>, <span class="number">20</span>)</span><br><span class="line">user_info(<span class="string">&#x27;Rose&#x27;</span>, <span class="number">18</span>, <span class="string">&#x27;女&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h1 id="匿名函数"><a href="#匿名函数" class="headerlink" title="匿名函数"></a>匿名函数</h1><h2 id="函数作为参数传递"><a href="#函数作为参数传递" class="headerlink" title="函数作为参数传递"></a>函数作为参数传递</h2><p>函数本身作为参数，传入另一个函数中进行使用。</p>
+<p>将函数传入的作用在于:传入计算逻辑，而非传入数据。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test_func</span>(<span class="params">func</span>):</span><br><span class="line">    result = func(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;func参数的类型是”：<span class="subst">&#123;func&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;计算结果：<span class="subst">&#123;result&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">compute</span>(<span class="params">x, y</span>):</span><br><span class="line">    <span class="keyword">return</span> x + y</span><br><span class="line"></span><br><span class="line">test_func(compute)</span><br></pre></td></tr></table></figure>
+
+<h2 id="lambda匿名函数"><a href="#lambda匿名函数" class="headerlink" title="lambda匿名函数"></a>lambda匿名函数</h2><p>函数的定义中:</p>
+<ul>
+<li>def关键字，可以定义带有名称的函数,可以基于名称<strong>重复使用</strong></li>
+<li>lambda关键字，可以定义匿名函数(无名称),只可<strong>临时使用一次</strong>。</li>
+</ul>
+<p>匿名函数定义语法:</p>
+<p>1ambda 传入参数:函数体(一行代码)</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test_func</span>(<span class="params">compute</span>):</span><br><span class="line">    result = compute(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">    <span class="built_in">print</span>(result)</span><br><span class="line"></span><br><span class="line">test_func(<span class="keyword">lambda</span> x, y: x + y)        <span class="comment">#结果:3</span></span><br></pre></td></tr></table></figure>
+
+<p>注意事项：</p>
+<ul>
+<li>匿名函数用于临时构建一个函数，只用一次的场景</li>
+<li>匿名函数的定义中，函数体只能写一行代码，如果函数体要写多行代码，不可用lambda匿名函数，应使用def定义带名函数</li>
+</ul>
+<div class="note info modern"><p><strong>💻 获取完整源码</strong><br>本文涉及的所有基础概念测试与完整可运行示例，均已分类归档至我的专属代码仓库。<br>👉 <strong><a href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/06_Advanced_Functions">点击前往 GitHub 获取本章完整示例代码</a></strong><br><em>(欢迎 Star ⭐️ 或直接 Clone 到本地运行调试)</em></p>
+</div>]]></content>
+      <categories>
+        <category>Python 技术笔记</category>
+        <category>核心基础篇</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>进阶语法</tag>
+        <tag>函数</tag>
+        <tag>Lambda</tag>
       </tags>
   </entry>
   <entry>
@@ -951,7 +1054,7 @@
 
 
 <p>注意:如果文件不存在会创建文件，如果文件存在会在最后追加写入文件</p>
-<div class="note info modern"><p><strong>💻 获取完整源码</strong><br>本文涉及的所有基础概念测试与完整可运行示例，均已分类归档至我的专属代码仓库。<br>👉 <strong><a href="https://github.com/fanbyteio/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/07_File_Operations">点击前往 GitHub 获取本章完整示例代码</a></strong><br><em>(欢迎 Star ⭐️ 或直接 Clone 到本地运行调试)</em></p>
+<div class="note info modern"><p><strong>💻 获取完整源码</strong><br>本文涉及的所有基础概念测试与完整可运行示例，均已分类归档至我的专属代码仓库。<br>👉 <strong><a href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/07_File_Operations">点击前往 GitHub 获取本章完整示例代码</a></strong><br><em>(欢迎 Star ⭐️ 或直接 Clone 到本地运行调试)</em></p>
 </div>
 ]]></content>
       <categories>
@@ -962,6 +1065,41 @@
         <tag>Python</tag>
         <tag>基础语法</tag>
         <tag>文件操作</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python 数据处理：JSON 解析与 Pyecharts 可视化</title>
+    <url>/2026/03/26/python-learning/Stage1_Core_Basics/python-s1-09-basic-comprehensive-Case/</url>
+    <content><![CDATA[<h1 id="JSON数据格式"><a href="#JSON数据格式" class="headerlink" title="JSON数据格式"></a>JSON数据格式</h1><h2 id="什么是JSON"><a href="#什么是JSON" class="headerlink" title="什么是JSON"></a>什么是JSON</h2><p>一种在各个编程语言中流通的数据格式，负责不同编程语言中的数据传递和交互。<br>JSON无非就是一个单独的字典或一个内部元素都是字典的列表。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># json数据的格式可以是：</span></span><br><span class="line">	&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;admin&quot;</span>, <span class="string">&quot;age&quot;</span>:<span class="number">18</span>&#125;</span><br><span class="line">	</span><br><span class="line"><span class="comment"># 也可以是：</span></span><br><span class="line">	[(<span class="string">&quot;name&quot;</span>:<span class="string">&quot;admin&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">18</span>&#125;,(<span class="string">&quot;name&quot;</span>:<span class="string">&quot;root&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">16</span>&#125;,(<span class="string">&quot;name&quot;</span>:<span class="string">&quot;张三&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">20</span>]]</span><br></pre></td></tr></table></figure>
+<h2 id="对JSON进行数据转换"><a href="#对JSON进行数据转换" class="headerlink" title="对JSON进行数据转换"></a>对JSON进行数据转换</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 导入json模块</span></span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line"><span class="comment"># 准备符合json格式要求的python数据</span></span><br><span class="line">data=[&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;老王&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">16</span>&#125;, &#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;张三&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">20</span>&#125;]</span><br><span class="line"></span><br><span class="line"><span class="comment"># json.dumps(data)方法把python数据转化为json数据</span></span><br><span class="line">data = json.dumps(data)</span><br><span class="line"><span class="comment"># 显示出中文</span></span><br><span class="line">data = json.dumps(data，ensure_ascii=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># json.loads(data)方法把json数据转化为python数据</span></span><br><span class="line">data =json.loads(data)</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="pyecharts模块介绍"><a href="#pyecharts模块介绍" class="headerlink" title="pyecharts模块介绍"></a>pyecharts模块介绍</h1><ol>
+<li>开发可视化图表使用的技术栈是:<br> Echarts框架的Python版本:PyEcharts包</li>
+<li>如何安装PyEcharts包:<br> pip install pyecharts</li>
+<li>如何查看官方示例<br> 打开官方画廊:<a href="https://gallery.pyecharts.org/#/README">https://gallery.pyecharts.org/#/README</a></li>
+</ol>
+<hr>
+<h1 id="pyecharts快速入门"><a href="#pyecharts快速入门" class="headerlink" title="pyecharts快速入门"></a>pyecharts快速入门</h1><h2 id="构建基础折线图"><a href="#构建基础折线图" class="headerlink" title="构建基础折线图"></a>构建基础折线图</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 导包，导入Line功能构建折线图对象</span></span><br><span class="line"><span class="keyword">from</span> pyecharts.charts <span class="keyword">import</span> Line</span><br><span class="line"></span><br><span class="line"><span class="comment"># 得到折线图对象</span></span><br><span class="line">line = Line()</span><br><span class="line"><span class="comment"># 添加x轴数据</span></span><br><span class="line">line.add_xaxis([<span class="string">&quot;中国&quot;</span>，<span class="string">&quot;美国&quot;</span>,<span class="string">&quot;英国&quot;</span>])</span><br><span class="line"><span class="comment"># 添加y轴数据</span></span><br><span class="line">line.add_yaxis(<span class="string">&quot;GDP&quot;</span>, [<span class="number">30</span>, <span class="number">20</span> ,<span class="number">10</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment">#生成图表</span></span><br><span class="line">line.renderO</span><br></pre></td></tr></table></figure>
+<h2 id="使用全局配置项设置属性"><a href="#使用全局配置项设置属性" class="headerlink" title="使用全局配置项设置属性"></a>使用全局配置项设置属性</h2><p>pyecharts模块中有很多的配置选项，常用到2个类别的选项: </p>
+<ul>
+<li><strong>全局配置选项</strong></li>
+<li><strong>系列配置选项</strong></li>
+</ul>
+<p>全局配置选项可以通过<strong>set_global_opts</strong>方法来进行配置，相应的选项和选项的功能如下:<br><img src="https://cdn.jsdelivr.net/gh/NimbusFan/blog-images@main/assets/pyecharts%E5%85%A8%E5%B1%80%E9%85%8D%E7%BD%AE.png" alt="image.png"></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 通过全局配置项设置属性</span></span><br><span class="line">line.set_global_opts(</span><br><span class="line">	title_opts=TitleOpts(<span class="string">&quot;测试&quot;</span>,pos_left=<span class="string">&quot;center&quot;</span>,pos_bottom=<span class="string">&quot;1%&quot;</span>),</span><br><span class="line">	legend_opts=Legendopts(is_show=<span class="literal">True</span>),</span><br><span class="line">	toolbox_opts=ToolboxOpts(is_show=<span class="literal">True</span>),</span><br><span class="line">	visualmap_opts=VisualMapOpts(is_show=<span class="literal">True</span>),</span><br><span class="line">	tooltip_opts=TooltipOpts(is_show=<span class="literal">True</span>),</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<div class="note info modern"><p><strong>💻 获取完整源码</strong><br>本文涉及的所有基础概念测试与完整可运行示例，均已分类归档至我的专属代码仓库。<br>👉 <strong><a href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/09_Basic_Comprehensive_Case">点击前往 GitHub 获取本章完整示例代码</a></strong><br><em>(欢迎 Star ⭐️ 或直接 Clone 到本地运行调试)</em></p>
+</div>]]></content>
+      <categories>
+        <category>Python 技术笔记</category>
+        <category>核心基础篇</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>JSON</tag>
+        <tag>数据可视化</tag>
+        <tag>PyEcharts</tag>
       </tags>
   </entry>
   <entry>
@@ -1015,7 +1153,7 @@
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> my_module <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">test_A()</span><br><span class="line">test_B()    <span class="comment"># 此时只可以使用test_A，test_B无法使用</span></span><br></pre></td></tr></table></figure>
 
 <hr>
-<h1 id="Python包"><a href="#Python包" class="headerlink" title="Python包"></a>Python包</h1><h2 id="自定义Python包"><a href="#自定义Python包" class="headerlink" title="自定义Python包"></a>自定义Python包</h2><p>包就是一个文件夹，里面可以存放许多Python的模块(代码文件)，通过包，在逻辑上将一批模块归为一类，方便使用。<br><img src="https://cdn.jsdelivr.net/gh/fanbyteio/blog-images@main/assets/Python%E5%8C%85%E7%BB%93%E6%9E%84.png" alt="image.png"></p>
+<h1 id="Python包"><a href="#Python包" class="headerlink" title="Python包"></a>Python包</h1><h2 id="自定义Python包"><a href="#自定义Python包" class="headerlink" title="自定义Python包"></a>自定义Python包</h2><p>包就是一个文件夹，里面可以存放许多Python的模块(代码文件)，通过包，在逻辑上将一批模块归为一类，方便使用。<br><img src="https://cdn.jsdelivr.net/gh/NimbusFan/blog-images@main/assets/Python%E5%8C%85%E7%BB%93%E6%9E%84.png" alt="image.png"></p>
 <h3 id="init-py文件"><a href="#init-py文件" class="headerlink" title="__init__.py文件"></a><code>__init__.py</code>文件</h3><p>创建包会默认自动创建的文件，通过这个文件来表示一个文件夹是Python的包，而非普通的文件夹。</p>
 <h3 id="创建包的步骤"><a href="#创建包的步骤" class="headerlink" title="创建包的步骤"></a>创建包的步骤</h3><ol>
 <li>新建包<code>my_package</code></li>
@@ -1038,7 +1176,7 @@
 <li>可勾选“选项”填入：-i 镜像网址</li>
 <li>安装软件包</li>
 </ol>
-<div class="note info modern"><p><strong>💻 获取完整源码</strong><br>本文涉及的所有基础概念测试与完整可运行示例，均已分类归档至我的专属代码仓库。<br>👉 <strong><a href="https://github.com/fanbyteio/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/08_Exception_Module_Package">点击前往 GitHub 获取本章完整示例代码</a></strong><br><em>(欢迎 Star ⭐️ 或直接 Clone 到本地运行调试)</em></p>
+<div class="note info modern"><p><strong>💻 获取完整源码</strong><br>本文涉及的所有基础概念测试与完整可运行示例，均已分类归档至我的专属代码仓库。<br>👉 <strong><a href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/08_Exception_Module_Package">点击前往 GitHub 获取本章完整示例代码</a></strong><br><em>(欢迎 Star ⭐️ 或直接 Clone 到本地运行调试)</em></p>
 </div>
 
 ]]></content>
@@ -1059,7 +1197,7 @@
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在程序中设计表格，我们称之为:设计类(class)</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>:</span><br><span class="line">	name = <span class="literal">None</span></span><br><span class="line">	</span><br><span class="line"><span class="comment"># 在程序中打印生产表格，我们称之为:创建对象</span></span><br><span class="line"><span class="comment"># 基于类创建对象</span></span><br><span class="line">stu_1 = Student()</span><br><span class="line">stu_2 = Student()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在程序中填写表格，我们称之为:对象属性赋值</span></span><br><span class="line">stu_1.name =<span class="string">&quot;周杰轮&quot;</span>    <span class="comment"># 为学生1对象赋予名称属性值</span></span><br><span class="line">stu_2.name =<span class="string">&quot;林军杰&quot;</span>    <span class="comment"># 为学生2对象赋予名称属性值</span></span><br></pre></td></tr></table></figure>
 <hr>
 <h1 id="成员方法"><a href="#成员方法" class="headerlink" title="成员方法"></a>成员方法</h1><h2 id="类的语法："><a href="#类的语法：" class="headerlink" title="类的语法："></a>类的语法：</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">类名称</span>：    <span class="comment"># class是关键字，表示要定义类</span></span><br><span class="line">	类的属性      <span class="comment"># 类的属性，即定义在类中的变量（成员变量）</span></span><br><span class="line">	</span><br><span class="line">	类的行为      <span class="comment"># 类的行为，即定义在类中的函数（成员方法）</span></span><br></pre></td></tr></table></figure>
-<p>注意：函数是写在类外的，定义在类内部的函数习惯上称为<strong>方法</strong><br><img src="https://cdn.jsdelivr.net/gh/fanbyteio/blog-images@main/assets/%E7%B1%BB%EF%BC%88class%EF%BC%89.png" alt="image.png"></p>
+<p>注意：函数是写在类外的，定义在类内部的函数习惯上称为<strong>方法</strong><br><img src="https://cdn.jsdelivr.net/gh/NimbusFan/blog-images@main/assets/%E7%B1%BB%EF%BC%88class%EF%BC%89.png" alt="image.png"></p>
 <h2 id="成员方法的语法"><a href="#成员方法的语法" class="headerlink" title="成员方法的语法"></a>成员方法的语法</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">类名称</span>:</span><br><span class="line">	成员变量</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">成员方法</span>(<span class="params">self, 参数列表</span>)：</span><br><span class="line">		成员方法体</span><br><span class="line">		</span><br><span class="line">对象 = 类名称()</span><br></pre></td></tr></table></figure>
 <p>self的作用：</p>
 <ul>
@@ -1146,7 +1284,7 @@
 <li>用以获得同一行为，不同状态<br>这种写法，就叫做抽象类(也可以称之为接口)</li>
 </ul>
 <p><strong>抽象类</strong>:含有抽象方法的类称之为抽象类<br><strong>抽象方法</strong>:方法体是空实现的(pass)称之为抽象方法</p>
-<div class="note info modern"><p><strong>💻 获取完整源码</strong><br>本文涉及的所有基础概念测试与完整可运行示例，均已分类归档至我的专属代码仓库。<br>👉 <strong><a href="https://github.com/fanbyteio/Python-Zero-to-Hero/tree/main/Stage2_OOP/01_Object-Oriented">点击前往 GitHub 获取本章完整示例代码</a></strong><br><em>(欢迎 Star ⭐️ 或直接 Clone 到本地运行调试)</em></p>
+<div class="note info modern"><p><strong>💻 获取完整源码</strong><br>本文涉及的所有基础概念测试与完整可运行示例，均已分类归档至我的专属代码仓库。<br>👉 <strong><a href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage2_OOP/01_Object-Oriented">点击前往 GitHub 获取本章完整示例代码</a></strong><br><em>(欢迎 Star ⭐️ 或直接 Clone 到本地运行调试)</em></p>
 </div>]]></content>
       <categories>
         <category>Python 技术笔记</category>
@@ -1157,144 +1295,6 @@
         <tag>基础语法</tag>
         <tag>面向对象</tag>
         <tag>OOP</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python 基础语法：变量、类型与表达式</title>
-    <url>/2026/03/12/python-learning/Stage1_Core_Basics/python-s1-01-basic-syntax/</url>
-    <content><![CDATA[<h1 id="字面量"><a href="#字面量" class="headerlink" title="字面量"></a>字面量</h1><p>常用的值的类型：<br><img src="https://cdn.jsdelivr.net/gh/fanbyteio/blog-images@main/assets/%E5%B8%B8%E7%94%A8%E7%9A%84%E5%80%BC%E7%9A%84%E7%B1%BB%E5%9E%8B.png" alt="image.png"></p>
-<hr>
-<h1 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h1><p>单行注释：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 单行注释</span></span><br></pre></td></tr></table></figure>
-
-<p>多行注释：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    多行注释</span></span><br><span class="line"><span class="string">    使用一对三个双引号引起来</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = <span class="number">10</span>   <span class="comment"># 赋值</span></span><br><span class="line">a = a - <span class="number">10</span>  <span class="comment">#运算</span></span><br></pre></td></tr></table></figure>
-
-<p>print语句可以输出多份数据</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(内容<span class="number">1</span>，内容<span class="number">2</span>，......，内容N)</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 直接查看数据类型</span></span><br><span class="line">string_type = <span class="built_in">type</span>(<span class="string">&quot;fanyunfei&quot;</span>)  </span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看变量的数据类型</span></span><br><span class="line">name = <span class="string">&quot;fanyunfei&quot;</span></span><br><span class="line">name_type = <span class="built_in">type</span>(name)  </span><br></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="数据类型转换"><a href="#数据类型转换" class="headerlink" title="数据类型转换"></a>数据类型转换</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">int</span>()   <span class="comment"># 转整数</span></span><br><span class="line"><span class="built_in">float</span>()  <span class="comment"># 转浮点数</span></span><br><span class="line"><span class="built_in">str</span>()   <span class="comment"># 转字符串</span></span><br></pre></td></tr></table></figure>
-
-<p>注意：只含有数字的字符串才可转为整数&#x2F;浮点数，但浮点数形式的字符串无法直接转整数</p>
-<hr>
-<h1 id="标识符"><a href="#标识符" class="headerlink" title="标识符"></a>标识符</h1><h2 id="标识符命名规则："><a href="#标识符命名规则：" class="headerlink" title="标识符命名规则："></a>标识符命名规则：</h2><p>（1）内容限定：</p>
-<p>​    只允许出现中文、字母、数字、下划线。</p>
-<p>​    不推荐使用中文，不能以数字作为开头</p>
-<p>（2）大小写敏感</p>
-<p>（3）不可使用关键字</p>
-<h2 id="Python所有关键字"><a href="#Python所有关键字" class="headerlink" title="Python所有关键字"></a>Python所有关键字</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> keyword</span><br><span class="line"><span class="built_in">print</span>(keyword.kwlist)</span><br></pre></td></tr></table></figure>
-
-<p>python所有的关键字：</p>
-<p>‘False’, ‘None’, ‘True’, ‘and’, ‘as’, ‘assert’, ‘async’, ‘await’, ‘break’, ‘class’, ‘continue’, ‘def’, ‘del’, ‘elif’, ‘else’, ‘except’, ‘finally’, ‘for’, ‘from’, ‘global’, ‘if’, ‘import’, ‘in’, ‘is’, ‘lambda’, ‘nonlocal’, ‘not’, ‘or’, ‘pass’, ‘raise’, ‘return’, ‘try’, ‘while’, ‘with’, ‘yield’</p>
-<hr>
-<h1 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h1><h2 id="基础运算符"><a href="#基础运算符" class="headerlink" title="基础运算符"></a>基础运算符</h2><table>
-<thead>
-<tr>
-<th align="center">+</th>
-<th align="center">加</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">-</td>
-<td align="center">减</td>
-</tr>
-<tr>
-<td align="center">*</td>
-<td align="center">乘</td>
-</tr>
-<tr>
-<td align="center">&#x2F;</td>
-<td align="center">除</td>
-</tr>
-<tr>
-<td align="center">&#x2F;&#x2F;</td>
-<td align="center">整除</td>
-</tr>
-<tr>
-<td align="center">%</td>
-<td align="center">取余</td>
-</tr>
-<tr>
-<td align="center">**</td>
-<td align="center">指数</td>
-</tr>
-</tbody></table>
-<h2 id="复合赋值运算符"><a href="#复合赋值运算符" class="headerlink" title="复合赋值运算符"></a>复合赋值运算符</h2><table>
-<thead>
-<tr>
-<th align="center">+&#x3D;</th>
-<th align="center">c +&#x3D; a等效于c &#x3D; c + a</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">-&#x3D;</td>
-<td align="center">c -&#x3D; a等效于c &#x3D; c - a</td>
-</tr>
-<tr>
-<td align="center">*&#x3D;</td>
-<td align="center">c *&#x3D; a等效于c &#x3D; c * a</td>
-</tr>
-<tr>
-<td align="center">&#x2F;&#x3D;</td>
-<td align="center">c &#x2F;&#x3D; a等效于c &#x3D; c &#x2F; a</td>
-</tr>
-<tr>
-<td align="center">&#x2F;&#x2F;&#x3D;</td>
-<td align="center">c &#x2F;&#x2F;&#x3D; a等效于c &#x3D; c &#x2F;&#x2F; a</td>
-</tr>
-<tr>
-<td align="center">%&#x3D;</td>
-<td align="center">c %&#x3D; a等效于c &#x3D; c % a</td>
-</tr>
-<tr>
-<td align="center">**&#x3D;</td>
-<td align="center">c **&#x3D; a等效于c &#x3D; c ** a</td>
-</tr>
-</tbody></table>
-<hr>
-<h1 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h1><h2 id="字符串的三种定义方式"><a href="#字符串的三种定义方式" class="headerlink" title="字符串的三种定义方式"></a>字符串的三种定义方式</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">name = <span class="string">&#x27;fanyunfei&#x27;</span>  <span class="comment"># 单引号定义法</span></span><br><span class="line">name = <span class="string">&quot;fanyunfei&quot;</span>  <span class="comment">#双引号定义法</span></span><br><span class="line">name = <span class="string">&quot;&quot;&quot;fanyunfei&quot;&quot;&quot;</span>  <span class="comment">#三引号定义法，如果被变量接受，就作为字符串，如果不被接受就作为注释</span></span><br></pre></td></tr></table></figure>
-
-<p>引号的嵌套：（1）可以使用\进行转义，解除引号作用，变成普通字符串（2）单引号内可以写双引号，双引号内可以写单引号</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Hello\nWorld&quot;</span>)    <span class="comment"># \n,换行符</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Hello\tWorld&quot;</span>)    <span class="comment"># \t,制表符</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Hello&quot;</span>，end = <span class="string">&#x27;&#x27;</span>)  <span class="comment"># print输出后不换行</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="字符串拼接"><a href="#字符串拼接" class="headerlink" title="字符串拼接"></a>字符串拼接</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;fanyunfei&quot;</span> + <span class="string">&quot;英俊潇洒风流倜傥有钱多金智商高&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>注意：此方法无法和非字符串类型进行拼接</p>
-<h2 id="字符串格式化"><a href="#字符串格式化" class="headerlink" title="字符串格式化"></a>字符串格式化</h2><p>通过占位的形式拼接字符串。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">name = <span class="string">&quot;pitejingji&quot;</span></span><br><span class="line">set_up_year = <span class="number">2026</span></span><br><span class="line">stock_price = <span class="number">19.99</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;%s成立于 %d年，今天的股价是%f&quot;</span> %(name,set_up_year,stock_price))</span><br></pre></td></tr></table></figure>
-
-<h2 id="字符串格式化的精度控制"><a href="#字符串格式化的精度控制" class="headerlink" title="字符串格式化的精度控制"></a>字符串格式化的精度控制</h2><p>使用辅助符号”m.n”来控制数据的宽度和精度</p>
-<p>m，控制宽度，要求是数字(很少使用)，如果设置的宽度小于数字自身，不生效</p>
-<p>.n，控制小数点精度，要求是数字，会进行小数的四舍五入</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">num1 = <span class="number">12.3456</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;数字12.34宽度限制7，小数精度3，结果是：%7.3f&quot;</span> %num1)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;数字12.34宽度限制10，小数精度6，结果是：%10.6f&quot;</span> %num1)</span><br></pre></td></tr></table></figure>
-
-<h2 id="快速字符串格式化"><a href="#快速字符串格式化" class="headerlink" title="快速字符串格式化"></a>快速字符串格式化</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;name&#125;</span>成立于<span class="subst">&#123;set_up_year&#125;</span>年，今天的股价是<span class="subst">&#123;stock_price&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>注意：此方法不会做精度控制。</p>
-<h2 id="对表达式进行格式化"><a href="#对表达式进行格式化" class="headerlink" title="对表达式进行格式化"></a>对表达式进行格式化</h2><p>表达式指一个具有明确结果的代码语句。如1+1，type(“fanyunfei”)。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;1 + 1的结果是：%d&quot;</span> %(<span class="number">1</span> + <span class="number">1</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;1 + 1的结果是：<span class="subst">&#123;<span class="number">1</span> +<span class="number">1</span>&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;字符串在python中的类型是：%s&quot;</span> %<span class="built_in">type</span>(<span class="string">&quot;fanyunfei&quot;</span>))</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="数据输入"><a href="#数据输入" class="headerlink" title="数据输入"></a>数据输入</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">input</span>()    <span class="comment">#获取键盘输入的数据</span></span><br><span class="line"><span class="built_in">input</span>(提示信息)    <span class="comment"># 在使用者输入内容之前显示提示信息</span></span><br></pre></td></tr></table></figure>
-
-<p>注意：input得到的数据永远都是字符串类型。</p>
-<div class="note info modern"><p><strong>💻 获取完整源码</strong><br>本文涉及的所有基础概念测试与完整可运行示例，均已分类归档至我的专属代码仓库。<br>👉 <strong><a href="https://github.com/fanbyteio/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/01_Data_Type">点击前往 GitHub 获取本章完整示例代码</a></strong><br><em>(欢迎 Star ⭐️ 或直接 Clone 到本地运行调试)</em></p>
-</div>]]></content>
-      <categories>
-        <category>Python 技术笔记</category>
-        <category>基础语法与数据结构</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>基础语法</tag>
-        <tag>编程入门</tag>
       </tags>
   </entry>
 </search>
