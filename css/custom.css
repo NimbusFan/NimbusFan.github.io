@@ -543,3 +543,38 @@ a:hover {
     box-shadow: 0 16px 34px rgba(31, 41, 55, 0.12) !important;
     transform: translateY(-3px);
 }
+
+
+/* ===================================================== */
+/* About 页面：技术栈徽标 */
+/* ===================================================== */
+
+.tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 10px;
+    align-items: center;
+    margin: 12px 0 28px 0;
+}
+
+.tech-stack span {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 11px;
+    border-radius: 999px;
+    border: 1px solid rgba(59, 52, 48, 0.14);
+    background: rgba(246, 241, 233, 0.82);
+    color: #2f2a26;
+    font-size: 0.86rem;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0.1px;
+    box-shadow: 0 4px 12px rgba(47, 42, 38, 0.04);
+}
+
+.tech-stack span:hover {
+    border-color: rgba(185, 139, 95, 0.42);
+    background: rgba(185, 139, 95, 0.12);
+    transform: translateY(-1px);
+    transition: all 0.2s ease;
+}
