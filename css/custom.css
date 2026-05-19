@@ -549,32 +549,38 @@ a:hover {
 /* About 页面：技术栈徽标 */
 /* ===================================================== */
 
-.tech-stack {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px 10px;
-    align-items: center;
-    margin: 12px 0 28px 0;
+/* ===================================================== */
+/* About 页面：技术栈徽标 */
+/* ===================================================== */
+
+#page .about-tech-stack {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 9px 10px !important;
+    align-items: center !important;
+    margin: 14px 0 30px 0 !important;
 }
 
-.tech-stack span {
-    display: inline-flex;
-    align-items: center;
-    padding: 5px 11px;
-    border-radius: 999px;
-    border: 1px solid rgba(59, 52, 48, 0.14);
-    background: rgba(246, 241, 233, 0.82);
-    color: #2f2a26;
-    font-size: 0.86rem;
-    font-weight: 600;
-    line-height: 1.4;
-    letter-spacing: 0.1px;
-    box-shadow: 0 4px 12px rgba(47, 42, 38, 0.04);
+#page .about-tech-stack span {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 5px 12px !important;
+    border-radius: 999px !important;
+    border: 1px solid rgba(59, 52, 48, 0.16) !important;
+    background: rgba(246, 241, 233, 0.92) !important;
+    color: #2f2a26 !important;
+    font-size: 0.86rem !important;
+    font-weight: 600 !important;
+    line-height: 1.4 !important;
+    letter-spacing: 0.1px !important;
+    box-shadow: 0 4px 12px rgba(47, 42, 38, 0.045) !important;
+    white-space: nowrap !important;
 }
 
-.tech-stack span:hover {
-    border-color: rgba(185, 139, 95, 0.42);
-    background: rgba(185, 139, 95, 0.12);
-    transform: translateY(-1px);
-    transition: all 0.2s ease;
+#page .about-tech-stack span:hover {
+    border-color: rgba(185, 139, 95, 0.42) !important;
+    background: rgba(185, 139, 95, 0.13) !important;
+    transform: translateY(-1px) !important;
+    transition: all 0.2s ease !important;
 }
