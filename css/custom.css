@@ -695,3 +695,137 @@ a:hover {
     transform: translateY(-1px) !important;
     transition: all 0.2s ease !important;
 }
+
+
+/* ===================================================== */
+/* 夜间模式适配：修复浅色卡片上白字不可见问题 */
+/* ===================================================== */
+
+[data-theme="dark"] {
+    --cb-primary: #d8c3a5;
+    --cb-accent: #c9a46b;
+
+    --cb-page-bg: #181614;
+    --cb-page-bg-2: #211e1b;
+
+    --cb-card-bg: #24211e;
+    --cb-card-bg-side: #2b2723;
+
+    --cb-text: #eee6da;
+    --cb-muted: #b7ada2;
+    --cb-border: rgba(216, 195, 165, 0.16);
+    --cb-line: rgba(216, 195, 165, 0.18);
+    --cb-bg-soft: rgba(201, 164, 107, 0.14);
+}
+
+/* 夜间模式整体背景 */
+[data-theme="dark"] html,
+[data-theme="dark"] body,
+[data-theme="dark"] #body-wrap {
+    background:
+        radial-gradient(circle at 8% 20%, rgba(201, 164, 107, 0.08), transparent 26%),
+        linear-gradient(180deg, #211e1b 0%, #181614 100%) !important;
+    color: var(--cb-text) !important;
+}
+
+/* 夜间模式：文章页、页面、侧边栏、卡片 */
+[data-theme="dark"] #post,
+[data-theme="dark"] #page,
+[data-theme="dark"] #archive,
+[data-theme="dark"] #tag,
+[data-theme="dark"] #category,
+[data-theme="dark"] .card-widget,
+[data-theme="dark"] #recent-posts > .recent-post-item {
+    background: var(--cb-card-bg) !important;
+    border-color: var(--cb-border) !important;
+    color: var(--cb-text) !important;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.24) !important;
+}
+
+/* 夜间模式：正文文字 */
+[data-theme="dark"] #article-container,
+[data-theme="dark"] #article-container p,
+[data-theme="dark"] #article-container li,
+[data-theme="dark"] #article-container span,
+[data-theme="dark"] #article-container div {
+    color: var(--cb-text) !important;
+}
+
+/* 夜间模式：标题 */
+[data-theme="dark"] #article-container h1,
+[data-theme="dark"] #article-container h2,
+[data-theme="dark"] #article-container h3,
+[data-theme="dark"] #article-container h4,
+[data-theme="dark"] #article-container h5,
+[data-theme="dark"] #article-container h6 {
+    color: #f4ecdf !important;
+}
+
+/* 夜间模式：弱化文字 */
+[data-theme="dark"] #article-container blockquote,
+[data-theme="dark"] #article-container .post-meta,
+[data-theme="dark"] #article-container .post-copyright,
+[data-theme="dark"] #aside-content {
+    color: var(--cb-muted) !important;
+}
+
+/* 夜间模式：链接 */
+[data-theme="dark"] a {
+    color: #d8c3a5 !important;
+}
+
+[data-theme="dark"] a:hover {
+    color: #c9a46b !important;
+}
+
+/* 夜间模式：代码块 */
+[data-theme="dark"] figure.highlight {
+    background: #1f1c19 !important;
+    border-color: rgba(216, 195, 165, 0.14) !important;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28) !important;
+}
+
+/* 夜间模式：代码块顶部语言栏 */
+[data-theme="dark"] figure.highlight .highlight-tools {
+    background: #2b2723 !important;
+    border-bottom: 1px solid rgba(216, 195, 165, 0.12) !important;
+}
+
+[data-theme="dark"] figure.highlight .code-lang {
+    color: #eee6da !important;
+}
+
+/* 夜间模式：代码主体 */
+[data-theme="dark"] figure.highlight table,
+[data-theme="dark"] figure.highlight pre,
+[data-theme="dark"] figure.highlight .code,
+[data-theme="dark"] figure.highlight .gutter {
+    background: #1f1c19 !important;
+}
+
+/* 夜间模式：代码文字 */
+[data-theme="dark"] figure.highlight pre,
+[data-theme="dark"] figure.highlight code {
+    color: #eee6da !important;
+}
+
+/* 夜间模式：行号 */
+[data-theme="dark"] figure.highlight .gutter,
+[data-theme="dark"] figure.highlight .gutter pre {
+    color: #8f857b !important;
+    border-right-color: rgba(216, 195, 165, 0.10) !important;
+}
+
+/* 夜间模式：行内代码 */
+[data-theme="dark"] #article-container code {
+    color: #f0c987 !important;
+    background: rgba(201, 164, 107, 0.14) !important;
+    border-color: rgba(201, 164, 107, 0.22) !important;
+}
+
+/* 代码块里的 code 不要套行内代码样式 */
+[data-theme="dark"] figure.highlight code {
+    color: inherit !important;
+    background: transparent !important;
+    border: none !important;
+}
