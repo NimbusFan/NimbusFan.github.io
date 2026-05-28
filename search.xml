@@ -1,145 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Python 基础语法：变量、类型与表达式</title>
-    <url>/2026/03/12/python-learning/Stage1_Core_Basics/python-s1-01-basic-syntax/</url>
-    <content><![CDATA[<h1 id="字面量"><a href="#字面量" class="headerlink" title="字面量"></a>字面量</h1><p>常用的值的类型：<br><img src="https://raw.githubusercontent.com/NimbusFan/blog-images/main/assets/%E5%B8%B8%E7%94%A8%E7%9A%84%E5%80%BC%E7%9A%84%E7%B1%BB%E5%9E%8B.png" alt="常用的值的类型.png"></p>
+    <title>Hexo 博客搭建：GitHub Pages 与 Butterfly 主题配置</title>
+    <url>/2026/03/11/daily/Hexo%20%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%EF%BC%9AGitHub%20Pages%20%E4%B8%8E%20Butterfly%20%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<h2 id="前言：为什么要做这个博客？"><a href="#前言：为什么要做这个博客？" class="headerlink" title="前言：为什么要做这个博客？"></a>前言：为什么要做这个博客？</h2><p>平时在学习过程中写过不少 Python 脚本，折腾过 PostgreSQL 数据库，也在 GitHub 上修过别人的 Bug。逐渐意识到，知识如果不系统地沉淀下来，很容易变成过眼云烟。</p>
+<p>为了记录接下来死磕 Java 后端开发的学习历程，决定搭建一个真正属于自己的独立博客。</p>
+<p>这篇文章不仅是教程，更是一篇的“填坑日记”。</p>
 <hr>
-<h1 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h1><p>单行注释：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 单行注释</span></span><br></pre></td></tr></table></figure>
+<h2 id="一、网络超时"><a href="#一、网络超时" class="headerlink" title="一、网络超时"></a>一、网络超时</h2><p>环境配置（Node.js 和 Git）还算顺利，但敲下第一行初始化命令 <code>hexo init myblog</code> 时，就开始报错了：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">fatal: unable to access <span class="string">&#x27;[https://github.com/hexojs/hexo-starter.git/](https://github.com/hexojs/hexo-starter.git/)&#x27;</span>: Connection timed out after 300030 milliseconds</span><br><span class="line">Error: EPERM: operation not permitted, <span class="built_in">mkdir</span> <span class="string">&#x27;D:\&#x27;</span></span><br></pre></td></tr></table></figure>
 
-<p>多行注释：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    多行注释</span></span><br><span class="line"><span class="string">    使用一对三个双引号引起来</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+<p><strong>排坑思路：</strong> 命令行默认是不走代理的，干等 300 秒后必定超时。而后面的 <code>EPERM</code> 报错纯粹是因为网络断开后，Hexo 备用机制乱了阵脚，试图在 D 盘根目录建文件夹被系统权限拦截。</p>
+<p><strong>解决方案：</strong> 果断清理残留的半成品文件夹，直接动用国内镜像源进行极速克隆：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo init myblog [https://ghproxy.net/https://github.com/hexojs/hexo-starter.git](https://ghproxy.net/https://github.com/hexojs/hexo-starter.git)</span><br></pre></td></tr></table></figure>
 
+<p>随后进入文件夹，使用淘宝镜像源安装依赖：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install --registry=[https://registry.npmmirror.com](https://registry.npmmirror.c</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、连接被重置"><a href="#二、连接被重置" class="headerlink" title="二、连接被重置"></a>二、连接被重置</h2><p>在本地跑通 <code>hexo s</code> 看到默认主题后，按照教程配置了 <code>_config.yml</code>，准备将网页推送到 GitHub Pages。结果在执行 <code>hexo d</code> 时，再次报错：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fatal: unable to access &#x27;[https://github.com/](https://github.com/)...&#x27;: Recv failure: Connection was reset</span><br></pre></td></tr></table></figure>
+
+<p><strong>排坑思路：</strong> 国内使用 <code>https://</code> 开头的地址去推送 Git 极度不稳定，经常推到一半连接就被掐断。于是抛弃 HTTPS 部署，改用 <strong>SSH 密钥免密传输</strong>。</p>
+<p><strong>解决方案：</strong></p>
+<ol>
+<li><strong>生成本地密钥：</strong> 运行 <code>ssh-keygen -t rsa -C &quot;我的邮箱&quot;</code>，一路回车。</li>
+<li><strong>配置 GitHub：</strong> 将 <code>~/.ssh/id_rsa.pub</code> 里的公钥全选复制，添加到 GitHub 的 <code>SSH and GPG keys</code> 中。</li>
+<li><strong>测试连接：</strong> 运行 <code>ssh -T git@github.com</code> 确认打通。</li>
+<li><strong>修改 Hexo 总配置：</strong> 将部署地址换成 SSH 格式。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:fanbyteio/fanbyteio.github.io.git</span><br><span class="line">  branch: main</span><br></pre></td></tr></table></figure>
+
+<p>修改完成后，再次 <code>hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</code>，丝滑上线！</p>
 <hr>
-<h1 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = <span class="number">10</span>   <span class="comment"># 赋值</span></span><br><span class="line">a = a - <span class="number">10</span>  <span class="comment">#运算</span></span><br></pre></td></tr></table></figure>
-
-<p>print语句可以输出多份数据</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(内容<span class="number">1</span>，内容<span class="number">2</span>，......，内容N)</span><br></pre></td></tr></table></figure>
-
+<h2 id="三、换装-Butterfly"><a href="#三、换装-Butterfly" class="headerlink" title="三、换装 Butterfly"></a>三、换装 Butterfly</h2><p>为了追求视觉效果，我选择了目前 Hexo 界功能多样的主题——<strong>Butterfly</strong>。但代价是配置复杂度的提升。</p>
+<p><strong>避坑指南：</strong></p>
+<ol>
+<li><strong>国内极速克隆：</strong> 同样使用镜像加速，避免克隆到一半报错。<br><code>git clone https://github.moeyy.xyz/https://github.com/JerryC808/hexo-theme-butterfly themes/butterfly</code></li>
+<li><strong>必装渲染器：</strong> Butterfly 使用了 Pug 和 Stylus，如果不装对应的渲染插件，本地预览会直接满屏乱码。<br><code>npm install hexo-renderer-pug hexo-renderer-stylus --save</code></li>
+</ol>
 <hr>
-<h1 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 直接查看数据类型</span></span><br><span class="line">string_type = <span class="built_in">type</span>(<span class="string">&quot;fanyunfei&quot;</span>)  </span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看变量的数据类型</span></span><br><span class="line">name = <span class="string">&quot;fanyunfei&quot;</span></span><br><span class="line">name_type = <span class="built_in">type</span>(name)  </span><br></pre></td></tr></table></figure>
+<h2 id="四、消失不掉的-“xxxxxx”"><a href="#四、消失不掉的-“xxxxxx”" class="headerlink" title="四、消失不掉的 “xxxxxx”"></a>四、消失不掉的 “xxxxxx”</h2><p>在配置侧边栏社交链接时，遇到了本次搭建过程中最诡异的 Bug：明明已经把 <code>_config.yml</code> 里的 <code>social</code> 链接改成了我自己的 GitHub 账号（fanbyteio），且再三确只有这一处social链接，但网页上的图标点开后，依然顽固地跳转到主题默认的 <code>github.com/xxxxxx</code>。</p>
+<p><strong>排坑思路：</strong><br>我先后尝试了：</p>
+<ul>
+<li>强制清除浏览器缓存（Ctrl + F5）。</li>
+<li>执行 <code>hexo clean</code> 深度清理。</li>
+<li>将主题内部的<code>_config.yml</code>放在根目录下且更名为<code>_config.butterfly.yml</code></li>
+<li>删除外层配置文件，直接修改主题内部的 <code>_config.yml</code>。<br><strong>结果：全部失败！</strong> 那个 <code>xxxxxx</code> 就像幽灵一样，不知藏在哪个角落。</li>
+</ul>
+<p><strong>最终解决办法：全局搜索</strong><br>我意识到，既然网页上出现了这个字符串，它一定以硬编码的形式存在于某个配置文件中。我动用了 Windows 命令行下的全局搜索工具：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">findstr /S /N <span class="string">&quot;xxxxxx&quot;</span> *.yml</span><br></pre></td></tr></table></figure>
 
-<hr>
-<h1 id="数据类型转换"><a href="#数据类型转换" class="headerlink" title="数据类型转换"></a>数据类型转换</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">int</span>()   <span class="comment"># 转整数</span></span><br><span class="line"><span class="built_in">float</span>()  <span class="comment"># 转浮点数</span></span><br><span class="line"><span class="built_in">str</span>()   <span class="comment"># 转字符串</span></span><br></pre></td></tr></table></figure>
-
-<p>注意：只含有数字的字符串才可转为整数&#x2F;浮点数，但浮点数形式的字符串无法直接转整数</p>
-<hr>
-<h1 id="标识符"><a href="#标识符" class="headerlink" title="标识符"></a>标识符</h1><h2 id="标识符命名规则："><a href="#标识符命名规则：" class="headerlink" title="标识符命名规则："></a>标识符命名规则：</h2><p>（1）内容限定：</p>
-<p>​    只允许出现中文、字母、数字、下划线。</p>
-<p>​    不推荐使用中文，不能以数字作为开头</p>
-<p>（2）大小写敏感</p>
-<p>（3）不可使用关键字</p>
-<h2 id="Python所有关键字"><a href="#Python所有关键字" class="headerlink" title="Python所有关键字"></a>Python所有关键字</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> keyword</span><br><span class="line"><span class="built_in">print</span>(keyword.kwlist)</span><br></pre></td></tr></table></figure>
-
-<p>python所有的关键字：</p>
-<p>‘False’, ‘None’, ‘True’, ‘and’, ‘as’, ‘assert’, ‘async’, ‘await’, ‘break’, ‘class’, ‘continue’, ‘def’, ‘del’, ‘elif’, ‘else’, ‘except’, ‘finally’, ‘for’, ‘from’, ‘global’, ‘if’, ‘import’, ‘in’, ‘is’, ‘lambda’, ‘nonlocal’, ‘not’, ‘or’, ‘pass’, ‘raise’, ‘return’, ‘try’, ‘while’, ‘with’, ‘yield’</p>
-<hr>
-<h1 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h1><h2 id="基础运算符"><a href="#基础运算符" class="headerlink" title="基础运算符"></a>基础运算符</h2><table>
-<thead>
-<tr>
-<th align="center">+</th>
-<th align="center">加</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">-</td>
-<td align="center">减</td>
-</tr>
-<tr>
-<td align="center">*</td>
-<td align="center">乘</td>
-</tr>
-<tr>
-<td align="center">&#x2F;</td>
-<td align="center">除</td>
-</tr>
-<tr>
-<td align="center">&#x2F;&#x2F;</td>
-<td align="center">整除</td>
-</tr>
-<tr>
-<td align="center">%</td>
-<td align="center">取余</td>
-</tr>
-<tr>
-<td align="center">**</td>
-<td align="center">指数</td>
-</tr>
-</tbody></table>
-<h2 id="复合赋值运算符"><a href="#复合赋值运算符" class="headerlink" title="复合赋值运算符"></a>复合赋值运算符</h2><table>
-<thead>
-<tr>
-<th align="center">+&#x3D;</th>
-<th align="center">c +&#x3D; a等效于c &#x3D; c + a</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">-&#x3D;</td>
-<td align="center">c -&#x3D; a等效于c &#x3D; c - a</td>
-</tr>
-<tr>
-<td align="center">*&#x3D;</td>
-<td align="center">c *&#x3D; a等效于c &#x3D; c * a</td>
-</tr>
-<tr>
-<td align="center">&#x2F;&#x3D;</td>
-<td align="center">c &#x2F;&#x3D; a等效于c &#x3D; c &#x2F; a</td>
-</tr>
-<tr>
-<td align="center">&#x2F;&#x2F;&#x3D;</td>
-<td align="center">c &#x2F;&#x2F;&#x3D; a等效于c &#x3D; c &#x2F;&#x2F; a</td>
-</tr>
-<tr>
-<td align="center">%&#x3D;</td>
-<td align="center">c %&#x3D; a等效于c &#x3D; c % a</td>
-</tr>
-<tr>
-<td align="center">**&#x3D;</td>
-<td align="center">c **&#x3D; a等效于c &#x3D; c ** a</td>
-</tr>
-</tbody></table>
-<hr>
-<h1 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h1><h2 id="字符串的三种定义方式"><a href="#字符串的三种定义方式" class="headerlink" title="字符串的三种定义方式"></a>字符串的三种定义方式</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">name = <span class="string">&#x27;fanyunfei&#x27;</span>  <span class="comment"># 单引号定义法</span></span><br><span class="line">name = <span class="string">&quot;fanyunfei&quot;</span>  <span class="comment">#双引号定义法</span></span><br><span class="line">name = <span class="string">&quot;&quot;&quot;fanyunfei&quot;&quot;&quot;</span>  <span class="comment">#三引号定义法，如果被变量接受，就作为字符串，如果不被接受就作为注释</span></span><br></pre></td></tr></table></figure>
-
-<p>引号的嵌套：（1）可以使用\进行转义，解除引号作用，变成普通字符串（2）单引号内可以写双引号，双引号内可以写单引号</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Hello\nWorld&quot;</span>)    <span class="comment"># \n,换行符</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Hello\tWorld&quot;</span>)    <span class="comment"># \t,制表符</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Hello&quot;</span>，end = <span class="string">&#x27;&#x27;</span>)  <span class="comment"># print输出后不换行</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="字符串拼接"><a href="#字符串拼接" class="headerlink" title="字符串拼接"></a>字符串拼接</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;fanyunfei&quot;</span> + <span class="string">&quot;英俊潇洒风流倜傥有钱多金智商高&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>注意：此方法无法和非字符串类型进行拼接</p>
-<h2 id="字符串格式化"><a href="#字符串格式化" class="headerlink" title="字符串格式化"></a>字符串格式化</h2><p>通过占位的形式拼接字符串。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">name = <span class="string">&quot;pitejingji&quot;</span></span><br><span class="line">set_up_year = <span class="number">2026</span></span><br><span class="line">stock_price = <span class="number">19.99</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;%s成立于 %d年，今天的股价是%f&quot;</span> %(name,set_up_year,stock_price))</span><br></pre></td></tr></table></figure>
-
-<h2 id="字符串格式化的精度控制"><a href="#字符串格式化的精度控制" class="headerlink" title="字符串格式化的精度控制"></a>字符串格式化的精度控制</h2><p>使用辅助符号”m.n”来控制数据的宽度和精度</p>
-<p>m，控制宽度，要求是数字(很少使用)，如果设置的宽度小于数字自身，不生效</p>
-<p>.n，控制小数点精度，要求是数字，会进行小数的四舍五入</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">num1 = <span class="number">12.3456</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;数字12.34宽度限制7，小数精度3，结果是：%7.3f&quot;</span> %num1)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;数字12.34宽度限制10，小数精度6，结果是：%10.6f&quot;</span> %num1)</span><br></pre></td></tr></table></figure>
-
-<h2 id="快速字符串格式化"><a href="#快速字符串格式化" class="headerlink" title="快速字符串格式化"></a>快速字符串格式化</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;name&#125;</span>成立于<span class="subst">&#123;set_up_year&#125;</span>年，今天的股价是<span class="subst">&#123;stock_price&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>注意：此方法不会做精度控制。</p>
-<h2 id="对表达式进行格式化"><a href="#对表达式进行格式化" class="headerlink" title="对表达式进行格式化"></a>对表达式进行格式化</h2><p>表达式指一个具有明确结果的代码语句。如1+1，type(“fanyunfei”)。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;1 + 1的结果是：%d&quot;</span> %(<span class="number">1</span> + <span class="number">1</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;1 + 1的结果是：<span class="subst">&#123;<span class="number">1</span> +<span class="number">1</span>&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;字符串在python中的类型是：%s&quot;</span> %<span class="built_in">type</span>(<span class="string">&quot;fanyunfei&quot;</span>))</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="数据输入"><a href="#数据输入" class="headerlink" title="数据输入"></a>数据输入</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">input</span>()    <span class="comment">#获取键盘输入的数据</span></span><br><span class="line"><span class="built_in">input</span>(提示信息)    <span class="comment"># 在使用者输入内容之前显示提示信息</span></span><br></pre></td></tr></table></figure>
-
-<p>注意：input得到的数据永远都是字符串类型。</p>
-<div class="note default simple"><p><strong>Repository</strong></p>
-<p>本章示例代码已归档至 GitHub，可用于本地复现、调试与扩展。</p>
-<p><a class="btn-beautify " href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/01_Data_Type" title="fab fa-github"><span>fab fa-github</span></a></p>
-</div>
-
+<p><strong>真相大白：</strong> 搜查结果显示，除了我修改的 <code>social</code> 区块，在 <code>themes\butterfly\_config.yml</code> 的第 285 行还藏着另一个 <code>link</code> 配置。原来 Butterfly 有多处可以配置 GitHub 链接的地方，而我之前只改了其中一个</p>
+<p>这就是典型的“代码改了，但没完全改”。精准打击掉这一行后，跳转终于恢复正常。</p>
 ]]></content>
       <categories>
-        <category>Python 技术笔记</category>
-        <category>基础语法与数据结构</category>
+        <category>个人博客建设</category>
       </categories>
       <tags>
-        <tag>Python</tag>
-        <tag>基础语法</tag>
-        <tag>编程入门</tag>
+        <tag>Hexo</tag>
+        <tag>GitHub-Pages</tag>
+        <tag>Butterfly</tag>
       </tags>
   </entry>
   <entry>
@@ -302,65 +222,145 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo 博客搭建：GitHub Pages 与 Butterfly 主题配置</title>
-    <url>/2026/03/11/daily/Hexo%20%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%EF%BC%9AGitHub%20Pages%20%E4%B8%8E%20Butterfly%20%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<h2 id="前言：为什么要做这个博客？"><a href="#前言：为什么要做这个博客？" class="headerlink" title="前言：为什么要做这个博客？"></a>前言：为什么要做这个博客？</h2><p>平时在学习过程中写过不少 Python 脚本，折腾过 PostgreSQL 数据库，也在 GitHub 上修过别人的 Bug。逐渐意识到，知识如果不系统地沉淀下来，很容易变成过眼云烟。</p>
-<p>为了记录接下来死磕 Java 后端开发的学习历程，决定搭建一个真正属于自己的独立博客。</p>
-<p>这篇文章不仅是教程，更是一篇的“填坑日记”。</p>
+    <title>Python 基础语法：变量、类型与表达式</title>
+    <url>/2026/03/12/python-learning/Stage1_Core_Basics/python-s1-01-basic-syntax/</url>
+    <content><![CDATA[<h1 id="字面量"><a href="#字面量" class="headerlink" title="字面量"></a>字面量</h1><p>常用的值的类型：<br><img src="https://raw.githubusercontent.com/NimbusFan/blog-images/main/assets/%E5%B8%B8%E7%94%A8%E7%9A%84%E5%80%BC%E7%9A%84%E7%B1%BB%E5%9E%8B.png" alt="常用的值的类型.png"></p>
 <hr>
-<h2 id="一、网络超时"><a href="#一、网络超时" class="headerlink" title="一、网络超时"></a>一、网络超时</h2><p>环境配置（Node.js 和 Git）还算顺利，但敲下第一行初始化命令 <code>hexo init myblog</code> 时，就开始报错了：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">fatal: unable to access <span class="string">&#x27;[https://github.com/hexojs/hexo-starter.git/](https://github.com/hexojs/hexo-starter.git/)&#x27;</span>: Connection timed out after 300030 milliseconds</span><br><span class="line">Error: EPERM: operation not permitted, <span class="built_in">mkdir</span> <span class="string">&#x27;D:\&#x27;</span></span><br></pre></td></tr></table></figure>
+<h1 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h1><p>单行注释：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 单行注释</span></span><br></pre></td></tr></table></figure>
 
-<p><strong>排坑思路：</strong> 命令行默认是不走代理的，干等 300 秒后必定超时。而后面的 <code>EPERM</code> 报错纯粹是因为网络断开后，Hexo 备用机制乱了阵脚，试图在 D 盘根目录建文件夹被系统权限拦截。</p>
-<p><strong>解决方案：</strong> 果断清理残留的半成品文件夹，直接动用国内镜像源进行极速克隆：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo init myblog [https://ghproxy.net/https://github.com/hexojs/hexo-starter.git](https://ghproxy.net/https://github.com/hexojs/hexo-starter.git)</span><br></pre></td></tr></table></figure>
+<p>多行注释：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    多行注释</span></span><br><span class="line"><span class="string">    使用一对三个双引号引起来</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
 
-<p>随后进入文件夹，使用淘宝镜像源安装依赖：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install --registry=[https://registry.npmmirror.com](https://registry.npmmirror.c</span><br></pre></td></tr></table></figure>
-
-<h2 id="二、连接被重置"><a href="#二、连接被重置" class="headerlink" title="二、连接被重置"></a>二、连接被重置</h2><p>在本地跑通 <code>hexo s</code> 看到默认主题后，按照教程配置了 <code>_config.yml</code>，准备将网页推送到 GitHub Pages。结果在执行 <code>hexo d</code> 时，再次报错：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fatal: unable to access &#x27;[https://github.com/](https://github.com/)...&#x27;: Recv failure: Connection was reset</span><br></pre></td></tr></table></figure>
-
-<p><strong>排坑思路：</strong> 国内使用 <code>https://</code> 开头的地址去推送 Git 极度不稳定，经常推到一半连接就被掐断。于是抛弃 HTTPS 部署，改用 <strong>SSH 密钥免密传输</strong>。</p>
-<p><strong>解决方案：</strong></p>
-<ol>
-<li><strong>生成本地密钥：</strong> 运行 <code>ssh-keygen -t rsa -C &quot;我的邮箱&quot;</code>，一路回车。</li>
-<li><strong>配置 GitHub：</strong> 将 <code>~/.ssh/id_rsa.pub</code> 里的公钥全选复制，添加到 GitHub 的 <code>SSH and GPG keys</code> 中。</li>
-<li><strong>测试连接：</strong> 运行 <code>ssh -T git@github.com</code> 确认打通。</li>
-<li><strong>修改 Hexo 总配置：</strong> 将部署地址换成 SSH 格式。</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:fanbyteio/fanbyteio.github.io.git</span><br><span class="line">  branch: main</span><br></pre></td></tr></table></figure>
-
-<p>修改完成后，再次 <code>hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</code>，丝滑上线！</p>
 <hr>
-<h2 id="三、换装-Butterfly"><a href="#三、换装-Butterfly" class="headerlink" title="三、换装 Butterfly"></a>三、换装 Butterfly</h2><p>为了追求视觉效果，我选择了目前 Hexo 界功能多样的主题——<strong>Butterfly</strong>。但代价是配置复杂度的提升。</p>
-<p><strong>避坑指南：</strong></p>
-<ol>
-<li><strong>国内极速克隆：</strong> 同样使用镜像加速，避免克隆到一半报错。<br><code>git clone https://github.moeyy.xyz/https://github.com/JerryC808/hexo-theme-butterfly themes/butterfly</code></li>
-<li><strong>必装渲染器：</strong> Butterfly 使用了 Pug 和 Stylus，如果不装对应的渲染插件，本地预览会直接满屏乱码。<br><code>npm install hexo-renderer-pug hexo-renderer-stylus --save</code></li>
-</ol>
-<hr>
-<h2 id="四、消失不掉的-“xxxxxx”"><a href="#四、消失不掉的-“xxxxxx”" class="headerlink" title="四、消失不掉的 “xxxxxx”"></a>四、消失不掉的 “xxxxxx”</h2><p>在配置侧边栏社交链接时，遇到了本次搭建过程中最诡异的 Bug：明明已经把 <code>_config.yml</code> 里的 <code>social</code> 链接改成了我自己的 GitHub 账号（fanbyteio），且再三确只有这一处social链接，但网页上的图标点开后，依然顽固地跳转到主题默认的 <code>github.com/xxxxxx</code>。</p>
-<p><strong>排坑思路：</strong><br>我先后尝试了：</p>
-<ul>
-<li>强制清除浏览器缓存（Ctrl + F5）。</li>
-<li>执行 <code>hexo clean</code> 深度清理。</li>
-<li>将主题内部的<code>_config.yml</code>放在根目录下且更名为<code>_config.butterfly.yml</code></li>
-<li>删除外层配置文件，直接修改主题内部的 <code>_config.yml</code>。<br><strong>结果：全部失败！</strong> 那个 <code>xxxxxx</code> 就像幽灵一样，不知藏在哪个角落。</li>
-</ul>
-<p><strong>最终解决办法：全局搜索</strong><br>我意识到，既然网页上出现了这个字符串，它一定以硬编码的形式存在于某个配置文件中。我动用了 Windows 命令行下的全局搜索工具：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">findstr /S /N <span class="string">&quot;xxxxxx&quot;</span> *.yml</span><br></pre></td></tr></table></figure>
+<h1 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = <span class="number">10</span>   <span class="comment"># 赋值</span></span><br><span class="line">a = a - <span class="number">10</span>  <span class="comment">#运算</span></span><br></pre></td></tr></table></figure>
 
-<p><strong>真相大白：</strong> 搜查结果显示，除了我修改的 <code>social</code> 区块，在 <code>themes\butterfly\_config.yml</code> 的第 285 行还藏着另一个 <code>link</code> 配置。原来 Butterfly 有多处可以配置 GitHub 链接的地方，而我之前只改了其中一个</p>
-<p>这就是典型的“代码改了，但没完全改”。精准打击掉这一行后，跳转终于恢复正常。</p>
+<p>print语句可以输出多份数据</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(内容<span class="number">1</span>，内容<span class="number">2</span>，......，内容N)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 直接查看数据类型</span></span><br><span class="line">string_type = <span class="built_in">type</span>(<span class="string">&quot;fanyunfei&quot;</span>)  </span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看变量的数据类型</span></span><br><span class="line">name = <span class="string">&quot;fanyunfei&quot;</span></span><br><span class="line">name_type = <span class="built_in">type</span>(name)  </span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="数据类型转换"><a href="#数据类型转换" class="headerlink" title="数据类型转换"></a>数据类型转换</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">int</span>()   <span class="comment"># 转整数</span></span><br><span class="line"><span class="built_in">float</span>()  <span class="comment"># 转浮点数</span></span><br><span class="line"><span class="built_in">str</span>()   <span class="comment"># 转字符串</span></span><br></pre></td></tr></table></figure>
+
+<p>注意：只含有数字的字符串才可转为整数&#x2F;浮点数，但浮点数形式的字符串无法直接转整数</p>
+<hr>
+<h1 id="标识符"><a href="#标识符" class="headerlink" title="标识符"></a>标识符</h1><h2 id="标识符命名规则："><a href="#标识符命名规则：" class="headerlink" title="标识符命名规则："></a>标识符命名规则：</h2><p>（1）内容限定：</p>
+<p>​    只允许出现中文、字母、数字、下划线。</p>
+<p>​    不推荐使用中文，不能以数字作为开头</p>
+<p>（2）大小写敏感</p>
+<p>（3）不可使用关键字</p>
+<h2 id="Python所有关键字"><a href="#Python所有关键字" class="headerlink" title="Python所有关键字"></a>Python所有关键字</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> keyword</span><br><span class="line"><span class="built_in">print</span>(keyword.kwlist)</span><br></pre></td></tr></table></figure>
+
+<p>python所有的关键字：</p>
+<p>‘False’, ‘None’, ‘True’, ‘and’, ‘as’, ‘assert’, ‘async’, ‘await’, ‘break’, ‘class’, ‘continue’, ‘def’, ‘del’, ‘elif’, ‘else’, ‘except’, ‘finally’, ‘for’, ‘from’, ‘global’, ‘if’, ‘import’, ‘in’, ‘is’, ‘lambda’, ‘nonlocal’, ‘not’, ‘or’, ‘pass’, ‘raise’, ‘return’, ‘try’, ‘while’, ‘with’, ‘yield’</p>
+<hr>
+<h1 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h1><h2 id="基础运算符"><a href="#基础运算符" class="headerlink" title="基础运算符"></a>基础运算符</h2><table>
+<thead>
+<tr>
+<th align="center">+</th>
+<th align="center">加</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">-</td>
+<td align="center">减</td>
+</tr>
+<tr>
+<td align="center">*</td>
+<td align="center">乘</td>
+</tr>
+<tr>
+<td align="center">&#x2F;</td>
+<td align="center">除</td>
+</tr>
+<tr>
+<td align="center">&#x2F;&#x2F;</td>
+<td align="center">整除</td>
+</tr>
+<tr>
+<td align="center">%</td>
+<td align="center">取余</td>
+</tr>
+<tr>
+<td align="center">**</td>
+<td align="center">指数</td>
+</tr>
+</tbody></table>
+<h2 id="复合赋值运算符"><a href="#复合赋值运算符" class="headerlink" title="复合赋值运算符"></a>复合赋值运算符</h2><table>
+<thead>
+<tr>
+<th align="center">+&#x3D;</th>
+<th align="center">c +&#x3D; a等效于c &#x3D; c + a</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">-&#x3D;</td>
+<td align="center">c -&#x3D; a等效于c &#x3D; c - a</td>
+</tr>
+<tr>
+<td align="center">*&#x3D;</td>
+<td align="center">c *&#x3D; a等效于c &#x3D; c * a</td>
+</tr>
+<tr>
+<td align="center">&#x2F;&#x3D;</td>
+<td align="center">c &#x2F;&#x3D; a等效于c &#x3D; c &#x2F; a</td>
+</tr>
+<tr>
+<td align="center">&#x2F;&#x2F;&#x3D;</td>
+<td align="center">c &#x2F;&#x2F;&#x3D; a等效于c &#x3D; c &#x2F;&#x2F; a</td>
+</tr>
+<tr>
+<td align="center">%&#x3D;</td>
+<td align="center">c %&#x3D; a等效于c &#x3D; c % a</td>
+</tr>
+<tr>
+<td align="center">**&#x3D;</td>
+<td align="center">c **&#x3D; a等效于c &#x3D; c ** a</td>
+</tr>
+</tbody></table>
+<hr>
+<h1 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h1><h2 id="字符串的三种定义方式"><a href="#字符串的三种定义方式" class="headerlink" title="字符串的三种定义方式"></a>字符串的三种定义方式</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">name = <span class="string">&#x27;fanyunfei&#x27;</span>  <span class="comment"># 单引号定义法</span></span><br><span class="line">name = <span class="string">&quot;fanyunfei&quot;</span>  <span class="comment">#双引号定义法</span></span><br><span class="line">name = <span class="string">&quot;&quot;&quot;fanyunfei&quot;&quot;&quot;</span>  <span class="comment">#三引号定义法，如果被变量接受，就作为字符串，如果不被接受就作为注释</span></span><br></pre></td></tr></table></figure>
+
+<p>引号的嵌套：（1）可以使用\进行转义，解除引号作用，变成普通字符串（2）单引号内可以写双引号，双引号内可以写单引号</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Hello\nWorld&quot;</span>)    <span class="comment"># \n,换行符</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Hello\tWorld&quot;</span>)    <span class="comment"># \t,制表符</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Hello&quot;</span>，end = <span class="string">&#x27;&#x27;</span>)  <span class="comment"># print输出后不换行</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="字符串拼接"><a href="#字符串拼接" class="headerlink" title="字符串拼接"></a>字符串拼接</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;fanyunfei&quot;</span> + <span class="string">&quot;英俊潇洒风流倜傥有钱多金智商高&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>注意：此方法无法和非字符串类型进行拼接</p>
+<h2 id="字符串格式化"><a href="#字符串格式化" class="headerlink" title="字符串格式化"></a>字符串格式化</h2><p>通过占位的形式拼接字符串。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">name = <span class="string">&quot;pitejingji&quot;</span></span><br><span class="line">set_up_year = <span class="number">2026</span></span><br><span class="line">stock_price = <span class="number">19.99</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;%s成立于 %d年，今天的股价是%f&quot;</span> %(name,set_up_year,stock_price))</span><br></pre></td></tr></table></figure>
+
+<h2 id="字符串格式化的精度控制"><a href="#字符串格式化的精度控制" class="headerlink" title="字符串格式化的精度控制"></a>字符串格式化的精度控制</h2><p>使用辅助符号”m.n”来控制数据的宽度和精度</p>
+<p>m，控制宽度，要求是数字(很少使用)，如果设置的宽度小于数字自身，不生效</p>
+<p>.n，控制小数点精度，要求是数字，会进行小数的四舍五入</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">num1 = <span class="number">12.3456</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;数字12.34宽度限制7，小数精度3，结果是：%7.3f&quot;</span> %num1)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;数字12.34宽度限制10，小数精度6，结果是：%10.6f&quot;</span> %num1)</span><br></pre></td></tr></table></figure>
+
+<h2 id="快速字符串格式化"><a href="#快速字符串格式化" class="headerlink" title="快速字符串格式化"></a>快速字符串格式化</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;name&#125;</span>成立于<span class="subst">&#123;set_up_year&#125;</span>年，今天的股价是<span class="subst">&#123;stock_price&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>注意：此方法不会做精度控制。</p>
+<h2 id="对表达式进行格式化"><a href="#对表达式进行格式化" class="headerlink" title="对表达式进行格式化"></a>对表达式进行格式化</h2><p>表达式指一个具有明确结果的代码语句。如1+1，type(“fanyunfei”)。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;1 + 1的结果是：%d&quot;</span> %(<span class="number">1</span> + <span class="number">1</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;1 + 1的结果是：<span class="subst">&#123;<span class="number">1</span> +<span class="number">1</span>&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;字符串在python中的类型是：%s&quot;</span> %<span class="built_in">type</span>(<span class="string">&quot;fanyunfei&quot;</span>))</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="数据输入"><a href="#数据输入" class="headerlink" title="数据输入"></a>数据输入</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">input</span>()    <span class="comment">#获取键盘输入的数据</span></span><br><span class="line"><span class="built_in">input</span>(提示信息)    <span class="comment"># 在使用者输入内容之前显示提示信息</span></span><br></pre></td></tr></table></figure>
+
+<p>注意：input得到的数据永远都是字符串类型。</p>
+<div class="note default simple"><p><strong>Repository</strong></p>
+<p>本章示例代码已归档至 GitHub，可用于本地复现、调试与扩展。</p>
+<p><a class="btn-beautify " href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/01_Data_Type" title="fab fa-github"><span>fab fa-github</span></a></p>
+</div>
+
 ]]></content>
       <categories>
-        <category>个人博客建设</category>
+        <category>Python 技术笔记</category>
+        <category>基础语法与数据结构</category>
       </categories>
       <tags>
-        <tag>Hexo</tag>
-        <tag>GitHub-Pages</tag>
-        <tag>Butterfly</tag>
+        <tag>Python</tag>
+        <tag>基础语法</tag>
+        <tag>编程入门</tag>
       </tags>
   </entry>
   <entry>
@@ -1083,6 +1083,132 @@
       </tags>
   </entry>
   <entry>
+    <title>Python 数据处理：JSON 解析与 Pyecharts 可视化</title>
+    <url>/2026/03/26/python-learning/Stage1_Core_Basics/python-s1-09-basic-comprehensive-Case/</url>
+    <content><![CDATA[<h1 id="JSON数据格式"><a href="#JSON数据格式" class="headerlink" title="JSON数据格式"></a>JSON数据格式</h1><h2 id="什么是JSON"><a href="#什么是JSON" class="headerlink" title="什么是JSON"></a>什么是JSON</h2><p>一种在各个编程语言中流通的数据格式，负责不同编程语言中的数据传递和交互。<br>JSON无非就是一个单独的字典或一个内部元素都是字典的列表。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># json数据的格式可以是：</span></span><br><span class="line">	&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;admin&quot;</span>, <span class="string">&quot;age&quot;</span>:<span class="number">18</span>&#125;</span><br><span class="line">	</span><br><span class="line"><span class="comment"># 也可以是：</span></span><br><span class="line">	[(<span class="string">&quot;name&quot;</span>:<span class="string">&quot;admin&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">18</span>&#125;,(<span class="string">&quot;name&quot;</span>:<span class="string">&quot;root&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">16</span>&#125;,(<span class="string">&quot;name&quot;</span>:<span class="string">&quot;张三&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">20</span>]]</span><br></pre></td></tr></table></figure>
+<h2 id="对JSON进行数据转换"><a href="#对JSON进行数据转换" class="headerlink" title="对JSON进行数据转换"></a>对JSON进行数据转换</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 导入json模块</span></span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line"><span class="comment"># 准备符合json格式要求的python数据</span></span><br><span class="line">data=[&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;老王&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">16</span>&#125;, &#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;张三&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">20</span>&#125;]</span><br><span class="line"></span><br><span class="line"><span class="comment"># json.dumps(data)方法把python数据转化为json数据</span></span><br><span class="line">data = json.dumps(data)</span><br><span class="line"><span class="comment"># 显示出中文</span></span><br><span class="line">data = json.dumps(data，ensure_ascii=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># json.loads(data)方法把json数据转化为python数据</span></span><br><span class="line">data =json.loads(data)</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="pyecharts模块介绍"><a href="#pyecharts模块介绍" class="headerlink" title="pyecharts模块介绍"></a>pyecharts模块介绍</h1><ol>
+<li>开发可视化图表使用的技术栈是:<br> Echarts框架的Python版本:PyEcharts包</li>
+<li>如何安装PyEcharts包:<br> pip install pyecharts</li>
+<li>如何查看官方示例<br> 打开官方画廊:<a href="https://gallery.pyecharts.org/#/README">https://gallery.pyecharts.org/#/README</a></li>
+</ol>
+<hr>
+<h1 id="pyecharts快速入门"><a href="#pyecharts快速入门" class="headerlink" title="pyecharts快速入门"></a>pyecharts快速入门</h1><h2 id="构建基础折线图"><a href="#构建基础折线图" class="headerlink" title="构建基础折线图"></a>构建基础折线图</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 导包，导入Line功能构建折线图对象</span></span><br><span class="line"><span class="keyword">from</span> pyecharts.charts <span class="keyword">import</span> Line</span><br><span class="line"></span><br><span class="line"><span class="comment"># 得到折线图对象</span></span><br><span class="line">line = Line()</span><br><span class="line"><span class="comment"># 添加x轴数据</span></span><br><span class="line">line.add_xaxis([<span class="string">&quot;中国&quot;</span>，<span class="string">&quot;美国&quot;</span>,<span class="string">&quot;英国&quot;</span>])</span><br><span class="line"><span class="comment"># 添加y轴数据</span></span><br><span class="line">line.add_yaxis(<span class="string">&quot;GDP&quot;</span>, [<span class="number">30</span>, <span class="number">20</span> ,<span class="number">10</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment">#生成图表</span></span><br><span class="line">line.renderO</span><br></pre></td></tr></table></figure>
+<h2 id="使用全局配置项设置属性"><a href="#使用全局配置项设置属性" class="headerlink" title="使用全局配置项设置属性"></a>使用全局配置项设置属性</h2><p>pyecharts模块中有很多的配置选项，常用到2个类别的选项: </p>
+<ul>
+<li><strong>全局配置选项</strong></li>
+<li><strong>系列配置选项</strong></li>
+</ul>
+<p>全局配置选项可以通过<strong>set_global_opts</strong>方法来进行配置，相应的选项和选项的功能如下:<br><img src="https://raw.githubusercontent.com/NimbusFan/blog-images/main/assets/pyecharts%E5%85%A8%E5%B1%80%E9%85%8D%E7%BD%AE.png" alt="pyecharts全局配置.png"></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 通过全局配置项设置属性</span></span><br><span class="line">line.set_global_opts(</span><br><span class="line">	title_opts=TitleOpts(<span class="string">&quot;测试&quot;</span>,pos_left=<span class="string">&quot;center&quot;</span>,pos_bottom=<span class="string">&quot;1%&quot;</span>),</span><br><span class="line">	legend_opts=Legendopts(is_show=<span class="literal">True</span>),</span><br><span class="line">	toolbox_opts=ToolboxOpts(is_show=<span class="literal">True</span>),</span><br><span class="line">	visualmap_opts=VisualMapOpts(is_show=<span class="literal">True</span>),</span><br><span class="line">	tooltip_opts=TooltipOpts(is_show=<span class="literal">True</span>),</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<div class="note default simple"><p><strong>Repository</strong></p>
+<p>本章示例代码已归档至 GitHub，可用于本地复现、调试与扩展。</p>
+<p><a class="btn-beautify " href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/09_Basic_Comprehensive_Case" title="查看本章源码"><i class="fab fa-github"></i><span>查看本章源码</span></a></p>
+</div>]]></content>
+      <categories>
+        <category>Python 技术笔记</category>
+        <category>基础语法与数据结构</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>JSON</tag>
+        <tag>数据可视化</tag>
+        <tag>PyEcharts</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python 异常处理与模块化开发</title>
+    <url>/2026/03/24/python-learning/Stage1_Core_Basics/python-s1-08-exceptions-modules-packages/</url>
+    <content><![CDATA[<h1 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h1><p>1.什么是异常:<br>程序运行的过程中出现了错误<br>2.bug是什么意思:<br>就是指异常的意思，历史上因为小虫子(bug)导致计算机失灵的案例，所以延续至今，bug就代表软件出现错误。</p>
+<hr>
+<h1 id="异常的捕获"><a href="#异常的捕获" class="headerlink" title="异常的捕获"></a>异常的捕获</h1><h2 id="捕获常规异常："><a href="#捕获常规异常：" class="headerlink" title="捕获常规异常："></a>捕获常规异常：</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">	可能发生错误的代码</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">	如果出现异常执行的代码</span><br></pre></td></tr></table></figure>
+<h2 id="捕获指定异常："><a href="#捕获指定异常：" class="headerlink" title="捕获指定异常："></a>捕获指定异常：</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">	<span class="built_in">print</span>(name)</span><br><span class="line"><span class="keyword">except</span> NameError <span class="keyword">as</span> e:</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">&#x27;变量名称未定义错误&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="捕获多个异常："><a href="#捕获多个异常：" class="headerlink" title="捕获多个异常："></a>捕获多个异常：</h2><p>当捕获多个异常时，把要捕获的异常类型的名字放在except 后，并使用元组的方式进行书写。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">	<span class="built_in">print</span>(<span class="number">1</span>/<span class="number">0</span>)</span><br><span class="line"><span class="keyword">except</span> (NameError, ZeroDivisionError):</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">&#x27;ZeroDivision错误...&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="异常else："><a href="#异常else：" class="headerlink" title="异常else："></a>异常else：</h2><p>else表示的是如果没有异常要执行的代码。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">	<span class="built_in">print</span>(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">	<span class="built_in">print</span>(e)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">&#x27;我是else，是没有异常的时候执行的代码)</span></span><br></pre></td></tr></table></figure>
+<h2 id="异常的finally："><a href="#异常的finally：" class="headerlink" title="异常的finally："></a>异常的finally：</h2><p>finally表示的是无论是否异常都要执行的代码，例如关闭文件。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">	f= <span class="built_in">open</span>(<span class="string">&quot;test.txt&#x27;,&#x27;r&#x27;)</span></span><br><span class="line"><span class="string">except Exception as e:</span></span><br><span class="line"><span class="string">	f= open(&#x27;test.txt&#x27;,&#x27;w&#x27;)</span></span><br><span class="line"><span class="string">else:</span></span><br><span class="line"><span class="string">	print(&#x27;没有异常，真开心&quot;</span>)</span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">	f.close()</span><br></pre></td></tr></table></figure>
+<p>其中，else和finally可写可不写</p>
+<hr>
+<h1 id="异常的传递性"><a href="#异常的传递性" class="headerlink" title="异常的传递性"></a>异常的传递性</h1><p>当函数func01中发生异常，并且没有捕获处理这个异常的时候，异常会传递到函数func02，当func02也没有捕获处理这个异常的时候，main函数会捕获这个异常，这就是异常的传递性.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">func01</span>():</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">&quot;这是func01开始)</span></span><br><span class="line"><span class="string">	num=1/0</span></span><br><span class="line"><span class="string">	print(&quot;</span>这是funcO1结束<span class="string">&quot;)</span></span><br><span class="line"><span class="string">	</span></span><br><span class="line"><span class="string">def func02():</span></span><br><span class="line"><span class="string">	print(&quot;</span>这是funcO2开始<span class="string">&quot;)</span></span><br><span class="line"><span class="string">	func01()</span></span><br><span class="line"><span class="string">	print(&quot;</span>这是func02结束<span class="string">&quot;)</span></span><br><span class="line"><span class="string">	</span></span><br><span class="line"><span class="string">def main():</span></span><br><span class="line"><span class="string">	try:</span></span><br><span class="line"><span class="string">		func02()</span></span><br><span class="line"><span class="string">	except Exception as e:</span></span><br><span class="line"><span class="string">		print(e)</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="Python模块"><a href="#Python模块" class="headerlink" title="Python模块"></a>Python模块</h1><h2 id="模块的导入"><a href="#模块的导入" class="headerlink" title="模块的导入"></a>模块的导入</h2><p>Python 模块(Module)，是一个 Python 文件，以.py 结尾，模块能定义函数，类和变量，模块里也能包含可执行的代码</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">[<span class="keyword">from</span> 模块名] <span class="keyword">import</span> [模块 | 类 | 变量 | 函数 | *] [<span class="keyword">as</span> 别名]</span><br></pre></td></tr></table></figure>
+<p>常用的组合形式如:</p>
+<ul>
+<li>import 模块名</li>
+<li>from 模块名 import 类、变量、方法等</li>
+<li>from 模块名 import *</li>
+<li>import 模块名 as 别名</li>
+<li>from 模块名 import 功能名 as 别名</li>
+</ul>
+<p>注意：</p>
+<ul>
+<li>from可以省略，直接import即可</li>
+<li>as别名可以省略</li>
+<li>通过”.”来确定层级关系</li>
+<li>模块的导入一般写在代码文件的开头位置</li>
+</ul>
+<h2 id="自定义模块"><a href="#自定义模块" class="headerlink" title="自定义模块"></a>自定义模块</h2><h2 id="制作自定义模块"><a href="#制作自定义模块" class="headerlink" title="制作自定义模块"></a>制作自定义模块</h2><p>每个Python文件都可以作为一个模块，模块的名字就是文件的名字。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># my_module.py文件</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test</span>(<span class="params">a, b</span>):</span><br><span class="line">	<span class="built_in">print</span>(a + b)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># test_my_module.py文件</span></span><br><span class="line"><span class="keyword">from</span> my_modle <span class="keyword">import</span> test</span><br><span class="line">	test(<span class="number">10</span>, <span class="number">20</span>)</span><br><span class="line">	</span><br><span class="line"><span class="keyword">import</span> my_module</span><br><span class="line">	my_module.test(<span class="number">10</span>, <span class="number">20</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="命名空间污染"><a href="#命名空间污染" class="headerlink" title="命名空间污染"></a>命名空间污染</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#模块1代码</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">my_test</span>(<span class="params">a,b</span>):</span><br><span class="line">	<span class="built_in">print</span>(a + b)</span><br><span class="line">	</span><br><span class="line"><span class="comment">#模块2代码</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">my_test</span>(<span class="params">a, b</span>):</span><br><span class="line">	<span class="built_in">print</span>(a - b)</span><br><span class="line"></span><br><span class="line"><span class="comment">#导 入模块和调用功能代码</span></span><br><span class="line"><span class="keyword">from</span> my_module1 <span class="keyword">import</span> my_test</span><br><span class="line"><span class="keyword">from</span> my_module2 <span class="keyword">import</span> my_test</span><br><span class="line"></span><br><span class="line"><span class="comment">#my_test函数是模块2中的函数</span></span><br><span class="line">my_test(<span class="number">1</span>, <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p>注意:当导入多个模块的时候，且模块内有同名功能，当调用这个同名功能的时候，调用到的是后导入模块的功能</p>
+<h2 id="main-变量"><a href="#main-变量" class="headerlink" title="__main__变量"></a><code>__main__</code>变量</h2><p>实际开发中，为了为了让模块能够在项目中达到想要的效果，通常会在py文件中添加一些测试信息，例如，在m_module1.py文件中添加测试代码</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test</span>(<span class="params">a, b</span>):</span><br><span class="line">	<span class="built_in">print</span>(a + b)</span><br><span class="line">	</span><br><span class="line">test(<span class="number">1</span>,<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p>问题:<br>此时，无论是当前文件，还是其他已经导入了该模块的文件，在运行的时候都会自动执行test函数的调用<br>解决方案:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test</span>(<span class="params">a, b</span>):</span><br><span class="line"><span class="built_in">print</span>(a + b)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 只在当前文件中调用该函数，其他导入的文件内不符合该条件，则不执行test函数调用</span></span><br><span class="line"><span class="keyword">if</span> __main__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">	test(<span class="number">1</span>, <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="all-变量"><a href="#all-变量" class="headerlink" title="__all__变量"></a><code>__all__</code>变量</h2><p>如果一个模块文件中有<code>__all__</code>变量，当使用from xxx import *导入时，只能导入这个列表中的元素</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># my_module.py文件</span></span><br><span class="line">__all__ = [<span class="string">&#x27;test_A&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test_A</span>():</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">&#x27;test_A&#x27;</span>)</span><br><span class="line">	</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test_B</span>():</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">&#x27;test_B&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> my_module <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">test_A()</span><br><span class="line">test_B()    <span class="comment"># 此时只可以使用test_A，test_B无法使用</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="Python包"><a href="#Python包" class="headerlink" title="Python包"></a>Python包</h1><h2 id="自定义Python包"><a href="#自定义Python包" class="headerlink" title="自定义Python包"></a>自定义Python包</h2><p>包就是一个文件夹，里面可以存放许多Python的模块(代码文件)，通过包，在逻辑上将一批模块归为一类，方便使用。<br><img src="https://raw.githubusercontent.com/NimbusFan/blog-images/main/assets/Python%E5%8C%85%E7%BB%93%E6%9E%84.png" alt="Python包结构.png"></p>
+<h3 id="init-py文件"><a href="#init-py文件" class="headerlink" title="__init__.py文件"></a><code>__init__.py</code>文件</h3><p>创建包会默认自动创建的文件，通过这个文件来表示一个文件夹是Python的包，而非普通的文件夹。</p>
+<h3 id="创建包的步骤"><a href="#创建包的步骤" class="headerlink" title="创建包的步骤"></a>创建包的步骤</h3><ol>
+<li>新建包<code>my_package</code></li>
+<li>新建包内模块:<code>my_module_1</code>…<code>my_module_n</code></li>
+</ol>
+<h3 id="导入包"><a href="#导入包" class="headerlink" title="导入包"></a>导入包</h3><p>方式一：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">包名.模块名.目标</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># import导入</span></span><br><span class="line"><span class="keyword">import</span> 包名.模块名</span><br><span class="line"></span><br><span class="line"><span class="comment"># from导入</span></span><br><span class="line"><span class="keyword">from</span> 包名 <span class="keyword">import</span> 模块名</span><br><span class="line"></span><br><span class="line"><span class="comment"># 直接导入功能</span></span><br><span class="line"><span class="keyword">from</span> 包名.模块名 <span class="keyword">import</span> 功能</span><br></pre></td></tr></table></figure>
+<p>方式二：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> 包名 <span class="keyword">import</span> *</span><br></pre></td></tr></table></figure>
+<p>注意:必须在<code>_init_.py</code>文件中添加<code>_all_ = []</code>，控制允许导入的模块列表</p>
+<h2 id="安装第三方包"><a href="#安装第三方包" class="headerlink" title="安装第三方包"></a>安装第三方包</h2><h3 id="pip"><a href="#pip" class="headerlink" title="pip"></a>pip</h3><p>打开命令提示符程序</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip install 包名称</span><br></pre></td></tr></table></figure>
+<p>由于pip是连接的国外的网站进行包的下载，有的时候会速度很慢。<br>可以通过连接国内的镜像网站提高下载速度:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip install -i 镜像网址 包名称</span><br></pre></td></tr></table></figure>
+<h3 id="PyCharm"><a href="#PyCharm" class="headerlink" title="PyCharm"></a>PyCharm</h3><ol>
+<li>pycharm中提供的安装第三方包的功能：</li>
+<li>右下角python解释器</li>
+<li>解释器设置</li>
+<li>点击“+”搜索想要安装的包</li>
+<li>可勾选“选项”填入：-i 镜像网址</li>
+<li>安装软件包</li>
+</ol>
+<div class="note default simple"><p><strong>Repository</strong></p>
+<p>本章示例代码已归档至 GitHub，可用于本地复现、调试与扩展。</p>
+<p><a class="btn-beautify " href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/08_Exception_Module_Package" title="查看本章源码"><i class="fab fa-github"></i><span>查看本章源码</span></a></p>
+</div>
+]]></content>
+      <categories>
+        <category>Python 技术笔记</category>
+        <category>基础语法与数据结构</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>异常处理</tag>
+        <tag>模块与包</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Python 面向对象编程：类、对象与核心特性</title>
     <url>/2026/04/14/python-learning/Stage2_OOP/python-s2-01-object-oriented/</url>
     <content><![CDATA[<h1 id="初识对象"><a href="#初识对象" class="headerlink" title="初识对象"></a>初识对象</h1><p>在程序中是可以做到和生活中那样，设计表格、生产表格、填写表格的组织形式的。</p>
@@ -1192,129 +1318,211 @@
       </tags>
   </entry>
   <entry>
-    <title>Python 异常处理与模块化开发</title>
-    <url>/2026/03/24/python-learning/Stage1_Core_Basics/python-s1-08-exceptions-modules-packages/</url>
-    <content><![CDATA[<h1 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h1><p>1.什么是异常:<br>程序运行的过程中出现了错误<br>2.bug是什么意思:<br>就是指异常的意思，历史上因为小虫子(bug)导致计算机失灵的案例，所以延续至今，bug就代表软件出现错误。</p>
-<hr>
-<h1 id="异常的捕获"><a href="#异常的捕获" class="headerlink" title="异常的捕获"></a>异常的捕获</h1><h2 id="捕获常规异常："><a href="#捕获常规异常：" class="headerlink" title="捕获常规异常："></a>捕获常规异常：</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">	可能发生错误的代码</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">	如果出现异常执行的代码</span><br></pre></td></tr></table></figure>
-<h2 id="捕获指定异常："><a href="#捕获指定异常：" class="headerlink" title="捕获指定异常："></a>捕获指定异常：</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">	<span class="built_in">print</span>(name)</span><br><span class="line"><span class="keyword">except</span> NameError <span class="keyword">as</span> e:</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">&#x27;变量名称未定义错误&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<h2 id="捕获多个异常："><a href="#捕获多个异常：" class="headerlink" title="捕获多个异常："></a>捕获多个异常：</h2><p>当捕获多个异常时，把要捕获的异常类型的名字放在except 后，并使用元组的方式进行书写。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">	<span class="built_in">print</span>(<span class="number">1</span>/<span class="number">0</span>)</span><br><span class="line"><span class="keyword">except</span> (NameError, ZeroDivisionError):</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">&#x27;ZeroDivision错误...&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<h2 id="异常else："><a href="#异常else：" class="headerlink" title="异常else："></a>异常else：</h2><p>else表示的是如果没有异常要执行的代码。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">	<span class="built_in">print</span>(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">	<span class="built_in">print</span>(e)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">&#x27;我是else，是没有异常的时候执行的代码)</span></span><br></pre></td></tr></table></figure>
-<h2 id="异常的finally："><a href="#异常的finally：" class="headerlink" title="异常的finally："></a>异常的finally：</h2><p>finally表示的是无论是否异常都要执行的代码，例如关闭文件。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">	f= <span class="built_in">open</span>(<span class="string">&quot;test.txt&#x27;,&#x27;r&#x27;)</span></span><br><span class="line"><span class="string">except Exception as e:</span></span><br><span class="line"><span class="string">	f= open(&#x27;test.txt&#x27;,&#x27;w&#x27;)</span></span><br><span class="line"><span class="string">else:</span></span><br><span class="line"><span class="string">	print(&#x27;没有异常，真开心&quot;</span>)</span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">	f.close()</span><br></pre></td></tr></table></figure>
-<p>其中，else和finally可写可不写</p>
-<hr>
-<h1 id="异常的传递性"><a href="#异常的传递性" class="headerlink" title="异常的传递性"></a>异常的传递性</h1><p>当函数func01中发生异常，并且没有捕获处理这个异常的时候，异常会传递到函数func02，当func02也没有捕获处理这个异常的时候，main函数会捕获这个异常，这就是异常的传递性.</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">func01</span>():</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">&quot;这是func01开始)</span></span><br><span class="line"><span class="string">	num=1/0</span></span><br><span class="line"><span class="string">	print(&quot;</span>这是funcO1结束<span class="string">&quot;)</span></span><br><span class="line"><span class="string">	</span></span><br><span class="line"><span class="string">def func02():</span></span><br><span class="line"><span class="string">	print(&quot;</span>这是funcO2开始<span class="string">&quot;)</span></span><br><span class="line"><span class="string">	func01()</span></span><br><span class="line"><span class="string">	print(&quot;</span>这是func02结束<span class="string">&quot;)</span></span><br><span class="line"><span class="string">	</span></span><br><span class="line"><span class="string">def main():</span></span><br><span class="line"><span class="string">	try:</span></span><br><span class="line"><span class="string">		func02()</span></span><br><span class="line"><span class="string">	except Exception as e:</span></span><br><span class="line"><span class="string">		print(e)</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="Python模块"><a href="#Python模块" class="headerlink" title="Python模块"></a>Python模块</h1><h2 id="模块的导入"><a href="#模块的导入" class="headerlink" title="模块的导入"></a>模块的导入</h2><p>Python 模块(Module)，是一个 Python 文件，以.py 结尾，模块能定义函数，类和变量，模块里也能包含可执行的代码</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">[<span class="keyword">from</span> 模块名] <span class="keyword">import</span> [模块 | 类 | 变量 | 函数 | *] [<span class="keyword">as</span> 别名]</span><br></pre></td></tr></table></figure>
-<p>常用的组合形式如:</p>
-<ul>
-<li>import 模块名</li>
-<li>from 模块名 import 类、变量、方法等</li>
-<li>from 模块名 import *</li>
-<li>import 模块名 as 别名</li>
-<li>from 模块名 import 功能名 as 别名</li>
-</ul>
-<p>注意：</p>
-<ul>
-<li>from可以省略，直接import即可</li>
-<li>as别名可以省略</li>
-<li>通过”.”来确定层级关系</li>
-<li>模块的导入一般写在代码文件的开头位置</li>
-</ul>
-<h2 id="自定义模块"><a href="#自定义模块" class="headerlink" title="自定义模块"></a>自定义模块</h2><h2 id="制作自定义模块"><a href="#制作自定义模块" class="headerlink" title="制作自定义模块"></a>制作自定义模块</h2><p>每个Python文件都可以作为一个模块，模块的名字就是文件的名字。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># my_module.py文件</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test</span>(<span class="params">a, b</span>):</span><br><span class="line">	<span class="built_in">print</span>(a + b)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># test_my_module.py文件</span></span><br><span class="line"><span class="keyword">from</span> my_modle <span class="keyword">import</span> test</span><br><span class="line">	test(<span class="number">10</span>, <span class="number">20</span>)</span><br><span class="line">	</span><br><span class="line"><span class="keyword">import</span> my_module</span><br><span class="line">	my_module.test(<span class="number">10</span>, <span class="number">20</span>)</span><br></pre></td></tr></table></figure>
-<h2 id="命名空间污染"><a href="#命名空间污染" class="headerlink" title="命名空间污染"></a>命名空间污染</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#模块1代码</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">my_test</span>(<span class="params">a,b</span>):</span><br><span class="line">	<span class="built_in">print</span>(a + b)</span><br><span class="line">	</span><br><span class="line"><span class="comment">#模块2代码</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">my_test</span>(<span class="params">a, b</span>):</span><br><span class="line">	<span class="built_in">print</span>(a - b)</span><br><span class="line"></span><br><span class="line"><span class="comment">#导 入模块和调用功能代码</span></span><br><span class="line"><span class="keyword">from</span> my_module1 <span class="keyword">import</span> my_test</span><br><span class="line"><span class="keyword">from</span> my_module2 <span class="keyword">import</span> my_test</span><br><span class="line"></span><br><span class="line"><span class="comment">#my_test函数是模块2中的函数</span></span><br><span class="line">my_test(<span class="number">1</span>, <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-<p>注意:当导入多个模块的时候，且模块内有同名功能，当调用这个同名功能的时候，调用到的是后导入模块的功能</p>
-<h2 id="main-变量"><a href="#main-变量" class="headerlink" title="__main__变量"></a><code>__main__</code>变量</h2><p>实际开发中，为了为了让模块能够在项目中达到想要的效果，通常会在py文件中添加一些测试信息，例如，在m_module1.py文件中添加测试代码</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test</span>(<span class="params">a, b</span>):</span><br><span class="line">	<span class="built_in">print</span>(a + b)</span><br><span class="line">	</span><br><span class="line">test(<span class="number">1</span>,<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-<p>问题:<br>此时，无论是当前文件，还是其他已经导入了该模块的文件，在运行的时候都会自动执行test函数的调用<br>解决方案:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test</span>(<span class="params">a, b</span>):</span><br><span class="line"><span class="built_in">print</span>(a + b)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 只在当前文件中调用该函数，其他导入的文件内不符合该条件，则不执行test函数调用</span></span><br><span class="line"><span class="keyword">if</span> __main__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">	test(<span class="number">1</span>, <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-<h2 id="all-变量"><a href="#all-变量" class="headerlink" title="__all__变量"></a><code>__all__</code>变量</h2><p>如果一个模块文件中有<code>__all__</code>变量，当使用from xxx import *导入时，只能导入这个列表中的元素</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># my_module.py文件</span></span><br><span class="line">__all__ = [<span class="string">&#x27;test_A&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test_A</span>():</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">&#x27;test_A&#x27;</span>)</span><br><span class="line">	</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test_B</span>():</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">&#x27;test_B&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> my_module <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">test_A()</span><br><span class="line">test_B()    <span class="comment"># 此时只可以使用test_A，test_B无法使用</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="Python包"><a href="#Python包" class="headerlink" title="Python包"></a>Python包</h1><h2 id="自定义Python包"><a href="#自定义Python包" class="headerlink" title="自定义Python包"></a>自定义Python包</h2><p>包就是一个文件夹，里面可以存放许多Python的模块(代码文件)，通过包，在逻辑上将一批模块归为一类，方便使用。<br><img src="https://raw.githubusercontent.com/NimbusFan/blog-images/main/assets/Python%E5%8C%85%E7%BB%93%E6%9E%84.png" alt="Python包结构.png"></p>
-<h3 id="init-py文件"><a href="#init-py文件" class="headerlink" title="__init__.py文件"></a><code>__init__.py</code>文件</h3><p>创建包会默认自动创建的文件，通过这个文件来表示一个文件夹是Python的包，而非普通的文件夹。</p>
-<h3 id="创建包的步骤"><a href="#创建包的步骤" class="headerlink" title="创建包的步骤"></a>创建包的步骤</h3><ol>
-<li>新建包<code>my_package</code></li>
-<li>新建包内模块:<code>my_module_1</code>…<code>my_module_n</code></li>
+    <title>Python 分布式计算：PySpark RDD 编程基础</title>
+    <url>/2026/05/28/python-learning/Stage3_PySpark/python-s3-01-PySpark/</url>
+    <content><![CDATA[<h1 id="基础准备"><a href="#基础准备" class="headerlink" title="基础准备"></a>基础准备</h1><p>PySpark的编程模型：</p>
+<ol>
+<li>通过SparkContext对象，完成数据输入</li>
+<li>输入数据后得到RDD对象，对RDD对象进行迭代计算</li>
+<li>最终通过RDD对象的成员方法，完成数据输出工作</li>
 </ol>
-<h3 id="导入包"><a href="#导入包" class="headerlink" title="导入包"></a>导入包</h3><p>方式一：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">包名.模块名.目标</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># import导入</span></span><br><span class="line"><span class="keyword">import</span> 包名.模块名</span><br><span class="line"></span><br><span class="line"><span class="comment"># from导入</span></span><br><span class="line"><span class="keyword">from</span> 包名 <span class="keyword">import</span> 模块名</span><br><span class="line"></span><br><span class="line"><span class="comment"># 直接导入功能</span></span><br><span class="line"><span class="keyword">from</span> 包名.模块名 <span class="keyword">import</span> 功能</span><br></pre></td></tr></table></figure>
-<p>方式二：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> 包名 <span class="keyword">import</span> *</span><br></pre></td></tr></table></figure>
-<p>注意:必须在<code>_init_.py</code>文件中添加<code>_all_ = []</code>，控制允许导入的模块列表</p>
-<h2 id="安装第三方包"><a href="#安装第三方包" class="headerlink" title="安装第三方包"></a>安装第三方包</h2><h3 id="pip"><a href="#pip" class="headerlink" title="pip"></a>pip</h3><p>打开命令提示符程序</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip install 包名称</span><br></pre></td></tr></table></figure>
-<p>由于pip是连接的国外的网站进行包的下载，有的时候会速度很慢。<br>可以通过连接国内的镜像网站提高下载速度:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip install -i 镜像网址 包名称</span><br></pre></td></tr></table></figure>
-<h3 id="PyCharm"><a href="#PyCharm" class="headerlink" title="PyCharm"></a>PyCharm</h3><ol>
-<li>pycharm中提供的安装第三方包的功能：</li>
-<li>右下角python解释器</li>
-<li>解释器设置</li>
-<li>点击“+”搜索想要安装的包</li>
-<li>可勾选“选项”填入：-i 镜像网址</li>
-<li>安装软件包</li>
-</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pyspark <span class="keyword">import</span> SparkConf, SparkContext  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># 创建SparkConf对象————链式调用</span></span><br><span class="line">conf = SparkConf().setMaster(<span class="string">&quot;local[*]&quot;</span>).setAppName(<span class="string">&quot;test_spark_app&quot;</span>)  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># 以下这段等同于上面这一行的作用,  </span></span><br><span class="line"><span class="comment"># conf = SparkConf()  </span></span><br><span class="line"><span class="comment"># conf.setMaster(&quot;local[*]&quot;)  </span></span><br><span class="line"><span class="comment"># conf.setAppName(&quot;test_spark_app&quot;)  </span></span><br><span class="line">  </span><br><span class="line"><span class="comment"># 基于SparkConf类对象创建SparkContext对象  </span></span><br><span class="line">sc = SparkContext(conf = conf)  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># 打印PySpark的运行版本  </span></span><br><span class="line"><span class="built_in">print</span>(sc.version)  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># 停止SparkContext对象的运行(停止PySpark程序)  </span></span><br><span class="line">sc.stop()</span><br></pre></td></tr></table></figure>
+<p>PySpark的功能都是从SparkContext对象作为开始</p>
+<hr>
+<h1 id="数据输入"><a href="#数据输入" class="headerlink" title="数据输入"></a>数据输入</h1><p>RDD对象称之为分布式弹性数据集，是PySpark中数据计算的载体，它可以:</p>
+<ul>
+<li>提供数据存储</li>
+<li>提供数据计算的各类方法</li>
+<li>数据计算的方法，返回值依旧是RDD(RDD迭代计算)<br>后续对数据进行各类计算，都是基于RDD对象进行</li>
+</ul>
+<p>输入数据到Spark(即得到RDD对象)：</p>
+<ul>
+<li>通过SparkContext的parallelize成员方法，将Python数据容器转换为RDD对象</li>
+<li>通过SparkContext的textFile成员方法，读取文本文件得到RDD对象</li>
+</ul>
+<hr>
+<h1 id="数据计算"><a href="#数据计算" class="headerlink" title="数据计算"></a>数据计算</h1><h2 id="map方法"><a href="#map方法" class="headerlink" title="map方法"></a>map方法</h2><p>map算子(成员方法)</p>
+<ul>
+<li>接受一个处理函数，可用lambda表达式快速编写</li>
+<li>对RDD内的元素逐个处理，并返回一个新的RDD<br>链式调用</li>
+<li>对于返回值是新RDD的算子，可以通过链式调用的方式多次调用算子</li>
+</ul>
+<h2 id="flatMap方法"><a href="#flatMap方法" class="headerlink" title="flatMap方法"></a>flatMap方法</h2><ul>
+<li>计算逻辑和map一样</li>
+<li>比map多一个解除一层嵌套的功能。</li>
+</ul>
+<h2 id="reduceByKey方法"><a href="#reduceByKey方法" class="headerlink" title="reduceByKey方法"></a>reduceByKey方法</h2><ul>
+<li>接受一个处理函数，对数据进行两两计算</li>
+</ul>
+<h2 id="filter方法"><a href="#filter方法" class="headerlink" title="filter方法"></a>filter方法</h2><ul>
+<li>接收一个处理函数，可用lambda快速编写</li>
+<li>函数对RDD数据逐个处理，得到True的保留至返回值的RDD中</li>
+</ul>
+<h2 id="distinct方法"><a href="#distinct方法" class="headerlink" title="distinct方法"></a>distinct方法</h2><ul>
+<li>完成对RDD内数据的去重操作</li>
+</ul>
+<h2 id="sortBy方法"><a href="#sortBy方法" class="headerlink" title="sortBy方法"></a>sortBy方法</h2><ul>
+<li>接收一个处理函数，可用lambda快速编写</li>
+<li>函数表示用来决定排序的依据</li>
+<li>可以控制升序或降序</li>
+<li>全局排序需要设置分区数为1</li>
+</ul>
+<hr>
+<h1 id="数据输出"><a href="#数据输出" class="headerlink" title="数据输出"></a>数据输出</h1><h2 id="输出为Python对象"><a href="#输出为Python对象" class="headerlink" title="输出为Python对象"></a>输出为Python对象</h2><ul>
+<li>collect:将RDD内容转换为list</li>
+<li>reduce:对RDD内容进行自定义聚合</li>
+<li>take:取出RDD的前N个元素组成list</li>
+<li>count:统计RDD元素个数</li>
+</ul>
+<h2 id="输出到文件中"><a href="#输出到文件中" class="headerlink" title="输出到文件中"></a>输出到文件中</h2><p>RDD输出到文件的方法：</p>
+<ul>
+<li>rdd.saveAsTextFile(路径)</li>
+<li>输出的结果是一个文件夹</li>
+<li>有几个分区就输出多少个结果文件<br>如何修改RDD分区：</li>
+<li>SparkConf对象设置conf.set(“spark.default.parallelism”, “1”)</li>
+<li>创建RDD的时候，sc.parallelize方法传入numSlices参数为1</li>
+</ul>
 <div class="note default simple"><p><strong>Repository</strong></p>
 <p>本章示例代码已归档至 GitHub，可用于本地复现、调试与扩展。</p>
-<p><a class="btn-beautify " href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/08_Exception_Module_Package" title="查看本章源码"><i class="fab fa-github"></i><span>查看本章源码</span></a></p>
+<p><a class="btn-beautify " href="https://github.com/NimbusFan/My-Second-Brain/tree/main/myblog/source/_posts/python-learning/Stage3_PySpark" title="查看本章源码"><i class="fab fa-github"></i><span>查看本章源码</span></a></p>
+</div>
+
+]]></content>
+      <categories>
+        <category>Python 技术笔记</category>
+        <category>大数据与分布式计算</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>PySpark</tag>
+        <tag>Spark</tag>
+        <tag>RDD</tag>
+        <tag>分布式计算</tag>
+        <tag>数据处理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python 数据库编程：SQL 语法与 MySQL 实践</title>
+    <url>/2026/05/21/python-learning/Stage2_OOP/python-s2-02-SQL/</url>
+    <content><![CDATA[<h1 id="基础命令"><a href="#基础命令" class="headerlink" title="基础命令"></a>基础命令</h1><p>SQL语言分类：</p>
+<ul>
+<li>DDL (Data Definition Language)数据定义</li>
+<li>DML (Data Manipulation Language)数据操作</li>
+<li>DCL(Data Control Language)数据控制</li>
+<li>DQL (Data Query Language)数据查询</li>
+</ul>
+<p>MySQL命令行环境下的基础命令:</p>
+<table>
+<thead>
+<tr>
+<th align="center">SQL命令</th>
+<th align="center">结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">mysql -uroot -p</td>
+<td align="center">以root用户，通过密码进行登录</td>
+</tr>
+<tr>
+<td align="center">show databases；</td>
+<td align="center">查看有哪些数据库</td>
+</tr>
+<tr>
+<td align="center">use 数据库名;</td>
+<td align="center">使用某个数据库</td>
+</tr>
+<tr>
+<td align="center">show tables;</td>
+<td align="center">查看数据库内有哪些表</td>
+</tr>
+<tr>
+<td align="center">exit</td>
+<td align="center">退出MySQL的命令行环境</td>
+</tr>
+</tbody></table>
+<hr>
+<h1 id="SQL的语法特征"><a href="#SQL的语法特征" class="headerlink" title="SQL的语法特征"></a>SQL的语法特征</h1><ol>
+<li>大小写不敏感</li>
+<li>可以单行或多行书写，最后以<code>;</code>号结束</li>
+<li>SQL支持注释:<ul>
+<li>单行注释：– 注释内容(–后面一定要有一个空格)</li>
+<li>单行注释：# 注释内容(#后面可以不加空格，推荐加上)</li>
+<li>多行注释：<code>/* 注释内容 */</code></li>
+</ul>
+</li>
+</ol>
+<hr>
+<h1 id="DDL-数据定义"><a href="#DDL-数据定义" class="headerlink" title="DDL-数据定义"></a>DDL-数据定义</h1><h2 id="库管理"><a href="#库管理" class="headerlink" title="库管理"></a>库管理</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 查看数据库</span></span><br><span class="line"><span class="keyword">SHOW</span> DATABASES;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 使用数据库</span></span><br><span class="line">USE 数据库名称;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 创建数据库</span></span><br><span class="line"><span class="keyword">CREATE</span> DATABASE 数据库名称[CHARSET UTF8];</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 删除数据库</span></span><br><span class="line"><span class="keyword">DROP</span> DATABASE 数据库名称;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 查看当前使用的数据库</span></span><br><span class="line"><span class="keyword">SELECT</span> DATABASE();</span><br></pre></td></tr></table></figure>
+<h2 id="表管理"><a href="#表管理" class="headerlink" title="表管理"></a>表管理</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 查看有哪些表(需要先选择数据库)</span></span><br><span class="line"><span class="keyword">SHOW</span> TABLES；</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 创建表</span></span><br><span class="line"><span class="keyword">CREATE TABLE</span> 表名称(</span><br><span class="line">	列名称 列类型，</span><br><span class="line">	列名称 列类型，</span><br><span class="line">	......</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 删除表</span></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> 表名称;</span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> IF <span class="keyword">EXISTS</span> 表名称;</span><br></pre></td></tr></table></figure>
+<p>列类型：</p>
+<table>
+<thead>
+<tr>
+<th align="center">列名称</th>
+<th align="center">列类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">int</td>
+<td align="center">整数</td>
+</tr>
+<tr>
+<td align="center">float</td>
+<td align="center">浮点数</td>
+</tr>
+<tr>
+<td align="center">varchar(长度)</td>
+<td align="center">文本，长度为数字，做最大长度限制，最大可填255</td>
+</tr>
+<tr>
+<td align="center">date</td>
+<td align="center">日期类型</td>
+</tr>
+<tr>
+<td align="center">timestamp</td>
+<td align="center">时间戳类型</td>
+</tr>
+</tbody></table>
+<hr>
+<h1 id="DML-数据操作"><a href="#DML-数据操作" class="headerlink" title="DML-数据操作"></a>DML-数据操作</h1><h2 id="INSERT数据插入"><a href="#INSERT数据插入" class="headerlink" title="INSERT数据插入"></a>INSERT数据插入</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"># []代表可以省略的内容</span><br><span class="line"><span class="keyword">INSERT INTO</span> 表[(列<span class="number">1</span>, 列<span class="number">2</span>, ..., 列N)] <span class="keyword">VALUES</span>(值<span class="number">1</span>, 值<span class="number">2</span>, ..., 值N)[, (值<span class="number">1</span>, 值<span class="number">2</span>, ..., 值N),...,(值<span class="number">1</span>, 值<span class="number">2</span>, ..., 值N)]</span><br></pre></td></tr></table></figure>
+<h2 id="DELETE数据删除"><a href="#DELETE数据删除" class="headerlink" title="DELETE数据删除"></a>DELETE数据删除</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"># []代表可以省略的内容</span><br><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> 表名称 [<span class="keyword">WHERE</span>条件判断]</span><br><span class="line"></span><br><span class="line"><span class="comment">/*  </span></span><br><span class="line"><span class="comment">条件判断：列 操作符 值</span></span><br><span class="line"><span class="comment">操作符： = &lt; &gt; &lt;= &gt;= !=等等，</span></span><br><span class="line"><span class="comment">如：id = 5  id &lt; 3  id &gt;= 6  id != 5</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<h2 id="UPDATE-数据更新"><a href="#UPDATE-数据更新" class="headerlink" title="UPDATE 数据更新"></a>UPDATE 数据更新</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> 表名 <span class="keyword">SET</span> 列<span class="operator">=</span>值 [<span class="keyword">WHERE</span> 条件判断]</span><br></pre></td></tr></table></figure>
+<p><strong>注意：字符串的值出现在SQL语句中，必须要用单引号包围起来。</strong></p>
+<hr>
+<h1 id="DCL-数据控制"><a href="#DCL-数据控制" class="headerlink" title="DCL-数据控制"></a>DCL-数据控制</h1><hr>
+<h1 id="DQL-数据查询"><a href="#DQL-数据查询" class="headerlink" title="DQL-数据查询"></a>DQL-数据查询</h1><h2 id="基础查询"><a href="#基础查询" class="headerlink" title="基础查询"></a>基础查询</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"># 基础查询的语法</span><br><span class="line"><span class="keyword">SELECT</span> 字段列表<span class="operator">|</span><span class="operator">*</span><span class="keyword">FROM</span> 表</span><br><span class="line"># 过滤查询的语法</span><br><span class="line"><span class="keyword">SELECT</span> 字段列表<span class="operator">|</span><span class="operator">*</span><span class="keyword">FROM</span> 表 <span class="keyword">WHERE</span> 条件判断</span><br></pre></td></tr></table></figure>
+<h2 id="分组聚合"><a href="#分组聚合" class="headerlink" title="分组聚合"></a>分组聚合</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> 字段<span class="operator">|</span>聚合函数 <span class="keyword">FROM</span> 表 [<span class="keyword">WHERE</span> 条件] <span class="keyword">GROUP</span> <span class="keyword">BY</span> 列 </span><br><span class="line">聚合函数有:</span><br><span class="line"><span class="operator">-</span> <span class="built_in">SUM</span>(列) 求和</span><br><span class="line"><span class="operator">-</span> <span class="built_in">AVG</span>(列) 求平均值</span><br><span class="line"><span class="operator">-</span> <span class="built_in">MIN</span>(列) 求最小值</span><br><span class="line"><span class="operator">-</span> <span class="built_in">MAX</span>(列) 求最大值</span><br><span class="line"><span class="operator">-</span> <span class="built_in">COUNT</span>(列<span class="operator">|</span><span class="operator">*</span>) 求数量</span><br></pre></td></tr></table></figure>
+<p>注意：</p>
+<ul>
+<li>一个SQL中可以写多个聚合</li>
+<li>GROUP BY中出现了哪个列，哪个列才能出现在SELECT中的非聚合中</li>
+</ul>
+<h2 id="排序分页"><a href="#排序分页" class="headerlink" title="排序分页"></a>排序分页</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"># 只写n表示：只显示几条数据</span><br><span class="line"># n和m都写表示：跳过前n行，从第n <span class="operator">+</span> <span class="number">1</span>条开始往下取m条</span><br><span class="line"><span class="keyword">SELECT</span> 列<span class="operator">|</span>聚合函数<span class="operator">|</span><span class="operator">*</span> <span class="keyword">FROM</span> 表</span><br><span class="line"><span class="keyword">WHERE</span> ...</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> ...</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> ... [<span class="keyword">ASC</span> <span class="operator">|</span> <span class="keyword">DESC</span>]</span><br><span class="line">LIMIT n[, m]</span><br></pre></td></tr></table></figure>
+<p>注意：</p>
+<ul>
+<li>WHERE、GROUP BY、ORDER BY、LIMIT均可按需求省略</li>
+<li>SELECT和FROM是必写的</li>
+<li>执行顺序:FROM -&gt;WHERE -&gt;GROUP BY和聚合函数 -&gt;SELECT -&gt;ORDER BY -&gt;LIMIT</li>
+</ul>
+<hr>
+<h1 id="Python操作MySQL"><a href="#Python操作MySQL" class="headerlink" title="Python操作MySQL"></a>Python操作MySQL</h1><h2 id="基础使用"><a href="#基础使用" class="headerlink" title="基础使用"></a>基础使用</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 导包</span></span><br><span class="line"><span class="keyword">from</span> pymysql <span class="keyword">import</span> Connection</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取链接对象</span></span><br><span class="line">链接对象 = Connection(主机，端口，账户，密码)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 得到游标对象</span></span><br><span class="line">游标对象 = 链接对象.cursor()</span><br><span class="line">链接对象.select_db(<span class="string">&quot;&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 执行SQL语句</span></span><br><span class="line">游标对象.execute(<span class="string">&quot;&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 得到全部的查询结果（封装在元组内）</span></span><br><span class="line">results = 游标对象.fetchall()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭和数据库的连接</span></span><br><span class="line">链接对象.close()</span><br></pre></td></tr></table></figure>
+<h2 id="数据插入"><a href="#数据插入" class="headerlink" title="数据插入"></a>数据插入</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 导包</span></span><br><span class="line"><span class="keyword">from</span> pymysql <span class="keyword">import</span> Connection</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取链接对象</span></span><br><span class="line">链接对象 = Connection(主机，端口，账户，密码)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 得到游标对象</span></span><br><span class="line">游标对象 = conn.cursor()</span><br><span class="line">链接对象.select_db(<span class="string">&quot;&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 执行SQL语句 </span></span><br><span class="line">游标对象.execute(<span class="string">&quot;&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 确认提交</span></span><br><span class="line">链接对象.commit()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭和数据库的连接</span></span><br><span class="line">链接对象.close()</span><br></pre></td></tr></table></figure>
+<p>也可以通过代码设置自动提交，无需手动commit</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">链接对象 = Connection(</span><br><span class="line">	主机，</span><br><span class="line">	端口，</span><br><span class="line">	账户，</span><br><span class="line">	密码</span><br><span class="line">	autocommit = <span class="literal">True</span>	<span class="comment"># 设置自动提交</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<div class="note default simple"><p><strong>Repository</strong></p>
+<p>本章示例代码已归档至 GitHub，可用于本地复现、调试与扩展。</p>
+<p><a class="btn-beautify " href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage2_OOP/02_SQL" title="查看本章源码"><i class="fab fa-github"></i><span>查看本章源码</span></a></p>
 </div>
 ]]></content>
       <categories>
         <category>Python 技术笔记</category>
-        <category>基础语法与数据结构</category>
+        <category>数据库与后端开发</category>
       </categories>
       <tags>
         <tag>Python</tag>
-        <tag>异常处理</tag>
-        <tag>模块与包</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python 数据处理：JSON 解析与 Pyecharts 可视化</title>
-    <url>/2026/03/26/python-learning/Stage1_Core_Basics/python-s1-09-basic-comprehensive-Case/</url>
-    <content><![CDATA[<h1 id="JSON数据格式"><a href="#JSON数据格式" class="headerlink" title="JSON数据格式"></a>JSON数据格式</h1><h2 id="什么是JSON"><a href="#什么是JSON" class="headerlink" title="什么是JSON"></a>什么是JSON</h2><p>一种在各个编程语言中流通的数据格式，负责不同编程语言中的数据传递和交互。<br>JSON无非就是一个单独的字典或一个内部元素都是字典的列表。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># json数据的格式可以是：</span></span><br><span class="line">	&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;admin&quot;</span>, <span class="string">&quot;age&quot;</span>:<span class="number">18</span>&#125;</span><br><span class="line">	</span><br><span class="line"><span class="comment"># 也可以是：</span></span><br><span class="line">	[(<span class="string">&quot;name&quot;</span>:<span class="string">&quot;admin&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">18</span>&#125;,(<span class="string">&quot;name&quot;</span>:<span class="string">&quot;root&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">16</span>&#125;,(<span class="string">&quot;name&quot;</span>:<span class="string">&quot;张三&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">20</span>]]</span><br></pre></td></tr></table></figure>
-<h2 id="对JSON进行数据转换"><a href="#对JSON进行数据转换" class="headerlink" title="对JSON进行数据转换"></a>对JSON进行数据转换</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 导入json模块</span></span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line"><span class="comment"># 准备符合json格式要求的python数据</span></span><br><span class="line">data=[&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;老王&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">16</span>&#125;, &#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;张三&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">20</span>&#125;]</span><br><span class="line"></span><br><span class="line"><span class="comment"># json.dumps(data)方法把python数据转化为json数据</span></span><br><span class="line">data = json.dumps(data)</span><br><span class="line"><span class="comment"># 显示出中文</span></span><br><span class="line">data = json.dumps(data，ensure_ascii=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># json.loads(data)方法把json数据转化为python数据</span></span><br><span class="line">data =json.loads(data)</span><br></pre></td></tr></table></figure>
-<hr>
-<h1 id="pyecharts模块介绍"><a href="#pyecharts模块介绍" class="headerlink" title="pyecharts模块介绍"></a>pyecharts模块介绍</h1><ol>
-<li>开发可视化图表使用的技术栈是:<br> Echarts框架的Python版本:PyEcharts包</li>
-<li>如何安装PyEcharts包:<br> pip install pyecharts</li>
-<li>如何查看官方示例<br> 打开官方画廊:<a href="https://gallery.pyecharts.org/#/README">https://gallery.pyecharts.org/#/README</a></li>
-</ol>
-<hr>
-<h1 id="pyecharts快速入门"><a href="#pyecharts快速入门" class="headerlink" title="pyecharts快速入门"></a>pyecharts快速入门</h1><h2 id="构建基础折线图"><a href="#构建基础折线图" class="headerlink" title="构建基础折线图"></a>构建基础折线图</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 导包，导入Line功能构建折线图对象</span></span><br><span class="line"><span class="keyword">from</span> pyecharts.charts <span class="keyword">import</span> Line</span><br><span class="line"></span><br><span class="line"><span class="comment"># 得到折线图对象</span></span><br><span class="line">line = Line()</span><br><span class="line"><span class="comment"># 添加x轴数据</span></span><br><span class="line">line.add_xaxis([<span class="string">&quot;中国&quot;</span>，<span class="string">&quot;美国&quot;</span>,<span class="string">&quot;英国&quot;</span>])</span><br><span class="line"><span class="comment"># 添加y轴数据</span></span><br><span class="line">line.add_yaxis(<span class="string">&quot;GDP&quot;</span>, [<span class="number">30</span>, <span class="number">20</span> ,<span class="number">10</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment">#生成图表</span></span><br><span class="line">line.renderO</span><br></pre></td></tr></table></figure>
-<h2 id="使用全局配置项设置属性"><a href="#使用全局配置项设置属性" class="headerlink" title="使用全局配置项设置属性"></a>使用全局配置项设置属性</h2><p>pyecharts模块中有很多的配置选项，常用到2个类别的选项: </p>
-<ul>
-<li><strong>全局配置选项</strong></li>
-<li><strong>系列配置选项</strong></li>
-</ul>
-<p>全局配置选项可以通过<strong>set_global_opts</strong>方法来进行配置，相应的选项和选项的功能如下:<br><img src="https://raw.githubusercontent.com/NimbusFan/blog-images/main/assets/pyecharts%E5%85%A8%E5%B1%80%E9%85%8D%E7%BD%AE.png" alt="pyecharts全局配置.png"></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 通过全局配置项设置属性</span></span><br><span class="line">line.set_global_opts(</span><br><span class="line">	title_opts=TitleOpts(<span class="string">&quot;测试&quot;</span>,pos_left=<span class="string">&quot;center&quot;</span>,pos_bottom=<span class="string">&quot;1%&quot;</span>),</span><br><span class="line">	legend_opts=Legendopts(is_show=<span class="literal">True</span>),</span><br><span class="line">	toolbox_opts=ToolboxOpts(is_show=<span class="literal">True</span>),</span><br><span class="line">	visualmap_opts=VisualMapOpts(is_show=<span class="literal">True</span>),</span><br><span class="line">	tooltip_opts=TooltipOpts(is_show=<span class="literal">True</span>),</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-
-<div class="note default simple"><p><strong>Repository</strong></p>
-<p>本章示例代码已归档至 GitHub，可用于本地复现、调试与扩展。</p>
-<p><a class="btn-beautify " href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/09_Basic_Comprehensive_Case" title="查看本章源码"><i class="fab fa-github"></i><span>查看本章源码</span></a></p>
-</div>]]></content>
-      <categories>
-        <category>Python 技术笔记</category>
-        <category>基础语法与数据结构</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>JSON</tag>
-        <tag>数据可视化</tag>
-        <tag>PyEcharts</tag>
+        <tag>SQL</tag>
+        <tag>MySQL</tag>
       </tags>
   </entry>
 </search>
