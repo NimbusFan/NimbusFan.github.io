@@ -1,399 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Python 条件判断与逻辑控制</title>
-    <url>/2026/03/13/python-learning/Stage1_Core_Basics/python-s1-02-condition-statement/</url>
-    <content><![CDATA[<h1 id="布尔类型和比较运算符"><a href="#布尔类型和比较运算符" class="headerlink" title="布尔类型和比较运算符"></a>布尔类型和比较运算符</h1><h2 id="布尔类型"><a href="#布尔类型" class="headerlink" title="布尔类型"></a>布尔类型</h2><p>在 Python 中，布尔类型的字面量用 <code>True</code> 表示真，<code>False</code> 表示假。</p>
-<h2 id="比较运算符"><a href="#比较运算符" class="headerlink" title="比较运算符"></a>比较运算符</h2><p>在逻辑判断中，我们经常需要对比两个值。Python 提供了以下比较运算符：</p>
-<table>
-<thead>
-<tr>
-<th align="center">运算符</th>
-<th align="center">描述说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center"><code>==</code></td>
-<td align="center">判断内容是否相等，满足为True，不满足为False</td>
-</tr>
-<tr>
-<td align="center"><code>!=</code></td>
-<td align="center">判断内容是否不相等，满足为True，不满足为 False</td>
-</tr>
-<tr>
-<td align="center"><code>&gt;</code></td>
-<td align="center">判断运算符左侧内容是否大于右侧满足为True，不满足为False</td>
-</tr>
-<tr>
-<td align="center"><code>&lt;</code></td>
-<td align="center">判断运算符左侧内容是否小于右侧满足为True，不满足为 False</td>
-</tr>
-<tr>
-<td align="center"><code>&gt;=</code></td>
-<td align="center">判断运算符左侧内容是否大于等于右侧满足为True，不满足为 False</td>
-</tr>
-<tr>
-<td align="center"><code>&lt;=</code></td>
-<td align="center">判断运算符左侧内容是否小于等于右侧满足为True，不满足为 False</td>
-</tr>
-</tbody></table>
-<hr>
-<h1 id="if-语句"><a href="#if-语句" class="headerlink" title="if 语句"></a>if 语句</h1><p>最基础的条件判断语句格式如下：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> 要判断的条件:</span><br><span class="line">    满足条件时要做的事情<span class="number">1</span></span><br><span class="line">    满足条件时要做的事情<span class="number">2</span></span><br><span class="line">    ...</span><br><span class="line">    满足条件时要做的事情N</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p><strong>⚠️ 注意事项：</strong></p>
-<ul>
-<li>判断条件的结果一定要是 <code>bool</code> 类型 。</li>
-<li>判断条件后必须要有<strong>冒号</strong> <code>:</code> 。</li>
-<li>归属于 <code>if</code> 语句的代码块，需在行前填充<strong>4个空格缩进 (1个Tab)</strong> 。</li>
-<li>Python 是严格通过空格缩进来判断代码归属的 。</li>
-</ul>
-</blockquote>
-<hr>
-<h2 id="if-else-组合判断语句"><a href="#if-else-组合判断语句" class="headerlink" title="if-else 组合判断语句"></a>if-else 组合判断语句</h2><p>当条件不满足时，如果我们想执行另一套逻辑，就需要加入 <code>else</code>：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> 要判断的条件:</span><br><span class="line">    满足条件时要做的事情<span class="number">1</span></span><br><span class="line">    满足条件时要做的事情<span class="number">2</span></span><br><span class="line">    ...</span><br><span class="line">    满足条件时要做的事情N</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    不满足条件时要做的事情<span class="number">1</span></span><br><span class="line">    不满足条件时要做的事情<span class="number">2</span></span><br><span class="line">    ...</span><br><span class="line">    不满足条件时要做的事情N</span><br></pre></td></tr></table></figure>
-
-<p><strong>注意：</strong></p>
-<ul>
-<li><p><code>else</code> 后面不需要再写判断条件 </p>
-</li>
-<li><p><code>else</code> 后的代码块同样需要四个空格作为缩进</p>
-</li>
-</ul>
-<h2 id="if-elif-else-组合语句"><a href="#if-elif-else-组合语句" class="headerlink" title="if-elif-else 组合语句"></a>if-elif-else 组合语句</h2><p>面对多种情况的条件分支，可以使用 <code>elif</code>：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> 条件<span class="number">1</span>:</span><br><span class="line">    满足条件<span class="number">1</span>时要做的事情<span class="number">1</span></span><br><span class="line">    ...</span><br><span class="line">    满足条件<span class="number">1</span>时要做的事情N</span><br><span class="line"><span class="keyword">elif</span> 条件<span class="number">2</span>:</span><br><span class="line">    满足条件<span class="number">2</span>时要做的事情<span class="number">1</span></span><br><span class="line">    ...</span><br><span class="line">    满足条件<span class="number">2</span>时要做的事情N</span><br><span class="line"><span class="keyword">elif</span> 条件N:</span><br><span class="line">    满足条件N时要做的事情<span class="number">1</span></span><br><span class="line">    ...</span><br><span class="line">    满足条件N时要做的事情N</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    所有条件都不满足要做的事情<span class="number">1</span></span><br><span class="line">    ...</span><br><span class="line">    所有条件都不满足要做的事情N</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p><strong>⚠️ 注意事项：</strong></p>
-<p><code>elif</code> 可以写多个，且每个条件后面都要加冒号 。每个判断是<strong>互斥且有序</strong>的，只要上面的某一个条件满足了，后面的条件就不会再进行判断了 。</p>
-</blockquote>
-<hr>
-<h2 id="判断语句的嵌套"><a href="#判断语句的嵌套" class="headerlink" title="判断语句的嵌套"></a>判断语句的嵌套</h2><p>在实际开发中，经常会遇到“在某个前提条件下，再进行二次判断”的场景。这就需要用到嵌套结构：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> 条件<span class="number">1</span>:</span><br><span class="line">    满足条件<span class="number">1</span>时要做的事情<span class="number">1</span></span><br><span class="line">    ...</span><br><span class="line">    满足条件<span class="number">1</span>时要做的事情N</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> 条件<span class="number">2</span>:</span><br><span class="line">        满足条件<span class="number">2</span>时要做的事情<span class="number">1</span></span><br><span class="line">        ...</span><br><span class="line">        满足条件<span class="number">2</span>时要做的事情N</span><br></pre></td></tr></table></figure>
-
-<p><strong>层级法则：</strong> Python 完全通过缩进来确定层级的包含关系 。内层嵌套的 <code>if</code> 需要叠加缩进。</p>
-<div class="note default simple"><p><strong>Repository</strong></p>
-<p>本章示例代码已归档至 GitHub，可用于本地复现、调试与扩展。</p>
-<p><a class="btn-beautify " href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/02_Condition_Statements" title="查看本章源码"><i class="fab fa-github"></i><span>查看本章源码</span></a></p>
-</div>]]></content>
-      <categories>
-        <category>Python 技术笔记</category>
-        <category>基础语法与数据结构</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>基础语法</tag>
-        <tag>逻辑控制</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo 博客搭建：GitHub Pages 与 Butterfly 主题配置</title>
-    <url>/2026/03/11/daily/Hexo%20%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%EF%BC%9AGitHub%20Pages%20%E4%B8%8E%20Butterfly%20%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<h2 id="前言：为什么要做这个博客？"><a href="#前言：为什么要做这个博客？" class="headerlink" title="前言：为什么要做这个博客？"></a>前言：为什么要做这个博客？</h2><p>平时在学习过程中写过不少 Python 脚本，折腾过 PostgreSQL 数据库，也在 GitHub 上修过别人的 Bug。逐渐意识到，知识如果不系统地沉淀下来，很容易变成过眼云烟。</p>
-<p>为了记录接下来死磕 Java 后端开发的学习历程，决定搭建一个真正属于自己的独立博客。</p>
-<p>这篇文章不仅是教程，更是一篇的“填坑日记”。</p>
-<hr>
-<h2 id="一、网络超时"><a href="#一、网络超时" class="headerlink" title="一、网络超时"></a>一、网络超时</h2><p>环境配置（Node.js 和 Git）还算顺利，但敲下第一行初始化命令 <code>hexo init myblog</code> 时，就开始报错了：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">fatal: unable to access <span class="string">&#x27;[https://github.com/hexojs/hexo-starter.git/](https://github.com/hexojs/hexo-starter.git/)&#x27;</span>: Connection timed out after 300030 milliseconds</span><br><span class="line">Error: EPERM: operation not permitted, <span class="built_in">mkdir</span> <span class="string">&#x27;D:\&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>排坑思路：</strong> 命令行默认是不走代理的，干等 300 秒后必定超时。而后面的 <code>EPERM</code> 报错纯粹是因为网络断开后，Hexo 备用机制乱了阵脚，试图在 D 盘根目录建文件夹被系统权限拦截。</p>
-<p><strong>解决方案：</strong> 果断清理残留的半成品文件夹，直接动用国内镜像源进行极速克隆：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo init myblog [https://ghproxy.net/https://github.com/hexojs/hexo-starter.git](https://ghproxy.net/https://github.com/hexojs/hexo-starter.git)</span><br></pre></td></tr></table></figure>
-
-<p>随后进入文件夹，使用淘宝镜像源安装依赖：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install --registry=[https://registry.npmmirror.com](https://registry.npmmirror.c</span><br></pre></td></tr></table></figure>
-
-<h2 id="二、连接被重置"><a href="#二、连接被重置" class="headerlink" title="二、连接被重置"></a>二、连接被重置</h2><p>在本地跑通 <code>hexo s</code> 看到默认主题后，按照教程配置了 <code>_config.yml</code>，准备将网页推送到 GitHub Pages。结果在执行 <code>hexo d</code> 时，再次报错：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fatal: unable to access &#x27;[https://github.com/](https://github.com/)...&#x27;: Recv failure: Connection was reset</span><br></pre></td></tr></table></figure>
-
-<p><strong>排坑思路：</strong> 国内使用 <code>https://</code> 开头的地址去推送 Git 极度不稳定，经常推到一半连接就被掐断。于是抛弃 HTTPS 部署，改用 <strong>SSH 密钥免密传输</strong>。</p>
-<p><strong>解决方案：</strong></p>
-<ol>
-<li><strong>生成本地密钥：</strong> 运行 <code>ssh-keygen -t rsa -C &quot;我的邮箱&quot;</code>，一路回车。</li>
-<li><strong>配置 GitHub：</strong> 将 <code>~/.ssh/id_rsa.pub</code> 里的公钥全选复制，添加到 GitHub 的 <code>SSH and GPG keys</code> 中。</li>
-<li><strong>测试连接：</strong> 运行 <code>ssh -T git@github.com</code> 确认打通。</li>
-<li><strong>修改 Hexo 总配置：</strong> 将部署地址换成 SSH 格式。</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:fanbyteio/fanbyteio.github.io.git</span><br><span class="line">  branch: main</span><br></pre></td></tr></table></figure>
-
-<p>修改完成后，再次 <code>hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</code>，丝滑上线！</p>
-<hr>
-<h2 id="三、换装-Butterfly"><a href="#三、换装-Butterfly" class="headerlink" title="三、换装 Butterfly"></a>三、换装 Butterfly</h2><p>为了追求视觉效果，我选择了目前 Hexo 界功能多样的主题——<strong>Butterfly</strong>。但代价是配置复杂度的提升。</p>
-<p><strong>避坑指南：</strong></p>
-<ol>
-<li><strong>国内极速克隆：</strong> 同样使用镜像加速，避免克隆到一半报错。<br><code>git clone https://github.moeyy.xyz/https://github.com/JerryC808/hexo-theme-butterfly themes/butterfly</code></li>
-<li><strong>必装渲染器：</strong> Butterfly 使用了 Pug 和 Stylus，如果不装对应的渲染插件，本地预览会直接满屏乱码。<br><code>npm install hexo-renderer-pug hexo-renderer-stylus --save</code></li>
-</ol>
-<hr>
-<h2 id="四、消失不掉的-“xxxxxx”"><a href="#四、消失不掉的-“xxxxxx”" class="headerlink" title="四、消失不掉的 “xxxxxx”"></a>四、消失不掉的 “xxxxxx”</h2><p>在配置侧边栏社交链接时，遇到了本次搭建过程中最诡异的 Bug：明明已经把 <code>_config.yml</code> 里的 <code>social</code> 链接改成了我自己的 GitHub 账号（fanbyteio），且再三确只有这一处social链接，但网页上的图标点开后，依然顽固地跳转到主题默认的 <code>github.com/xxxxxx</code>。</p>
-<p><strong>排坑思路：</strong><br>我先后尝试了：</p>
-<ul>
-<li>强制清除浏览器缓存（Ctrl + F5）。</li>
-<li>执行 <code>hexo clean</code> 深度清理。</li>
-<li>将主题内部的<code>_config.yml</code>放在根目录下且更名为<code>_config.butterfly.yml</code></li>
-<li>删除外层配置文件，直接修改主题内部的 <code>_config.yml</code>。<br><strong>结果：全部失败！</strong> 那个 <code>xxxxxx</code> 就像幽灵一样，不知藏在哪个角落。</li>
-</ul>
-<p><strong>最终解决办法：全局搜索</strong><br>我意识到，既然网页上出现了这个字符串，它一定以硬编码的形式存在于某个配置文件中。我动用了 Windows 命令行下的全局搜索工具：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">findstr /S /N <span class="string">&quot;xxxxxx&quot;</span> *.yml</span><br></pre></td></tr></table></figure>
-
-<p><strong>真相大白：</strong> 搜查结果显示，除了我修改的 <code>social</code> 区块，在 <code>themes\butterfly\_config.yml</code> 的第 285 行还藏着另一个 <code>link</code> 配置。原来 Butterfly 有多处可以配置 GitHub 链接的地方，而我之前只改了其中一个</p>
-<p>这就是典型的“代码改了，但没完全改”。精准打击掉这一行后，跳转终于恢复正常。</p>
-]]></content>
-      <categories>
-        <category>个人博客建设</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-        <tag>GitHub-Pages</tag>
-        <tag>Butterfly</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python 函数进阶：作用域、参数与匿名函数</title>
-    <url>/2026/03/17/python-learning/Stage1_Core_Basics/python-s1-06-advanced-functions/</url>
-    <content><![CDATA[<h1 id="函数多返回值"><a href="#函数多返回值" class="headerlink" title="函数多返回值"></a>函数多返回值</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test_return</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>, <span class="string">&quot;Hello&quot;</span>, <span class="literal">True</span></span><br><span class="line">x, y, z = test_return()</span><br><span class="line"><span class="built_in">print</span>(x, y, z)</span><br></pre></td></tr></table></figure>
-
-<h1 id="函数多种传参方式"><a href="#函数多种传参方式" class="headerlink" title="函数多种传参方式"></a>函数多种传参方式</h1><h2 id="位置参数"><a href="#位置参数" class="headerlink" title="位置参数"></a>位置参数</h2><p>调用函数时根据函数定义的参数位置来传递参数</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">user_info</span>(<span class="params">name, age, gender</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;姓名是：<span class="subst">&#123;name&#125;</span>,年龄是：<span class="subst">&#123;age&#125;</span>,性别是：<span class="subst">&#123;gender&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 位置参数</span></span><br><span class="line">user_info(<span class="string">&#x27;小明&#x27;</span>, <span class="number">20</span>, <span class="string">&#x27;男&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
-<h2 id="关键字参数"><a href="#关键字参数" class="headerlink" title="关键字参数"></a>关键字参数</h2><p>调用函数时通过“键 &#x3D; 值”的形式传递参数，消除参数的顺序需求</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">user_info</span>(<span class="params">name, age, gender</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;您的名字是:<span class="subst">&#123;name&#125;</span>，年龄是:<span class="subst">&#123;age&#125;</span>,性别是:<span class="subst">&#123;gender&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#关键字传参</span></span><br><span class="line">user_info(name=<span class="string">&quot;小明&quot;</span>,age=<span class="number">20</span>,gender=<span class="string">&quot;男&quot;</span>)</span><br><span class="line"><span class="comment"># 可以不按照固定顺序</span></span><br><span class="line">user_info(age=<span class="number">20</span>,gender=<span class="string">&quot;男&quot;</span>,name=<span class="string">&quot;小明&quot;</span>)</span><br><span class="line"><span class="comment">#可以和位置参数混用，位置参数必须在前，且匹配参数顺序</span></span><br><span class="line">user_info(<span class="string">&quot;小明&quot;</span>,age=<span class="number">20</span>,gender=<span class="string">&quot;男&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<h2 id="不定长参数"><a href="#不定长参数" class="headerlink" title="不定长参数"></a>不定长参数</h2><p>不定长参数也叫可变参数.用于不确定调用的时候会传递多少个参数(不传参也可以)的场景</p>
-<p>不定长参数的类型:</p>
-<h3 id="（1）位置传递"><a href="#（1）位置传递" class="headerlink" title="（1）位置传递"></a>（1）位置传递</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">user_info</span>(<span class="params">*args</span>):</span><br><span class="line">    <span class="built_in">print</span>(args)</span><br><span class="line"></span><br><span class="line"><span class="comment"># (&#x27;TOM&#x27;,)</span></span><br><span class="line">user_info(<span class="string">&#x27;TOM&#x27;</span>)</span><br><span class="line"><span class="comment"># (&#x27;TOM&#x27;, 18)</span></span><br><span class="line">user_info(<span class="string">&#x27;TOM&#x27;</span>, <span class="number">18</span>)</span><br></pre></td></tr></table></figure>
-
-<p>注意:传进的所有参数都会被args变量收集，它会根据传进参数的位置合并为一个元组(tuple)，args是元组类型</p>
-<h3 id="（2）关键字传递"><a href="#（2）关键字传递" class="headerlink" title="（2）关键字传递"></a>（2）关键字传递</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">user_info</span>(<span class="params">**kwargs</span>):</span><br><span class="line">    <span class="built_in">print</span>(kwargs)</span><br><span class="line"></span><br><span class="line"><span class="comment"># &#123;&#x27;name&#x27; : &#x27;TOM&#x27;, &#x27;age&#x27; : 18, &#x27;id&#x27; : 110&#125;</span></span><br><span class="line">user_info(name=<span class="string">&#x27;TOM&#x27;</span>, age=<span class="number">18</span>, <span class="built_in">id</span>=<span class="number">110</span>)</span><br></pre></td></tr></table></figure>
-
-<p>传入的参数是“键&#x3D;值”格式，被kwargs接收后根据“键&#x3D;值”组成字典</p>
-<h2 id="缺省参数"><a href="#缺省参数" class="headerlink" title="缺省参数"></a>缺省参数</h2><p>缺省参数也叫默认参数，调用函数时可不传该默认参数的值,如果传入该参数的值，则修改默认参数值</p>
-<p>注意:<strong>函数定义和调用时，所有位置参数必须出现在默认参数前</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">user_info</span>(<span class="params">name,age,gender = <span class="string">&#x27;男&#x27;</span></span>):</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&#x27;您的名字是<span class="subst">&#123;name&#125;</span>，年龄是<span class="subst">&#123;age&#125;</span>，性别是<span class="subst">&#123;gender&#125;</span>&#x27;</span>)</span><br><span class="line">user_info(<span class="string">&#x27;TOM&#x27;</span>, <span class="number">20</span>)</span><br><span class="line">user_info(<span class="string">&#x27;Rose&#x27;</span>, <span class="number">18</span>, <span class="string">&#x27;女&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
-<h1 id="匿名函数"><a href="#匿名函数" class="headerlink" title="匿名函数"></a>匿名函数</h1><h2 id="函数作为参数传递"><a href="#函数作为参数传递" class="headerlink" title="函数作为参数传递"></a>函数作为参数传递</h2><p>函数本身作为参数，传入另一个函数中进行使用。</p>
-<p>将函数传入的作用在于:传入计算逻辑，而非传入数据。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test_func</span>(<span class="params">func</span>):</span><br><span class="line">    result = func(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;func参数的类型是”：<span class="subst">&#123;func&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;计算结果：<span class="subst">&#123;result&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">compute</span>(<span class="params">x, y</span>):</span><br><span class="line">    <span class="keyword">return</span> x + y</span><br><span class="line"></span><br><span class="line">test_func(compute)</span><br></pre></td></tr></table></figure>
-
-<h2 id="lambda匿名函数"><a href="#lambda匿名函数" class="headerlink" title="lambda匿名函数"></a>lambda匿名函数</h2><p>函数的定义中:</p>
-<ul>
-<li>def关键字，可以定义带有名称的函数,可以基于名称<strong>重复使用</strong></li>
-<li>lambda关键字，可以定义匿名函数(无名称),只可<strong>临时使用一次</strong>。</li>
-</ul>
-<p>匿名函数定义语法:</p>
-<p>1ambda 传入参数:函数体(一行代码)</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test_func</span>(<span class="params">compute</span>):</span><br><span class="line">    result = compute(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">    <span class="built_in">print</span>(result)</span><br><span class="line"></span><br><span class="line">test_func(<span class="keyword">lambda</span> x, y: x + y)        <span class="comment">#结果:3</span></span><br></pre></td></tr></table></figure>
-
-<p>注意事项：</p>
-<ul>
-<li>匿名函数用于临时构建一个函数，只用一次的场景</li>
-<li>匿名函数的定义中，函数体只能写一行代码，如果函数体要写多行代码，不可用lambda匿名函数，应使用def定义带名函数</li>
-</ul>
-<div class="note default simple"><p><strong>Repository</strong></p>
-<p>本章示例代码已归档至 GitHub，可用于本地复现、调试与扩展。</p>
-<p><a class="btn-beautify " href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/06_Advanced_Functions" title="查看本章源码"><i class="fab fa-github"></i><span>查看本章源码</span></a></p>
-</div>]]></content>
-      <categories>
-        <category>Python 技术笔记</category>
-        <category>基础语法与数据结构</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>进阶语法</tag>
-        <tag>函数</tag>
-        <tag>Lambda</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python 文件读写与数据持久化</title>
-    <url>/2026/03/18/python-learning/Stage1_Core_Basics/python-s1-07-file-cperations/</url>
-    <content><![CDATA[<h1 id="文件的编码"><a href="#文件的编码" class="headerlink" title="文件的编码"></a>文件的编码</h1><p>1.什么是编码?<br>编码就是一种规则集合，记录了内容和二进制间进行相互转换的逻辑。编码有许多种，最常用的是UTF-8编码<br>2.为什么需要使用编码?<br>计算机只认识0和1，所以需要将内容翻译成0和1才能保存在计算机中。同时也需要编码，将计算机保存的0和1，反向翻译回可以识别的内容。</p>
-<hr>
-<h1 id="文件的读取"><a href="#文件的读取" class="headerlink" title="文件的读取"></a>文件的读取</h1><h2 id="打开文件"><a href="#打开文件" class="headerlink" title="打开文件"></a>打开文件</h2><p>使用open函数打开一个已经存在的文件，或者创建一个新文件，语法:<code>open(name, mode, encoding)</code></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">f= <span class="built_in">open</span>(<span class="string">&#x27;python.txt&#x27;</span>,<span class="string">&#x27;r&#x27;</span>, encoding=” UTF-<span class="number">8</span>)		<span class="comment">#encoding的顺序不是第三位，所以不能用位置参数，用关键字参数直接指定</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>name</code>:要打开的目标文件名的字符串(可以包含文件所在的具体路径)。</li>
-<li><code>mode</code>:设置打开文件的模式:只读、写入、追加等。</li>
-<li><code>encoding</code>:编码格式(推荐使用UTF-8)</li>
-</ul>
-<p>注意:此时的f是<code>open</code>函数的文件对象，对象是Python中一种特殊的数据类型，拥有属性和方法，可以使用对象.属性或对象.方法对其进行访问</p>
-<table>
-<thead>
-<tr>
-<th align="center">模式</th>
-<th align="center">描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">r</td>
-<td align="center">以只读方式打开文件。文件的指针将会放在文件的开头。是默认模式。</td>
-</tr>
-<tr>
-<td align="center">w</td>
-<td align="center">以写入方式打开文件。如果该文件已存在则打开文件，并从开头开始编辑，原有内容会被删除。如果该文件不存在，创建新文件。</td>
-</tr>
-<tr>
-<td align="center">a</td>
-<td align="center">以追加方式打开文件。如果该文件已存在，新的内容将会被写入到已有内容之后。如果该文件不存在，创建新文件进行写入。</td>
-</tr>
-</tbody></table>
-<h2 id="读操作相关方法"><a href="#读操作相关方法" class="headerlink" title="读操作相关方法"></a>读操作相关方法</h2><table>
-<thead>
-<tr>
-<th align="center">操作</th>
-<th align="center">功能</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">文件对象&#x3D;open(file, mode, encoding)</td>
-<td align="center">打开文件获得文件对象</td>
-</tr>
-<tr>
-<td align="center">文件对象.read(num)</td>
-<td align="center">读取指定长度字节,不指定num读取文件全部</td>
-</tr>
-<tr>
-<td align="center">文件对象.redline()</td>
-<td align="center">读取一行</td>
-</tr>
-<tr>
-<td align="center">文件对象.redlines()</td>
-<td align="center">取全部行，得到列表</td>
-</tr>
-<tr>
-<td align="center">for line in文件对象</td>
-<td align="center">for循环文件行，一次循环得到一行数据</td>
-</tr>
-<tr>
-<td align="center">件对象.close()</td>
-<td align="center">关闭文件对象</td>
-</tr>
-<tr>
-<td align="center">with open() as f</td>
-<td align="center">通过with open语法打开文件，可以自动关闭</td>
-</tr>
-</tbody></table>
-<h3 id="read-方法"><a href="#read-方法" class="headerlink" title="read()方法:"></a>read()方法:</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">文件对象.read(num)</span><br></pre></td></tr></table></figure>
-<p><code>num</code>表示要从文件中读取的数据的长度，如果没有传入num，那么就表示读取文件中所有的数据。<br><code>num</code>:如果文件是以二进制模式打开，单位是字节（Byte），如果是文本模式，单位是字符。</p>
-<h3 id="redline-方法："><a href="#redline-方法：" class="headerlink" title="redline()方法："></a>redline()方法：</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">文件对象.readline()</span><br></pre></td></tr></table></figure>
-<p>一次读取一行内容</p>
-<h3 id="redlines-方法"><a href="#redlines-方法" class="headerlink" title="redlines ()方法:"></a>redlines ()方法:</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">文件对象.readlines()</span><br></pre></td></tr></table></figure>
-<p><code>redlines</code>是按照行的方式把整个文件中的内容进行一次性读取，以每一行的数据为一个元素，返回一个列表。</p>
-<h3 id="for循环读取文件行"><a href="#for循环读取文件行" class="headerlink" title="for循环读取文件行"></a>for循环读取文件行</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> <span class="built_in">open</span>(<span class="string">&quot;python.txt, &quot;</span><span class="string">r&quot;)</span></span><br><span class="line"><span class="string">	print(line)</span></span><br></pre></td></tr></table></figure>
-<p>每一个<code>line</code>临时变量，就记录了文件的一行数据</p>
-<h3 id="close关闭文件对象"><a href="#close关闭文件对象" class="headerlink" title="close关闭文件对象"></a>close关闭文件对象</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">f.close()</span><br></pre></td></tr></table></figure>
-
-<p>如果不调用<code>close</code>,同时程序没有停止运行，那么这个文件将一直被Python程序占用。</p>
-<h3 id="with-open语法"><a href="#with-open语法" class="headerlink" title="with open语法"></a>with open语法</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;python.txt&quot;</span>,<span class="string">&quot;r&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">f.readlines()</span><br></pre></td></tr></table></figure>
-
-<p>通过在<code>with open</code>的语句块中对文件进行操作，可以在操作完成后自动关闭close文件，避免遗忘掉<code>close</code>方法</p>
-<hr>
-<h1 id="文件的写入"><a href="#文件的写入" class="headerlink" title="文件的写入"></a>文件的写入</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#1.打开文件</span></span><br><span class="line">f = <span class="built_in">open</span>(<span class="string">&#x27;python.txt&#x27;</span>,<span class="string">&#x27;w&#x27;</span>, encoding=<span class="string">&quot;utf-8&quot;</span> )</span><br><span class="line"></span><br><span class="line"><span class="comment">#2.文件写入</span></span><br><span class="line">f.write(<span class="string">&#x27;hello world&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#3.刷新内容到硬盘中</span></span><br><span class="line">f.flush()</span><br></pre></td></tr></table></figure>
-
-<p>注意:</p>
-<ul>
-<li><p>文件不存在时，w模式会创建新文件，文件存在时，会清空原有内容</p>
-</li>
-<li><p>close()方法，自带了flush()方法的功能</p>
-</li>
-<li><p>write是把内容写在程序的内存中（<strong>缓冲区</strong>），调用flush后，刷新内容到硬盘中。避免频繁的操作硬盘，导致效率下降</p>
-</li>
-</ul>
-<hr>
-<h1 id="文件的追加"><a href="#文件的追加" class="headerlink" title="文件的追加"></a>文件的追加</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#1.打开文件，通过a模式打开即可</span></span><br><span class="line">f=<span class="built_in">open</span>(<span class="string">&#x27;python.txt,a)</span></span><br><span class="line"><span class="string">       </span></span><br><span class="line"><span class="string">#2.文件写入</span></span><br><span class="line"><span class="string">f.write(&#x27;</span>hello world<span class="string">&#x27;)</span></span><br><span class="line"><span class="string">       </span></span><br><span class="line"><span class="string">#3.内容刷新</span></span><br><span class="line"><span class="string">f.flush()</span></span><br></pre></td></tr></table></figure>
-
-
-<p>注意:如果文件不存在会创建文件，如果文件存在会在最后追加写入文件</p>
-<div class="note default simple"><p><strong>Repository</strong></p>
-<p>本章示例代码已归档至 GitHub，可用于本地复现、调试与扩展。</p>
-<p><a class="btn-beautify " href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/07_File_Operations" title="查看本章源码"><i class="fab fa-github"></i><span>查看本章源码</span></a></p>
-</div>
-]]></content>
-      <categories>
-        <category>Python 技术笔记</category>
-        <category>基础语法与数据结构</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>基础语法</tag>
-        <tag>文件操作</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python 循环结构：while 与 for 的使用</title>
-    <url>/2026/03/14/python-learning/Stage1_Core_Basics/python-s1-03-loop-statement/</url>
-    <content><![CDATA[<h1 id="While-循环"><a href="#While-循环" class="headerlink" title="While 循环"></a>While 循环</h1><p><code>while</code> 循环适用于“只要条件满足，就一直执行”的场景。</p>
-<h2 id="基础应用"><a href="#基础应用" class="headerlink" title="基础应用"></a>基础应用</h2><p><code>while</code> 循环的基础语法如下：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> 条件:</span><br><span class="line">	满足条件时要做的事情<span class="number">1</span></span><br><span class="line">    满足条件时要做的事情<span class="number">2</span></span><br><span class="line">    ...</span><br><span class="line">    满足条件时要做的事情N</span><br></pre></td></tr></table></figure>
-
-<p><strong>⚠️ 注意事项：</strong></p>
-<p><strong>条件类型：</strong> 条件的结果一定要是 <code>bool</code> 类型 。<br><strong>防止死循环：</strong> 必须要设置循环的终止条件 。<br><strong>层级关系：</strong> 严格通过空格缩进来判断代码的归属 。</p>
-<h2 id="While-循环嵌套"><a href="#While-循环嵌套" class="headerlink" title="While 循环嵌套"></a>While 循环嵌套</h2><p>在复杂的逻辑中，我们可以在循环内部再嵌套循环：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> 条件<span class="number">1</span>:</span><br><span class="line">    满足条件<span class="number">1</span>时要做的事情<span class="number">1</span></span><br><span class="line">    ... </span><br><span class="line">    <span class="keyword">while</span> 条件<span class="number">2</span>:</span><br><span class="line">        满足条件<span class="number">2</span>时要做的事情<span class="number">1</span></span><br><span class="line">        ... </span><br></pre></td></tr></table></figure>
-
-<p>注意：</p>
-<ul>
-<li>需要设置循环的终止条件</li>
-<li>通过空格缩进来判断归属</li>
-</ul>
-<hr>
-<h1 id="For-循环"><a href="#For-循环" class="headerlink" title="For 循环"></a>For 循环</h1><h2 id="基础语法"><a href="#基础语法" class="headerlink" title="基础语法"></a>基础语法</h2><p><code>for</code> 循环主要用于遍历（依次取出）数据集中的元素。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> 临时变量 <span class="keyword">in</span> 待处理数据集(序列):</span><br><span class="line">    循环满足条件时执行的代码</span><br></pre></td></tr></table></figure>
-
-<p>这里的“待处理数据集”，严格来说称之为<strong>序列类型</strong> 。</p>
-<p>序列类型是指其内容可以一个个依次取出的一种数据类型，包括：字符串、列表、元组等 。</p>
-<p><strong>⚠️ 注意事项：</strong></p>
-<ul>
-<li><p>无法像 <code>while</code> 那样自定义循环条件，只能被动取出数据处理 。</p>
-</li>
-<li><p>需要通过空格缩进来判断归属 。</p>
-</li>
-</ul>
-<h2 id="range-语句"><a href="#range-语句" class="headerlink" title="range 语句"></a>range 语句</h2><p><code>range</code> 函数是 <code>for</code> 循环的最佳拍档，用于快速生成数字序列：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">range</span>(num)：		<span class="comment">#获得一个从 0 开始，到 num-1 结束的数字序列 </span></span><br><span class="line"><span class="built_in">range</span>(num1, num2)：		<span class="comment">#获得一个从 num1 开始，到 num2-1 结束的数字序列 </span></span><br><span class="line"><span class="built_in">range</span>(num1, num2, step)：  <span class="comment">#获得一个从 num1 开始，到 num2-1 结束的数字序列，步长为 step (默认为 1) </span></span><br></pre></td></tr></table></figure>
-
-<h2 id="变量作用域"><a href="#变量作用域" class="headerlink" title="变量作用域"></a>变量作用域</h2><p><code>for</code> 循环中临时变量的作用域只被限定在循环内。<br><strong>⚠️ 注意事项：</strong></p>
-<ul>
-<li><p>虽然在 Python 中，你可以在作用域外访问临时变量，但极其不推荐这样做，这破坏了代码的封装性 。</p>
-</li>
-<li><p>如需访问临时变量，可以预先在循环外定义它</p>
-</li>
-</ul>
-<h2 id="For-循环的嵌套"><a href="#For-循环的嵌套" class="headerlink" title="For 循环的嵌套"></a>For 循环的嵌套</h2><p>与 <code>while</code> 类似，<code>for</code> 循环也支持嵌套：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> 临时变量 <span class="keyword">in</span> 待处理数据集(序列):</span><br><span class="line">    满足条件时要做的事情<span class="number">1</span></span><br><span class="line">    ... </span><br><span class="line">    <span class="keyword">for</span> 临时变量 <span class="keyword">in</span> 待处理数据集(序列):</span><br><span class="line">        满足条件时要做的事情<span class="number">1</span></span><br><span class="line">        ...</span><br></pre></td></tr></table></figure>
-
-<h2 id="Continue-和-Break"><a href="#Continue-和-Break" class="headerlink" title="Continue 和 Break"></a>Continue 和 Break</h2><h3 id="continue"><a href="#continue" class="headerlink" title="continue"></a>continue</h3><p><code>continue</code> 的作用是：<strong>中断本次循环，直接进入下一次循环</strong> 。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">100</span>): </span><br><span class="line">    语句<span class="number">1</span> </span><br><span class="line">    <span class="keyword">continue</span></span><br><span class="line">    语句<span class="number">2</span> 	<span class="comment"># 此行命令会被跳过</span></span><br></pre></td></tr></table></figure>
-
-<p><code>continue</code> 可用于 <code>for</code> 循环和 <code>while</code> 循环，效果一致 。</p>
-<h3 id="break"><a href="#break" class="headerlink" title="break"></a>break</h3><p><code>break</code> 的作用更加坚决：<strong>直接结束整个循环</strong> 。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">100</span>):</span><br><span class="line">    语句<span class="number">1</span></span><br><span class="line">    <span class="keyword">break</span> <span class="comment"># 跳出整个循环</span></span><br><span class="line">    语句<span class="number">2</span></span><br><span class="line">语句<span class="number">3</span></span><br></pre></td></tr></table></figure>
-
-<p><code>break</code> 同样可用于 <code>for</code> 循环和 <code>while</code> 循环，效果完全一致 。</p>
-<blockquote>
-<p><strong>💡 Break 的底层作用规则：</strong><br>在 Python 以及绝大多数编程语言中，<code>break</code> 遵循以下逻辑：</p>
-<ol>
-<li><strong>寻找上级：</strong> 当程序运行到 <code>break</code> 时，向外层寻找最近的一个 <code>for/while</code> 循环 。</li>
-<li><strong>无视障碍：</strong> 在寻找的过程中，它会穿透所有的 <code>if</code>, <code>elif</code>, <code>else</code> 。</li>
-</ol>
-</blockquote>
-<hr>
-<div class="note default simple"><p><strong>Repository</strong></p>
-<p>本章示例代码已归档至 GitHub，可用于本地复现、调试与扩展。</p>
-<p><a class="btn-beautify " href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/03_Loop_Statements" title="查看本章源码"><i class="fab fa-github"></i><span>查看本章源码</span></a></p>
-</div>]]></content>
-      <categories>
-        <category>Python 技术笔记</category>
-        <category>基础语法与数据结构</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>基础语法</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Python 基础语法：变量、类型与表达式</title>
     <url>/2026/03/12/python-learning/Stage1_Core_Basics/python-s1-01-basic-syntax/</url>
     <content><![CDATA[<h1 id="字面量"><a href="#字面量" class="headerlink" title="字面量"></a>字面量</h1><p>常用的值的类型：<br><img src="https://raw.githubusercontent.com/NimbusFan/blog-images/main/assets/%E5%B8%B8%E7%94%A8%E7%9A%84%E5%80%BC%E7%9A%84%E7%B1%BB%E5%9E%8B.png" alt="常用的值的类型.png"></p>
@@ -533,6 +140,783 @@
         <tag>Python</tag>
         <tag>基础语法</tag>
         <tag>编程入门</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python 函数基础：定义、参数与返回值</title>
+    <url>/2026/03/15/python-learning/Stage1_Core_Basics/python-s1-04-function-basics/</url>
+    <content><![CDATA[<h1 id="函数的基础定义"><a href="#函数的基础定义" class="headerlink" title="函数的基础定义"></a>函数的基础定义</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">函数名</span>(<span class="params">传入参数</span>):</span><br><span class="line">    函数体</span><br><span class="line">    <span class="keyword">return</span> 返回值</span><br></pre></td></tr></table></figure>
+
+<p>注意：</p>
+<ul>
+<li>参数&#x2F;返回值如不需要，可以省略</li>
+<li>如果不使用return，函数会返回None，类型是：&lt;class ‘NoneType’&gt;</li>
+<li>函数必须先定义后使用</li>
+</ul>
+<hr>
+<h1 id="函数的传入参数"><a href="#函数的传入参数" class="headerlink" title="函数的传入参数"></a>函数的传入参数</h1><ul>
+<li>函数定义中的参数为<strong>形式参数</strong></li>
+<li>函数调用中的参数为<strong>实际参数</strong></li>
+<li>函数的参数数量不限(0~N)，使用逗号分隔开</li>
+<li>传入参数的时候，要和形式参数一一对应，逗号隔开?</li>
+</ul>
+<hr>
+<h1 id="函数返回值"><a href="#函数返回值" class="headerlink" title="函数返回值"></a>函数返回值</h1><h2 id="函数返回值的定义"><a href="#函数返回值的定义" class="headerlink" title="函数返回值的定义"></a>函数返回值的定义</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">函数</span>(<span class="params">参数...</span>):</span><br><span class="line">    函数体</span><br><span class="line">    <span class="keyword">return</span>返回值</span><br><span class="line"></span><br><span class="line"><span class="comment"># 通过return关键字向调用者返回数据</span></span><br><span class="line">变量=函数(参数)</span><br></pre></td></tr></table></figure>
+
+<p>函数体在遇到return后就结束，写在return后的代码不会执行</p>
+<h2 id="None类型"><a href="#None类型" class="headerlink" title="None类型"></a>None类型</h2><h3 id="什么是None"><a href="#什么是None" class="headerlink" title="什么是None"></a>什么是None</h3><p>None是类型’NoneType’的字面量，用于表示:空的、无意义的</p>
+<h3 id="函数如何返回None"><a href="#函数如何返回None" class="headerlink" title="函数如何返回None"></a>函数如何返回None</h3><ul>
+<li>不使用return语句即返回None</li>
+<li>主动return None</li>
+</ul>
+<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><ul>
+<li><p>用在函数无返回值上</p>
+</li>
+<li><p>用在if判断上：在if判断中，None等同于False；一般用于在函数中主动返回None，配合if判断做相关处理</p>
+</li>
+<li><p>用于声明无内容的变量上:定义变量但暂时不需要变量有具体值，可以用None来代替</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">• <span class="comment">#暂不赋予变量具体值</span></span><br><span class="line">• name = <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="函数说明文档"><a href="#函数说明文档" class="headerlink" title="函数说明文档"></a>函数说明文档</h1><h2 id="函数说明文档的作用："><a href="#函数说明文档的作用：" class="headerlink" title="函数说明文档的作用："></a>函数说明文档的作用：</h2><p>对函数进行说明解释，帮助更好理解函数的功能</p>
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">func</span>(<span class="params">x,y</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    函数说明</span></span><br><span class="line"><span class="string">    :param x:参数x的说明</span></span><br><span class="line"><span class="string">    :param x:参数y的说明</span></span><br><span class="line"><span class="string">    :return:返回值的说明</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    函数体</span><br><span class="line">    <span class="keyword">return</span> 返回值</span><br></pre></td></tr></table></figure>
+
+<p>:param用于解释参数（parameter，参数）</p>
+<p>:return用于解释返回值</p>
+<hr>
+<h1 id="函数的嵌套调用"><a href="#函数的嵌套调用" class="headerlink" title="函数的嵌套调用"></a>函数的嵌套调用</h1><p>函数A中执行到调用函数B的语句，会将函数B全部执行完成后，继续执行函数A的剩余内容</p>
+<hr>
+<h1 id="变量的作用域"><a href="#变量的作用域" class="headerlink" title="变量的作用域"></a>变量的作用域</h1><h2 id="变量作用域"><a href="#变量作用域" class="headerlink" title="变量作用域"></a>变量作用域</h2><p>变量作用域指的是变量的作用范围</p>
+<p>变量主要分为两类:<strong>局部变量</strong>和<strong>全局变量</strong></p>
+<p><strong>局部变量</strong>是定义在函数体内部的变量，只在函数体内部生效</p>
+<p><strong>全局变量</strong>是在函数体内、外都能生效的变量</p>
+<h2 id="global关键字"><a href="#global关键字" class="headerlink" title="global关键字"></a>global关键字</h2><p><code>global</code> 用于在函数内部声明某个变量来自全局作用域，从而允许在函数内部修改该全局变量。</p>
+<hr>
+<div class="note default simple"><p><strong>Repository</strong></p>
+<p>本章示例代码已归档至 GitHub，可用于本地复现、调试与扩展。</p>
+<p><a class="btn-beautify " href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/04_Functions" title="查看本章源码"><i class="fab fa-github"></i><span>查看本章源码</span></a></p>
+</div>]]></content>
+      <categories>
+        <category>Python 技术笔记</category>
+        <category>基础语法与数据结构</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>基础语法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo 博客搭建：GitHub Pages 与 Butterfly 主题配置</title>
+    <url>/2026/03/11/daily/Hexo%20%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%EF%BC%9AGitHub%20Pages%20%E4%B8%8E%20Butterfly%20%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<h2 id="前言：为什么要做这个博客？"><a href="#前言：为什么要做这个博客？" class="headerlink" title="前言：为什么要做这个博客？"></a>前言：为什么要做这个博客？</h2><p>平时在学习过程中写过不少 Python 脚本，折腾过 PostgreSQL 数据库，也在 GitHub 上修过别人的 Bug。逐渐意识到，知识如果不系统地沉淀下来，很容易变成过眼云烟。</p>
+<p>为了记录接下来死磕 Java 后端开发的学习历程，决定搭建一个真正属于自己的独立博客。</p>
+<p>这篇文章不仅是教程，更是一篇的“填坑日记”。</p>
+<hr>
+<h2 id="一、网络超时"><a href="#一、网络超时" class="headerlink" title="一、网络超时"></a>一、网络超时</h2><p>环境配置（Node.js 和 Git）还算顺利，但敲下第一行初始化命令 <code>hexo init myblog</code> 时，就开始报错了：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">fatal: unable to access <span class="string">&#x27;[https://github.com/hexojs/hexo-starter.git/](https://github.com/hexojs/hexo-starter.git/)&#x27;</span>: Connection timed out after 300030 milliseconds</span><br><span class="line">Error: EPERM: operation not permitted, <span class="built_in">mkdir</span> <span class="string">&#x27;D:\&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>排坑思路：</strong> 命令行默认是不走代理的，干等 300 秒后必定超时。而后面的 <code>EPERM</code> 报错纯粹是因为网络断开后，Hexo 备用机制乱了阵脚，试图在 D 盘根目录建文件夹被系统权限拦截。</p>
+<p><strong>解决方案：</strong> 果断清理残留的半成品文件夹，直接动用国内镜像源进行极速克隆：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo init myblog [https://ghproxy.net/https://github.com/hexojs/hexo-starter.git](https://ghproxy.net/https://github.com/hexojs/hexo-starter.git)</span><br></pre></td></tr></table></figure>
+
+<p>随后进入文件夹，使用淘宝镜像源安装依赖：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install --registry=[https://registry.npmmirror.com](https://registry.npmmirror.c</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、连接被重置"><a href="#二、连接被重置" class="headerlink" title="二、连接被重置"></a>二、连接被重置</h2><p>在本地跑通 <code>hexo s</code> 看到默认主题后，按照教程配置了 <code>_config.yml</code>，准备将网页推送到 GitHub Pages。结果在执行 <code>hexo d</code> 时，再次报错：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fatal: unable to access &#x27;[https://github.com/](https://github.com/)...&#x27;: Recv failure: Connection was reset</span><br></pre></td></tr></table></figure>
+
+<p><strong>排坑思路：</strong> 国内使用 <code>https://</code> 开头的地址去推送 Git 极度不稳定，经常推到一半连接就被掐断。于是抛弃 HTTPS 部署，改用 <strong>SSH 密钥免密传输</strong>。</p>
+<p><strong>解决方案：</strong></p>
+<ol>
+<li><strong>生成本地密钥：</strong> 运行 <code>ssh-keygen -t rsa -C &quot;我的邮箱&quot;</code>，一路回车。</li>
+<li><strong>配置 GitHub：</strong> 将 <code>~/.ssh/id_rsa.pub</code> 里的公钥全选复制，添加到 GitHub 的 <code>SSH and GPG keys</code> 中。</li>
+<li><strong>测试连接：</strong> 运行 <code>ssh -T git@github.com</code> 确认打通。</li>
+<li><strong>修改 Hexo 总配置：</strong> 将部署地址换成 SSH 格式。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:fanbyteio/fanbyteio.github.io.git</span><br><span class="line">  branch: main</span><br></pre></td></tr></table></figure>
+
+<p>修改完成后，再次 <code>hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</code>，丝滑上线！</p>
+<hr>
+<h2 id="三、换装-Butterfly"><a href="#三、换装-Butterfly" class="headerlink" title="三、换装 Butterfly"></a>三、换装 Butterfly</h2><p>为了追求视觉效果，我选择了目前 Hexo 界功能多样的主题——<strong>Butterfly</strong>。但代价是配置复杂度的提升。</p>
+<p><strong>避坑指南：</strong></p>
+<ol>
+<li><strong>国内极速克隆：</strong> 同样使用镜像加速，避免克隆到一半报错。<br><code>git clone https://github.moeyy.xyz/https://github.com/JerryC808/hexo-theme-butterfly themes/butterfly</code></li>
+<li><strong>必装渲染器：</strong> Butterfly 使用了 Pug 和 Stylus，如果不装对应的渲染插件，本地预览会直接满屏乱码。<br><code>npm install hexo-renderer-pug hexo-renderer-stylus --save</code></li>
+</ol>
+<hr>
+<h2 id="四、消失不掉的-“xxxxxx”"><a href="#四、消失不掉的-“xxxxxx”" class="headerlink" title="四、消失不掉的 “xxxxxx”"></a>四、消失不掉的 “xxxxxx”</h2><p>在配置侧边栏社交链接时，遇到了本次搭建过程中最诡异的 Bug：明明已经把 <code>_config.yml</code> 里的 <code>social</code> 链接改成了我自己的 GitHub 账号（fanbyteio），且再三确只有这一处social链接，但网页上的图标点开后，依然顽固地跳转到主题默认的 <code>github.com/xxxxxx</code>。</p>
+<p><strong>排坑思路：</strong><br>我先后尝试了：</p>
+<ul>
+<li>强制清除浏览器缓存（Ctrl + F5）。</li>
+<li>执行 <code>hexo clean</code> 深度清理。</li>
+<li>将主题内部的<code>_config.yml</code>放在根目录下且更名为<code>_config.butterfly.yml</code></li>
+<li>删除外层配置文件，直接修改主题内部的 <code>_config.yml</code>。<br><strong>结果：全部失败！</strong> 那个 <code>xxxxxx</code> 就像幽灵一样，不知藏在哪个角落。</li>
+</ul>
+<p><strong>最终解决办法：全局搜索</strong><br>我意识到，既然网页上出现了这个字符串，它一定以硬编码的形式存在于某个配置文件中。我动用了 Windows 命令行下的全局搜索工具：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">findstr /S /N <span class="string">&quot;xxxxxx&quot;</span> *.yml</span><br></pre></td></tr></table></figure>
+
+<p><strong>真相大白：</strong> 搜查结果显示，除了我修改的 <code>social</code> 区块，在 <code>themes\butterfly\_config.yml</code> 的第 285 行还藏着另一个 <code>link</code> 配置。原来 Butterfly 有多处可以配置 GitHub 链接的地方，而我之前只改了其中一个</p>
+<p>这就是典型的“代码改了，但没完全改”。精准打击掉这一行后，跳转终于恢复正常。</p>
+]]></content>
+      <categories>
+        <category>个人博客建设</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+        <tag>GitHub-Pages</tag>
+        <tag>Butterfly</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python 循环结构：while 与 for 的使用</title>
+    <url>/2026/03/14/python-learning/Stage1_Core_Basics/python-s1-03-loop-statement/</url>
+    <content><![CDATA[<h1 id="While-循环"><a href="#While-循环" class="headerlink" title="While 循环"></a>While 循环</h1><p><code>while</code> 循环适用于“只要条件满足，就一直执行”的场景。</p>
+<h2 id="基础应用"><a href="#基础应用" class="headerlink" title="基础应用"></a>基础应用</h2><p><code>while</code> 循环的基础语法如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> 条件:</span><br><span class="line">	满足条件时要做的事情<span class="number">1</span></span><br><span class="line">    满足条件时要做的事情<span class="number">2</span></span><br><span class="line">    ...</span><br><span class="line">    满足条件时要做的事情N</span><br></pre></td></tr></table></figure>
+
+<p><strong>⚠️ 注意事项：</strong></p>
+<p><strong>条件类型：</strong> 条件的结果一定要是 <code>bool</code> 类型 。<br><strong>防止死循环：</strong> 必须要设置循环的终止条件 。<br><strong>层级关系：</strong> 严格通过空格缩进来判断代码的归属 。</p>
+<h2 id="While-循环嵌套"><a href="#While-循环嵌套" class="headerlink" title="While 循环嵌套"></a>While 循环嵌套</h2><p>在复杂的逻辑中，我们可以在循环内部再嵌套循环：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> 条件<span class="number">1</span>:</span><br><span class="line">    满足条件<span class="number">1</span>时要做的事情<span class="number">1</span></span><br><span class="line">    ... </span><br><span class="line">    <span class="keyword">while</span> 条件<span class="number">2</span>:</span><br><span class="line">        满足条件<span class="number">2</span>时要做的事情<span class="number">1</span></span><br><span class="line">        ... </span><br></pre></td></tr></table></figure>
+
+<p>注意：</p>
+<ul>
+<li>需要设置循环的终止条件</li>
+<li>通过空格缩进来判断归属</li>
+</ul>
+<hr>
+<h1 id="For-循环"><a href="#For-循环" class="headerlink" title="For 循环"></a>For 循环</h1><h2 id="基础语法"><a href="#基础语法" class="headerlink" title="基础语法"></a>基础语法</h2><p><code>for</code> 循环主要用于遍历（依次取出）数据集中的元素。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> 临时变量 <span class="keyword">in</span> 待处理数据集(序列):</span><br><span class="line">    循环满足条件时执行的代码</span><br></pre></td></tr></table></figure>
+
+<p>这里的“待处理数据集”，严格来说称之为<strong>序列类型</strong> 。</p>
+<p>序列类型是指其内容可以一个个依次取出的一种数据类型，包括：字符串、列表、元组等 。</p>
+<p><strong>⚠️ 注意事项：</strong></p>
+<ul>
+<li><p>无法像 <code>while</code> 那样自定义循环条件，只能被动取出数据处理 。</p>
+</li>
+<li><p>需要通过空格缩进来判断归属 。</p>
+</li>
+</ul>
+<h2 id="range-语句"><a href="#range-语句" class="headerlink" title="range 语句"></a>range 语句</h2><p><code>range</code> 函数是 <code>for</code> 循环的最佳拍档，用于快速生成数字序列：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">range</span>(num)：		<span class="comment">#获得一个从 0 开始，到 num-1 结束的数字序列 </span></span><br><span class="line"><span class="built_in">range</span>(num1, num2)：		<span class="comment">#获得一个从 num1 开始，到 num2-1 结束的数字序列 </span></span><br><span class="line"><span class="built_in">range</span>(num1, num2, step)：  <span class="comment">#获得一个从 num1 开始，到 num2-1 结束的数字序列，步长为 step (默认为 1) </span></span><br></pre></td></tr></table></figure>
+
+<h2 id="变量作用域"><a href="#变量作用域" class="headerlink" title="变量作用域"></a>变量作用域</h2><p><code>for</code> 循环中临时变量的作用域只被限定在循环内。<br><strong>⚠️ 注意事项：</strong></p>
+<ul>
+<li><p>虽然在 Python 中，你可以在作用域外访问临时变量，但极其不推荐这样做，这破坏了代码的封装性 。</p>
+</li>
+<li><p>如需访问临时变量，可以预先在循环外定义它</p>
+</li>
+</ul>
+<h2 id="For-循环的嵌套"><a href="#For-循环的嵌套" class="headerlink" title="For 循环的嵌套"></a>For 循环的嵌套</h2><p>与 <code>while</code> 类似，<code>for</code> 循环也支持嵌套：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> 临时变量 <span class="keyword">in</span> 待处理数据集(序列):</span><br><span class="line">    满足条件时要做的事情<span class="number">1</span></span><br><span class="line">    ... </span><br><span class="line">    <span class="keyword">for</span> 临时变量 <span class="keyword">in</span> 待处理数据集(序列):</span><br><span class="line">        满足条件时要做的事情<span class="number">1</span></span><br><span class="line">        ...</span><br></pre></td></tr></table></figure>
+
+<h2 id="Continue-和-Break"><a href="#Continue-和-Break" class="headerlink" title="Continue 和 Break"></a>Continue 和 Break</h2><h3 id="continue"><a href="#continue" class="headerlink" title="continue"></a>continue</h3><p><code>continue</code> 的作用是：<strong>中断本次循环，直接进入下一次循环</strong> 。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">100</span>): </span><br><span class="line">    语句<span class="number">1</span> </span><br><span class="line">    <span class="keyword">continue</span></span><br><span class="line">    语句<span class="number">2</span> 	<span class="comment"># 此行命令会被跳过</span></span><br></pre></td></tr></table></figure>
+
+<p><code>continue</code> 可用于 <code>for</code> 循环和 <code>while</code> 循环，效果一致 。</p>
+<h3 id="break"><a href="#break" class="headerlink" title="break"></a>break</h3><p><code>break</code> 的作用更加坚决：<strong>直接结束整个循环</strong> 。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">100</span>):</span><br><span class="line">    语句<span class="number">1</span></span><br><span class="line">    <span class="keyword">break</span> <span class="comment"># 跳出整个循环</span></span><br><span class="line">    语句<span class="number">2</span></span><br><span class="line">语句<span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+<p><code>break</code> 同样可用于 <code>for</code> 循环和 <code>while</code> 循环，效果完全一致 。</p>
+<blockquote>
+<p><strong>💡 Break 的底层作用规则：</strong><br>在 Python 以及绝大多数编程语言中，<code>break</code> 遵循以下逻辑：</p>
+<ol>
+<li><strong>寻找上级：</strong> 当程序运行到 <code>break</code> 时，向外层寻找最近的一个 <code>for/while</code> 循环 。</li>
+<li><strong>无视障碍：</strong> 在寻找的过程中，它会穿透所有的 <code>if</code>, <code>elif</code>, <code>else</code> 。</li>
+</ol>
+</blockquote>
+<hr>
+<div class="note default simple"><p><strong>Repository</strong></p>
+<p>本章示例代码已归档至 GitHub，可用于本地复现、调试与扩展。</p>
+<p><a class="btn-beautify " href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/03_Loop_Statements" title="查看本章源码"><i class="fab fa-github"></i><span>查看本章源码</span></a></p>
+</div>]]></content>
+      <categories>
+        <category>Python 技术笔记</category>
+        <category>基础语法与数据结构</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>基础语法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python 函数进阶：作用域、参数与匿名函数</title>
+    <url>/2026/03/17/python-learning/Stage1_Core_Basics/python-s1-06-advanced-functions/</url>
+    <content><![CDATA[<h1 id="函数多返回值"><a href="#函数多返回值" class="headerlink" title="函数多返回值"></a>函数多返回值</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test_return</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>, <span class="string">&quot;Hello&quot;</span>, <span class="literal">True</span></span><br><span class="line">x, y, z = test_return()</span><br><span class="line"><span class="built_in">print</span>(x, y, z)</span><br></pre></td></tr></table></figure>
+
+<h1 id="函数多种传参方式"><a href="#函数多种传参方式" class="headerlink" title="函数多种传参方式"></a>函数多种传参方式</h1><h2 id="位置参数"><a href="#位置参数" class="headerlink" title="位置参数"></a>位置参数</h2><p>调用函数时根据函数定义的参数位置来传递参数</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">user_info</span>(<span class="params">name, age, gender</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;姓名是：<span class="subst">&#123;name&#125;</span>,年龄是：<span class="subst">&#123;age&#125;</span>,性别是：<span class="subst">&#123;gender&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 位置参数</span></span><br><span class="line">user_info(<span class="string">&#x27;小明&#x27;</span>, <span class="number">20</span>, <span class="string">&#x27;男&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="关键字参数"><a href="#关键字参数" class="headerlink" title="关键字参数"></a>关键字参数</h2><p>调用函数时通过“键 &#x3D; 值”的形式传递参数，消除参数的顺序需求</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">user_info</span>(<span class="params">name, age, gender</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;您的名字是:<span class="subst">&#123;name&#125;</span>，年龄是:<span class="subst">&#123;age&#125;</span>,性别是:<span class="subst">&#123;gender&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#关键字传参</span></span><br><span class="line">user_info(name=<span class="string">&quot;小明&quot;</span>,age=<span class="number">20</span>,gender=<span class="string">&quot;男&quot;</span>)</span><br><span class="line"><span class="comment"># 可以不按照固定顺序</span></span><br><span class="line">user_info(age=<span class="number">20</span>,gender=<span class="string">&quot;男&quot;</span>,name=<span class="string">&quot;小明&quot;</span>)</span><br><span class="line"><span class="comment">#可以和位置参数混用，位置参数必须在前，且匹配参数顺序</span></span><br><span class="line">user_info(<span class="string">&quot;小明&quot;</span>,age=<span class="number">20</span>,gender=<span class="string">&quot;男&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="不定长参数"><a href="#不定长参数" class="headerlink" title="不定长参数"></a>不定长参数</h2><p>不定长参数也叫可变参数.用于不确定调用的时候会传递多少个参数(不传参也可以)的场景</p>
+<p>不定长参数的类型:</p>
+<h3 id="（1）位置传递"><a href="#（1）位置传递" class="headerlink" title="（1）位置传递"></a>（1）位置传递</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">user_info</span>(<span class="params">*args</span>):</span><br><span class="line">    <span class="built_in">print</span>(args)</span><br><span class="line"></span><br><span class="line"><span class="comment"># (&#x27;TOM&#x27;,)</span></span><br><span class="line">user_info(<span class="string">&#x27;TOM&#x27;</span>)</span><br><span class="line"><span class="comment"># (&#x27;TOM&#x27;, 18)</span></span><br><span class="line">user_info(<span class="string">&#x27;TOM&#x27;</span>, <span class="number">18</span>)</span><br></pre></td></tr></table></figure>
+
+<p>注意:传进的所有参数都会被args变量收集，它会根据传进参数的位置合并为一个元组(tuple)，args是元组类型</p>
+<h3 id="（2）关键字传递"><a href="#（2）关键字传递" class="headerlink" title="（2）关键字传递"></a>（2）关键字传递</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">user_info</span>(<span class="params">**kwargs</span>):</span><br><span class="line">    <span class="built_in">print</span>(kwargs)</span><br><span class="line"></span><br><span class="line"><span class="comment"># &#123;&#x27;name&#x27; : &#x27;TOM&#x27;, &#x27;age&#x27; : 18, &#x27;id&#x27; : 110&#125;</span></span><br><span class="line">user_info(name=<span class="string">&#x27;TOM&#x27;</span>, age=<span class="number">18</span>, <span class="built_in">id</span>=<span class="number">110</span>)</span><br></pre></td></tr></table></figure>
+
+<p>传入的参数是“键&#x3D;值”格式，被kwargs接收后根据“键&#x3D;值”组成字典</p>
+<h2 id="缺省参数"><a href="#缺省参数" class="headerlink" title="缺省参数"></a>缺省参数</h2><p>缺省参数也叫默认参数，调用函数时可不传该默认参数的值,如果传入该参数的值，则修改默认参数值</p>
+<p>注意:<strong>函数定义和调用时，所有位置参数必须出现在默认参数前</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">user_info</span>(<span class="params">name,age,gender = <span class="string">&#x27;男&#x27;</span></span>):</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&#x27;您的名字是<span class="subst">&#123;name&#125;</span>，年龄是<span class="subst">&#123;age&#125;</span>，性别是<span class="subst">&#123;gender&#125;</span>&#x27;</span>)</span><br><span class="line">user_info(<span class="string">&#x27;TOM&#x27;</span>, <span class="number">20</span>)</span><br><span class="line">user_info(<span class="string">&#x27;Rose&#x27;</span>, <span class="number">18</span>, <span class="string">&#x27;女&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h1 id="匿名函数"><a href="#匿名函数" class="headerlink" title="匿名函数"></a>匿名函数</h1><h2 id="函数作为参数传递"><a href="#函数作为参数传递" class="headerlink" title="函数作为参数传递"></a>函数作为参数传递</h2><p>函数本身作为参数，传入另一个函数中进行使用。</p>
+<p>将函数传入的作用在于:传入计算逻辑，而非传入数据。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test_func</span>(<span class="params">func</span>):</span><br><span class="line">    result = func(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;func参数的类型是”：<span class="subst">&#123;func&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;计算结果：<span class="subst">&#123;result&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">compute</span>(<span class="params">x, y</span>):</span><br><span class="line">    <span class="keyword">return</span> x + y</span><br><span class="line"></span><br><span class="line">test_func(compute)</span><br></pre></td></tr></table></figure>
+
+<h2 id="lambda匿名函数"><a href="#lambda匿名函数" class="headerlink" title="lambda匿名函数"></a>lambda匿名函数</h2><p>函数的定义中:</p>
+<ul>
+<li>def关键字，可以定义带有名称的函数,可以基于名称<strong>重复使用</strong></li>
+<li>lambda关键字，可以定义匿名函数(无名称),只可<strong>临时使用一次</strong>。</li>
+</ul>
+<p>匿名函数定义语法:</p>
+<p>1ambda 传入参数:函数体(一行代码)</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test_func</span>(<span class="params">compute</span>):</span><br><span class="line">    result = compute(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">    <span class="built_in">print</span>(result)</span><br><span class="line"></span><br><span class="line">test_func(<span class="keyword">lambda</span> x, y: x + y)        <span class="comment">#结果:3</span></span><br></pre></td></tr></table></figure>
+
+<p>注意事项：</p>
+<ul>
+<li>匿名函数用于临时构建一个函数，只用一次的场景</li>
+<li>匿名函数的定义中，函数体只能写一行代码，如果函数体要写多行代码，不可用lambda匿名函数，应使用def定义带名函数</li>
+</ul>
+<div class="note default simple"><p><strong>Repository</strong></p>
+<p>本章示例代码已归档至 GitHub，可用于本地复现、调试与扩展。</p>
+<p><a class="btn-beautify " href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/06_Advanced_Functions" title="查看本章源码"><i class="fab fa-github"></i><span>查看本章源码</span></a></p>
+</div>]]></content>
+      <categories>
+        <category>Python 技术笔记</category>
+        <category>基础语法与数据结构</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>进阶语法</tag>
+        <tag>函数</tag>
+        <tag>Lambda</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python 条件判断与逻辑控制</title>
+    <url>/2026/03/13/python-learning/Stage1_Core_Basics/python-s1-02-condition-statement/</url>
+    <content><![CDATA[<h1 id="布尔类型和比较运算符"><a href="#布尔类型和比较运算符" class="headerlink" title="布尔类型和比较运算符"></a>布尔类型和比较运算符</h1><h2 id="布尔类型"><a href="#布尔类型" class="headerlink" title="布尔类型"></a>布尔类型</h2><p>在 Python 中，布尔类型的字面量用 <code>True</code> 表示真，<code>False</code> 表示假。</p>
+<h2 id="比较运算符"><a href="#比较运算符" class="headerlink" title="比较运算符"></a>比较运算符</h2><p>在逻辑判断中，我们经常需要对比两个值。Python 提供了以下比较运算符：</p>
+<table>
+<thead>
+<tr>
+<th align="center">运算符</th>
+<th align="center">描述说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>==</code></td>
+<td align="center">判断内容是否相等，满足为True，不满足为False</td>
+</tr>
+<tr>
+<td align="center"><code>!=</code></td>
+<td align="center">判断内容是否不相等，满足为True，不满足为 False</td>
+</tr>
+<tr>
+<td align="center"><code>&gt;</code></td>
+<td align="center">判断运算符左侧内容是否大于右侧满足为True，不满足为False</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;</code></td>
+<td align="center">判断运算符左侧内容是否小于右侧满足为True，不满足为 False</td>
+</tr>
+<tr>
+<td align="center"><code>&gt;=</code></td>
+<td align="center">判断运算符左侧内容是否大于等于右侧满足为True，不满足为 False</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;=</code></td>
+<td align="center">判断运算符左侧内容是否小于等于右侧满足为True，不满足为 False</td>
+</tr>
+</tbody></table>
+<hr>
+<h1 id="if-语句"><a href="#if-语句" class="headerlink" title="if 语句"></a>if 语句</h1><p>最基础的条件判断语句格式如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> 要判断的条件:</span><br><span class="line">    满足条件时要做的事情<span class="number">1</span></span><br><span class="line">    满足条件时要做的事情<span class="number">2</span></span><br><span class="line">    ...</span><br><span class="line">    满足条件时要做的事情N</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>⚠️ 注意事项：</strong></p>
+<ul>
+<li>判断条件的结果一定要是 <code>bool</code> 类型 。</li>
+<li>判断条件后必须要有<strong>冒号</strong> <code>:</code> 。</li>
+<li>归属于 <code>if</code> 语句的代码块，需在行前填充<strong>4个空格缩进 (1个Tab)</strong> 。</li>
+<li>Python 是严格通过空格缩进来判断代码归属的 。</li>
+</ul>
+</blockquote>
+<hr>
+<h2 id="if-else-组合判断语句"><a href="#if-else-组合判断语句" class="headerlink" title="if-else 组合判断语句"></a>if-else 组合判断语句</h2><p>当条件不满足时，如果我们想执行另一套逻辑，就需要加入 <code>else</code>：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> 要判断的条件:</span><br><span class="line">    满足条件时要做的事情<span class="number">1</span></span><br><span class="line">    满足条件时要做的事情<span class="number">2</span></span><br><span class="line">    ...</span><br><span class="line">    满足条件时要做的事情N</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    不满足条件时要做的事情<span class="number">1</span></span><br><span class="line">    不满足条件时要做的事情<span class="number">2</span></span><br><span class="line">    ...</span><br><span class="line">    不满足条件时要做的事情N</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：</strong></p>
+<ul>
+<li><p><code>else</code> 后面不需要再写判断条件 </p>
+</li>
+<li><p><code>else</code> 后的代码块同样需要四个空格作为缩进</p>
+</li>
+</ul>
+<h2 id="if-elif-else-组合语句"><a href="#if-elif-else-组合语句" class="headerlink" title="if-elif-else 组合语句"></a>if-elif-else 组合语句</h2><p>面对多种情况的条件分支，可以使用 <code>elif</code>：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> 条件<span class="number">1</span>:</span><br><span class="line">    满足条件<span class="number">1</span>时要做的事情<span class="number">1</span></span><br><span class="line">    ...</span><br><span class="line">    满足条件<span class="number">1</span>时要做的事情N</span><br><span class="line"><span class="keyword">elif</span> 条件<span class="number">2</span>:</span><br><span class="line">    满足条件<span class="number">2</span>时要做的事情<span class="number">1</span></span><br><span class="line">    ...</span><br><span class="line">    满足条件<span class="number">2</span>时要做的事情N</span><br><span class="line"><span class="keyword">elif</span> 条件N:</span><br><span class="line">    满足条件N时要做的事情<span class="number">1</span></span><br><span class="line">    ...</span><br><span class="line">    满足条件N时要做的事情N</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    所有条件都不满足要做的事情<span class="number">1</span></span><br><span class="line">    ...</span><br><span class="line">    所有条件都不满足要做的事情N</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>⚠️ 注意事项：</strong></p>
+<p><code>elif</code> 可以写多个，且每个条件后面都要加冒号 。每个判断是<strong>互斥且有序</strong>的，只要上面的某一个条件满足了，后面的条件就不会再进行判断了 。</p>
+</blockquote>
+<hr>
+<h2 id="判断语句的嵌套"><a href="#判断语句的嵌套" class="headerlink" title="判断语句的嵌套"></a>判断语句的嵌套</h2><p>在实际开发中，经常会遇到“在某个前提条件下，再进行二次判断”的场景。这就需要用到嵌套结构：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> 条件<span class="number">1</span>:</span><br><span class="line">    满足条件<span class="number">1</span>时要做的事情<span class="number">1</span></span><br><span class="line">    ...</span><br><span class="line">    满足条件<span class="number">1</span>时要做的事情N</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> 条件<span class="number">2</span>:</span><br><span class="line">        满足条件<span class="number">2</span>时要做的事情<span class="number">1</span></span><br><span class="line">        ...</span><br><span class="line">        满足条件<span class="number">2</span>时要做的事情N</span><br></pre></td></tr></table></figure>
+
+<p><strong>层级法则：</strong> Python 完全通过缩进来确定层级的包含关系 。内层嵌套的 <code>if</code> 需要叠加缩进。</p>
+<div class="note default simple"><p><strong>Repository</strong></p>
+<p>本章示例代码已归档至 GitHub，可用于本地复现、调试与扩展。</p>
+<p><a class="btn-beautify " href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/02_Condition_Statements" title="查看本章源码"><i class="fab fa-github"></i><span>查看本章源码</span></a></p>
+</div>]]></content>
+      <categories>
+        <category>Python 技术笔记</category>
+        <category>基础语法与数据结构</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>基础语法</tag>
+        <tag>逻辑控制</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python 数据处理：JSON 解析与 Pyecharts 可视化</title>
+    <url>/2026/03/26/python-learning/Stage1_Core_Basics/python-s1-09-basic-comprehensive-Case/</url>
+    <content><![CDATA[<h1 id="JSON数据格式"><a href="#JSON数据格式" class="headerlink" title="JSON数据格式"></a>JSON数据格式</h1><h2 id="什么是JSON"><a href="#什么是JSON" class="headerlink" title="什么是JSON"></a>什么是JSON</h2><p>一种在各个编程语言中流通的数据格式，负责不同编程语言中的数据传递和交互。<br>JSON无非就是一个单独的字典或一个内部元素都是字典的列表。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># json数据的格式可以是：</span></span><br><span class="line">	&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;admin&quot;</span>, <span class="string">&quot;age&quot;</span>:<span class="number">18</span>&#125;</span><br><span class="line">	</span><br><span class="line"><span class="comment"># 也可以是：</span></span><br><span class="line">	[(<span class="string">&quot;name&quot;</span>:<span class="string">&quot;admin&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">18</span>&#125;,(<span class="string">&quot;name&quot;</span>:<span class="string">&quot;root&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">16</span>&#125;,(<span class="string">&quot;name&quot;</span>:<span class="string">&quot;张三&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">20</span>]]</span><br></pre></td></tr></table></figure>
+<h2 id="对JSON进行数据转换"><a href="#对JSON进行数据转换" class="headerlink" title="对JSON进行数据转换"></a>对JSON进行数据转换</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 导入json模块</span></span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line"><span class="comment"># 准备符合json格式要求的python数据</span></span><br><span class="line">data=[&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;老王&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">16</span>&#125;, &#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;张三&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">20</span>&#125;]</span><br><span class="line"></span><br><span class="line"><span class="comment"># json.dumps(data)方法把python数据转化为json数据</span></span><br><span class="line">data = json.dumps(data)</span><br><span class="line"><span class="comment"># 显示出中文</span></span><br><span class="line">data = json.dumps(data，ensure_ascii=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># json.loads(data)方法把json数据转化为python数据</span></span><br><span class="line">data =json.loads(data)</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="pyecharts模块介绍"><a href="#pyecharts模块介绍" class="headerlink" title="pyecharts模块介绍"></a>pyecharts模块介绍</h1><ol>
+<li>开发可视化图表使用的技术栈是:<br> Echarts框架的Python版本:PyEcharts包</li>
+<li>如何安装PyEcharts包:<br> pip install pyecharts</li>
+<li>如何查看官方示例<br> 打开官方画廊:<a href="https://gallery.pyecharts.org/#/README">https://gallery.pyecharts.org/#/README</a></li>
+</ol>
+<hr>
+<h1 id="pyecharts快速入门"><a href="#pyecharts快速入门" class="headerlink" title="pyecharts快速入门"></a>pyecharts快速入门</h1><h2 id="构建基础折线图"><a href="#构建基础折线图" class="headerlink" title="构建基础折线图"></a>构建基础折线图</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 导包，导入Line功能构建折线图对象</span></span><br><span class="line"><span class="keyword">from</span> pyecharts.charts <span class="keyword">import</span> Line</span><br><span class="line"></span><br><span class="line"><span class="comment"># 得到折线图对象</span></span><br><span class="line">line = Line()</span><br><span class="line"><span class="comment"># 添加x轴数据</span></span><br><span class="line">line.add_xaxis([<span class="string">&quot;中国&quot;</span>，<span class="string">&quot;美国&quot;</span>,<span class="string">&quot;英国&quot;</span>])</span><br><span class="line"><span class="comment"># 添加y轴数据</span></span><br><span class="line">line.add_yaxis(<span class="string">&quot;GDP&quot;</span>, [<span class="number">30</span>, <span class="number">20</span> ,<span class="number">10</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment">#生成图表</span></span><br><span class="line">line.renderO</span><br></pre></td></tr></table></figure>
+<h2 id="使用全局配置项设置属性"><a href="#使用全局配置项设置属性" class="headerlink" title="使用全局配置项设置属性"></a>使用全局配置项设置属性</h2><p>pyecharts模块中有很多的配置选项，常用到2个类别的选项: </p>
+<ul>
+<li><strong>全局配置选项</strong></li>
+<li><strong>系列配置选项</strong></li>
+</ul>
+<p>全局配置选项可以通过<strong>set_global_opts</strong>方法来进行配置，相应的选项和选项的功能如下:<br><img src="https://raw.githubusercontent.com/NimbusFan/blog-images/main/assets/pyecharts%E5%85%A8%E5%B1%80%E9%85%8D%E7%BD%AE.png" alt="pyecharts全局配置.png"></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 通过全局配置项设置属性</span></span><br><span class="line">line.set_global_opts(</span><br><span class="line">	title_opts=TitleOpts(<span class="string">&quot;测试&quot;</span>,pos_left=<span class="string">&quot;center&quot;</span>,pos_bottom=<span class="string">&quot;1%&quot;</span>),</span><br><span class="line">	legend_opts=Legendopts(is_show=<span class="literal">True</span>),</span><br><span class="line">	toolbox_opts=ToolboxOpts(is_show=<span class="literal">True</span>),</span><br><span class="line">	visualmap_opts=VisualMapOpts(is_show=<span class="literal">True</span>),</span><br><span class="line">	tooltip_opts=TooltipOpts(is_show=<span class="literal">True</span>),</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<div class="note default simple"><p><strong>Repository</strong></p>
+<p>本章示例代码已归档至 GitHub，可用于本地复现、调试与扩展。</p>
+<p><a class="btn-beautify " href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/09_Basic_Comprehensive_Case" title="查看本章源码"><i class="fab fa-github"></i><span>查看本章源码</span></a></p>
+</div>]]></content>
+      <categories>
+        <category>Python 技术笔记</category>
+        <category>基础语法与数据结构</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>JSON</tag>
+        <tag>数据可视化</tag>
+        <tag>PyEcharts</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python 异常处理与模块化开发</title>
+    <url>/2026/03/24/python-learning/Stage1_Core_Basics/python-s1-08-exceptions-modules-packages/</url>
+    <content><![CDATA[<h1 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h1><p>1.什么是异常:<br>程序运行的过程中出现了错误<br>2.bug是什么意思:<br>就是指异常的意思，历史上因为小虫子(bug)导致计算机失灵的案例，所以延续至今，bug就代表软件出现错误。</p>
+<hr>
+<h1 id="异常的捕获"><a href="#异常的捕获" class="headerlink" title="异常的捕获"></a>异常的捕获</h1><h2 id="捕获常规异常："><a href="#捕获常规异常：" class="headerlink" title="捕获常规异常："></a>捕获常规异常：</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">	可能发生错误的代码</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">	如果出现异常执行的代码</span><br></pre></td></tr></table></figure>
+<h2 id="捕获指定异常："><a href="#捕获指定异常：" class="headerlink" title="捕获指定异常："></a>捕获指定异常：</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">	<span class="built_in">print</span>(name)</span><br><span class="line"><span class="keyword">except</span> NameError <span class="keyword">as</span> e:</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">&#x27;变量名称未定义错误&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="捕获多个异常："><a href="#捕获多个异常：" class="headerlink" title="捕获多个异常："></a>捕获多个异常：</h2><p>当捕获多个异常时，把要捕获的异常类型的名字放在except 后，并使用元组的方式进行书写。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">	<span class="built_in">print</span>(<span class="number">1</span>/<span class="number">0</span>)</span><br><span class="line"><span class="keyword">except</span> (NameError, ZeroDivisionError):</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">&#x27;ZeroDivision错误...&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="异常else："><a href="#异常else：" class="headerlink" title="异常else："></a>异常else：</h2><p>else表示的是如果没有异常要执行的代码。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">	<span class="built_in">print</span>(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">	<span class="built_in">print</span>(e)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">&#x27;我是else，是没有异常的时候执行的代码)</span></span><br></pre></td></tr></table></figure>
+<h2 id="异常的finally："><a href="#异常的finally：" class="headerlink" title="异常的finally："></a>异常的finally：</h2><p>finally表示的是无论是否异常都要执行的代码，例如关闭文件。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">	f= <span class="built_in">open</span>(<span class="string">&quot;test.txt&#x27;,&#x27;r&#x27;)</span></span><br><span class="line"><span class="string">except Exception as e:</span></span><br><span class="line"><span class="string">	f= open(&#x27;test.txt&#x27;,&#x27;w&#x27;)</span></span><br><span class="line"><span class="string">else:</span></span><br><span class="line"><span class="string">	print(&#x27;没有异常，真开心&quot;</span>)</span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">	f.close()</span><br></pre></td></tr></table></figure>
+<p>其中，else和finally可写可不写</p>
+<hr>
+<h1 id="异常的传递性"><a href="#异常的传递性" class="headerlink" title="异常的传递性"></a>异常的传递性</h1><p>当函数func01中发生异常，并且没有捕获处理这个异常的时候，异常会传递到函数func02，当func02也没有捕获处理这个异常的时候，main函数会捕获这个异常，这就是异常的传递性.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">func01</span>():</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">&quot;这是func01开始)</span></span><br><span class="line"><span class="string">	num=1/0</span></span><br><span class="line"><span class="string">	print(&quot;</span>这是funcO1结束<span class="string">&quot;)</span></span><br><span class="line"><span class="string">	</span></span><br><span class="line"><span class="string">def func02():</span></span><br><span class="line"><span class="string">	print(&quot;</span>这是funcO2开始<span class="string">&quot;)</span></span><br><span class="line"><span class="string">	func01()</span></span><br><span class="line"><span class="string">	print(&quot;</span>这是func02结束<span class="string">&quot;)</span></span><br><span class="line"><span class="string">	</span></span><br><span class="line"><span class="string">def main():</span></span><br><span class="line"><span class="string">	try:</span></span><br><span class="line"><span class="string">		func02()</span></span><br><span class="line"><span class="string">	except Exception as e:</span></span><br><span class="line"><span class="string">		print(e)</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="Python模块"><a href="#Python模块" class="headerlink" title="Python模块"></a>Python模块</h1><h2 id="模块的导入"><a href="#模块的导入" class="headerlink" title="模块的导入"></a>模块的导入</h2><p>Python 模块(Module)，是一个 Python 文件，以.py 结尾，模块能定义函数，类和变量，模块里也能包含可执行的代码</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">[<span class="keyword">from</span> 模块名] <span class="keyword">import</span> [模块 | 类 | 变量 | 函数 | *] [<span class="keyword">as</span> 别名]</span><br></pre></td></tr></table></figure>
+<p>常用的组合形式如:</p>
+<ul>
+<li>import 模块名</li>
+<li>from 模块名 import 类、变量、方法等</li>
+<li>from 模块名 import *</li>
+<li>import 模块名 as 别名</li>
+<li>from 模块名 import 功能名 as 别名</li>
+</ul>
+<p>注意：</p>
+<ul>
+<li>from可以省略，直接import即可</li>
+<li>as别名可以省略</li>
+<li>通过”.”来确定层级关系</li>
+<li>模块的导入一般写在代码文件的开头位置</li>
+</ul>
+<h2 id="自定义模块"><a href="#自定义模块" class="headerlink" title="自定义模块"></a>自定义模块</h2><h2 id="制作自定义模块"><a href="#制作自定义模块" class="headerlink" title="制作自定义模块"></a>制作自定义模块</h2><p>每个Python文件都可以作为一个模块，模块的名字就是文件的名字。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># my_module.py文件</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test</span>(<span class="params">a, b</span>):</span><br><span class="line">	<span class="built_in">print</span>(a + b)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># test_my_module.py文件</span></span><br><span class="line"><span class="keyword">from</span> my_modle <span class="keyword">import</span> test</span><br><span class="line">	test(<span class="number">10</span>, <span class="number">20</span>)</span><br><span class="line">	</span><br><span class="line"><span class="keyword">import</span> my_module</span><br><span class="line">	my_module.test(<span class="number">10</span>, <span class="number">20</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="命名空间污染"><a href="#命名空间污染" class="headerlink" title="命名空间污染"></a>命名空间污染</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#模块1代码</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">my_test</span>(<span class="params">a,b</span>):</span><br><span class="line">	<span class="built_in">print</span>(a + b)</span><br><span class="line">	</span><br><span class="line"><span class="comment">#模块2代码</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">my_test</span>(<span class="params">a, b</span>):</span><br><span class="line">	<span class="built_in">print</span>(a - b)</span><br><span class="line"></span><br><span class="line"><span class="comment">#导 入模块和调用功能代码</span></span><br><span class="line"><span class="keyword">from</span> my_module1 <span class="keyword">import</span> my_test</span><br><span class="line"><span class="keyword">from</span> my_module2 <span class="keyword">import</span> my_test</span><br><span class="line"></span><br><span class="line"><span class="comment">#my_test函数是模块2中的函数</span></span><br><span class="line">my_test(<span class="number">1</span>, <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p>注意:当导入多个模块的时候，且模块内有同名功能，当调用这个同名功能的时候，调用到的是后导入模块的功能</p>
+<h2 id="main-变量"><a href="#main-变量" class="headerlink" title="__main__变量"></a><code>__main__</code>变量</h2><p>实际开发中，为了为了让模块能够在项目中达到想要的效果，通常会在py文件中添加一些测试信息，例如，在m_module1.py文件中添加测试代码</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test</span>(<span class="params">a, b</span>):</span><br><span class="line">	<span class="built_in">print</span>(a + b)</span><br><span class="line">	</span><br><span class="line">test(<span class="number">1</span>,<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p>问题:<br>此时，无论是当前文件，还是其他已经导入了该模块的文件，在运行的时候都会自动执行test函数的调用<br>解决方案:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test</span>(<span class="params">a, b</span>):</span><br><span class="line"><span class="built_in">print</span>(a + b)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 只在当前文件中调用该函数，其他导入的文件内不符合该条件，则不执行test函数调用</span></span><br><span class="line"><span class="keyword">if</span> __main__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">	test(<span class="number">1</span>, <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="all-变量"><a href="#all-变量" class="headerlink" title="__all__变量"></a><code>__all__</code>变量</h2><p>如果一个模块文件中有<code>__all__</code>变量，当使用from xxx import *导入时，只能导入这个列表中的元素</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># my_module.py文件</span></span><br><span class="line">__all__ = [<span class="string">&#x27;test_A&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test_A</span>():</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">&#x27;test_A&#x27;</span>)</span><br><span class="line">	</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test_B</span>():</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">&#x27;test_B&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> my_module <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">test_A()</span><br><span class="line">test_B()    <span class="comment"># 此时只可以使用test_A，test_B无法使用</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="Python包"><a href="#Python包" class="headerlink" title="Python包"></a>Python包</h1><h2 id="自定义Python包"><a href="#自定义Python包" class="headerlink" title="自定义Python包"></a>自定义Python包</h2><p>包就是一个文件夹，里面可以存放许多Python的模块(代码文件)，通过包，在逻辑上将一批模块归为一类，方便使用。<br><img src="https://raw.githubusercontent.com/NimbusFan/blog-images/main/assets/Python%E5%8C%85%E7%BB%93%E6%9E%84.png" alt="Python包结构.png"></p>
+<h3 id="init-py文件"><a href="#init-py文件" class="headerlink" title="__init__.py文件"></a><code>__init__.py</code>文件</h3><p>创建包会默认自动创建的文件，通过这个文件来表示一个文件夹是Python的包，而非普通的文件夹。</p>
+<h3 id="创建包的步骤"><a href="#创建包的步骤" class="headerlink" title="创建包的步骤"></a>创建包的步骤</h3><ol>
+<li>新建包<code>my_package</code></li>
+<li>新建包内模块:<code>my_module_1</code>…<code>my_module_n</code></li>
+</ol>
+<h3 id="导入包"><a href="#导入包" class="headerlink" title="导入包"></a>导入包</h3><p>方式一：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">包名.模块名.目标</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># import导入</span></span><br><span class="line"><span class="keyword">import</span> 包名.模块名</span><br><span class="line"></span><br><span class="line"><span class="comment"># from导入</span></span><br><span class="line"><span class="keyword">from</span> 包名 <span class="keyword">import</span> 模块名</span><br><span class="line"></span><br><span class="line"><span class="comment"># 直接导入功能</span></span><br><span class="line"><span class="keyword">from</span> 包名.模块名 <span class="keyword">import</span> 功能</span><br></pre></td></tr></table></figure>
+<p>方式二：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> 包名 <span class="keyword">import</span> *</span><br></pre></td></tr></table></figure>
+<p>注意:必须在<code>_init_.py</code>文件中添加<code>_all_ = []</code>，控制允许导入的模块列表</p>
+<h2 id="安装第三方包"><a href="#安装第三方包" class="headerlink" title="安装第三方包"></a>安装第三方包</h2><h3 id="pip"><a href="#pip" class="headerlink" title="pip"></a>pip</h3><p>打开命令提示符程序</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip install 包名称</span><br></pre></td></tr></table></figure>
+<p>由于pip是连接的国外的网站进行包的下载，有的时候会速度很慢。<br>可以通过连接国内的镜像网站提高下载速度:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip install -i 镜像网址 包名称</span><br></pre></td></tr></table></figure>
+<h3 id="PyCharm"><a href="#PyCharm" class="headerlink" title="PyCharm"></a>PyCharm</h3><ol>
+<li>pycharm中提供的安装第三方包的功能：</li>
+<li>右下角python解释器</li>
+<li>解释器设置</li>
+<li>点击“+”搜索想要安装的包</li>
+<li>可勾选“选项”填入：-i 镜像网址</li>
+<li>安装软件包</li>
+</ol>
+<div class="note default simple"><p><strong>Repository</strong></p>
+<p>本章示例代码已归档至 GitHub，可用于本地复现、调试与扩展。</p>
+<p><a class="btn-beautify " href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/08_Exception_Module_Package" title="查看本章源码"><i class="fab fa-github"></i><span>查看本章源码</span></a></p>
+</div>
+]]></content>
+      <categories>
+        <category>Python 技术笔记</category>
+        <category>基础语法与数据结构</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>异常处理</tag>
+        <tag>模块与包</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python 文件读写与数据持久化</title>
+    <url>/2026/03/18/python-learning/Stage1_Core_Basics/python-s1-07-file-cperations/</url>
+    <content><![CDATA[<h1 id="文件的编码"><a href="#文件的编码" class="headerlink" title="文件的编码"></a>文件的编码</h1><p>1.什么是编码?<br>编码就是一种规则集合，记录了内容和二进制间进行相互转换的逻辑。编码有许多种，最常用的是UTF-8编码<br>2.为什么需要使用编码?<br>计算机只认识0和1，所以需要将内容翻译成0和1才能保存在计算机中。同时也需要编码，将计算机保存的0和1，反向翻译回可以识别的内容。</p>
+<hr>
+<h1 id="文件的读取"><a href="#文件的读取" class="headerlink" title="文件的读取"></a>文件的读取</h1><h2 id="打开文件"><a href="#打开文件" class="headerlink" title="打开文件"></a>打开文件</h2><p>使用open函数打开一个已经存在的文件，或者创建一个新文件，语法:<code>open(name, mode, encoding)</code></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">f= <span class="built_in">open</span>(<span class="string">&#x27;python.txt&#x27;</span>,<span class="string">&#x27;r&#x27;</span>, encoding=” UTF-<span class="number">8</span>)		<span class="comment">#encoding的顺序不是第三位，所以不能用位置参数，用关键字参数直接指定</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>name</code>:要打开的目标文件名的字符串(可以包含文件所在的具体路径)。</li>
+<li><code>mode</code>:设置打开文件的模式:只读、写入、追加等。</li>
+<li><code>encoding</code>:编码格式(推荐使用UTF-8)</li>
+</ul>
+<p>注意:此时的f是<code>open</code>函数的文件对象，对象是Python中一种特殊的数据类型，拥有属性和方法，可以使用对象.属性或对象.方法对其进行访问</p>
+<table>
+<thead>
+<tr>
+<th align="center">模式</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">r</td>
+<td align="center">以只读方式打开文件。文件的指针将会放在文件的开头。是默认模式。</td>
+</tr>
+<tr>
+<td align="center">w</td>
+<td align="center">以写入方式打开文件。如果该文件已存在则打开文件，并从开头开始编辑，原有内容会被删除。如果该文件不存在，创建新文件。</td>
+</tr>
+<tr>
+<td align="center">a</td>
+<td align="center">以追加方式打开文件。如果该文件已存在，新的内容将会被写入到已有内容之后。如果该文件不存在，创建新文件进行写入。</td>
+</tr>
+</tbody></table>
+<h2 id="读操作相关方法"><a href="#读操作相关方法" class="headerlink" title="读操作相关方法"></a>读操作相关方法</h2><table>
+<thead>
+<tr>
+<th align="center">操作</th>
+<th align="center">功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">文件对象&#x3D;open(file, mode, encoding)</td>
+<td align="center">打开文件获得文件对象</td>
+</tr>
+<tr>
+<td align="center">文件对象.read(num)</td>
+<td align="center">读取指定长度字节,不指定num读取文件全部</td>
+</tr>
+<tr>
+<td align="center">文件对象.redline()</td>
+<td align="center">读取一行</td>
+</tr>
+<tr>
+<td align="center">文件对象.redlines()</td>
+<td align="center">取全部行，得到列表</td>
+</tr>
+<tr>
+<td align="center">for line in文件对象</td>
+<td align="center">for循环文件行，一次循环得到一行数据</td>
+</tr>
+<tr>
+<td align="center">件对象.close()</td>
+<td align="center">关闭文件对象</td>
+</tr>
+<tr>
+<td align="center">with open() as f</td>
+<td align="center">通过with open语法打开文件，可以自动关闭</td>
+</tr>
+</tbody></table>
+<h3 id="read-方法"><a href="#read-方法" class="headerlink" title="read()方法:"></a>read()方法:</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">文件对象.read(num)</span><br></pre></td></tr></table></figure>
+<p><code>num</code>表示要从文件中读取的数据的长度，如果没有传入num，那么就表示读取文件中所有的数据。<br><code>num</code>:如果文件是以二进制模式打开，单位是字节（Byte），如果是文本模式，单位是字符。</p>
+<h3 id="redline-方法："><a href="#redline-方法：" class="headerlink" title="redline()方法："></a>redline()方法：</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">文件对象.readline()</span><br></pre></td></tr></table></figure>
+<p>一次读取一行内容</p>
+<h3 id="redlines-方法"><a href="#redlines-方法" class="headerlink" title="redlines ()方法:"></a>redlines ()方法:</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">文件对象.readlines()</span><br></pre></td></tr></table></figure>
+<p><code>redlines</code>是按照行的方式把整个文件中的内容进行一次性读取，以每一行的数据为一个元素，返回一个列表。</p>
+<h3 id="for循环读取文件行"><a href="#for循环读取文件行" class="headerlink" title="for循环读取文件行"></a>for循环读取文件行</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> <span class="built_in">open</span>(<span class="string">&quot;python.txt, &quot;</span><span class="string">r&quot;)</span></span><br><span class="line"><span class="string">	print(line)</span></span><br></pre></td></tr></table></figure>
+<p>每一个<code>line</code>临时变量，就记录了文件的一行数据</p>
+<h3 id="close关闭文件对象"><a href="#close关闭文件对象" class="headerlink" title="close关闭文件对象"></a>close关闭文件对象</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">f.close()</span><br></pre></td></tr></table></figure>
+
+<p>如果不调用<code>close</code>,同时程序没有停止运行，那么这个文件将一直被Python程序占用。</p>
+<h3 id="with-open语法"><a href="#with-open语法" class="headerlink" title="with open语法"></a>with open语法</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;python.txt&quot;</span>,<span class="string">&quot;r&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">f.readlines()</span><br></pre></td></tr></table></figure>
+
+<p>通过在<code>with open</code>的语句块中对文件进行操作，可以在操作完成后自动关闭close文件，避免遗忘掉<code>close</code>方法</p>
+<hr>
+<h1 id="文件的写入"><a href="#文件的写入" class="headerlink" title="文件的写入"></a>文件的写入</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#1.打开文件</span></span><br><span class="line">f = <span class="built_in">open</span>(<span class="string">&#x27;python.txt&#x27;</span>,<span class="string">&#x27;w&#x27;</span>, encoding=<span class="string">&quot;utf-8&quot;</span> )</span><br><span class="line"></span><br><span class="line"><span class="comment">#2.文件写入</span></span><br><span class="line">f.write(<span class="string">&#x27;hello world&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#3.刷新内容到硬盘中</span></span><br><span class="line">f.flush()</span><br></pre></td></tr></table></figure>
+
+<p>注意:</p>
+<ul>
+<li><p>文件不存在时，w模式会创建新文件，文件存在时，会清空原有内容</p>
+</li>
+<li><p>close()方法，自带了flush()方法的功能</p>
+</li>
+<li><p>write是把内容写在程序的内存中（<strong>缓冲区</strong>），调用flush后，刷新内容到硬盘中。避免频繁的操作硬盘，导致效率下降</p>
+</li>
+</ul>
+<hr>
+<h1 id="文件的追加"><a href="#文件的追加" class="headerlink" title="文件的追加"></a>文件的追加</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#1.打开文件，通过a模式打开即可</span></span><br><span class="line">f=<span class="built_in">open</span>(<span class="string">&#x27;python.txt,a)</span></span><br><span class="line"><span class="string">       </span></span><br><span class="line"><span class="string">#2.文件写入</span></span><br><span class="line"><span class="string">f.write(&#x27;</span>hello world<span class="string">&#x27;)</span></span><br><span class="line"><span class="string">       </span></span><br><span class="line"><span class="string">#3.内容刷新</span></span><br><span class="line"><span class="string">f.flush()</span></span><br></pre></td></tr></table></figure>
+
+
+<p>注意:如果文件不存在会创建文件，如果文件存在会在最后追加写入文件</p>
+<div class="note default simple"><p><strong>Repository</strong></p>
+<p>本章示例代码已归档至 GitHub，可用于本地复现、调试与扩展。</p>
+<p><a class="btn-beautify " href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/07_File_Operations" title="查看本章源码"><i class="fab fa-github"></i><span>查看本章源码</span></a></p>
+</div>
+]]></content>
+      <categories>
+        <category>Python 技术笔记</category>
+        <category>基础语法与数据结构</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>基础语法</tag>
+        <tag>文件操作</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python 大数据处理：PySpark RDD 编程基础</title>
+    <url>/2026/05/28/python-learning/Stage3_PySpark/python-s3-01-PySpark/</url>
+    <content><![CDATA[<h1 id="基础准备"><a href="#基础准备" class="headerlink" title="基础准备"></a>基础准备</h1><p>PySpark的编程模型：</p>
+<ol>
+<li>通过SparkContext对象，完成数据输入</li>
+<li>输入数据后得到RDD对象，对RDD对象进行迭代计算</li>
+<li>最终通过RDD对象的成员方法，完成数据输出工作</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pyspark <span class="keyword">import</span> SparkConf, SparkContext  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># 创建SparkConf对象————链式调用</span></span><br><span class="line">conf = SparkConf().setMaster(<span class="string">&quot;local[*]&quot;</span>).setAppName(<span class="string">&quot;test_spark_app&quot;</span>)  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># 以下这段等同于上面这一行的作用,  </span></span><br><span class="line"><span class="comment"># conf = SparkConf()  </span></span><br><span class="line"><span class="comment"># conf.setMaster(&quot;local[*]&quot;)  </span></span><br><span class="line"><span class="comment"># conf.setAppName(&quot;test_spark_app&quot;)  </span></span><br><span class="line">  </span><br><span class="line"><span class="comment"># 基于SparkConf类对象创建SparkContext对象  </span></span><br><span class="line">sc = SparkContext(conf = conf)  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># 打印PySpark的运行版本  </span></span><br><span class="line"><span class="built_in">print</span>(sc.version)  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># 停止SparkContext对象的运行(停止PySpark程序)  </span></span><br><span class="line">sc.stop()</span><br></pre></td></tr></table></figure>
+<p>PySpark的功能都是从SparkContext对象作为开始</p>
+<hr>
+<h1 id="数据输入"><a href="#数据输入" class="headerlink" title="数据输入"></a>数据输入</h1><p>RDD对象称之为分布式弹性数据集，是PySpark中数据计算的载体，它可以:</p>
+<ul>
+<li>提供数据存储</li>
+<li>提供数据计算的各类方法</li>
+<li>数据计算的方法，返回值依旧是RDD(RDD迭代计算)<br>后续对数据进行各类计算，都是基于RDD对象进行</li>
+</ul>
+<p>输入数据到Spark(即得到RDD对象)：</p>
+<ul>
+<li>通过SparkContext的parallelize成员方法，将Python数据容器转换为RDD对象</li>
+<li>通过SparkContext的textFile成员方法，读取文本文件得到RDD对象</li>
+</ul>
+<hr>
+<h1 id="数据计算"><a href="#数据计算" class="headerlink" title="数据计算"></a>数据计算</h1><h2 id="map方法"><a href="#map方法" class="headerlink" title="map方法"></a>map方法</h2><p>map算子(成员方法)</p>
+<ul>
+<li>接受一个处理函数，可用lambda表达式快速编写</li>
+<li>对RDD内的元素逐个处理，并返回一个新的RDD<br>链式调用</li>
+<li>对于返回值是新RDD的算子，可以通过链式调用的方式多次调用算子</li>
+</ul>
+<h2 id="flatMap方法"><a href="#flatMap方法" class="headerlink" title="flatMap方法"></a>flatMap方法</h2><ul>
+<li>计算逻辑和map一样</li>
+<li>比map多一个解除一层嵌套的功能。</li>
+</ul>
+<h2 id="reduceByKey方法"><a href="#reduceByKey方法" class="headerlink" title="reduceByKey方法"></a>reduceByKey方法</h2><ul>
+<li>接受一个处理函数，对数据进行两两计算</li>
+</ul>
+<h2 id="filter方法"><a href="#filter方法" class="headerlink" title="filter方法"></a>filter方法</h2><ul>
+<li>接收一个处理函数，可用lambda快速编写</li>
+<li>函数对RDD数据逐个处理，得到True的保留至返回值的RDD中</li>
+</ul>
+<h2 id="distinct方法"><a href="#distinct方法" class="headerlink" title="distinct方法"></a>distinct方法</h2><ul>
+<li>完成对RDD内数据的去重操作</li>
+</ul>
+<h2 id="sortBy方法"><a href="#sortBy方法" class="headerlink" title="sortBy方法"></a>sortBy方法</h2><ul>
+<li>接收一个处理函数，可用lambda快速编写</li>
+<li>函数表示用来决定排序的依据</li>
+<li>可以控制升序或降序</li>
+<li>全局排序需要设置分区数为1</li>
+</ul>
+<hr>
+<h1 id="数据输出"><a href="#数据输出" class="headerlink" title="数据输出"></a>数据输出</h1><h2 id="输出为Python对象"><a href="#输出为Python对象" class="headerlink" title="输出为Python对象"></a>输出为Python对象</h2><ul>
+<li>collect:将RDD内容转换为list</li>
+<li>reduce:对RDD内容进行自定义聚合</li>
+<li>take:取出RDD的前N个元素组成list</li>
+<li>count:统计RDD元素个数</li>
+</ul>
+<h2 id="输出到文件中"><a href="#输出到文件中" class="headerlink" title="输出到文件中"></a>输出到文件中</h2><p>RDD输出到文件的方法：</p>
+<ul>
+<li>rdd.saveAsTextFile(路径)</li>
+<li>输出的结果是一个文件夹</li>
+<li>有几个分区就输出多少个结果文件<br>如何修改RDD分区：</li>
+<li>SparkConf对象设置conf.set(“spark.default.parallelism”, “1”)</li>
+<li>创建RDD的时候，sc.parallelize方法传入numSlices参数为1</li>
+</ul>
+<div class="note default simple"><p><strong>Repository</strong></p>
+<p>本章示例代码已归档至 GitHub，可用于本地复现、调试与扩展。</p>
+<p><a class="btn-beautify " href="https://github.com/NimbusFan/My-Second-Brain/tree/main/myblog/source/_posts/python-learning/Stage3_PySpark" title="查看本章源码"><i class="fab fa-github"></i><span>查看本章源码</span></a></p>
+</div>
+
+]]></content>
+      <categories>
+        <category>Python 技术笔记</category>
+        <category>大数据与分布式计算</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>PySpark</tag>
+        <tag>Spark</tag>
+        <tag>RDD</tag>
+        <tag>分布式计算</tag>
+        <tag>数据处理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python 面向对象编程：类、对象与核心特性</title>
+    <url>/2026/04/14/python-learning/Stage2_OOP/python-s2-01-object-oriented/</url>
+    <content><![CDATA[<h1 id="初识对象"><a href="#初识对象" class="headerlink" title="初识对象"></a>初识对象</h1><p>在程序中是可以做到和生活中那样，设计表格、生产表格、填写表格的组织形式的。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在程序中设计表格，我们称之为:设计类(class)</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>:</span><br><span class="line">	name = <span class="literal">None</span></span><br><span class="line">	</span><br><span class="line"><span class="comment"># 在程序中打印生产表格，我们称之为:创建对象</span></span><br><span class="line"><span class="comment"># 基于类创建对象</span></span><br><span class="line">stu_1 = Student()</span><br><span class="line">stu_2 = Student()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在程序中填写表格，我们称之为:对象属性赋值</span></span><br><span class="line">stu_1.name =<span class="string">&quot;周杰轮&quot;</span>    <span class="comment"># 为学生1对象赋予名称属性值</span></span><br><span class="line">stu_2.name =<span class="string">&quot;林军杰&quot;</span>    <span class="comment"># 为学生2对象赋予名称属性值</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="成员方法"><a href="#成员方法" class="headerlink" title="成员方法"></a>成员方法</h1><h2 id="类的语法："><a href="#类的语法：" class="headerlink" title="类的语法："></a>类的语法：</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">类名称</span>：    <span class="comment"># class是关键字，表示要定义类</span></span><br><span class="line">	类的属性      <span class="comment"># 类的属性，即定义在类中的变量（成员变量）</span></span><br><span class="line">	</span><br><span class="line">	类的行为      <span class="comment"># 类的行为，即定义在类中的函数（成员方法）</span></span><br></pre></td></tr></table></figure>
+<p>注意：函数是写在类外的，定义在类内部的函数习惯上称为<strong>方法</strong></p>
+<h2 id="成员方法的语法"><a href="#成员方法的语法" class="headerlink" title="成员方法的语法"></a>成员方法的语法</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">类名称</span>:</span><br><span class="line">	成员变量</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">成员方法</span>(<span class="params">self, 参数列表</span>)：</span><br><span class="line">		成员方法体</span><br><span class="line">		</span><br><span class="line">对象 = 类名称()</span><br></pre></td></tr></table></figure>
+<p>self的作用：</p>
+<ul>
+<li>表示类对象本身的意思</li>
+<li>只有通过self，成员方法才能访问类的成员变量</li>
+<li>self出现在形参列表中，但是不占用参数位置，因此调用时无需理会</li>
+</ul>
+<h2 id="创建类对象的语法："><a href="#创建类对象的语法：" class="headerlink" title="创建类对象的语法："></a>创建类对象的语法：</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">对象 = 类名称()</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="类和对象"><a href="#类和对象" class="headerlink" title="类和对象"></a>类和对象</h1><p>类和对象的关系是什么?</p>
+<ul>
+<li>类是程序中的“设计图纸”</li>
+<li>对象是基于图纸生产的具体实体</li>
+</ul>
+<p>面向对象编程：使用对象进行编程。即设计类，基于类创建对象，并使用对象来完成具体的工作</p>
+<hr>
+<h1 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h1><p>Python类可以使用:<code>__init__()</code>方法，称之为构造方法。</p>
+<ul>
+<li>在创建类对象(构造类)的时候，会自动执行。</li>
+<li>在创建类对象(构造类)的时候，传入参数时会自动传递给<code>__init__</code>方法使用。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>:</span><br><span class="line">	name = <span class="literal">None</span>    <span class="comment"># 可以省略</span></span><br><span class="line">	age = <span class="literal">None</span>     <span class="comment"># 可以省略</span></span><br><span class="line">	tel = <span class="literal">None</span>     <span class="comment"># 可以省略</span></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,name,age, tel</span>):</span><br><span class="line">		<span class="variable language_">self</span>.name = name</span><br><span class="line">		<span class="variable language_">self</span>.age = age</span><br><span class="line">		<span class="variable language_">self</span>.tel = tel</span><br><span class="line">		<span class="built_in">print</span>(<span class="string">&quot;student类创建了一个对象&quot;</span>)</span><br><span class="line">		</span><br><span class="line">stu = Student(<span class="string">&quot;周杰轮&quot;</span>，<span class="number">31</span>,<span class="string">&quot;18500006666&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>注意：构造方法也是成员方法，不能忘记在参数列表中提供<code>self</code></p>
+<hr>
+<h1 id="魔术方法"><a href="#魔术方法" class="headerlink" title="魔术方法"></a>魔术方法</h1><p><code>__init__</code>构造方法，是Python类内置的方法之一。<br>这些内置的类方法各自有各自特殊的功能，称之为<strong>魔术方法</strong></p>
+<h2 id="str-字符串魔术方法"><a href="#str-字符串魔术方法" class="headerlink" title="__str__字符串魔术方法"></a><code>__str__</code>字符串魔术方法</h2><p>当类对象需要被转换为字符串时，会输出其内存地址</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>:</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__init__</span> (<span class="variable language_">self</span>, name, age):</span><br><span class="line">		<span class="variable language_">self</span>.name = name</span><br><span class="line">		<span class="variable language_">self</span>.age = age</span><br><span class="line">		</span><br><span class="line">student = Student(<span class="string">&quot;周杰轮&quot;</span>, <span class="number">11</span>)</span><br><span class="line"><span class="built_in">print</span>(student)        <span class="comment"># 结果:&lt;__main__.Student object at 0x000002200cFD7040&gt;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">str</span>(student))   <span class="comment"># 结果:&lt;__main__.Student object at Ox000002200cFD7040&gt;</span></span><br></pre></td></tr></table></figure>
+<p>但是内存地址没有多大作用，可以通过str 方法，控制类转换为字符串的行为<br> <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>:</span><br><span class="line">	<span class="keyword">def</span>  <span class="title function_">__init__</span> (<span class="variable language_">self</span>, name, age):</span><br><span class="line">		<span class="variable language_">self</span>.name = name</span><br><span class="line">		<span class="variable language_">self</span>.age = age</span><br><span class="line">		</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>):</span><br><span class="line">		<span class="keyword">return</span> <span class="string">f&quot;student类对象,name=<span class="subst">&#123;self.name&#125;</span>, age=<span class="subst">&#123;self.age&#125;</span>&quot;</span></span><br><span class="line">		</span><br><span class="line">student = Student(<span class="string">&quot;周杰轮&quot;</span>, <span class="number">11</span>)</span><br><span class="line"><span class="built_in">print</span>(student)         <span class="comment"># 结果:Student类对象，name=周杰轮，age=11</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">str</span>(student))    <span class="comment"># 结果:Student类对象，name=周杰轮，age=l1</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="lt-小于符号魔术方法"><a href="#lt-小于符号魔术方法" class="headerlink" title="__lt__小于符号魔术方法"></a><code>__lt__</code>小于符号魔术方法</h2><p> 两个对象之间不可以直接进行比较<br> <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>:</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__init__</span> (<span class="variable language_">self</span>, name, age):</span><br><span class="line">	<span class="variable language_">self</span>.name = nameself.age = age</span><br><span class="line"></span><br><span class="line">stu1 = Student(<span class="string">&quot;周杰伦&quot;</span>,<span class="number">11</span>)</span><br><span class="line">stu2 = Student(<span class="string">&quot;林俊杰&quot;</span>,<span class="number">13</span>)</span><br><span class="line"><span class="built_in">print</span>(stul &lt; stu2)      <span class="comment"># 此处无法比较，会直接报错</span></span><br></pre></td></tr></table></figure><br> 此时需要在类中实现<code>__lt__</code>方法，即可同时完成:小于符号和大于符号2种比较<br> <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>:</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name, age</span>):</span><br><span class="line">		<span class="variable language_">self</span>.name = name</span><br><span class="line">		<span class="variable language_">self</span>.age = age</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__lt__</span>(<span class="params">self, other</span>):</span><br><span class="line">		<span class="keyword">return</span> <span class="variable language_">self</span>.age &lt; other.age</span><br><span class="line">stu1 = Student(<span class="string">&quot;周杰伦&quot;</span>,<span class="number">11</span>)</span><br><span class="line">stu2 = Student(<span class="string">&quot;林俊杰&quot;</span>,<span class="number">13</span>)</span><br><span class="line"><span class="built_in">print</span>(stu1 &lt; stu2)     <span class="comment"># 结果:True</span></span><br><span class="line"><span class="built_in">print</span>(stu1 &gt; stu2)     <span class="comment"># 结果:False</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="le-小于等于符号魔术方法"><a href="#le-小于等于符号魔术方法" class="headerlink" title="__le__小于等于符号魔术方法"></a><code>__le__</code>小于等于符号魔术方法</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>:</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__init__</span> (<span class="variable language_">self</span>, name, age):</span><br><span class="line">		<span class="variable language_">self</span>.name = name</span><br><span class="line">		<span class="variable language_">self</span>.age = age</span><br><span class="line"></span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">___le__</span>(<span class="params">self, other</span>):</span><br><span class="line">		<span class="keyword">return</span> <span class="variable language_">self</span>.age &lt;= other.age</span><br><span class="line">		</span><br><span class="line">stu1 = Student(<span class="string">&quot;周杰轮&quot;</span>,<span class="number">11</span>)</span><br><span class="line">stu2 = Student(<span class="string">&quot;林军杰&quot;</span>,<span class="number">13</span>)</span><br><span class="line"><span class="built_in">print</span>(stu1 &lt;= stu2)    <span class="comment"># 结果:True</span></span><br><span class="line"><span class="built_in">print</span>(stu2 &gt;= stu2)    <span class="comment"># 结果:False</span></span><br></pre></td></tr></table></figure>
+<h2 id="eq-比较运算符魔术方法"><a href="#eq-比较运算符魔术方法" class="headerlink" title="__eq__比较运算符魔术方法"></a><code>__eq__</code>比较运算符魔术方法</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>:</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__init__</span> (<span class="variable language_">self</span>, name, age):</span><br><span class="line">		<span class="variable language_">self</span>.name = name</span><br><span class="line">		<span class="variable language_">self</span>.age = age</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__eq__</span>(<span class="params">self, other</span>):</span><br><span class="line">	<span class="keyword">return</span> <span class="variable language_">self</span>.age == other.age</span><br><span class="line"></span><br><span class="line">stu1 = Student(<span class="string">&quot;周杰轮&quot;</span>,<span class="number">11</span>)</span><br><span class="line">stu2 = Student(<span class="string">&quot;林军杰&quot;</span>,<span class="number">11</span>)    </span><br><span class="line"><span class="built_in">print</span>(stu1 == stu2)    <span class="comment"># 结果:True</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h1><p>面向对象包含3大主要特性：</p>
+<ul>
+<li>封装</li>
+<li>继承</li>
+<li>多态</li>
+</ul>
+<p>封装是指将现实世界事物在类中描述为属性和方法。</p>
+<p>现实事物的部分属性和行为是不公开对使用者开放的。同样在类中描述属性和方法的时候也需要达到这个要求</p>
+<p>定义私有成员：成员变量和成员方法的命名均以<code>__</code>作为开头</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Phone</span>:  </span><br><span class="line">    __current_voltage = <span class="number">1</span>  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__keep_single_core</span>(<span class="params">self</span>):  </span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;让cpu以单核模式运行&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>注意：类对象无法访问私有成员，类中的其它成员可以访问私有成员</p>
+<hr>
+<h1 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h1><h2 id="继承的基础语法"><a href="#继承的基础语法" class="headerlink" title="继承的基础语法"></a>继承的基础语法</h2><p>继承:将从父类那里继承(复制)来成员变量和成员方法(<strong>不含私有</strong>)</p>
+<p>子类构建的类对象，可以</p>
+<ul>
+<li>有自己的成员变量和成员方法</li>
+<li>使用父类的成员变量和成员方法</li>
+</ul>
+<h2 id="单继承和多继承"><a href="#单继承和多继承" class="headerlink" title="单继承和多继承"></a>单继承和多继承</h2><p>类的单继承语法：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">类名</span>(<span class="title class_ inherited__">父类名</span>):</span><br><span class="line">	类内容体</span><br></pre></td></tr></table></figure>
+
+<p>类的多继承语法：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">类名</span>(父类<span class="number">1</span>, 父类<span class="number">2</span>, ..., 父类N):</span><br></pre></td></tr></table></figure>
+<p><strong>注意</strong>：多继承中，如果父类有同名方法或属性，先继承的优先级高于后继承</p>
+<h2 id="pass"><a href="#pass" class="headerlink" title="pass"></a>pass</h2><p>pass是占位语句，用来保证函数(方法)或类定义的完整性，表示无内容，空的意思</p>
+<hr>
+<h1 id="复写和使用父类成员"><a href="#复写和使用父类成员" class="headerlink" title="复写和使用父类成员"></a>复写和使用父类成员</h1><h2 id="复写"><a href="#复写" class="headerlink" title="复写"></a>复写</h2><p>对父类的成员属性或成员方法进行重新定义</p>
+<h2 id="调用父类成员"><a href="#调用父类成员" class="headerlink" title="调用父类成员"></a>调用父类成员</h2><p>一旦复写父类成员，那么类对象调用成员的时候，就会调用复写后的新成员。<br>如果需要使用被复写的父类的成员，需要特殊的调用方式:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 方式1:调用父类成员</span></span><br><span class="line">使用成员变量:父类名.成员变量</span><br><span class="line">使用成员方法:父类名.成员方法(<span class="variable language_">self</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 方式2:使用super()调用父类成员</span></span><br><span class="line">使用成员变量:<span class="built_in">super</span>().成员变量</span><br><span class="line">使用成员方法:<span class="built_in">super</span>().成员方法()</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="类型注解"><a href="#类型注解" class="headerlink" title="类型注解"></a>类型注解</h1><p>类型注解支持:</p>
+<ol>
+<li>变量的类型注解</li>
+<li>函数(方法)的形参和返回值的类型注解</li>
+</ol>
+<h2 id="变量的类型注解"><a href="#变量的类型注解" class="headerlink" title="变量的类型注解"></a>变量的类型注解</h2><p>语法1:<strong>变量:类型</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 基础数据类型注解</span></span><br><span class="line">var_1: <span class="built_in">int</span> = <span class="number">10</span></span><br><span class="line">var_2: <span class="built_in">float</span> = <span class="number">3.1415926</span></span><br><span class="line">var_3: <span class="built_in">bool</span> = <span class="literal">True</span></span><br><span class="line">Var_4: <span class="built_in">str</span> = <span class="string">&quot;itheima”</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># 基础容器类型注解</span></span><br><span class="line"><span class="string">my_list: list = [1, 2, 3]      </span></span><br><span class="line"><span class="string">my_tuple: tuple = (1, 2, 3)</span></span><br><span class="line"><span class="string">my_set: set = &#123;1, 2, 3&#125;</span></span><br><span class="line"><span class="string">my_dict: dict = &#123;&quot;</span>itheima<span class="string">&quot;: 666&#125;</span></span><br><span class="line"><span class="string">my_str: str = &quot;</span>itheima<span class="string">&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># 容器类型详细注解</span></span><br><span class="line"><span class="string">my_list: list[int] = [1, 2, 3]</span></span><br><span class="line"><span class="string">my_tuple: tuple[str, int, bool] = (&quot;</span>itheima<span class="string">&quot;, 666, True)</span></span><br><span class="line"><span class="string">my_set: set[int] = &#123;1, 2, 3&#125;</span></span><br><span class="line"><span class="string">my_dict: dict[str, int] = &#123;&quot;</span>itheima<span class="string">&quot;: 666&#125;</span></span><br><span class="line"><span class="string"># 注意:元组类型设置类型详细注解，需要将每一个元素都标记出来</span></span><br><span class="line"><span class="string"># 注意:字典类型设置类型详细注解，需要2个类型，第一个是key第二个是value</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># 类对象类型注解</span></span><br><span class="line"><span class="string">class Student:</span></span><br><span class="line"><span class="string">	pass</span></span><br><span class="line"><span class="string">stu: Student = Student()</span></span><br></pre></td></tr></table></figure>
+<p>语法2:在注释中，<strong>#type:类型</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在注释中进行类型注解</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>:</span><br><span class="line">	<span class="keyword">pass</span></span><br><span class="line">var_1 = random.randint(<span class="number">1</span>, <span class="number">10</span>)     <span class="comment"># type:<span class="built_in">int</span></span></span><br><span class="line">var_2 = json.loads(data)          <span class="comment"># type: <span class="built_in">dict</span>[<span class="built_in">str</span>, <span class="built_in">int</span>]</span></span><br><span class="line">var_3 = func()                    <span class="comment"># type: Student</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong>:类型注解只是提示性的，并非决定性的。数据类型和注解类型无法对应也不会导致编译错误</p>
+<h2 id="函数-方法-的类型注解"><a href="#函数-方法-的类型注解" class="headerlink" title="函数(方法)的类型注解"></a>函数(方法)的类型注解</h2><h3 id="形参的类型注解"><a href="#形参的类型注解" class="headerlink" title="形参的类型注解"></a>形参的类型注解</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">x: <span class="built_in">int</span>, y: <span class="built_in">int</span></span>):</span><br><span class="line">	<span class="keyword">return</span> x + y</span><br><span class="line">	</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">func</span>(<span class="params">data: <span class="built_in">list</span></span>):</span><br><span class="line">	<span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+<h3 id="返回值的类型注解"><a href="#返回值的类型注解" class="headerlink" title="返回值的类型注解"></a>返回值的类型注解</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">函数方法名</span>(<span class="params">形参: 类型，......, 形参:类型</span>) -&gt; 返回值类型:</span><br><span class="line">	<span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+<h2 id="Union联合类型注解"><a href="#Union联合类型注解" class="headerlink" title="Union联合类型注解"></a>Union联合类型注解</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 变量的联合类型注解</span></span><br><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">Union</span></span><br><span class="line"></span><br><span class="line">my_list: <span class="built_in">list</span>[union[<span class="built_in">str</span>, <span class="built_in">int</span>]] = [<span class="number">1</span>, <span class="number">2</span>, <span class="string">&quot;itheima&quot;</span>, <span class="string">&quot;itcast&quot;</span>]</span><br><span class="line">my_dict: <span class="built_in">dict</span>[<span class="built_in">str</span>, <span class="type">Union</span>[<span class="built_in">str</span>, <span class="built_in">int</span>]] = &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;周杰伦&quot;</span>, <span class="string">&quot;age&quot;</span>:<span class="number">31</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 函数(方法)的联合类型注解</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">func</span>(<span class="params">data: union[<span class="built_in">int</span>, <span class="built_in">str</span>]</span>) -&gt; union[<span class="built_in">int</span>, <span class="built_in">str</span>]:</span><br><span class="line">	<span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h1><p>多态常用在继承关系上。</p>
+<ul>
+<li>以父类做定义声明</li>
+<li>以子类做实际工作</li>
+<li>用以获得同一行为，不同状态<br>这种写法，就叫做抽象类(也可以称之为接口)</li>
+</ul>
+<p><strong>抽象类</strong>:含有抽象方法的类称之为抽象类<br><strong>抽象方法</strong>:方法体是空实现的(pass)称之为抽象方法</p>
+<div class="note default simple"><p><strong>Repository</strong></p>
+<p>本章示例代码已归档至 GitHub，可用于本地复现、调试与扩展。</p>
+<p><a class="btn-beautify " href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage2_OOP/01_Object-Oriented" title="查看本章源码"><i class="fab fa-github"></i><span>查看本章源码</span></a></p>
+</div>]]></content>
+      <categories>
+        <category>Python 技术笔记</category>
+        <category>面向对象程序设计</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>基础语法</tag>
+        <tag>面向对象</tag>
+        <tag>OOP</tag>
       </tags>
   </entry>
   <entry>
@@ -1018,391 +1402,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Python 面向对象编程：类、对象与核心特性</title>
-    <url>/2026/04/14/python-learning/Stage2_OOP/python-s2-01-object-oriented/</url>
-    <content><![CDATA[<h1 id="初识对象"><a href="#初识对象" class="headerlink" title="初识对象"></a>初识对象</h1><p>在程序中是可以做到和生活中那样，设计表格、生产表格、填写表格的组织形式的。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在程序中设计表格，我们称之为:设计类(class)</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>:</span><br><span class="line">	name = <span class="literal">None</span></span><br><span class="line">	</span><br><span class="line"><span class="comment"># 在程序中打印生产表格，我们称之为:创建对象</span></span><br><span class="line"><span class="comment"># 基于类创建对象</span></span><br><span class="line">stu_1 = Student()</span><br><span class="line">stu_2 = Student()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在程序中填写表格，我们称之为:对象属性赋值</span></span><br><span class="line">stu_1.name =<span class="string">&quot;周杰轮&quot;</span>    <span class="comment"># 为学生1对象赋予名称属性值</span></span><br><span class="line">stu_2.name =<span class="string">&quot;林军杰&quot;</span>    <span class="comment"># 为学生2对象赋予名称属性值</span></span><br></pre></td></tr></table></figure>
-<hr>
-<h1 id="成员方法"><a href="#成员方法" class="headerlink" title="成员方法"></a>成员方法</h1><h2 id="类的语法："><a href="#类的语法：" class="headerlink" title="类的语法："></a>类的语法：</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">类名称</span>：    <span class="comment"># class是关键字，表示要定义类</span></span><br><span class="line">	类的属性      <span class="comment"># 类的属性，即定义在类中的变量（成员变量）</span></span><br><span class="line">	</span><br><span class="line">	类的行为      <span class="comment"># 类的行为，即定义在类中的函数（成员方法）</span></span><br></pre></td></tr></table></figure>
-<p>注意：函数是写在类外的，定义在类内部的函数习惯上称为<strong>方法</strong></p>
-<h2 id="成员方法的语法"><a href="#成员方法的语法" class="headerlink" title="成员方法的语法"></a>成员方法的语法</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">类名称</span>:</span><br><span class="line">	成员变量</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">成员方法</span>(<span class="params">self, 参数列表</span>)：</span><br><span class="line">		成员方法体</span><br><span class="line">		</span><br><span class="line">对象 = 类名称()</span><br></pre></td></tr></table></figure>
-<p>self的作用：</p>
-<ul>
-<li>表示类对象本身的意思</li>
-<li>只有通过self，成员方法才能访问类的成员变量</li>
-<li>self出现在形参列表中，但是不占用参数位置，因此调用时无需理会</li>
-</ul>
-<h2 id="创建类对象的语法："><a href="#创建类对象的语法：" class="headerlink" title="创建类对象的语法："></a>创建类对象的语法：</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">对象 = 类名称()</span><br></pre></td></tr></table></figure>
-<hr>
-<h1 id="类和对象"><a href="#类和对象" class="headerlink" title="类和对象"></a>类和对象</h1><p>类和对象的关系是什么?</p>
-<ul>
-<li>类是程序中的“设计图纸”</li>
-<li>对象是基于图纸生产的具体实体</li>
-</ul>
-<p>面向对象编程：使用对象进行编程。即设计类，基于类创建对象，并使用对象来完成具体的工作</p>
-<hr>
-<h1 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h1><p>Python类可以使用:<code>__init__()</code>方法，称之为构造方法。</p>
-<ul>
-<li>在创建类对象(构造类)的时候，会自动执行。</li>
-<li>在创建类对象(构造类)的时候，传入参数时会自动传递给<code>__init__</code>方法使用。</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>:</span><br><span class="line">	name = <span class="literal">None</span>    <span class="comment"># 可以省略</span></span><br><span class="line">	age = <span class="literal">None</span>     <span class="comment"># 可以省略</span></span><br><span class="line">	tel = <span class="literal">None</span>     <span class="comment"># 可以省略</span></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,name,age, tel</span>):</span><br><span class="line">		<span class="variable language_">self</span>.name = name</span><br><span class="line">		<span class="variable language_">self</span>.age = age</span><br><span class="line">		<span class="variable language_">self</span>.tel = tel</span><br><span class="line">		<span class="built_in">print</span>(<span class="string">&quot;student类创建了一个对象&quot;</span>)</span><br><span class="line">		</span><br><span class="line">stu = Student(<span class="string">&quot;周杰轮&quot;</span>，<span class="number">31</span>,<span class="string">&quot;18500006666&quot;</span>)</span><br></pre></td></tr></table></figure>
-<p>注意：构造方法也是成员方法，不能忘记在参数列表中提供<code>self</code></p>
-<hr>
-<h1 id="魔术方法"><a href="#魔术方法" class="headerlink" title="魔术方法"></a>魔术方法</h1><p><code>__init__</code>构造方法，是Python类内置的方法之一。<br>这些内置的类方法各自有各自特殊的功能，称之为<strong>魔术方法</strong></p>
-<h2 id="str-字符串魔术方法"><a href="#str-字符串魔术方法" class="headerlink" title="__str__字符串魔术方法"></a><code>__str__</code>字符串魔术方法</h2><p>当类对象需要被转换为字符串时，会输出其内存地址</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>:</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__init__</span> (<span class="variable language_">self</span>, name, age):</span><br><span class="line">		<span class="variable language_">self</span>.name = name</span><br><span class="line">		<span class="variable language_">self</span>.age = age</span><br><span class="line">		</span><br><span class="line">student = Student(<span class="string">&quot;周杰轮&quot;</span>, <span class="number">11</span>)</span><br><span class="line"><span class="built_in">print</span>(student)        <span class="comment"># 结果:&lt;__main__.Student object at 0x000002200cFD7040&gt;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">str</span>(student))   <span class="comment"># 结果:&lt;__main__.Student object at Ox000002200cFD7040&gt;</span></span><br></pre></td></tr></table></figure>
-<p>但是内存地址没有多大作用，可以通过str 方法，控制类转换为字符串的行为<br> <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>:</span><br><span class="line">	<span class="keyword">def</span>  <span class="title function_">__init__</span> (<span class="variable language_">self</span>, name, age):</span><br><span class="line">		<span class="variable language_">self</span>.name = name</span><br><span class="line">		<span class="variable language_">self</span>.age = age</span><br><span class="line">		</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>):</span><br><span class="line">		<span class="keyword">return</span> <span class="string">f&quot;student类对象,name=<span class="subst">&#123;self.name&#125;</span>, age=<span class="subst">&#123;self.age&#125;</span>&quot;</span></span><br><span class="line">		</span><br><span class="line">student = Student(<span class="string">&quot;周杰轮&quot;</span>, <span class="number">11</span>)</span><br><span class="line"><span class="built_in">print</span>(student)         <span class="comment"># 结果:Student类对象，name=周杰轮，age=11</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">str</span>(student))    <span class="comment"># 结果:Student类对象，name=周杰轮，age=l1</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="lt-小于符号魔术方法"><a href="#lt-小于符号魔术方法" class="headerlink" title="__lt__小于符号魔术方法"></a><code>__lt__</code>小于符号魔术方法</h2><p> 两个对象之间不可以直接进行比较<br> <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>:</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__init__</span> (<span class="variable language_">self</span>, name, age):</span><br><span class="line">	<span class="variable language_">self</span>.name = nameself.age = age</span><br><span class="line"></span><br><span class="line">stu1 = Student(<span class="string">&quot;周杰伦&quot;</span>,<span class="number">11</span>)</span><br><span class="line">stu2 = Student(<span class="string">&quot;林俊杰&quot;</span>,<span class="number">13</span>)</span><br><span class="line"><span class="built_in">print</span>(stul &lt; stu2)      <span class="comment"># 此处无法比较，会直接报错</span></span><br></pre></td></tr></table></figure><br> 此时需要在类中实现<code>__lt__</code>方法，即可同时完成:小于符号和大于符号2种比较<br> <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>:</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name, age</span>):</span><br><span class="line">		<span class="variable language_">self</span>.name = name</span><br><span class="line">		<span class="variable language_">self</span>.age = age</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__lt__</span>(<span class="params">self, other</span>):</span><br><span class="line">		<span class="keyword">return</span> <span class="variable language_">self</span>.age &lt; other.age</span><br><span class="line">stu1 = Student(<span class="string">&quot;周杰伦&quot;</span>,<span class="number">11</span>)</span><br><span class="line">stu2 = Student(<span class="string">&quot;林俊杰&quot;</span>,<span class="number">13</span>)</span><br><span class="line"><span class="built_in">print</span>(stu1 &lt; stu2)     <span class="comment"># 结果:True</span></span><br><span class="line"><span class="built_in">print</span>(stu1 &gt; stu2)     <span class="comment"># 结果:False</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="le-小于等于符号魔术方法"><a href="#le-小于等于符号魔术方法" class="headerlink" title="__le__小于等于符号魔术方法"></a><code>__le__</code>小于等于符号魔术方法</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>:</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__init__</span> (<span class="variable language_">self</span>, name, age):</span><br><span class="line">		<span class="variable language_">self</span>.name = name</span><br><span class="line">		<span class="variable language_">self</span>.age = age</span><br><span class="line"></span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">___le__</span>(<span class="params">self, other</span>):</span><br><span class="line">		<span class="keyword">return</span> <span class="variable language_">self</span>.age &lt;= other.age</span><br><span class="line">		</span><br><span class="line">stu1 = Student(<span class="string">&quot;周杰轮&quot;</span>,<span class="number">11</span>)</span><br><span class="line">stu2 = Student(<span class="string">&quot;林军杰&quot;</span>,<span class="number">13</span>)</span><br><span class="line"><span class="built_in">print</span>(stu1 &lt;= stu2)    <span class="comment"># 结果:True</span></span><br><span class="line"><span class="built_in">print</span>(stu2 &gt;= stu2)    <span class="comment"># 结果:False</span></span><br></pre></td></tr></table></figure>
-<h2 id="eq-比较运算符魔术方法"><a href="#eq-比较运算符魔术方法" class="headerlink" title="__eq__比较运算符魔术方法"></a><code>__eq__</code>比较运算符魔术方法</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>:</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__init__</span> (<span class="variable language_">self</span>, name, age):</span><br><span class="line">		<span class="variable language_">self</span>.name = name</span><br><span class="line">		<span class="variable language_">self</span>.age = age</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__eq__</span>(<span class="params">self, other</span>):</span><br><span class="line">	<span class="keyword">return</span> <span class="variable language_">self</span>.age == other.age</span><br><span class="line"></span><br><span class="line">stu1 = Student(<span class="string">&quot;周杰轮&quot;</span>,<span class="number">11</span>)</span><br><span class="line">stu2 = Student(<span class="string">&quot;林军杰&quot;</span>,<span class="number">11</span>)    </span><br><span class="line"><span class="built_in">print</span>(stu1 == stu2)    <span class="comment"># 结果:True</span></span><br></pre></td></tr></table></figure>
-<hr>
-<h1 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h1><p>面向对象包含3大主要特性：</p>
-<ul>
-<li>封装</li>
-<li>继承</li>
-<li>多态</li>
-</ul>
-<p>封装是指将现实世界事物在类中描述为属性和方法。</p>
-<p>现实事物的部分属性和行为是不公开对使用者开放的。同样在类中描述属性和方法的时候也需要达到这个要求</p>
-<p>定义私有成员：成员变量和成员方法的命名均以<code>__</code>作为开头</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Phone</span>:  </span><br><span class="line">    __current_voltage = <span class="number">1</span>  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__keep_single_core</span>(<span class="params">self</span>):  </span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;让cpu以单核模式运行&quot;</span>)</span><br></pre></td></tr></table></figure>
-<p>注意：类对象无法访问私有成员，类中的其它成员可以访问私有成员</p>
-<hr>
-<h1 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h1><h2 id="继承的基础语法"><a href="#继承的基础语法" class="headerlink" title="继承的基础语法"></a>继承的基础语法</h2><p>继承:将从父类那里继承(复制)来成员变量和成员方法(<strong>不含私有</strong>)</p>
-<p>子类构建的类对象，可以</p>
-<ul>
-<li>有自己的成员变量和成员方法</li>
-<li>使用父类的成员变量和成员方法</li>
-</ul>
-<h2 id="单继承和多继承"><a href="#单继承和多继承" class="headerlink" title="单继承和多继承"></a>单继承和多继承</h2><p>类的单继承语法：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">类名</span>(<span class="title class_ inherited__">父类名</span>):</span><br><span class="line">	类内容体</span><br></pre></td></tr></table></figure>
-
-<p>类的多继承语法：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">类名</span>(父类<span class="number">1</span>, 父类<span class="number">2</span>, ..., 父类N):</span><br></pre></td></tr></table></figure>
-<p><strong>注意</strong>：多继承中，如果父类有同名方法或属性，先继承的优先级高于后继承</p>
-<h2 id="pass"><a href="#pass" class="headerlink" title="pass"></a>pass</h2><p>pass是占位语句，用来保证函数(方法)或类定义的完整性，表示无内容，空的意思</p>
-<hr>
-<h1 id="复写和使用父类成员"><a href="#复写和使用父类成员" class="headerlink" title="复写和使用父类成员"></a>复写和使用父类成员</h1><h2 id="复写"><a href="#复写" class="headerlink" title="复写"></a>复写</h2><p>对父类的成员属性或成员方法进行重新定义</p>
-<h2 id="调用父类成员"><a href="#调用父类成员" class="headerlink" title="调用父类成员"></a>调用父类成员</h2><p>一旦复写父类成员，那么类对象调用成员的时候，就会调用复写后的新成员。<br>如果需要使用被复写的父类的成员，需要特殊的调用方式:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 方式1:调用父类成员</span></span><br><span class="line">使用成员变量:父类名.成员变量</span><br><span class="line">使用成员方法:父类名.成员方法(<span class="variable language_">self</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 方式2:使用super()调用父类成员</span></span><br><span class="line">使用成员变量:<span class="built_in">super</span>().成员变量</span><br><span class="line">使用成员方法:<span class="built_in">super</span>().成员方法()</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="类型注解"><a href="#类型注解" class="headerlink" title="类型注解"></a>类型注解</h1><p>类型注解支持:</p>
-<ol>
-<li>变量的类型注解</li>
-<li>函数(方法)的形参和返回值的类型注解</li>
-</ol>
-<h2 id="变量的类型注解"><a href="#变量的类型注解" class="headerlink" title="变量的类型注解"></a>变量的类型注解</h2><p>语法1:<strong>变量:类型</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 基础数据类型注解</span></span><br><span class="line">var_1: <span class="built_in">int</span> = <span class="number">10</span></span><br><span class="line">var_2: <span class="built_in">float</span> = <span class="number">3.1415926</span></span><br><span class="line">var_3: <span class="built_in">bool</span> = <span class="literal">True</span></span><br><span class="line">Var_4: <span class="built_in">str</span> = <span class="string">&quot;itheima”</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># 基础容器类型注解</span></span><br><span class="line"><span class="string">my_list: list = [1, 2, 3]      </span></span><br><span class="line"><span class="string">my_tuple: tuple = (1, 2, 3)</span></span><br><span class="line"><span class="string">my_set: set = &#123;1, 2, 3&#125;</span></span><br><span class="line"><span class="string">my_dict: dict = &#123;&quot;</span>itheima<span class="string">&quot;: 666&#125;</span></span><br><span class="line"><span class="string">my_str: str = &quot;</span>itheima<span class="string">&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># 容器类型详细注解</span></span><br><span class="line"><span class="string">my_list: list[int] = [1, 2, 3]</span></span><br><span class="line"><span class="string">my_tuple: tuple[str, int, bool] = (&quot;</span>itheima<span class="string">&quot;, 666, True)</span></span><br><span class="line"><span class="string">my_set: set[int] = &#123;1, 2, 3&#125;</span></span><br><span class="line"><span class="string">my_dict: dict[str, int] = &#123;&quot;</span>itheima<span class="string">&quot;: 666&#125;</span></span><br><span class="line"><span class="string"># 注意:元组类型设置类型详细注解，需要将每一个元素都标记出来</span></span><br><span class="line"><span class="string"># 注意:字典类型设置类型详细注解，需要2个类型，第一个是key第二个是value</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># 类对象类型注解</span></span><br><span class="line"><span class="string">class Student:</span></span><br><span class="line"><span class="string">	pass</span></span><br><span class="line"><span class="string">stu: Student = Student()</span></span><br></pre></td></tr></table></figure>
-<p>语法2:在注释中，<strong>#type:类型</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在注释中进行类型注解</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>:</span><br><span class="line">	<span class="keyword">pass</span></span><br><span class="line">var_1 = random.randint(<span class="number">1</span>, <span class="number">10</span>)     <span class="comment"># type:<span class="built_in">int</span></span></span><br><span class="line">var_2 = json.loads(data)          <span class="comment"># type: <span class="built_in">dict</span>[<span class="built_in">str</span>, <span class="built_in">int</span>]</span></span><br><span class="line">var_3 = func()                    <span class="comment"># type: Student</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>注意</strong>:类型注解只是提示性的，并非决定性的。数据类型和注解类型无法对应也不会导致编译错误</p>
-<h2 id="函数-方法-的类型注解"><a href="#函数-方法-的类型注解" class="headerlink" title="函数(方法)的类型注解"></a>函数(方法)的类型注解</h2><h3 id="形参的类型注解"><a href="#形参的类型注解" class="headerlink" title="形参的类型注解"></a>形参的类型注解</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">x: <span class="built_in">int</span>, y: <span class="built_in">int</span></span>):</span><br><span class="line">	<span class="keyword">return</span> x + y</span><br><span class="line">	</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">func</span>(<span class="params">data: <span class="built_in">list</span></span>):</span><br><span class="line">	<span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
-<h3 id="返回值的类型注解"><a href="#返回值的类型注解" class="headerlink" title="返回值的类型注解"></a>返回值的类型注解</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">函数方法名</span>(<span class="params">形参: 类型，......, 形参:类型</span>) -&gt; 返回值类型:</span><br><span class="line">	<span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
-<h2 id="Union联合类型注解"><a href="#Union联合类型注解" class="headerlink" title="Union联合类型注解"></a>Union联合类型注解</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 变量的联合类型注解</span></span><br><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">Union</span></span><br><span class="line"></span><br><span class="line">my_list: <span class="built_in">list</span>[union[<span class="built_in">str</span>, <span class="built_in">int</span>]] = [<span class="number">1</span>, <span class="number">2</span>, <span class="string">&quot;itheima&quot;</span>, <span class="string">&quot;itcast&quot;</span>]</span><br><span class="line">my_dict: <span class="built_in">dict</span>[<span class="built_in">str</span>, <span class="type">Union</span>[<span class="built_in">str</span>, <span class="built_in">int</span>]] = &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;周杰伦&quot;</span>, <span class="string">&quot;age&quot;</span>:<span class="number">31</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 函数(方法)的联合类型注解</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">func</span>(<span class="params">data: union[<span class="built_in">int</span>, <span class="built_in">str</span>]</span>) -&gt; union[<span class="built_in">int</span>, <span class="built_in">str</span>]:</span><br><span class="line">	<span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h1><p>多态常用在继承关系上。</p>
-<ul>
-<li>以父类做定义声明</li>
-<li>以子类做实际工作</li>
-<li>用以获得同一行为，不同状态<br>这种写法，就叫做抽象类(也可以称之为接口)</li>
-</ul>
-<p><strong>抽象类</strong>:含有抽象方法的类称之为抽象类<br><strong>抽象方法</strong>:方法体是空实现的(pass)称之为抽象方法</p>
-<div class="note default simple"><p><strong>Repository</strong></p>
-<p>本章示例代码已归档至 GitHub，可用于本地复现、调试与扩展。</p>
-<p><a class="btn-beautify " href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage2_OOP/01_Object-Oriented" title="查看本章源码"><i class="fab fa-github"></i><span>查看本章源码</span></a></p>
-</div>]]></content>
-      <categories>
-        <category>Python 技术笔记</category>
-        <category>面向对象程序设计</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>基础语法</tag>
-        <tag>面向对象</tag>
-        <tag>OOP</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python 异常处理与模块化开发</title>
-    <url>/2026/03/24/python-learning/Stage1_Core_Basics/python-s1-08-exceptions-modules-packages/</url>
-    <content><![CDATA[<h1 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h1><p>1.什么是异常:<br>程序运行的过程中出现了错误<br>2.bug是什么意思:<br>就是指异常的意思，历史上因为小虫子(bug)导致计算机失灵的案例，所以延续至今，bug就代表软件出现错误。</p>
-<hr>
-<h1 id="异常的捕获"><a href="#异常的捕获" class="headerlink" title="异常的捕获"></a>异常的捕获</h1><h2 id="捕获常规异常："><a href="#捕获常规异常：" class="headerlink" title="捕获常规异常："></a>捕获常规异常：</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">	可能发生错误的代码</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">	如果出现异常执行的代码</span><br></pre></td></tr></table></figure>
-<h2 id="捕获指定异常："><a href="#捕获指定异常：" class="headerlink" title="捕获指定异常："></a>捕获指定异常：</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">	<span class="built_in">print</span>(name)</span><br><span class="line"><span class="keyword">except</span> NameError <span class="keyword">as</span> e:</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">&#x27;变量名称未定义错误&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<h2 id="捕获多个异常："><a href="#捕获多个异常：" class="headerlink" title="捕获多个异常："></a>捕获多个异常：</h2><p>当捕获多个异常时，把要捕获的异常类型的名字放在except 后，并使用元组的方式进行书写。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">	<span class="built_in">print</span>(<span class="number">1</span>/<span class="number">0</span>)</span><br><span class="line"><span class="keyword">except</span> (NameError, ZeroDivisionError):</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">&#x27;ZeroDivision错误...&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<h2 id="异常else："><a href="#异常else：" class="headerlink" title="异常else："></a>异常else：</h2><p>else表示的是如果没有异常要执行的代码。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">	<span class="built_in">print</span>(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">	<span class="built_in">print</span>(e)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">&#x27;我是else，是没有异常的时候执行的代码)</span></span><br></pre></td></tr></table></figure>
-<h2 id="异常的finally："><a href="#异常的finally：" class="headerlink" title="异常的finally："></a>异常的finally：</h2><p>finally表示的是无论是否异常都要执行的代码，例如关闭文件。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">	f= <span class="built_in">open</span>(<span class="string">&quot;test.txt&#x27;,&#x27;r&#x27;)</span></span><br><span class="line"><span class="string">except Exception as e:</span></span><br><span class="line"><span class="string">	f= open(&#x27;test.txt&#x27;,&#x27;w&#x27;)</span></span><br><span class="line"><span class="string">else:</span></span><br><span class="line"><span class="string">	print(&#x27;没有异常，真开心&quot;</span>)</span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">	f.close()</span><br></pre></td></tr></table></figure>
-<p>其中，else和finally可写可不写</p>
-<hr>
-<h1 id="异常的传递性"><a href="#异常的传递性" class="headerlink" title="异常的传递性"></a>异常的传递性</h1><p>当函数func01中发生异常，并且没有捕获处理这个异常的时候，异常会传递到函数func02，当func02也没有捕获处理这个异常的时候，main函数会捕获这个异常，这就是异常的传递性.</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">func01</span>():</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">&quot;这是func01开始)</span></span><br><span class="line"><span class="string">	num=1/0</span></span><br><span class="line"><span class="string">	print(&quot;</span>这是funcO1结束<span class="string">&quot;)</span></span><br><span class="line"><span class="string">	</span></span><br><span class="line"><span class="string">def func02():</span></span><br><span class="line"><span class="string">	print(&quot;</span>这是funcO2开始<span class="string">&quot;)</span></span><br><span class="line"><span class="string">	func01()</span></span><br><span class="line"><span class="string">	print(&quot;</span>这是func02结束<span class="string">&quot;)</span></span><br><span class="line"><span class="string">	</span></span><br><span class="line"><span class="string">def main():</span></span><br><span class="line"><span class="string">	try:</span></span><br><span class="line"><span class="string">		func02()</span></span><br><span class="line"><span class="string">	except Exception as e:</span></span><br><span class="line"><span class="string">		print(e)</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="Python模块"><a href="#Python模块" class="headerlink" title="Python模块"></a>Python模块</h1><h2 id="模块的导入"><a href="#模块的导入" class="headerlink" title="模块的导入"></a>模块的导入</h2><p>Python 模块(Module)，是一个 Python 文件，以.py 结尾，模块能定义函数，类和变量，模块里也能包含可执行的代码</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">[<span class="keyword">from</span> 模块名] <span class="keyword">import</span> [模块 | 类 | 变量 | 函数 | *] [<span class="keyword">as</span> 别名]</span><br></pre></td></tr></table></figure>
-<p>常用的组合形式如:</p>
-<ul>
-<li>import 模块名</li>
-<li>from 模块名 import 类、变量、方法等</li>
-<li>from 模块名 import *</li>
-<li>import 模块名 as 别名</li>
-<li>from 模块名 import 功能名 as 别名</li>
-</ul>
-<p>注意：</p>
-<ul>
-<li>from可以省略，直接import即可</li>
-<li>as别名可以省略</li>
-<li>通过”.”来确定层级关系</li>
-<li>模块的导入一般写在代码文件的开头位置</li>
-</ul>
-<h2 id="自定义模块"><a href="#自定义模块" class="headerlink" title="自定义模块"></a>自定义模块</h2><h2 id="制作自定义模块"><a href="#制作自定义模块" class="headerlink" title="制作自定义模块"></a>制作自定义模块</h2><p>每个Python文件都可以作为一个模块，模块的名字就是文件的名字。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># my_module.py文件</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test</span>(<span class="params">a, b</span>):</span><br><span class="line">	<span class="built_in">print</span>(a + b)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># test_my_module.py文件</span></span><br><span class="line"><span class="keyword">from</span> my_modle <span class="keyword">import</span> test</span><br><span class="line">	test(<span class="number">10</span>, <span class="number">20</span>)</span><br><span class="line">	</span><br><span class="line"><span class="keyword">import</span> my_module</span><br><span class="line">	my_module.test(<span class="number">10</span>, <span class="number">20</span>)</span><br></pre></td></tr></table></figure>
-<h2 id="命名空间污染"><a href="#命名空间污染" class="headerlink" title="命名空间污染"></a>命名空间污染</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#模块1代码</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">my_test</span>(<span class="params">a,b</span>):</span><br><span class="line">	<span class="built_in">print</span>(a + b)</span><br><span class="line">	</span><br><span class="line"><span class="comment">#模块2代码</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">my_test</span>(<span class="params">a, b</span>):</span><br><span class="line">	<span class="built_in">print</span>(a - b)</span><br><span class="line"></span><br><span class="line"><span class="comment">#导 入模块和调用功能代码</span></span><br><span class="line"><span class="keyword">from</span> my_module1 <span class="keyword">import</span> my_test</span><br><span class="line"><span class="keyword">from</span> my_module2 <span class="keyword">import</span> my_test</span><br><span class="line"></span><br><span class="line"><span class="comment">#my_test函数是模块2中的函数</span></span><br><span class="line">my_test(<span class="number">1</span>, <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-<p>注意:当导入多个模块的时候，且模块内有同名功能，当调用这个同名功能的时候，调用到的是后导入模块的功能</p>
-<h2 id="main-变量"><a href="#main-变量" class="headerlink" title="__main__变量"></a><code>__main__</code>变量</h2><p>实际开发中，为了为了让模块能够在项目中达到想要的效果，通常会在py文件中添加一些测试信息，例如，在m_module1.py文件中添加测试代码</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test</span>(<span class="params">a, b</span>):</span><br><span class="line">	<span class="built_in">print</span>(a + b)</span><br><span class="line">	</span><br><span class="line">test(<span class="number">1</span>,<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-<p>问题:<br>此时，无论是当前文件，还是其他已经导入了该模块的文件，在运行的时候都会自动执行test函数的调用<br>解决方案:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test</span>(<span class="params">a, b</span>):</span><br><span class="line"><span class="built_in">print</span>(a + b)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 只在当前文件中调用该函数，其他导入的文件内不符合该条件，则不执行test函数调用</span></span><br><span class="line"><span class="keyword">if</span> __main__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">	test(<span class="number">1</span>, <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-<h2 id="all-变量"><a href="#all-变量" class="headerlink" title="__all__变量"></a><code>__all__</code>变量</h2><p>如果一个模块文件中有<code>__all__</code>变量，当使用from xxx import *导入时，只能导入这个列表中的元素</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># my_module.py文件</span></span><br><span class="line">__all__ = [<span class="string">&#x27;test_A&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test_A</span>():</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">&#x27;test_A&#x27;</span>)</span><br><span class="line">	</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test_B</span>():</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">&#x27;test_B&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> my_module <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">test_A()</span><br><span class="line">test_B()    <span class="comment"># 此时只可以使用test_A，test_B无法使用</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="Python包"><a href="#Python包" class="headerlink" title="Python包"></a>Python包</h1><h2 id="自定义Python包"><a href="#自定义Python包" class="headerlink" title="自定义Python包"></a>自定义Python包</h2><p>包就是一个文件夹，里面可以存放许多Python的模块(代码文件)，通过包，在逻辑上将一批模块归为一类，方便使用。<br><img src="https://raw.githubusercontent.com/NimbusFan/blog-images/main/assets/Python%E5%8C%85%E7%BB%93%E6%9E%84.png" alt="Python包结构.png"></p>
-<h3 id="init-py文件"><a href="#init-py文件" class="headerlink" title="__init__.py文件"></a><code>__init__.py</code>文件</h3><p>创建包会默认自动创建的文件，通过这个文件来表示一个文件夹是Python的包，而非普通的文件夹。</p>
-<h3 id="创建包的步骤"><a href="#创建包的步骤" class="headerlink" title="创建包的步骤"></a>创建包的步骤</h3><ol>
-<li>新建包<code>my_package</code></li>
-<li>新建包内模块:<code>my_module_1</code>…<code>my_module_n</code></li>
-</ol>
-<h3 id="导入包"><a href="#导入包" class="headerlink" title="导入包"></a>导入包</h3><p>方式一：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">包名.模块名.目标</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># import导入</span></span><br><span class="line"><span class="keyword">import</span> 包名.模块名</span><br><span class="line"></span><br><span class="line"><span class="comment"># from导入</span></span><br><span class="line"><span class="keyword">from</span> 包名 <span class="keyword">import</span> 模块名</span><br><span class="line"></span><br><span class="line"><span class="comment"># 直接导入功能</span></span><br><span class="line"><span class="keyword">from</span> 包名.模块名 <span class="keyword">import</span> 功能</span><br></pre></td></tr></table></figure>
-<p>方式二：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> 包名 <span class="keyword">import</span> *</span><br></pre></td></tr></table></figure>
-<p>注意:必须在<code>_init_.py</code>文件中添加<code>_all_ = []</code>，控制允许导入的模块列表</p>
-<h2 id="安装第三方包"><a href="#安装第三方包" class="headerlink" title="安装第三方包"></a>安装第三方包</h2><h3 id="pip"><a href="#pip" class="headerlink" title="pip"></a>pip</h3><p>打开命令提示符程序</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip install 包名称</span><br></pre></td></tr></table></figure>
-<p>由于pip是连接的国外的网站进行包的下载，有的时候会速度很慢。<br>可以通过连接国内的镜像网站提高下载速度:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip install -i 镜像网址 包名称</span><br></pre></td></tr></table></figure>
-<h3 id="PyCharm"><a href="#PyCharm" class="headerlink" title="PyCharm"></a>PyCharm</h3><ol>
-<li>pycharm中提供的安装第三方包的功能：</li>
-<li>右下角python解释器</li>
-<li>解释器设置</li>
-<li>点击“+”搜索想要安装的包</li>
-<li>可勾选“选项”填入：-i 镜像网址</li>
-<li>安装软件包</li>
-</ol>
-<div class="note default simple"><p><strong>Repository</strong></p>
-<p>本章示例代码已归档至 GitHub，可用于本地复现、调试与扩展。</p>
-<p><a class="btn-beautify " href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/08_Exception_Module_Package" title="查看本章源码"><i class="fab fa-github"></i><span>查看本章源码</span></a></p>
-</div>
-]]></content>
-      <categories>
-        <category>Python 技术笔记</category>
-        <category>基础语法与数据结构</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>异常处理</tag>
-        <tag>模块与包</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python 函数基础：定义、参数与返回值</title>
-    <url>/2026/03/15/python-learning/Stage1_Core_Basics/python-s1-04-function-basics/</url>
-    <content><![CDATA[<h1 id="函数的基础定义"><a href="#函数的基础定义" class="headerlink" title="函数的基础定义"></a>函数的基础定义</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">函数名</span>(<span class="params">传入参数</span>):</span><br><span class="line">    函数体</span><br><span class="line">    <span class="keyword">return</span> 返回值</span><br></pre></td></tr></table></figure>
-
-<p>注意：</p>
-<ul>
-<li>参数&#x2F;返回值如不需要，可以省略</li>
-<li>如果不使用return，函数会返回None，类型是：&lt;class ‘NoneType’&gt;</li>
-<li>函数必须先定义后使用</li>
-</ul>
-<hr>
-<h1 id="函数的传入参数"><a href="#函数的传入参数" class="headerlink" title="函数的传入参数"></a>函数的传入参数</h1><ul>
-<li>函数定义中的参数为<strong>形式参数</strong></li>
-<li>函数调用中的参数为<strong>实际参数</strong></li>
-<li>函数的参数数量不限(0~N)，使用逗号分隔开</li>
-<li>传入参数的时候，要和形式参数一一对应，逗号隔开?</li>
-</ul>
-<hr>
-<h1 id="函数返回值"><a href="#函数返回值" class="headerlink" title="函数返回值"></a>函数返回值</h1><h2 id="函数返回值的定义"><a href="#函数返回值的定义" class="headerlink" title="函数返回值的定义"></a>函数返回值的定义</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">函数</span>(<span class="params">参数...</span>):</span><br><span class="line">    函数体</span><br><span class="line">    <span class="keyword">return</span>返回值</span><br><span class="line"></span><br><span class="line"><span class="comment"># 通过return关键字向调用者返回数据</span></span><br><span class="line">变量=函数(参数)</span><br></pre></td></tr></table></figure>
-
-<p>函数体在遇到return后就结束，写在return后的代码不会执行</p>
-<h2 id="None类型"><a href="#None类型" class="headerlink" title="None类型"></a>None类型</h2><h3 id="什么是None"><a href="#什么是None" class="headerlink" title="什么是None"></a>什么是None</h3><p>None是类型’NoneType’的字面量，用于表示:空的、无意义的</p>
-<h3 id="函数如何返回None"><a href="#函数如何返回None" class="headerlink" title="函数如何返回None"></a>函数如何返回None</h3><ul>
-<li>不使用return语句即返回None</li>
-<li>主动return None</li>
-</ul>
-<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><ul>
-<li><p>用在函数无返回值上</p>
-</li>
-<li><p>用在if判断上：在if判断中，None等同于False；一般用于在函数中主动返回None，配合if判断做相关处理</p>
-</li>
-<li><p>用于声明无内容的变量上:定义变量但暂时不需要变量有具体值，可以用None来代替</p>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">• <span class="comment">#暂不赋予变量具体值</span></span><br><span class="line">• name = <span class="literal">None</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="函数说明文档"><a href="#函数说明文档" class="headerlink" title="函数说明文档"></a>函数说明文档</h1><h2 id="函数说明文档的作用："><a href="#函数说明文档的作用：" class="headerlink" title="函数说明文档的作用："></a>函数说明文档的作用：</h2><p>对函数进行说明解释，帮助更好理解函数的功能</p>
-<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">func</span>(<span class="params">x,y</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    函数说明</span></span><br><span class="line"><span class="string">    :param x:参数x的说明</span></span><br><span class="line"><span class="string">    :param x:参数y的说明</span></span><br><span class="line"><span class="string">    :return:返回值的说明</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    函数体</span><br><span class="line">    <span class="keyword">return</span> 返回值</span><br></pre></td></tr></table></figure>
-
-<p>:param用于解释参数（parameter，参数）</p>
-<p>:return用于解释返回值</p>
-<hr>
-<h1 id="函数的嵌套调用"><a href="#函数的嵌套调用" class="headerlink" title="函数的嵌套调用"></a>函数的嵌套调用</h1><p>函数A中执行到调用函数B的语句，会将函数B全部执行完成后，继续执行函数A的剩余内容</p>
-<hr>
-<h1 id="变量的作用域"><a href="#变量的作用域" class="headerlink" title="变量的作用域"></a>变量的作用域</h1><h2 id="变量作用域"><a href="#变量作用域" class="headerlink" title="变量作用域"></a>变量作用域</h2><p>变量作用域指的是变量的作用范围</p>
-<p>变量主要分为两类:<strong>局部变量</strong>和<strong>全局变量</strong></p>
-<p><strong>局部变量</strong>是定义在函数体内部的变量，只在函数体内部生效</p>
-<p><strong>全局变量</strong>是在函数体内、外都能生效的变量</p>
-<h2 id="global关键字"><a href="#global关键字" class="headerlink" title="global关键字"></a>global关键字</h2><p><code>global</code> 用于在函数内部声明某个变量来自全局作用域，从而允许在函数内部修改该全局变量。</p>
-<hr>
-<div class="note default simple"><p><strong>Repository</strong></p>
-<p>本章示例代码已归档至 GitHub，可用于本地复现、调试与扩展。</p>
-<p><a class="btn-beautify " href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/04_Functions" title="查看本章源码"><i class="fab fa-github"></i><span>查看本章源码</span></a></p>
-</div>]]></content>
-      <categories>
-        <category>Python 技术笔记</category>
-        <category>基础语法与数据结构</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>基础语法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python 数据处理：JSON 解析与 Pyecharts 可视化</title>
-    <url>/2026/03/26/python-learning/Stage1_Core_Basics/python-s1-09-basic-comprehensive-Case/</url>
-    <content><![CDATA[<h1 id="JSON数据格式"><a href="#JSON数据格式" class="headerlink" title="JSON数据格式"></a>JSON数据格式</h1><h2 id="什么是JSON"><a href="#什么是JSON" class="headerlink" title="什么是JSON"></a>什么是JSON</h2><p>一种在各个编程语言中流通的数据格式，负责不同编程语言中的数据传递和交互。<br>JSON无非就是一个单独的字典或一个内部元素都是字典的列表。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># json数据的格式可以是：</span></span><br><span class="line">	&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;admin&quot;</span>, <span class="string">&quot;age&quot;</span>:<span class="number">18</span>&#125;</span><br><span class="line">	</span><br><span class="line"><span class="comment"># 也可以是：</span></span><br><span class="line">	[(<span class="string">&quot;name&quot;</span>:<span class="string">&quot;admin&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">18</span>&#125;,(<span class="string">&quot;name&quot;</span>:<span class="string">&quot;root&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">16</span>&#125;,(<span class="string">&quot;name&quot;</span>:<span class="string">&quot;张三&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">20</span>]]</span><br></pre></td></tr></table></figure>
-<h2 id="对JSON进行数据转换"><a href="#对JSON进行数据转换" class="headerlink" title="对JSON进行数据转换"></a>对JSON进行数据转换</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 导入json模块</span></span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line"><span class="comment"># 准备符合json格式要求的python数据</span></span><br><span class="line">data=[&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;老王&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">16</span>&#125;, &#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;张三&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">20</span>&#125;]</span><br><span class="line"></span><br><span class="line"><span class="comment"># json.dumps(data)方法把python数据转化为json数据</span></span><br><span class="line">data = json.dumps(data)</span><br><span class="line"><span class="comment"># 显示出中文</span></span><br><span class="line">data = json.dumps(data，ensure_ascii=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># json.loads(data)方法把json数据转化为python数据</span></span><br><span class="line">data =json.loads(data)</span><br></pre></td></tr></table></figure>
-<hr>
-<h1 id="pyecharts模块介绍"><a href="#pyecharts模块介绍" class="headerlink" title="pyecharts模块介绍"></a>pyecharts模块介绍</h1><ol>
-<li>开发可视化图表使用的技术栈是:<br> Echarts框架的Python版本:PyEcharts包</li>
-<li>如何安装PyEcharts包:<br> pip install pyecharts</li>
-<li>如何查看官方示例<br> 打开官方画廊:<a href="https://gallery.pyecharts.org/#/README">https://gallery.pyecharts.org/#/README</a></li>
-</ol>
-<hr>
-<h1 id="pyecharts快速入门"><a href="#pyecharts快速入门" class="headerlink" title="pyecharts快速入门"></a>pyecharts快速入门</h1><h2 id="构建基础折线图"><a href="#构建基础折线图" class="headerlink" title="构建基础折线图"></a>构建基础折线图</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 导包，导入Line功能构建折线图对象</span></span><br><span class="line"><span class="keyword">from</span> pyecharts.charts <span class="keyword">import</span> Line</span><br><span class="line"></span><br><span class="line"><span class="comment"># 得到折线图对象</span></span><br><span class="line">line = Line()</span><br><span class="line"><span class="comment"># 添加x轴数据</span></span><br><span class="line">line.add_xaxis([<span class="string">&quot;中国&quot;</span>，<span class="string">&quot;美国&quot;</span>,<span class="string">&quot;英国&quot;</span>])</span><br><span class="line"><span class="comment"># 添加y轴数据</span></span><br><span class="line">line.add_yaxis(<span class="string">&quot;GDP&quot;</span>, [<span class="number">30</span>, <span class="number">20</span> ,<span class="number">10</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment">#生成图表</span></span><br><span class="line">line.renderO</span><br></pre></td></tr></table></figure>
-<h2 id="使用全局配置项设置属性"><a href="#使用全局配置项设置属性" class="headerlink" title="使用全局配置项设置属性"></a>使用全局配置项设置属性</h2><p>pyecharts模块中有很多的配置选项，常用到2个类别的选项: </p>
-<ul>
-<li><strong>全局配置选项</strong></li>
-<li><strong>系列配置选项</strong></li>
-</ul>
-<p>全局配置选项可以通过<strong>set_global_opts</strong>方法来进行配置，相应的选项和选项的功能如下:<br><img src="https://raw.githubusercontent.com/NimbusFan/blog-images/main/assets/pyecharts%E5%85%A8%E5%B1%80%E9%85%8D%E7%BD%AE.png" alt="pyecharts全局配置.png"></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 通过全局配置项设置属性</span></span><br><span class="line">line.set_global_opts(</span><br><span class="line">	title_opts=TitleOpts(<span class="string">&quot;测试&quot;</span>,pos_left=<span class="string">&quot;center&quot;</span>,pos_bottom=<span class="string">&quot;1%&quot;</span>),</span><br><span class="line">	legend_opts=Legendopts(is_show=<span class="literal">True</span>),</span><br><span class="line">	toolbox_opts=ToolboxOpts(is_show=<span class="literal">True</span>),</span><br><span class="line">	visualmap_opts=VisualMapOpts(is_show=<span class="literal">True</span>),</span><br><span class="line">	tooltip_opts=TooltipOpts(is_show=<span class="literal">True</span>),</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-
-<div class="note default simple"><p><strong>Repository</strong></p>
-<p>本章示例代码已归档至 GitHub，可用于本地复现、调试与扩展。</p>
-<p><a class="btn-beautify " href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/09_Basic_Comprehensive_Case" title="查看本章源码"><i class="fab fa-github"></i><span>查看本章源码</span></a></p>
-</div>]]></content>
-      <categories>
-        <category>Python 技术笔记</category>
-        <category>基础语法与数据结构</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>JSON</tag>
-        <tag>数据可视化</tag>
-        <tag>PyEcharts</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python 分布式计算：PySpark RDD 编程基础</title>
-    <url>/2026/05/28/python-learning/Stage3_PySpark/python-s3-01-PySpark/</url>
-    <content><![CDATA[<h1 id="基础准备"><a href="#基础准备" class="headerlink" title="基础准备"></a>基础准备</h1><p>PySpark的编程模型：</p>
-<ol>
-<li>通过SparkContext对象，完成数据输入</li>
-<li>输入数据后得到RDD对象，对RDD对象进行迭代计算</li>
-<li>最终通过RDD对象的成员方法，完成数据输出工作</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pyspark <span class="keyword">import</span> SparkConf, SparkContext  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># 创建SparkConf对象————链式调用</span></span><br><span class="line">conf = SparkConf().setMaster(<span class="string">&quot;local[*]&quot;</span>).setAppName(<span class="string">&quot;test_spark_app&quot;</span>)  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># 以下这段等同于上面这一行的作用,  </span></span><br><span class="line"><span class="comment"># conf = SparkConf()  </span></span><br><span class="line"><span class="comment"># conf.setMaster(&quot;local[*]&quot;)  </span></span><br><span class="line"><span class="comment"># conf.setAppName(&quot;test_spark_app&quot;)  </span></span><br><span class="line">  </span><br><span class="line"><span class="comment"># 基于SparkConf类对象创建SparkContext对象  </span></span><br><span class="line">sc = SparkContext(conf = conf)  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># 打印PySpark的运行版本  </span></span><br><span class="line"><span class="built_in">print</span>(sc.version)  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># 停止SparkContext对象的运行(停止PySpark程序)  </span></span><br><span class="line">sc.stop()</span><br></pre></td></tr></table></figure>
-<p>PySpark的功能都是从SparkContext对象作为开始</p>
-<hr>
-<h1 id="数据输入"><a href="#数据输入" class="headerlink" title="数据输入"></a>数据输入</h1><p>RDD对象称之为分布式弹性数据集，是PySpark中数据计算的载体，它可以:</p>
-<ul>
-<li>提供数据存储</li>
-<li>提供数据计算的各类方法</li>
-<li>数据计算的方法，返回值依旧是RDD(RDD迭代计算)<br>后续对数据进行各类计算，都是基于RDD对象进行</li>
-</ul>
-<p>输入数据到Spark(即得到RDD对象)：</p>
-<ul>
-<li>通过SparkContext的parallelize成员方法，将Python数据容器转换为RDD对象</li>
-<li>通过SparkContext的textFile成员方法，读取文本文件得到RDD对象</li>
-</ul>
-<hr>
-<h1 id="数据计算"><a href="#数据计算" class="headerlink" title="数据计算"></a>数据计算</h1><h2 id="map方法"><a href="#map方法" class="headerlink" title="map方法"></a>map方法</h2><p>map算子(成员方法)</p>
-<ul>
-<li>接受一个处理函数，可用lambda表达式快速编写</li>
-<li>对RDD内的元素逐个处理，并返回一个新的RDD<br>链式调用</li>
-<li>对于返回值是新RDD的算子，可以通过链式调用的方式多次调用算子</li>
-</ul>
-<h2 id="flatMap方法"><a href="#flatMap方法" class="headerlink" title="flatMap方法"></a>flatMap方法</h2><ul>
-<li>计算逻辑和map一样</li>
-<li>比map多一个解除一层嵌套的功能。</li>
-</ul>
-<h2 id="reduceByKey方法"><a href="#reduceByKey方法" class="headerlink" title="reduceByKey方法"></a>reduceByKey方法</h2><ul>
-<li>接受一个处理函数，对数据进行两两计算</li>
-</ul>
-<h2 id="filter方法"><a href="#filter方法" class="headerlink" title="filter方法"></a>filter方法</h2><ul>
-<li>接收一个处理函数，可用lambda快速编写</li>
-<li>函数对RDD数据逐个处理，得到True的保留至返回值的RDD中</li>
-</ul>
-<h2 id="distinct方法"><a href="#distinct方法" class="headerlink" title="distinct方法"></a>distinct方法</h2><ul>
-<li>完成对RDD内数据的去重操作</li>
-</ul>
-<h2 id="sortBy方法"><a href="#sortBy方法" class="headerlink" title="sortBy方法"></a>sortBy方法</h2><ul>
-<li>接收一个处理函数，可用lambda快速编写</li>
-<li>函数表示用来决定排序的依据</li>
-<li>可以控制升序或降序</li>
-<li>全局排序需要设置分区数为1</li>
-</ul>
-<hr>
-<h1 id="数据输出"><a href="#数据输出" class="headerlink" title="数据输出"></a>数据输出</h1><h2 id="输出为Python对象"><a href="#输出为Python对象" class="headerlink" title="输出为Python对象"></a>输出为Python对象</h2><ul>
-<li>collect:将RDD内容转换为list</li>
-<li>reduce:对RDD内容进行自定义聚合</li>
-<li>take:取出RDD的前N个元素组成list</li>
-<li>count:统计RDD元素个数</li>
-</ul>
-<h2 id="输出到文件中"><a href="#输出到文件中" class="headerlink" title="输出到文件中"></a>输出到文件中</h2><p>RDD输出到文件的方法：</p>
-<ul>
-<li>rdd.saveAsTextFile(路径)</li>
-<li>输出的结果是一个文件夹</li>
-<li>有几个分区就输出多少个结果文件<br>如何修改RDD分区：</li>
-<li>SparkConf对象设置conf.set(“spark.default.parallelism”, “1”)</li>
-<li>创建RDD的时候，sc.parallelize方法传入numSlices参数为1</li>
-</ul>
-<div class="note default simple"><p><strong>Repository</strong></p>
-<p>本章示例代码已归档至 GitHub，可用于本地复现、调试与扩展。</p>
-<p><a class="btn-beautify " href="https://github.com/NimbusFan/My-Second-Brain/tree/main/myblog/source/_posts/python-learning/Stage3_PySpark" title="查看本章源码"><i class="fab fa-github"></i><span>查看本章源码</span></a></p>
-</div>
-
-]]></content>
-      <categories>
-        <category>Python 技术笔记</category>
-        <category>大数据与分布式计算</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>PySpark</tag>
-        <tag>Spark</tag>
-        <tag>RDD</tag>
-        <tag>分布式计算</tag>
-        <tag>数据处理</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python 大数据处理：SQL 语法与 MySQL 实践</title>
+    <title>Python 数据库编程：SQL 语法与 MySQL 实践</title>
     <url>/2026/05/21/python-learning/Stage2_OOP/python-s2-02-SQL/</url>
     <content><![CDATA[<h1 id="基础命令"><a href="#基础命令" class="headerlink" title="基础命令"></a>基础命令</h1><p>SQL语言分类：</p>
 <ul>
