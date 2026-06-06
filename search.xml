@@ -1,149 +1,199 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Hexo 博客搭建：GitHub Pages 与 Butterfly 主题配置</title>
-    <url>/2026/03/11/daily/Hexo%20%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%EF%BC%9AGitHub%20Pages%20%E4%B8%8E%20Butterfly%20%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<h2 id="前言：为什么要做这个博客？"><a href="#前言：为什么要做这个博客？" class="headerlink" title="前言：为什么要做这个博客？"></a>前言：为什么要做这个博客？</h2><p>平时在学习过程中写过不少 Python 脚本，折腾过 PostgreSQL 数据库，也在 GitHub 上修过别人的 Bug。逐渐意识到，知识如果不系统地沉淀下来，很容易变成过眼云烟。</p>
-<p>为了记录接下来死磕 Java 后端开发的学习历程，决定搭建一个真正属于自己的独立博客。</p>
-<p>这篇文章不仅是教程，更是一篇的“填坑日记”。</p>
+    <title>Python 条件判断与逻辑控制</title>
+    <url>/2026/03/13/python-learning/Stage1_Core_Basics/python-s1-02-condition-statement/</url>
+    <content><![CDATA[<h1 id="布尔类型和比较运算符"><a href="#布尔类型和比较运算符" class="headerlink" title="布尔类型和比较运算符"></a>布尔类型和比较运算符</h1><h2 id="布尔类型"><a href="#布尔类型" class="headerlink" title="布尔类型"></a>布尔类型</h2><p>在 Python 中，布尔类型的字面量用 <code>True</code> 表示真，<code>False</code> 表示假。</p>
+<h2 id="比较运算符"><a href="#比较运算符" class="headerlink" title="比较运算符"></a>比较运算符</h2><p>在逻辑判断中，我们经常需要对比两个值。Python 提供了以下比较运算符：</p>
+<table>
+<thead>
+<tr>
+<th align="center">运算符</th>
+<th align="center">描述说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>==</code></td>
+<td align="center">判断内容是否相等，满足为True，不满足为False</td>
+</tr>
+<tr>
+<td align="center"><code>!=</code></td>
+<td align="center">判断内容是否不相等，满足为True，不满足为 False</td>
+</tr>
+<tr>
+<td align="center"><code>&gt;</code></td>
+<td align="center">判断运算符左侧内容是否大于右侧满足为True，不满足为False</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;</code></td>
+<td align="center">判断运算符左侧内容是否小于右侧满足为True，不满足为 False</td>
+</tr>
+<tr>
+<td align="center"><code>&gt;=</code></td>
+<td align="center">判断运算符左侧内容是否大于等于右侧满足为True，不满足为 False</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;=</code></td>
+<td align="center">判断运算符左侧内容是否小于等于右侧满足为True，不满足为 False</td>
+</tr>
+</tbody></table>
 <hr>
-<h2 id="一、网络超时"><a href="#一、网络超时" class="headerlink" title="一、网络超时"></a>一、网络超时</h2><p>环境配置（Node.js 和 Git）还算顺利，但敲下第一行初始化命令 <code>hexo init myblog</code> 时，就开始报错了：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">fatal: unable to access <span class="string">&#x27;[https://github.com/hexojs/hexo-starter.git/](https://github.com/hexojs/hexo-starter.git/)&#x27;</span>: Connection timed out after 300030 milliseconds</span><br><span class="line">Error: EPERM: operation not permitted, <span class="built_in">mkdir</span> <span class="string">&#x27;D:\&#x27;</span></span><br></pre></td></tr></table></figure>
+<h1 id="if-语句"><a href="#if-语句" class="headerlink" title="if 语句"></a>if 语句</h1><p>最基础的条件判断语句格式如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> 要判断的条件:</span><br><span class="line">    满足条件时要做的事情<span class="number">1</span></span><br><span class="line">    满足条件时要做的事情<span class="number">2</span></span><br><span class="line">    ...</span><br><span class="line">    满足条件时要做的事情N</span><br></pre></td></tr></table></figure>
 
-<p><strong>排坑思路：</strong> 命令行默认是不走代理的，干等 300 秒后必定超时。而后面的 <code>EPERM</code> 报错纯粹是因为网络断开后，Hexo 备用机制乱了阵脚，试图在 D 盘根目录建文件夹被系统权限拦截。</p>
-<p><strong>解决方案：</strong> 果断清理残留的半成品文件夹，直接动用国内镜像源进行极速克隆：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo init myblog [https://ghproxy.net/https://github.com/hexojs/hexo-starter.git](https://ghproxy.net/https://github.com/hexojs/hexo-starter.git)</span><br></pre></td></tr></table></figure>
-
-<p>随后进入文件夹，使用淘宝镜像源安装依赖：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install --registry=[https://registry.npmmirror.com](https://registry.npmmirror.c</span><br></pre></td></tr></table></figure>
-
-<h2 id="二、连接被重置"><a href="#二、连接被重置" class="headerlink" title="二、连接被重置"></a>二、连接被重置</h2><p>在本地跑通 <code>hexo s</code> 看到默认主题后，按照教程配置了 <code>_config.yml</code>，准备将网页推送到 GitHub Pages。结果在执行 <code>hexo d</code> 时，再次报错：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fatal: unable to access &#x27;[https://github.com/](https://github.com/)...&#x27;: Recv failure: Connection was reset</span><br></pre></td></tr></table></figure>
-
-<p><strong>排坑思路：</strong> 国内使用 <code>https://</code> 开头的地址去推送 Git 极度不稳定，经常推到一半连接就被掐断。于是抛弃 HTTPS 部署，改用 <strong>SSH 密钥免密传输</strong>。</p>
-<p><strong>解决方案：</strong></p>
-<ol>
-<li><strong>生成本地密钥：</strong> 运行 <code>ssh-keygen -t rsa -C &quot;我的邮箱&quot;</code>，一路回车。</li>
-<li><strong>配置 GitHub：</strong> 将 <code>~/.ssh/id_rsa.pub</code> 里的公钥全选复制，添加到 GitHub 的 <code>SSH and GPG keys</code> 中。</li>
-<li><strong>测试连接：</strong> 运行 <code>ssh -T git@github.com</code> 确认打通。</li>
-<li><strong>修改 Hexo 总配置：</strong> 将部署地址换成 SSH 格式。</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:fanbyteio/fanbyteio.github.io.git</span><br><span class="line">  branch: main</span><br></pre></td></tr></table></figure>
-
-<p>修改完成后，再次 <code>hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</code>，丝滑上线！</p>
-<hr>
-<h2 id="三、换装-Butterfly"><a href="#三、换装-Butterfly" class="headerlink" title="三、换装 Butterfly"></a>三、换装 Butterfly</h2><p>为了追求视觉效果，我选择了目前 Hexo 界功能多样的主题——<strong>Butterfly</strong>。但代价是配置复杂度的提升。</p>
-<p><strong>避坑指南：</strong></p>
-<ol>
-<li><strong>国内极速克隆：</strong> 同样使用镜像加速，避免克隆到一半报错。<br><code>git clone https://github.moeyy.xyz/https://github.com/JerryC808/hexo-theme-butterfly themes/butterfly</code></li>
-<li><strong>必装渲染器：</strong> Butterfly 使用了 Pug 和 Stylus，如果不装对应的渲染插件，本地预览会直接满屏乱码。<br><code>npm install hexo-renderer-pug hexo-renderer-stylus --save</code></li>
-</ol>
-<hr>
-<h2 id="四、消失不掉的-“xxxxxx”"><a href="#四、消失不掉的-“xxxxxx”" class="headerlink" title="四、消失不掉的 “xxxxxx”"></a>四、消失不掉的 “xxxxxx”</h2><p>在配置侧边栏社交链接时，遇到了本次搭建过程中最诡异的 Bug：明明已经把 <code>_config.yml</code> 里的 <code>social</code> 链接改成了我自己的 GitHub 账号（fanbyteio），且再三确只有这一处social链接，但网页上的图标点开后，依然顽固地跳转到主题默认的 <code>github.com/xxxxxx</code>。</p>
-<p><strong>排坑思路：</strong><br>我先后尝试了：</p>
+<blockquote>
+<p><strong>⚠️ 注意事项：</strong></p>
 <ul>
-<li>强制清除浏览器缓存（Ctrl + F5）。</li>
-<li>执行 <code>hexo clean</code> 深度清理。</li>
-<li>将主题内部的<code>_config.yml</code>放在根目录下且更名为<code>_config.butterfly.yml</code></li>
-<li>删除外层配置文件，直接修改主题内部的 <code>_config.yml</code>。<br><strong>结果：全部失败！</strong> 那个 <code>xxxxxx</code> 就像幽灵一样，不知藏在哪个角落。</li>
+<li>判断条件的结果一定要是 <code>bool</code> 类型 。</li>
+<li>判断条件后必须要有<strong>冒号</strong> <code>:</code> 。</li>
+<li>归属于 <code>if</code> 语句的代码块，需在行前填充<strong>4个空格缩进 (1个Tab)</strong> 。</li>
+<li>Python 是严格通过空格缩进来判断代码归属的 。</li>
 </ul>
-<p><strong>最终解决办法：全局搜索</strong><br>我意识到，既然网页上出现了这个字符串，它一定以硬编码的形式存在于某个配置文件中。我动用了 Windows 命令行下的全局搜索工具：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">findstr /S /N <span class="string">&quot;xxxxxx&quot;</span> *.yml</span><br></pre></td></tr></table></figure>
+</blockquote>
+<hr>
+<h2 id="if-else-组合判断语句"><a href="#if-else-组合判断语句" class="headerlink" title="if-else 组合判断语句"></a>if-else 组合判断语句</h2><p>当条件不满足时，如果我们想执行另一套逻辑，就需要加入 <code>else</code>：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> 要判断的条件:</span><br><span class="line">    满足条件时要做的事情<span class="number">1</span></span><br><span class="line">    满足条件时要做的事情<span class="number">2</span></span><br><span class="line">    ...</span><br><span class="line">    满足条件时要做的事情N</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    不满足条件时要做的事情<span class="number">1</span></span><br><span class="line">    不满足条件时要做的事情<span class="number">2</span></span><br><span class="line">    ...</span><br><span class="line">    不满足条件时要做的事情N</span><br></pre></td></tr></table></figure>
 
-<p><strong>真相大白：</strong> 搜查结果显示，除了我修改的 <code>social</code> 区块，在 <code>themes\butterfly\_config.yml</code> 的第 285 行还藏着另一个 <code>link</code> 配置。原来 Butterfly 有多处可以配置 GitHub 链接的地方，而我之前只改了其中一个</p>
-<p>这就是典型的“代码改了，但没完全改”。精准打击掉这一行后，跳转终于恢复正常。</p>
-]]></content>
-      <categories>
-        <category>个人博客建设</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-        <tag>GitHub-Pages</tag>
-        <tag>Butterfly</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python 大数据处理：PySpark RDD 编程基础</title>
-    <url>/2026/05/28/python-learning/Stage3_PySpark/python-s3-01-PySpark/</url>
-    <content><![CDATA[<h1 id="基础准备"><a href="#基础准备" class="headerlink" title="基础准备"></a>基础准备</h1><p>PySpark的编程模型：</p>
-<ol>
-<li>通过SparkContext对象，完成数据输入</li>
-<li>输入数据后得到RDD对象，对RDD对象进行迭代计算</li>
-<li>最终通过RDD对象的成员方法，完成数据输出工作</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pyspark <span class="keyword">import</span> SparkConf, SparkContext  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># 创建SparkConf对象————链式调用</span></span><br><span class="line">conf = SparkConf().setMaster(<span class="string">&quot;local[*]&quot;</span>).setAppName(<span class="string">&quot;test_spark_app&quot;</span>)  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># 以下这段等同于上面这一行的作用,  </span></span><br><span class="line"><span class="comment"># conf = SparkConf()  </span></span><br><span class="line"><span class="comment"># conf.setMaster(&quot;local[*]&quot;)  </span></span><br><span class="line"><span class="comment"># conf.setAppName(&quot;test_spark_app&quot;)  </span></span><br><span class="line">  </span><br><span class="line"><span class="comment"># 基于SparkConf类对象创建SparkContext对象  </span></span><br><span class="line">sc = SparkContext(conf = conf)  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># 打印PySpark的运行版本  </span></span><br><span class="line"><span class="built_in">print</span>(sc.version)  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># 停止SparkContext对象的运行(停止PySpark程序)  </span></span><br><span class="line">sc.stop()</span><br></pre></td></tr></table></figure>
-<p>PySpark的功能都是从SparkContext对象作为开始</p>
+<p><strong>注意：</strong></p>
+<ul>
+<li><p><code>else</code> 后面不需要再写判断条件 </p>
+</li>
+<li><p><code>else</code> 后的代码块同样需要四个空格作为缩进</p>
+</li>
+</ul>
+<h2 id="if-elif-else-组合语句"><a href="#if-elif-else-组合语句" class="headerlink" title="if-elif-else 组合语句"></a>if-elif-else 组合语句</h2><p>面对多种情况的条件分支，可以使用 <code>elif</code>：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> 条件<span class="number">1</span>:</span><br><span class="line">    满足条件<span class="number">1</span>时要做的事情<span class="number">1</span></span><br><span class="line">    ...</span><br><span class="line">    满足条件<span class="number">1</span>时要做的事情N</span><br><span class="line"><span class="keyword">elif</span> 条件<span class="number">2</span>:</span><br><span class="line">    满足条件<span class="number">2</span>时要做的事情<span class="number">1</span></span><br><span class="line">    ...</span><br><span class="line">    满足条件<span class="number">2</span>时要做的事情N</span><br><span class="line"><span class="keyword">elif</span> 条件N:</span><br><span class="line">    满足条件N时要做的事情<span class="number">1</span></span><br><span class="line">    ...</span><br><span class="line">    满足条件N时要做的事情N</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    所有条件都不满足要做的事情<span class="number">1</span></span><br><span class="line">    ...</span><br><span class="line">    所有条件都不满足要做的事情N</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>⚠️ 注意事项：</strong></p>
+<p><code>elif</code> 可以写多个，且每个条件后面都要加冒号 。每个判断是<strong>互斥且有序</strong>的，只要上面的某一个条件满足了，后面的条件就不会再进行判断了 。</p>
+</blockquote>
 <hr>
-<h1 id="数据输入"><a href="#数据输入" class="headerlink" title="数据输入"></a>数据输入</h1><p>RDD对象称之为分布式弹性数据集，是PySpark中数据计算的载体，它可以:</p>
-<ul>
-<li>提供数据存储</li>
-<li>提供数据计算的各类方法</li>
-<li>数据计算的方法，返回值依旧是RDD(RDD迭代计算)<br>后续对数据进行各类计算，都是基于RDD对象进行</li>
-</ul>
-<p>输入数据到Spark(即得到RDD对象)：</p>
-<ul>
-<li>通过SparkContext的parallelize成员方法，将Python数据容器转换为RDD对象</li>
-<li>通过SparkContext的textFile成员方法，读取文本文件得到RDD对象</li>
-</ul>
-<hr>
-<h1 id="数据计算"><a href="#数据计算" class="headerlink" title="数据计算"></a>数据计算</h1><h2 id="map方法"><a href="#map方法" class="headerlink" title="map方法"></a>map方法</h2><p>map算子(成员方法)</p>
-<ul>
-<li>接受一个处理函数，可用lambda表达式快速编写</li>
-<li>对RDD内的元素逐个处理，并返回一个新的RDD<br>链式调用</li>
-<li>对于返回值是新RDD的算子，可以通过链式调用的方式多次调用算子</li>
-</ul>
-<h2 id="flatMap方法"><a href="#flatMap方法" class="headerlink" title="flatMap方法"></a>flatMap方法</h2><ul>
-<li>计算逻辑和map一样</li>
-<li>比map多一个解除一层嵌套的功能。</li>
-</ul>
-<h2 id="reduceByKey方法"><a href="#reduceByKey方法" class="headerlink" title="reduceByKey方法"></a>reduceByKey方法</h2><ul>
-<li>接受一个处理函数，对数据进行两两计算</li>
-</ul>
-<h2 id="filter方法"><a href="#filter方法" class="headerlink" title="filter方法"></a>filter方法</h2><ul>
-<li>接收一个处理函数，可用lambda快速编写</li>
-<li>函数对RDD数据逐个处理，得到True的保留至返回值的RDD中</li>
-</ul>
-<h2 id="distinct方法"><a href="#distinct方法" class="headerlink" title="distinct方法"></a>distinct方法</h2><ul>
-<li>完成对RDD内数据的去重操作</li>
-</ul>
-<h2 id="sortBy方法"><a href="#sortBy方法" class="headerlink" title="sortBy方法"></a>sortBy方法</h2><ul>
-<li>接收一个处理函数，可用lambda快速编写</li>
-<li>函数表示用来决定排序的依据</li>
-<li>可以控制升序或降序</li>
-<li>全局排序需要设置分区数为1</li>
-</ul>
-<hr>
-<h1 id="数据输出"><a href="#数据输出" class="headerlink" title="数据输出"></a>数据输出</h1><h2 id="输出为Python对象"><a href="#输出为Python对象" class="headerlink" title="输出为Python对象"></a>输出为Python对象</h2><ul>
-<li>collect:将RDD内容转换为list</li>
-<li>reduce:对RDD内容进行自定义聚合</li>
-<li>take:取出RDD的前N个元素组成list</li>
-<li>count:统计RDD元素个数</li>
-</ul>
-<h2 id="输出到文件中"><a href="#输出到文件中" class="headerlink" title="输出到文件中"></a>输出到文件中</h2><p>RDD输出到文件的方法：</p>
-<ul>
-<li>rdd.saveAsTextFile(路径)</li>
-<li>输出的结果是一个文件夹</li>
-<li>有几个分区就输出多少个结果文件<br>如何修改RDD分区：</li>
-<li>SparkConf对象设置conf.set(“spark.default.parallelism”, “1”)</li>
-<li>创建RDD的时候，sc.parallelize方法传入numSlices参数为1</li>
-</ul>
+<h2 id="判断语句的嵌套"><a href="#判断语句的嵌套" class="headerlink" title="判断语句的嵌套"></a>判断语句的嵌套</h2><p>在实际开发中，经常会遇到“在某个前提条件下，再进行二次判断”的场景。这就需要用到嵌套结构：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> 条件<span class="number">1</span>:</span><br><span class="line">    满足条件<span class="number">1</span>时要做的事情<span class="number">1</span></span><br><span class="line">    ...</span><br><span class="line">    满足条件<span class="number">1</span>时要做的事情N</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> 条件<span class="number">2</span>:</span><br><span class="line">        满足条件<span class="number">2</span>时要做的事情<span class="number">1</span></span><br><span class="line">        ...</span><br><span class="line">        满足条件<span class="number">2</span>时要做的事情N</span><br></pre></td></tr></table></figure>
+
+<p><strong>层级法则：</strong> Python 完全通过缩进来确定层级的包含关系 。内层嵌套的 <code>if</code> 需要叠加缩进。</p>
 <div class="note default simple"><p><strong>Repository</strong></p>
 <p>本章示例代码已归档至 GitHub，可用于本地复现、调试与扩展。</p>
-<p><a class="btn-beautify " href="https://github.com/NimbusFan/My-Second-Brain/tree/main/myblog/source/_posts/python-learning/Stage3_PySpark" title="查看本章源码"><i class="fab fa-github"></i><span>查看本章源码</span></a></p>
-</div>
-
-]]></content>
+<p><a class="btn-beautify " href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/02_Condition_Statements" title="查看本章源码"><i class="fab fa-github"></i><span>查看本章源码</span></a></p>
+</div>]]></content>
       <categories>
         <category>Python 技术笔记</category>
-        <category>大数据与分布式计算</category>
+        <category>基础语法与数据结构</category>
       </categories>
       <tags>
         <tag>Python</tag>
-        <tag>PySpark</tag>
-        <tag>Spark</tag>
-        <tag>RDD</tag>
-        <tag>分布式计算</tag>
-        <tag>数据处理</tag>
+        <tag>基础语法</tag>
+        <tag>逻辑控制</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python 面向对象编程：类、对象与核心特性</title>
+    <url>/2026/04/14/python-learning/Stage2_OOP/python-s2-01-object-oriented/</url>
+    <content><![CDATA[<h1 id="初识对象"><a href="#初识对象" class="headerlink" title="初识对象"></a>初识对象</h1><p>在程序中是可以做到和生活中那样，设计表格、生产表格、填写表格的组织形式的。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在程序中设计表格，我们称之为:设计类(class)</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>:</span><br><span class="line">	name = <span class="literal">None</span></span><br><span class="line">	</span><br><span class="line"><span class="comment"># 在程序中打印生产表格，我们称之为:创建对象</span></span><br><span class="line"><span class="comment"># 基于类创建对象</span></span><br><span class="line">stu_1 = Student()</span><br><span class="line">stu_2 = Student()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在程序中填写表格，我们称之为:对象属性赋值</span></span><br><span class="line">stu_1.name =<span class="string">&quot;周杰轮&quot;</span>    <span class="comment"># 为学生1对象赋予名称属性值</span></span><br><span class="line">stu_2.name =<span class="string">&quot;林军杰&quot;</span>    <span class="comment"># 为学生2对象赋予名称属性值</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="成员方法"><a href="#成员方法" class="headerlink" title="成员方法"></a>成员方法</h1><h2 id="类的语法："><a href="#类的语法：" class="headerlink" title="类的语法："></a>类的语法：</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">类名称</span>：    <span class="comment"># class是关键字，表示要定义类</span></span><br><span class="line">	类的属性      <span class="comment"># 类的属性，即定义在类中的变量（成员变量）</span></span><br><span class="line">	</span><br><span class="line">	类的行为      <span class="comment"># 类的行为，即定义在类中的函数（成员方法）</span></span><br></pre></td></tr></table></figure>
+<p>注意：函数是写在类外的，定义在类内部的函数习惯上称为<strong>方法</strong></p>
+<h2 id="成员方法的语法"><a href="#成员方法的语法" class="headerlink" title="成员方法的语法"></a>成员方法的语法</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">类名称</span>:</span><br><span class="line">	成员变量</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">成员方法</span>(<span class="params">self, 参数列表</span>)：</span><br><span class="line">		成员方法体</span><br><span class="line">		</span><br><span class="line">对象 = 类名称()</span><br></pre></td></tr></table></figure>
+<p>self的作用：</p>
+<ul>
+<li>表示类对象本身的意思</li>
+<li>只有通过self，成员方法才能访问类的成员变量</li>
+<li>self出现在形参列表中，但是不占用参数位置，因此调用时无需理会</li>
+</ul>
+<h2 id="创建类对象的语法："><a href="#创建类对象的语法：" class="headerlink" title="创建类对象的语法："></a>创建类对象的语法：</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">对象 = 类名称()</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="类和对象"><a href="#类和对象" class="headerlink" title="类和对象"></a>类和对象</h1><p>类和对象的关系是什么?</p>
+<ul>
+<li>类是程序中的“设计图纸”</li>
+<li>对象是基于图纸生产的具体实体</li>
+</ul>
+<p>面向对象编程：使用对象进行编程。即设计类，基于类创建对象，并使用对象来完成具体的工作</p>
+<hr>
+<h1 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h1><p>Python类可以使用:<code>__init__()</code>方法，称之为构造方法。</p>
+<ul>
+<li>在创建类对象(构造类)的时候，会自动执行。</li>
+<li>在创建类对象(构造类)的时候，传入参数时会自动传递给<code>__init__</code>方法使用。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>:</span><br><span class="line">	name = <span class="literal">None</span>    <span class="comment"># 可以省略</span></span><br><span class="line">	age = <span class="literal">None</span>     <span class="comment"># 可以省略</span></span><br><span class="line">	tel = <span class="literal">None</span>     <span class="comment"># 可以省略</span></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,name,age, tel</span>):</span><br><span class="line">		<span class="variable language_">self</span>.name = name</span><br><span class="line">		<span class="variable language_">self</span>.age = age</span><br><span class="line">		<span class="variable language_">self</span>.tel = tel</span><br><span class="line">		<span class="built_in">print</span>(<span class="string">&quot;student类创建了一个对象&quot;</span>)</span><br><span class="line">		</span><br><span class="line">stu = Student(<span class="string">&quot;周杰轮&quot;</span>，<span class="number">31</span>,<span class="string">&quot;18500006666&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>注意：构造方法也是成员方法，不能忘记在参数列表中提供<code>self</code></p>
+<hr>
+<h1 id="魔术方法"><a href="#魔术方法" class="headerlink" title="魔术方法"></a>魔术方法</h1><p><code>__init__</code>构造方法，是Python类内置的方法之一。<br>这些内置的类方法各自有各自特殊的功能，称之为<strong>魔术方法</strong></p>
+<h2 id="str-字符串魔术方法"><a href="#str-字符串魔术方法" class="headerlink" title="__str__字符串魔术方法"></a><code>__str__</code>字符串魔术方法</h2><p>当类对象需要被转换为字符串时，会输出其内存地址</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>:</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__init__</span> (<span class="variable language_">self</span>, name, age):</span><br><span class="line">		<span class="variable language_">self</span>.name = name</span><br><span class="line">		<span class="variable language_">self</span>.age = age</span><br><span class="line">		</span><br><span class="line">student = Student(<span class="string">&quot;周杰轮&quot;</span>, <span class="number">11</span>)</span><br><span class="line"><span class="built_in">print</span>(student)        <span class="comment"># 结果:&lt;__main__.Student object at 0x000002200cFD7040&gt;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">str</span>(student))   <span class="comment"># 结果:&lt;__main__.Student object at Ox000002200cFD7040&gt;</span></span><br></pre></td></tr></table></figure>
+<p>但是内存地址没有多大作用，可以通过str 方法，控制类转换为字符串的行为<br> <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>:</span><br><span class="line">	<span class="keyword">def</span>  <span class="title function_">__init__</span> (<span class="variable language_">self</span>, name, age):</span><br><span class="line">		<span class="variable language_">self</span>.name = name</span><br><span class="line">		<span class="variable language_">self</span>.age = age</span><br><span class="line">		</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>):</span><br><span class="line">		<span class="keyword">return</span> <span class="string">f&quot;student类对象,name=<span class="subst">&#123;self.name&#125;</span>, age=<span class="subst">&#123;self.age&#125;</span>&quot;</span></span><br><span class="line">		</span><br><span class="line">student = Student(<span class="string">&quot;周杰轮&quot;</span>, <span class="number">11</span>)</span><br><span class="line"><span class="built_in">print</span>(student)         <span class="comment"># 结果:Student类对象，name=周杰轮，age=11</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">str</span>(student))    <span class="comment"># 结果:Student类对象，name=周杰轮，age=l1</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="lt-小于符号魔术方法"><a href="#lt-小于符号魔术方法" class="headerlink" title="__lt__小于符号魔术方法"></a><code>__lt__</code>小于符号魔术方法</h2><p> 两个对象之间不可以直接进行比较<br> <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>:</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__init__</span> (<span class="variable language_">self</span>, name, age):</span><br><span class="line">	<span class="variable language_">self</span>.name = nameself.age = age</span><br><span class="line"></span><br><span class="line">stu1 = Student(<span class="string">&quot;周杰伦&quot;</span>,<span class="number">11</span>)</span><br><span class="line">stu2 = Student(<span class="string">&quot;林俊杰&quot;</span>,<span class="number">13</span>)</span><br><span class="line"><span class="built_in">print</span>(stul &lt; stu2)      <span class="comment"># 此处无法比较，会直接报错</span></span><br></pre></td></tr></table></figure><br> 此时需要在类中实现<code>__lt__</code>方法，即可同时完成:小于符号和大于符号2种比较<br> <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>:</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name, age</span>):</span><br><span class="line">		<span class="variable language_">self</span>.name = name</span><br><span class="line">		<span class="variable language_">self</span>.age = age</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__lt__</span>(<span class="params">self, other</span>):</span><br><span class="line">		<span class="keyword">return</span> <span class="variable language_">self</span>.age &lt; other.age</span><br><span class="line">stu1 = Student(<span class="string">&quot;周杰伦&quot;</span>,<span class="number">11</span>)</span><br><span class="line">stu2 = Student(<span class="string">&quot;林俊杰&quot;</span>,<span class="number">13</span>)</span><br><span class="line"><span class="built_in">print</span>(stu1 &lt; stu2)     <span class="comment"># 结果:True</span></span><br><span class="line"><span class="built_in">print</span>(stu1 &gt; stu2)     <span class="comment"># 结果:False</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="le-小于等于符号魔术方法"><a href="#le-小于等于符号魔术方法" class="headerlink" title="__le__小于等于符号魔术方法"></a><code>__le__</code>小于等于符号魔术方法</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>:</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__init__</span> (<span class="variable language_">self</span>, name, age):</span><br><span class="line">		<span class="variable language_">self</span>.name = name</span><br><span class="line">		<span class="variable language_">self</span>.age = age</span><br><span class="line"></span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">___le__</span>(<span class="params">self, other</span>):</span><br><span class="line">		<span class="keyword">return</span> <span class="variable language_">self</span>.age &lt;= other.age</span><br><span class="line">		</span><br><span class="line">stu1 = Student(<span class="string">&quot;周杰轮&quot;</span>,<span class="number">11</span>)</span><br><span class="line">stu2 = Student(<span class="string">&quot;林军杰&quot;</span>,<span class="number">13</span>)</span><br><span class="line"><span class="built_in">print</span>(stu1 &lt;= stu2)    <span class="comment"># 结果:True</span></span><br><span class="line"><span class="built_in">print</span>(stu2 &gt;= stu2)    <span class="comment"># 结果:False</span></span><br></pre></td></tr></table></figure>
+<h2 id="eq-比较运算符魔术方法"><a href="#eq-比较运算符魔术方法" class="headerlink" title="__eq__比较运算符魔术方法"></a><code>__eq__</code>比较运算符魔术方法</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>:</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__init__</span> (<span class="variable language_">self</span>, name, age):</span><br><span class="line">		<span class="variable language_">self</span>.name = name</span><br><span class="line">		<span class="variable language_">self</span>.age = age</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__eq__</span>(<span class="params">self, other</span>):</span><br><span class="line">	<span class="keyword">return</span> <span class="variable language_">self</span>.age == other.age</span><br><span class="line"></span><br><span class="line">stu1 = Student(<span class="string">&quot;周杰轮&quot;</span>,<span class="number">11</span>)</span><br><span class="line">stu2 = Student(<span class="string">&quot;林军杰&quot;</span>,<span class="number">11</span>)    </span><br><span class="line"><span class="built_in">print</span>(stu1 == stu2)    <span class="comment"># 结果:True</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h1><p>面向对象包含3大主要特性：</p>
+<ul>
+<li>封装</li>
+<li>继承</li>
+<li>多态</li>
+</ul>
+<p>封装是指将现实世界事物在类中描述为属性和方法。</p>
+<p>现实事物的部分属性和行为是不公开对使用者开放的。同样在类中描述属性和方法的时候也需要达到这个要求</p>
+<p>定义私有成员：成员变量和成员方法的命名均以<code>__</code>作为开头</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Phone</span>:  </span><br><span class="line">    __current_voltage = <span class="number">1</span>  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__keep_single_core</span>(<span class="params">self</span>):  </span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;让cpu以单核模式运行&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>注意：类对象无法访问私有成员，类中的其它成员可以访问私有成员</p>
+<hr>
+<h1 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h1><h2 id="继承的基础语法"><a href="#继承的基础语法" class="headerlink" title="继承的基础语法"></a>继承的基础语法</h2><p>继承:将从父类那里继承(复制)来成员变量和成员方法(<strong>不含私有</strong>)</p>
+<p>子类构建的类对象，可以</p>
+<ul>
+<li>有自己的成员变量和成员方法</li>
+<li>使用父类的成员变量和成员方法</li>
+</ul>
+<h2 id="单继承和多继承"><a href="#单继承和多继承" class="headerlink" title="单继承和多继承"></a>单继承和多继承</h2><p>类的单继承语法：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">类名</span>(<span class="title class_ inherited__">父类名</span>):</span><br><span class="line">	类内容体</span><br></pre></td></tr></table></figure>
+
+<p>类的多继承语法：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">类名</span>(父类<span class="number">1</span>, 父类<span class="number">2</span>, ..., 父类N):</span><br></pre></td></tr></table></figure>
+<p><strong>注意</strong>：多继承中，如果父类有同名方法或属性，先继承的优先级高于后继承</p>
+<h2 id="pass"><a href="#pass" class="headerlink" title="pass"></a>pass</h2><p>pass是占位语句，用来保证函数(方法)或类定义的完整性，表示无内容，空的意思</p>
+<hr>
+<h1 id="复写和使用父类成员"><a href="#复写和使用父类成员" class="headerlink" title="复写和使用父类成员"></a>复写和使用父类成员</h1><h2 id="复写"><a href="#复写" class="headerlink" title="复写"></a>复写</h2><p>对父类的成员属性或成员方法进行重新定义</p>
+<h2 id="调用父类成员"><a href="#调用父类成员" class="headerlink" title="调用父类成员"></a>调用父类成员</h2><p>一旦复写父类成员，那么类对象调用成员的时候，就会调用复写后的新成员。<br>如果需要使用被复写的父类的成员，需要特殊的调用方式:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 方式1:调用父类成员</span></span><br><span class="line">使用成员变量:父类名.成员变量</span><br><span class="line">使用成员方法:父类名.成员方法(<span class="variable language_">self</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 方式2:使用super()调用父类成员</span></span><br><span class="line">使用成员变量:<span class="built_in">super</span>().成员变量</span><br><span class="line">使用成员方法:<span class="built_in">super</span>().成员方法()</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="类型注解"><a href="#类型注解" class="headerlink" title="类型注解"></a>类型注解</h1><p>类型注解支持:</p>
+<ol>
+<li>变量的类型注解</li>
+<li>函数(方法)的形参和返回值的类型注解</li>
+</ol>
+<h2 id="变量的类型注解"><a href="#变量的类型注解" class="headerlink" title="变量的类型注解"></a>变量的类型注解</h2><p>语法1:<strong>变量:类型</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 基础数据类型注解</span></span><br><span class="line">var_1: <span class="built_in">int</span> = <span class="number">10</span></span><br><span class="line">var_2: <span class="built_in">float</span> = <span class="number">3.1415926</span></span><br><span class="line">var_3: <span class="built_in">bool</span> = <span class="literal">True</span></span><br><span class="line">Var_4: <span class="built_in">str</span> = <span class="string">&quot;itheima”</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># 基础容器类型注解</span></span><br><span class="line"><span class="string">my_list: list = [1, 2, 3]      </span></span><br><span class="line"><span class="string">my_tuple: tuple = (1, 2, 3)</span></span><br><span class="line"><span class="string">my_set: set = &#123;1, 2, 3&#125;</span></span><br><span class="line"><span class="string">my_dict: dict = &#123;&quot;</span>itheima<span class="string">&quot;: 666&#125;</span></span><br><span class="line"><span class="string">my_str: str = &quot;</span>itheima<span class="string">&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># 容器类型详细注解</span></span><br><span class="line"><span class="string">my_list: list[int] = [1, 2, 3]</span></span><br><span class="line"><span class="string">my_tuple: tuple[str, int, bool] = (&quot;</span>itheima<span class="string">&quot;, 666, True)</span></span><br><span class="line"><span class="string">my_set: set[int] = &#123;1, 2, 3&#125;</span></span><br><span class="line"><span class="string">my_dict: dict[str, int] = &#123;&quot;</span>itheima<span class="string">&quot;: 666&#125;</span></span><br><span class="line"><span class="string"># 注意:元组类型设置类型详细注解，需要将每一个元素都标记出来</span></span><br><span class="line"><span class="string"># 注意:字典类型设置类型详细注解，需要2个类型，第一个是key第二个是value</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># 类对象类型注解</span></span><br><span class="line"><span class="string">class Student:</span></span><br><span class="line"><span class="string">	pass</span></span><br><span class="line"><span class="string">stu: Student = Student()</span></span><br></pre></td></tr></table></figure>
+<p>语法2:在注释中，<strong>#type:类型</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在注释中进行类型注解</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>:</span><br><span class="line">	<span class="keyword">pass</span></span><br><span class="line">var_1 = random.randint(<span class="number">1</span>, <span class="number">10</span>)     <span class="comment"># type:<span class="built_in">int</span></span></span><br><span class="line">var_2 = json.loads(data)          <span class="comment"># type: <span class="built_in">dict</span>[<span class="built_in">str</span>, <span class="built_in">int</span>]</span></span><br><span class="line">var_3 = func()                    <span class="comment"># type: Student</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong>:类型注解只是提示性的，并非决定性的。数据类型和注解类型无法对应也不会导致编译错误</p>
+<h2 id="函数-方法-的类型注解"><a href="#函数-方法-的类型注解" class="headerlink" title="函数(方法)的类型注解"></a>函数(方法)的类型注解</h2><h3 id="形参的类型注解"><a href="#形参的类型注解" class="headerlink" title="形参的类型注解"></a>形参的类型注解</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">x: <span class="built_in">int</span>, y: <span class="built_in">int</span></span>):</span><br><span class="line">	<span class="keyword">return</span> x + y</span><br><span class="line">	</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">func</span>(<span class="params">data: <span class="built_in">list</span></span>):</span><br><span class="line">	<span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+<h3 id="返回值的类型注解"><a href="#返回值的类型注解" class="headerlink" title="返回值的类型注解"></a>返回值的类型注解</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">函数方法名</span>(<span class="params">形参: 类型，......, 形参:类型</span>) -&gt; 返回值类型:</span><br><span class="line">	<span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+<h2 id="Union联合类型注解"><a href="#Union联合类型注解" class="headerlink" title="Union联合类型注解"></a>Union联合类型注解</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 变量的联合类型注解</span></span><br><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">Union</span></span><br><span class="line"></span><br><span class="line">my_list: <span class="built_in">list</span>[union[<span class="built_in">str</span>, <span class="built_in">int</span>]] = [<span class="number">1</span>, <span class="number">2</span>, <span class="string">&quot;itheima&quot;</span>, <span class="string">&quot;itcast&quot;</span>]</span><br><span class="line">my_dict: <span class="built_in">dict</span>[<span class="built_in">str</span>, <span class="type">Union</span>[<span class="built_in">str</span>, <span class="built_in">int</span>]] = &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;周杰伦&quot;</span>, <span class="string">&quot;age&quot;</span>:<span class="number">31</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 函数(方法)的联合类型注解</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">func</span>(<span class="params">data: union[<span class="built_in">int</span>, <span class="built_in">str</span>]</span>) -&gt; union[<span class="built_in">int</span>, <span class="built_in">str</span>]:</span><br><span class="line">	<span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h1><p>多态常用在继承关系上。</p>
+<ul>
+<li>以父类做定义声明</li>
+<li>以子类做实际工作</li>
+<li>用以获得同一行为，不同状态<br>这种写法，就叫做抽象类(也可以称之为接口)</li>
+</ul>
+<p><strong>抽象类</strong>:含有抽象方法的类称之为抽象类<br><strong>抽象方法</strong>:方法体是空实现的(pass)称之为抽象方法</p>
+<div class="note default simple"><p><strong>Repository</strong></p>
+<p>本章示例代码已归档至 GitHub，可用于本地复现、调试与扩展。</p>
+<p><a class="btn-beautify " href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage2_OOP/01_Object-Oriented" title="查看本章源码"><i class="fab fa-github"></i><span>查看本章源码</span></a></p>
+</div>]]></content>
+      <categories>
+        <category>Python 技术笔记</category>
+        <category>面向对象程序设计</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>基础语法</tag>
+        <tag>面向对象</tag>
+        <tag>OOP</tag>
       </tags>
   </entry>
   <entry>
@@ -426,90 +476,127 @@
       </tags>
   </entry>
   <entry>
-    <title>Python 条件判断与逻辑控制</title>
-    <url>/2026/03/13/python-learning/Stage1_Core_Basics/python-s1-02-condition-statement/</url>
-    <content><![CDATA[<h1 id="布尔类型和比较运算符"><a href="#布尔类型和比较运算符" class="headerlink" title="布尔类型和比较运算符"></a>布尔类型和比较运算符</h1><h2 id="布尔类型"><a href="#布尔类型" class="headerlink" title="布尔类型"></a>布尔类型</h2><p>在 Python 中，布尔类型的字面量用 <code>True</code> 表示真，<code>False</code> 表示假。</p>
-<h2 id="比较运算符"><a href="#比较运算符" class="headerlink" title="比较运算符"></a>比较运算符</h2><p>在逻辑判断中，我们经常需要对比两个值。Python 提供了以下比较运算符：</p>
+    <title>Python 数据库编程：SQL 语法与 MySQL 实践</title>
+    <url>/2026/05/21/python-learning/Stage2_OOP/python-s2-02-SQL/</url>
+    <content><![CDATA[<h1 id="基础命令"><a href="#基础命令" class="headerlink" title="基础命令"></a>基础命令</h1><p>SQL语言分类：</p>
+<ul>
+<li>DDL (Data Definition Language)数据定义</li>
+<li>DML (Data Manipulation Language)数据操作</li>
+<li>DCL(Data Control Language)数据控制</li>
+<li>DQL (Data Query Language)数据查询</li>
+</ul>
+<p>MySQL命令行环境下的基础命令:</p>
 <table>
 <thead>
 <tr>
-<th align="center">运算符</th>
-<th align="center">描述说明</th>
+<th align="center">SQL命令</th>
+<th align="center">结果</th>
 </tr>
 </thead>
 <tbody><tr>
-<td align="center"><code>==</code></td>
-<td align="center">判断内容是否相等，满足为True，不满足为False</td>
+<td align="center">mysql -uroot -p</td>
+<td align="center">以root用户，通过密码进行登录</td>
 </tr>
 <tr>
-<td align="center"><code>!=</code></td>
-<td align="center">判断内容是否不相等，满足为True，不满足为 False</td>
+<td align="center">show databases；</td>
+<td align="center">查看有哪些数据库</td>
 </tr>
 <tr>
-<td align="center"><code>&gt;</code></td>
-<td align="center">判断运算符左侧内容是否大于右侧满足为True，不满足为False</td>
+<td align="center">use 数据库名;</td>
+<td align="center">使用某个数据库</td>
 </tr>
 <tr>
-<td align="center"><code>&lt;</code></td>
-<td align="center">判断运算符左侧内容是否小于右侧满足为True，不满足为 False</td>
+<td align="center">show tables;</td>
+<td align="center">查看数据库内有哪些表</td>
 </tr>
 <tr>
-<td align="center"><code>&gt;=</code></td>
-<td align="center">判断运算符左侧内容是否大于等于右侧满足为True，不满足为 False</td>
-</tr>
-<tr>
-<td align="center"><code>&lt;=</code></td>
-<td align="center">判断运算符左侧内容是否小于等于右侧满足为True，不满足为 False</td>
+<td align="center">exit</td>
+<td align="center">退出MySQL的命令行环境</td>
 </tr>
 </tbody></table>
 <hr>
-<h1 id="if-语句"><a href="#if-语句" class="headerlink" title="if 语句"></a>if 语句</h1><p>最基础的条件判断语句格式如下：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> 要判断的条件:</span><br><span class="line">    满足条件时要做的事情<span class="number">1</span></span><br><span class="line">    满足条件时要做的事情<span class="number">2</span></span><br><span class="line">    ...</span><br><span class="line">    满足条件时要做的事情N</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p><strong>⚠️ 注意事项：</strong></p>
-<ul>
-<li>判断条件的结果一定要是 <code>bool</code> 类型 。</li>
-<li>判断条件后必须要有<strong>冒号</strong> <code>:</code> 。</li>
-<li>归属于 <code>if</code> 语句的代码块，需在行前填充<strong>4个空格缩进 (1个Tab)</strong> 。</li>
-<li>Python 是严格通过空格缩进来判断代码归属的 。</li>
+<h1 id="SQL的语法特征"><a href="#SQL的语法特征" class="headerlink" title="SQL的语法特征"></a>SQL的语法特征</h1><ol>
+<li>大小写不敏感</li>
+<li>可以单行或多行书写，最后以<code>;</code>号结束</li>
+<li>SQL支持注释:<ul>
+<li>单行注释：– 注释内容(–后面一定要有一个空格)</li>
+<li>单行注释：# 注释内容(#后面可以不加空格，推荐加上)</li>
+<li>多行注释：<code>/* 注释内容 */</code></li>
 </ul>
-</blockquote>
+</li>
+</ol>
 <hr>
-<h2 id="if-else-组合判断语句"><a href="#if-else-组合判断语句" class="headerlink" title="if-else 组合判断语句"></a>if-else 组合判断语句</h2><p>当条件不满足时，如果我们想执行另一套逻辑，就需要加入 <code>else</code>：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> 要判断的条件:</span><br><span class="line">    满足条件时要做的事情<span class="number">1</span></span><br><span class="line">    满足条件时要做的事情<span class="number">2</span></span><br><span class="line">    ...</span><br><span class="line">    满足条件时要做的事情N</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    不满足条件时要做的事情<span class="number">1</span></span><br><span class="line">    不满足条件时要做的事情<span class="number">2</span></span><br><span class="line">    ...</span><br><span class="line">    不满足条件时要做的事情N</span><br></pre></td></tr></table></figure>
-
-<p><strong>注意：</strong></p>
+<h1 id="DDL-数据定义"><a href="#DDL-数据定义" class="headerlink" title="DDL-数据定义"></a>DDL-数据定义</h1><h2 id="库管理"><a href="#库管理" class="headerlink" title="库管理"></a>库管理</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 查看数据库</span></span><br><span class="line"><span class="keyword">SHOW</span> DATABASES;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 使用数据库</span></span><br><span class="line">USE 数据库名称;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 创建数据库</span></span><br><span class="line"><span class="keyword">CREATE</span> DATABASE 数据库名称[CHARSET UTF8];</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 删除数据库</span></span><br><span class="line"><span class="keyword">DROP</span> DATABASE 数据库名称;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 查看当前使用的数据库</span></span><br><span class="line"><span class="keyword">SELECT</span> DATABASE();</span><br></pre></td></tr></table></figure>
+<h2 id="表管理"><a href="#表管理" class="headerlink" title="表管理"></a>表管理</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 查看有哪些表(需要先选择数据库)</span></span><br><span class="line"><span class="keyword">SHOW</span> TABLES；</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 创建表</span></span><br><span class="line"><span class="keyword">CREATE TABLE</span> 表名称(</span><br><span class="line">	列名称 列类型，</span><br><span class="line">	列名称 列类型，</span><br><span class="line">	......</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 删除表</span></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> 表名称;</span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> IF <span class="keyword">EXISTS</span> 表名称;</span><br></pre></td></tr></table></figure>
+<p>列类型：</p>
+<table>
+<thead>
+<tr>
+<th align="center">列名称</th>
+<th align="center">列类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">int</td>
+<td align="center">整数</td>
+</tr>
+<tr>
+<td align="center">float</td>
+<td align="center">浮点数</td>
+</tr>
+<tr>
+<td align="center">varchar(长度)</td>
+<td align="center">文本，长度为数字，做最大长度限制，最大可填255</td>
+</tr>
+<tr>
+<td align="center">date</td>
+<td align="center">日期类型</td>
+</tr>
+<tr>
+<td align="center">timestamp</td>
+<td align="center">时间戳类型</td>
+</tr>
+</tbody></table>
+<hr>
+<h1 id="DML-数据操作"><a href="#DML-数据操作" class="headerlink" title="DML-数据操作"></a>DML-数据操作</h1><h2 id="INSERT数据插入"><a href="#INSERT数据插入" class="headerlink" title="INSERT数据插入"></a>INSERT数据插入</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"># []代表可以省略的内容</span><br><span class="line"><span class="keyword">INSERT INTO</span> 表[(列<span class="number">1</span>, 列<span class="number">2</span>, ..., 列N)] <span class="keyword">VALUES</span>(值<span class="number">1</span>, 值<span class="number">2</span>, ..., 值N)[, (值<span class="number">1</span>, 值<span class="number">2</span>, ..., 值N),...,(值<span class="number">1</span>, 值<span class="number">2</span>, ..., 值N)]</span><br></pre></td></tr></table></figure>
+<h2 id="DELETE数据删除"><a href="#DELETE数据删除" class="headerlink" title="DELETE数据删除"></a>DELETE数据删除</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"># []代表可以省略的内容</span><br><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> 表名称 [<span class="keyword">WHERE</span>条件判断]</span><br><span class="line"></span><br><span class="line"><span class="comment">/*  </span></span><br><span class="line"><span class="comment">条件判断：列 操作符 值</span></span><br><span class="line"><span class="comment">操作符： = &lt; &gt; &lt;= &gt;= !=等等，</span></span><br><span class="line"><span class="comment">如：id = 5  id &lt; 3  id &gt;= 6  id != 5</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<h2 id="UPDATE-数据更新"><a href="#UPDATE-数据更新" class="headerlink" title="UPDATE 数据更新"></a>UPDATE 数据更新</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> 表名 <span class="keyword">SET</span> 列<span class="operator">=</span>值 [<span class="keyword">WHERE</span> 条件判断]</span><br></pre></td></tr></table></figure>
+<p><strong>注意：字符串的值出现在SQL语句中，必须要用单引号包围起来。</strong></p>
+<hr>
+<h1 id="DCL-数据控制"><a href="#DCL-数据控制" class="headerlink" title="DCL-数据控制"></a>DCL-数据控制</h1><hr>
+<h1 id="DQL-数据查询"><a href="#DQL-数据查询" class="headerlink" title="DQL-数据查询"></a>DQL-数据查询</h1><h2 id="基础查询"><a href="#基础查询" class="headerlink" title="基础查询"></a>基础查询</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"># 基础查询的语法</span><br><span class="line"><span class="keyword">SELECT</span> 字段列表<span class="operator">|</span><span class="operator">*</span><span class="keyword">FROM</span> 表</span><br><span class="line"># 过滤查询的语法</span><br><span class="line"><span class="keyword">SELECT</span> 字段列表<span class="operator">|</span><span class="operator">*</span><span class="keyword">FROM</span> 表 <span class="keyword">WHERE</span> 条件判断</span><br></pre></td></tr></table></figure>
+<h2 id="分组聚合"><a href="#分组聚合" class="headerlink" title="分组聚合"></a>分组聚合</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> 字段<span class="operator">|</span>聚合函数 <span class="keyword">FROM</span> 表 [<span class="keyword">WHERE</span> 条件] <span class="keyword">GROUP</span> <span class="keyword">BY</span> 列 </span><br><span class="line">聚合函数有:</span><br><span class="line"><span class="operator">-</span> <span class="built_in">SUM</span>(列) 求和</span><br><span class="line"><span class="operator">-</span> <span class="built_in">AVG</span>(列) 求平均值</span><br><span class="line"><span class="operator">-</span> <span class="built_in">MIN</span>(列) 求最小值</span><br><span class="line"><span class="operator">-</span> <span class="built_in">MAX</span>(列) 求最大值</span><br><span class="line"><span class="operator">-</span> <span class="built_in">COUNT</span>(列<span class="operator">|</span><span class="operator">*</span>) 求数量</span><br></pre></td></tr></table></figure>
+<p>注意：</p>
 <ul>
-<li><p><code>else</code> 后面不需要再写判断条件 </p>
-</li>
-<li><p><code>else</code> 后的代码块同样需要四个空格作为缩进</p>
-</li>
+<li>一个SQL中可以写多个聚合</li>
+<li>GROUP BY中出现了哪个列，哪个列才能出现在SELECT中的非聚合中</li>
 </ul>
-<h2 id="if-elif-else-组合语句"><a href="#if-elif-else-组合语句" class="headerlink" title="if-elif-else 组合语句"></a>if-elif-else 组合语句</h2><p>面对多种情况的条件分支，可以使用 <code>elif</code>：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> 条件<span class="number">1</span>:</span><br><span class="line">    满足条件<span class="number">1</span>时要做的事情<span class="number">1</span></span><br><span class="line">    ...</span><br><span class="line">    满足条件<span class="number">1</span>时要做的事情N</span><br><span class="line"><span class="keyword">elif</span> 条件<span class="number">2</span>:</span><br><span class="line">    满足条件<span class="number">2</span>时要做的事情<span class="number">1</span></span><br><span class="line">    ...</span><br><span class="line">    满足条件<span class="number">2</span>时要做的事情N</span><br><span class="line"><span class="keyword">elif</span> 条件N:</span><br><span class="line">    满足条件N时要做的事情<span class="number">1</span></span><br><span class="line">    ...</span><br><span class="line">    满足条件N时要做的事情N</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    所有条件都不满足要做的事情<span class="number">1</span></span><br><span class="line">    ...</span><br><span class="line">    所有条件都不满足要做的事情N</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p><strong>⚠️ 注意事项：</strong></p>
-<p><code>elif</code> 可以写多个，且每个条件后面都要加冒号 。每个判断是<strong>互斥且有序</strong>的，只要上面的某一个条件满足了，后面的条件就不会再进行判断了 。</p>
-</blockquote>
+<h2 id="排序分页"><a href="#排序分页" class="headerlink" title="排序分页"></a>排序分页</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"># 只写n表示：只显示几条数据</span><br><span class="line"># n和m都写表示：跳过前n行，从第n <span class="operator">+</span> <span class="number">1</span>条开始往下取m条</span><br><span class="line"><span class="keyword">SELECT</span> 列<span class="operator">|</span>聚合函数<span class="operator">|</span><span class="operator">*</span> <span class="keyword">FROM</span> 表</span><br><span class="line"><span class="keyword">WHERE</span> ...</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> ...</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> ... [<span class="keyword">ASC</span> <span class="operator">|</span> <span class="keyword">DESC</span>]</span><br><span class="line">LIMIT n[, m]</span><br></pre></td></tr></table></figure>
+<p>注意：</p>
+<ul>
+<li>WHERE、GROUP BY、ORDER BY、LIMIT均可按需求省略</li>
+<li>SELECT和FROM是必写的</li>
+<li>执行顺序:FROM -&gt;WHERE -&gt;GROUP BY和聚合函数 -&gt;SELECT -&gt;ORDER BY -&gt;LIMIT</li>
+</ul>
 <hr>
-<h2 id="判断语句的嵌套"><a href="#判断语句的嵌套" class="headerlink" title="判断语句的嵌套"></a>判断语句的嵌套</h2><p>在实际开发中，经常会遇到“在某个前提条件下，再进行二次判断”的场景。这就需要用到嵌套结构：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> 条件<span class="number">1</span>:</span><br><span class="line">    满足条件<span class="number">1</span>时要做的事情<span class="number">1</span></span><br><span class="line">    ...</span><br><span class="line">    满足条件<span class="number">1</span>时要做的事情N</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> 条件<span class="number">2</span>:</span><br><span class="line">        满足条件<span class="number">2</span>时要做的事情<span class="number">1</span></span><br><span class="line">        ...</span><br><span class="line">        满足条件<span class="number">2</span>时要做的事情N</span><br></pre></td></tr></table></figure>
+<h1 id="Python操作MySQL"><a href="#Python操作MySQL" class="headerlink" title="Python操作MySQL"></a>Python操作MySQL</h1><h2 id="基础使用"><a href="#基础使用" class="headerlink" title="基础使用"></a>基础使用</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 导包</span></span><br><span class="line"><span class="keyword">from</span> pymysql <span class="keyword">import</span> Connection</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取链接对象</span></span><br><span class="line">链接对象 = Connection(主机，端口，账户，密码)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 得到游标对象</span></span><br><span class="line">游标对象 = 链接对象.cursor()</span><br><span class="line">链接对象.select_db(<span class="string">&quot;&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 执行SQL语句</span></span><br><span class="line">游标对象.execute(<span class="string">&quot;&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 得到全部的查询结果（封装在元组内）</span></span><br><span class="line">results = 游标对象.fetchall()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭和数据库的连接</span></span><br><span class="line">链接对象.close()</span><br></pre></td></tr></table></figure>
+<h2 id="数据插入"><a href="#数据插入" class="headerlink" title="数据插入"></a>数据插入</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 导包</span></span><br><span class="line"><span class="keyword">from</span> pymysql <span class="keyword">import</span> Connection</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取链接对象</span></span><br><span class="line">链接对象 = Connection(主机，端口，账户，密码)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 得到游标对象</span></span><br><span class="line">游标对象 = conn.cursor()</span><br><span class="line">链接对象.select_db(<span class="string">&quot;&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 执行SQL语句 </span></span><br><span class="line">游标对象.execute(<span class="string">&quot;&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 确认提交</span></span><br><span class="line">链接对象.commit()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭和数据库的连接</span></span><br><span class="line">链接对象.close()</span><br></pre></td></tr></table></figure>
+<p>也可以通过代码设置自动提交，无需手动commit</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">链接对象 = Connection(</span><br><span class="line">	主机，</span><br><span class="line">	端口，</span><br><span class="line">	账户，</span><br><span class="line">	密码</span><br><span class="line">	autocommit = <span class="literal">True</span>	<span class="comment"># 设置自动提交</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 
-<p><strong>层级法则：</strong> Python 完全通过缩进来确定层级的包含关系 。内层嵌套的 <code>if</code> 需要叠加缩进。</p>
 <div class="note default simple"><p><strong>Repository</strong></p>
 <p>本章示例代码已归档至 GitHub，可用于本地复现、调试与扩展。</p>
-<p><a class="btn-beautify " href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/02_Condition_Statements" title="查看本章源码"><i class="fab fa-github"></i><span>查看本章源码</span></a></p>
-</div>]]></content>
+<p><a class="btn-beautify " href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage2_OOP/02_SQL" title="查看本章源码"><i class="fab fa-github"></i><span>查看本章源码</span></a></p>
+</div>
+]]></content>
       <categories>
         <category>Python 技术笔记</category>
-        <category>基础语法与数据结构</category>
+        <category>数据库与后端开发</category>
       </categories>
       <tags>
         <tag>Python</tag>
-        <tag>基础语法</tag>
-        <tag>逻辑控制</tag>
+        <tag>SQL</tag>
+        <tag>MySQL</tag>
       </tags>
   </entry>
   <entry>
@@ -566,6 +653,250 @@
         <tag>进阶语法</tag>
         <tag>函数</tag>
         <tag>Lambda</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo 博客搭建：GitHub Pages 部署与 Butterfly 主题配置</title>
+    <url>/2026/03/11/daily/Hexo%20%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%EF%BC%9AGitHub%20Pages%20%E4%B8%8E%20Butterfly%20%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在学习和开发过程中，零散的代码片段、配置记录和排错经验很容易被遗忘。相比只把笔记保存在本地，我更希望搭建一个可以长期维护、方便检索、也能够对外展示的技术博客。</p>
+<p>最终我选择了 <strong>Hexo + GitHub Pages + Butterfly</strong> 这一套方案：</p>
+<ul>
+<li><strong>Hexo</strong>：生成静态博客，部署简单，生态成熟；</li>
+<li><strong>GitHub Pages</strong>：免费托管静态网页，适合个人技术博客；</li>
+<li><strong>Butterfly</strong>：基于 Hexo 的高可配置主题，视觉效果和功能扩展都比较完善。</li>
+</ul>
+<p>这篇文章记录博客从初始化、本地预览、GitHub Pages 部署，到 Butterfly 主题配置过程中遇到的问题和解决方法。</p>
+<hr>
+<h1 id="一、环境准备"><a href="#一、环境准备" class="headerlink" title="一、环境准备"></a>一、环境准备</h1><p>在开始之前，需要先安装以下工具：</p>
+<table>
+<thead>
+<tr>
+<th>工具</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Node.js</td>
+<td>提供 npm 环境，用于安装 Hexo 和相关依赖</td>
+</tr>
+<tr>
+<td>Git</td>
+<td>用于拉取主题、管理代码和部署到 GitHub</td>
+</tr>
+<tr>
+<td>Hexo</td>
+<td>静态博客生成器</td>
+</tr>
+<tr>
+<td>GitHub Pages</td>
+<td>博客网页托管平台</td>
+</tr>
+</tbody></table>
+<p>安装完成后，可以在终端中检查版本：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">node -v</span><br><span class="line">npm -v</span><br><span class="line">git --version</span><br></pre></td></tr></table></figure>
+
+<p>确认环境正常后，安装 Hexo 命令行工具：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="二、初始化-Hexo-项目"><a href="#二、初始化-Hexo-项目" class="headerlink" title="二、初始化 Hexo 项目"></a>二、初始化 Hexo 项目</h1><p>创建博客项目：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo init myblog</span><br><span class="line"><span class="built_in">cd</span> myblog</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
+
+<p>启动本地服务：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+
+<p>浏览器访问：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">http://localhost:4000/</span><br></pre></td></tr></table></figure>
+
+<p>如果能够看到 Hexo 默认页面，说明本地博客已经成功运行。</p>
+<hr>
+<h1 id="三、初始化时的网络超时问题"><a href="#三、初始化时的网络超时问题" class="headerlink" title="三、初始化时的网络超时问题"></a>三、初始化时的网络超时问题</h1><p>在执行 <code>hexo init myblog</code> 时，可能会遇到 GitHub 连接超时：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">fatal: unable to access <span class="string">&#x27;https://github.com/hexojs/hexo-starter.git/&#x27;</span>:</span><br><span class="line">Connection timed out after 300030 milliseconds</span><br></pre></td></tr></table></figure>
+
+<p>这个问题通常不是 Hexo 本身的问题，而是终端访问 GitHub 不稳定导致的。浏览器能打开 GitHub，不代表命令行中的 Git 或 npm 一定能正常访问。</p>
+<p>可以采用两种方式处理。</p>
+<h2 id="方式一：使用-npm-镜像源安装依赖"><a href="#方式一：使用-npm-镜像源安装依赖" class="headerlink" title="方式一：使用 npm 镜像源安装依赖"></a>方式一：使用 npm 镜像源安装依赖</h2><p>进入项目目录后，使用国内镜像源安装依赖：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install --registry=https://registry.npmmirror.com</span><br></pre></td></tr></table></figure>
+
+<h2 id="方式二：手动克隆-Hexo-Starter"><a href="#方式二：手动克隆-Hexo-Starter" class="headerlink" title="方式二：手动克隆 Hexo Starter"></a>方式二：手动克隆 Hexo Starter</h2><p>如果 <code>hexo init</code> 一直失败，可以手动克隆 starter 项目：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/hexojs/hexo-starter.git myblog</span><br><span class="line"><span class="built_in">cd</span> myblog</span><br><span class="line">npm install --registry=https://registry.npmmirror.com</span><br></pre></td></tr></table></figure>
+
+<p>随后继续执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="四、部署到-GitHub-Pages"><a href="#四、部署到-GitHub-Pages" class="headerlink" title="四、部署到 GitHub Pages"></a>四、部署到 GitHub Pages</h1><h2 id="1-创建-GitHub-Pages-仓库"><a href="#1-创建-GitHub-Pages-仓库" class="headerlink" title="1. 创建 GitHub Pages 仓库"></a>1. 创建 GitHub Pages 仓库</h2><p>如果 GitHub 用户名是 <code>NimbusFan</code>，则仓库名应为：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">NimbusFan.github.io</span><br></pre></td></tr></table></figure>
+
+<p>完整仓库地址类似：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">https://github.com/NimbusFan/NimbusFan.github.io</span><br></pre></td></tr></table></figure>
+
+<p>GitHub Pages 对用户主页仓库的命名有固定要求，必须使用：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">用户名.github.io</span><br></pre></td></tr></table></figure>
+
+<p>否则部署后可能无法通过 <code>https://用户名.github.io/</code> 访问。</p>
+<hr>
+<h2 id="2-安装部署插件"><a href="#2-安装部署插件" class="headerlink" title="2. 安装部署插件"></a>2. 安装部署插件</h2><p>Hexo 默认不会自动部署到 GitHub，需要安装部署插件：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="3-修改-Hexo-根目录配置"><a href="#3-修改-Hexo-根目录配置" class="headerlink" title="3. 修改 Hexo 根目录配置"></a>3. 修改 Hexo 根目录配置</h2><p>打开 Hexo 根目录下的 <code>_config.yml</code>，找到 <code>deploy</code> 配置项：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">git@github.com:NimbusFan/NimbusFan.github.io.git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
+
+<p>这里推荐使用 SSH 地址，而不是 HTTPS 地址。HTTPS 在推送过程中容易出现连接中断、认证失败或令牌问题。</p>
+<hr>
+<h1 id="五、配置-GitHub-SSH-密钥"><a href="#五、配置-GitHub-SSH-密钥" class="headerlink" title="五、配置 GitHub SSH 密钥"></a>五、配置 GitHub SSH 密钥</h1><p>如果部署时出现类似错误：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Please make sure you have the correct access rights</span><br><span class="line">and the repository exists.</span><br></pre></td></tr></table></figure>
+
+<p>通常说明当前电脑没有 GitHub 仓库的推送权限，需要配置 SSH 密钥。</p>
+<h2 id="1-生成-SSH-密钥"><a href="#1-生成-SSH-密钥" class="headerlink" title="1. 生成 SSH 密钥"></a>1. 生成 SSH 密钥</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;你的邮箱&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>一路回车即可。</p>
+<h2 id="2-复制公钥"><a href="#2-复制公钥" class="headerlink" title="2. 复制公钥"></a>2. 复制公钥</h2><p>Windows 下公钥通常位于：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">C:\Users\你的用户名\.ssh\id_rsa.pub</span><br></pre></td></tr></table></figure>
+
+<p>打开后复制全部内容。</p>
+<h2 id="3-添加到-GitHub"><a href="#3-添加到-GitHub" class="headerlink" title="3. 添加到 GitHub"></a>3. 添加到 GitHub</h2><p>进入 GitHub：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Settings -&gt; SSH and GPG keys -&gt; New SSH key</span><br></pre></td></tr></table></figure>
+
+<p>将刚才复制的公钥粘贴进去并保存。</p>
+<h2 id="4-测试连接"><a href="#4-测试连接" class="headerlink" title="4. 测试连接"></a>4. 测试连接</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+
+<p>如果看到类似下面的提示，说明 SSH 配置成功：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Hi NimbusFan! You<span class="string">&#x27;ve successfully authenticated.</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="六、生成并部署博客"><a href="#六、生成并部署博客" class="headerlink" title="六、生成并部署博客"></a>六、生成并部署博客</h1><p>完成配置后，执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+<p>也可以合并为：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
+
+<p>部署成功后，访问：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">https://nimbusfan.github.io/</span><br></pre></td></tr></table></figure>
+
+<p>如果页面没有立即更新，可以等待一到三分钟，或者使用浏览器强制刷新：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Ctrl + F5</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="七、安装-Butterfly-主题"><a href="#七、安装-Butterfly-主题" class="headerlink" title="七、安装 Butterfly 主题"></a>七、安装 Butterfly 主题</h1><p>Hexo 默认主题比较基础，适合快速验证环境，但不太适合作为长期维护的技术博客。我最终选择了 Butterfly 主题。</p>
+<p>进入博客根目录后执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/jerryc127/hexo-theme-butterfly.git themes/butterfly</span><br></pre></td></tr></table></figure>
+
+<p>安装 Butterfly 需要的渲染器：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-renderer-pug hexo-renderer-stylus --save</span><br></pre></td></tr></table></figure>
+
+<p>然后打开 Hexo 根目录下的 <code>_config.yml</code>，修改主题：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">butterfly</span></span><br></pre></td></tr></table></figure>
+
+<p>重新生成并启动：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="八、使用独立主题配置文件"><a href="#八、使用独立主题配置文件" class="headerlink" title="八、使用独立主题配置文件"></a>八、使用独立主题配置文件</h1><p>Butterfly 的配置项很多，不建议直接长期修改：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">themes/butterfly/_config.yml</span><br></pre></td></tr></table></figure>
+
+<p>更推荐在 Hexo 根目录下创建：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">_config.butterfly.yml</span><br></pre></td></tr></table></figure>
+
+<p>然后将主题配置复制到这个文件中进行修改。</p>
+<p>这样做有两个好处：</p>
+<ol>
+<li>主题升级时，不容易覆盖自己的配置；</li>
+<li>站点配置和主题配置分离，后期维护更清晰。</li>
+</ol>
+<p>常见结构如下：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">myblog/</span><br><span class="line">├── _config.yml</span><br><span class="line">├── _config.butterfly.yml</span><br><span class="line">├── source/</span><br><span class="line">├── themes/</span><br><span class="line">│   └── butterfly/</span><br><span class="line">└── package.json</span><br></pre></td></tr></table></figure>
+
+<p>其中：</p>
+<ul>
+<li><code>_config.yml</code>：Hexo 站点基础配置；</li>
+<li><code>_config.butterfly.yml</code>：Butterfly 主题配置；</li>
+<li><code>source/</code>：文章、页面、图片和自定义资源；</li>
+<li><code>themes/</code>：主题文件。</li>
+</ul>
+<hr>
+<h1 id="九、配置过程中遇到的典型问题"><a href="#九、配置过程中遇到的典型问题" class="headerlink" title="九、配置过程中遇到的典型问题"></a>九、配置过程中遇到的典型问题</h1><h2 id="1-修改配置后页面没有变化"><a href="#1-修改配置后页面没有变化" class="headerlink" title="1. 修改配置后页面没有变化"></a>1. 修改配置后页面没有变化</h2><p>常见原因有三个：</p>
+<p>第一，Hexo 没有重新生成：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+
+<p>第二，浏览器缓存没有清理：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Ctrl + F5</span><br></pre></td></tr></table></figure>
+
+<p>第三，配置文件改错了位置。</p>
+<p>Butterfly 相关配置应优先检查：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">_config.butterfly.yml</span><br></pre></td></tr></table></figure>
+
+<p>而不是只检查主题目录中的 <code>_config.yml</code>。</p>
+<hr>
+<h2 id="2-GitHub-链接仍然跳转到默认地址"><a href="#2-GitHub-链接仍然跳转到默认地址" class="headerlink" title="2. GitHub 链接仍然跳转到默认地址"></a>2. GitHub 链接仍然跳转到默认地址</h2><p>在配置社交链接时，可能会遇到这样的问题：已经把 GitHub 地址改成自己的账号，但页面上仍然跳转到主题默认的 <code>github.com/xxxxxx</code>。</p>
+<p>这种情况通常说明主题中不止一个位置配置了 GitHub 链接。</p>
+<p>可以在项目根目录中全局搜索：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">findstr /S /N <span class="string">&quot;xxxxxx&quot;</span> *.yml</span><br></pre></td></tr></table></figure>
+
+<p>如果是在 VS Code 中，也可以直接使用全局搜索：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Ctrl + Shift + F</span><br></pre></td></tr></table></figure>
+
+<p>搜索关键词：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">xxxxxx</span><br></pre></td></tr></table></figure>
+
+<p>找到所有残留配置后，再逐一修改。</p>
+<p>这个问题本质上不是缓存问题，而是配置没有改完整。</p>
+<hr>
+<h2 id="3-部署失败但本地预览正常"><a href="#3-部署失败但本地预览正常" class="headerlink" title="3. 部署失败但本地预览正常"></a>3. 部署失败但本地预览正常</h2><p>如果 <code>hexo s</code> 本地能正常打开，但 <code>hexo d</code> 失败，说明问题通常出在部署环节，而不是文章或主题本身。</p>
+<p>优先检查：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">git@github.com:NimbusFan/NimbusFan.github.io.git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
+
+<p>还需要确认：</p>
+<ul>
+<li>GitHub 仓库是否存在；</li>
+<li>仓库名是否为 <code>NimbusFan.github.io</code>；</li>
+<li>当前电脑是否配置了正确的 SSH Key；</li>
+<li>本地 Git 是否能正常连接 GitHub。</li>
+</ul>
+<p>可以使用：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+
+<p>进行验证。</p>
+<hr>
+<h1 id="十、个人博客的基本结构建议"><a href="#十、个人博客的基本结构建议" class="headerlink" title="十、个人博客的基本结构建议"></a>十、个人博客的基本结构建议</h1><p>完成基础搭建后，博客不应该只停留在“文章列表”状态。一个更完整的个人技术博客，至少可以包含以下页面：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Home</span><br><span class="line">Projects</span><br><span class="line">Resume</span><br><span class="line">Archives</span><br><span class="line">Tags</span><br><span class="line">Categories</span><br><span class="line">About</span><br></pre></td></tr></table></figure>
+
+<p>其中：</p>
+<ul>
+<li><code>Projects</code> 用于展示项目经历；</li>
+<li><code>Resume</code> 用于放置网页简历；</li>
+<li><code>About</code> 用于介绍个人方向、技术栈和联系方式；</li>
+<li><code>Archives / Tags / Categories</code> 用于文章管理和检索。</li>
+</ul>
+<p>对应页面可以通过以下命令创建：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page projects</span><br><span class="line">hexo new page resume</span><br><span class="line">hexo new page about</span><br></pre></td></tr></table></figure>
+
+<p>创建后，页面文件会出现在：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">source/projects/index.md</span><br><span class="line">source/resume/index.md</span><br><span class="line">source/about/index.md</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="十一、最终常用命令"><a href="#十一、最终常用命令" class="headerlink" title="十一、最终常用命令"></a>十一、最终常用命令</h1><p>本地预览：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+
+<p>部署到 GitHub Pages：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+<p>新建文章：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new <span class="string">&quot;文章标题&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>新建页面：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page 页面名称</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>个人博客建设</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+        <tag>Butterfly</tag>
+        <tag>静态博客</tag>
+        <tag>前端部署</tag>
       </tags>
   </entry>
   <entry>
@@ -1204,6 +1535,90 @@
       </tags>
   </entry>
   <entry>
+    <title>Python 大数据处理：PySpark RDD 编程基础</title>
+    <url>/2026/05/28/python-learning/Stage3_PySpark/python-s3-01-PySpark/</url>
+    <content><![CDATA[<h1 id="基础准备"><a href="#基础准备" class="headerlink" title="基础准备"></a>基础准备</h1><p>PySpark的编程模型：</p>
+<ol>
+<li>通过SparkContext对象，完成数据输入</li>
+<li>输入数据后得到RDD对象，对RDD对象进行迭代计算</li>
+<li>最终通过RDD对象的成员方法，完成数据输出工作</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pyspark <span class="keyword">import</span> SparkConf, SparkContext  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># 创建SparkConf对象————链式调用</span></span><br><span class="line">conf = SparkConf().setMaster(<span class="string">&quot;local[*]&quot;</span>).setAppName(<span class="string">&quot;test_spark_app&quot;</span>)  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># 以下这段等同于上面这一行的作用,  </span></span><br><span class="line"><span class="comment"># conf = SparkConf()  </span></span><br><span class="line"><span class="comment"># conf.setMaster(&quot;local[*]&quot;)  </span></span><br><span class="line"><span class="comment"># conf.setAppName(&quot;test_spark_app&quot;)  </span></span><br><span class="line">  </span><br><span class="line"><span class="comment"># 基于SparkConf类对象创建SparkContext对象  </span></span><br><span class="line">sc = SparkContext(conf = conf)  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># 打印PySpark的运行版本  </span></span><br><span class="line"><span class="built_in">print</span>(sc.version)  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># 停止SparkContext对象的运行(停止PySpark程序)  </span></span><br><span class="line">sc.stop()</span><br></pre></td></tr></table></figure>
+<p>PySpark的功能都是从SparkContext对象作为开始</p>
+<hr>
+<h1 id="数据输入"><a href="#数据输入" class="headerlink" title="数据输入"></a>数据输入</h1><p>RDD对象称之为分布式弹性数据集，是PySpark中数据计算的载体，它可以:</p>
+<ul>
+<li>提供数据存储</li>
+<li>提供数据计算的各类方法</li>
+<li>数据计算的方法，返回值依旧是RDD(RDD迭代计算)<br>后续对数据进行各类计算，都是基于RDD对象进行</li>
+</ul>
+<p>输入数据到Spark(即得到RDD对象)：</p>
+<ul>
+<li>通过SparkContext的parallelize成员方法，将Python数据容器转换为RDD对象</li>
+<li>通过SparkContext的textFile成员方法，读取文本文件得到RDD对象</li>
+</ul>
+<hr>
+<h1 id="数据计算"><a href="#数据计算" class="headerlink" title="数据计算"></a>数据计算</h1><h2 id="map方法"><a href="#map方法" class="headerlink" title="map方法"></a>map方法</h2><p>map算子(成员方法)</p>
+<ul>
+<li>接受一个处理函数，可用lambda表达式快速编写</li>
+<li>对RDD内的元素逐个处理，并返回一个新的RDD<br>链式调用</li>
+<li>对于返回值是新RDD的算子，可以通过链式调用的方式多次调用算子</li>
+</ul>
+<h2 id="flatMap方法"><a href="#flatMap方法" class="headerlink" title="flatMap方法"></a>flatMap方法</h2><ul>
+<li>计算逻辑和map一样</li>
+<li>比map多一个解除一层嵌套的功能。</li>
+</ul>
+<h2 id="reduceByKey方法"><a href="#reduceByKey方法" class="headerlink" title="reduceByKey方法"></a>reduceByKey方法</h2><ul>
+<li>接受一个处理函数，对数据进行两两计算</li>
+</ul>
+<h2 id="filter方法"><a href="#filter方法" class="headerlink" title="filter方法"></a>filter方法</h2><ul>
+<li>接收一个处理函数，可用lambda快速编写</li>
+<li>函数对RDD数据逐个处理，得到True的保留至返回值的RDD中</li>
+</ul>
+<h2 id="distinct方法"><a href="#distinct方法" class="headerlink" title="distinct方法"></a>distinct方法</h2><ul>
+<li>完成对RDD内数据的去重操作</li>
+</ul>
+<h2 id="sortBy方法"><a href="#sortBy方法" class="headerlink" title="sortBy方法"></a>sortBy方法</h2><ul>
+<li>接收一个处理函数，可用lambda快速编写</li>
+<li>函数表示用来决定排序的依据</li>
+<li>可以控制升序或降序</li>
+<li>全局排序需要设置分区数为1</li>
+</ul>
+<hr>
+<h1 id="数据输出"><a href="#数据输出" class="headerlink" title="数据输出"></a>数据输出</h1><h2 id="输出为Python对象"><a href="#输出为Python对象" class="headerlink" title="输出为Python对象"></a>输出为Python对象</h2><ul>
+<li>collect:将RDD内容转换为list</li>
+<li>reduce:对RDD内容进行自定义聚合</li>
+<li>take:取出RDD的前N个元素组成list</li>
+<li>count:统计RDD元素个数</li>
+</ul>
+<h2 id="输出到文件中"><a href="#输出到文件中" class="headerlink" title="输出到文件中"></a>输出到文件中</h2><p>RDD输出到文件的方法：</p>
+<ul>
+<li>rdd.saveAsTextFile(路径)</li>
+<li>输出的结果是一个文件夹</li>
+<li>有几个分区就输出多少个结果文件<br>如何修改RDD分区：</li>
+<li>SparkConf对象设置conf.set(“spark.default.parallelism”, “1”)</li>
+<li>创建RDD的时候，sc.parallelize方法传入numSlices参数为1</li>
+</ul>
+<div class="note default simple"><p><strong>Repository</strong></p>
+<p>本章示例代码已归档至 GitHub，可用于本地复现、调试与扩展。</p>
+<p><a class="btn-beautify " href="https://github.com/NimbusFan/My-Second-Brain/tree/main/myblog/source/_posts/python-learning/Stage3_PySpark" title="查看本章源码"><i class="fab fa-github"></i><span>查看本章源码</span></a></p>
+</div>
+
+]]></content>
+      <categories>
+        <category>Python 技术笔记</category>
+        <category>大数据与分布式计算</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>PySpark</tag>
+        <tag>Spark</tag>
+        <tag>RDD</tag>
+        <tag>分布式计算</tag>
+        <tag>数据处理</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Python 异常处理与模块化开发</title>
     <url>/2026/03/24/python-learning/Stage1_Core_Basics/python-s1-08-exceptions-modules-packages/</url>
     <content><![CDATA[<h1 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h1><p>1.什么是异常:<br>程序运行的过程中出现了错误<br>2.bug是什么意思:<br>就是指异常的意思，历史上因为小虫子(bug)导致计算机失灵的案例，所以延续至今，bug就代表软件出现错误。</p>
@@ -1515,239 +1930,6 @@
         <tag>Socket</tag>
         <tag>正则表达式</tag>
         <tag>递归</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python 面向对象编程：类、对象与核心特性</title>
-    <url>/2026/04/14/python-learning/Stage2_OOP/python-s2-01-object-oriented/</url>
-    <content><![CDATA[<h1 id="初识对象"><a href="#初识对象" class="headerlink" title="初识对象"></a>初识对象</h1><p>在程序中是可以做到和生活中那样，设计表格、生产表格、填写表格的组织形式的。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在程序中设计表格，我们称之为:设计类(class)</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>:</span><br><span class="line">	name = <span class="literal">None</span></span><br><span class="line">	</span><br><span class="line"><span class="comment"># 在程序中打印生产表格，我们称之为:创建对象</span></span><br><span class="line"><span class="comment"># 基于类创建对象</span></span><br><span class="line">stu_1 = Student()</span><br><span class="line">stu_2 = Student()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在程序中填写表格，我们称之为:对象属性赋值</span></span><br><span class="line">stu_1.name =<span class="string">&quot;周杰轮&quot;</span>    <span class="comment"># 为学生1对象赋予名称属性值</span></span><br><span class="line">stu_2.name =<span class="string">&quot;林军杰&quot;</span>    <span class="comment"># 为学生2对象赋予名称属性值</span></span><br></pre></td></tr></table></figure>
-<hr>
-<h1 id="成员方法"><a href="#成员方法" class="headerlink" title="成员方法"></a>成员方法</h1><h2 id="类的语法："><a href="#类的语法：" class="headerlink" title="类的语法："></a>类的语法：</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">类名称</span>：    <span class="comment"># class是关键字，表示要定义类</span></span><br><span class="line">	类的属性      <span class="comment"># 类的属性，即定义在类中的变量（成员变量）</span></span><br><span class="line">	</span><br><span class="line">	类的行为      <span class="comment"># 类的行为，即定义在类中的函数（成员方法）</span></span><br></pre></td></tr></table></figure>
-<p>注意：函数是写在类外的，定义在类内部的函数习惯上称为<strong>方法</strong></p>
-<h2 id="成员方法的语法"><a href="#成员方法的语法" class="headerlink" title="成员方法的语法"></a>成员方法的语法</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">类名称</span>:</span><br><span class="line">	成员变量</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">成员方法</span>(<span class="params">self, 参数列表</span>)：</span><br><span class="line">		成员方法体</span><br><span class="line">		</span><br><span class="line">对象 = 类名称()</span><br></pre></td></tr></table></figure>
-<p>self的作用：</p>
-<ul>
-<li>表示类对象本身的意思</li>
-<li>只有通过self，成员方法才能访问类的成员变量</li>
-<li>self出现在形参列表中，但是不占用参数位置，因此调用时无需理会</li>
-</ul>
-<h2 id="创建类对象的语法："><a href="#创建类对象的语法：" class="headerlink" title="创建类对象的语法："></a>创建类对象的语法：</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">对象 = 类名称()</span><br></pre></td></tr></table></figure>
-<hr>
-<h1 id="类和对象"><a href="#类和对象" class="headerlink" title="类和对象"></a>类和对象</h1><p>类和对象的关系是什么?</p>
-<ul>
-<li>类是程序中的“设计图纸”</li>
-<li>对象是基于图纸生产的具体实体</li>
-</ul>
-<p>面向对象编程：使用对象进行编程。即设计类，基于类创建对象，并使用对象来完成具体的工作</p>
-<hr>
-<h1 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h1><p>Python类可以使用:<code>__init__()</code>方法，称之为构造方法。</p>
-<ul>
-<li>在创建类对象(构造类)的时候，会自动执行。</li>
-<li>在创建类对象(构造类)的时候，传入参数时会自动传递给<code>__init__</code>方法使用。</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>:</span><br><span class="line">	name = <span class="literal">None</span>    <span class="comment"># 可以省略</span></span><br><span class="line">	age = <span class="literal">None</span>     <span class="comment"># 可以省略</span></span><br><span class="line">	tel = <span class="literal">None</span>     <span class="comment"># 可以省略</span></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,name,age, tel</span>):</span><br><span class="line">		<span class="variable language_">self</span>.name = name</span><br><span class="line">		<span class="variable language_">self</span>.age = age</span><br><span class="line">		<span class="variable language_">self</span>.tel = tel</span><br><span class="line">		<span class="built_in">print</span>(<span class="string">&quot;student类创建了一个对象&quot;</span>)</span><br><span class="line">		</span><br><span class="line">stu = Student(<span class="string">&quot;周杰轮&quot;</span>，<span class="number">31</span>,<span class="string">&quot;18500006666&quot;</span>)</span><br></pre></td></tr></table></figure>
-<p>注意：构造方法也是成员方法，不能忘记在参数列表中提供<code>self</code></p>
-<hr>
-<h1 id="魔术方法"><a href="#魔术方法" class="headerlink" title="魔术方法"></a>魔术方法</h1><p><code>__init__</code>构造方法，是Python类内置的方法之一。<br>这些内置的类方法各自有各自特殊的功能，称之为<strong>魔术方法</strong></p>
-<h2 id="str-字符串魔术方法"><a href="#str-字符串魔术方法" class="headerlink" title="__str__字符串魔术方法"></a><code>__str__</code>字符串魔术方法</h2><p>当类对象需要被转换为字符串时，会输出其内存地址</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>:</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__init__</span> (<span class="variable language_">self</span>, name, age):</span><br><span class="line">		<span class="variable language_">self</span>.name = name</span><br><span class="line">		<span class="variable language_">self</span>.age = age</span><br><span class="line">		</span><br><span class="line">student = Student(<span class="string">&quot;周杰轮&quot;</span>, <span class="number">11</span>)</span><br><span class="line"><span class="built_in">print</span>(student)        <span class="comment"># 结果:&lt;__main__.Student object at 0x000002200cFD7040&gt;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">str</span>(student))   <span class="comment"># 结果:&lt;__main__.Student object at Ox000002200cFD7040&gt;</span></span><br></pre></td></tr></table></figure>
-<p>但是内存地址没有多大作用，可以通过str 方法，控制类转换为字符串的行为<br> <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>:</span><br><span class="line">	<span class="keyword">def</span>  <span class="title function_">__init__</span> (<span class="variable language_">self</span>, name, age):</span><br><span class="line">		<span class="variable language_">self</span>.name = name</span><br><span class="line">		<span class="variable language_">self</span>.age = age</span><br><span class="line">		</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>):</span><br><span class="line">		<span class="keyword">return</span> <span class="string">f&quot;student类对象,name=<span class="subst">&#123;self.name&#125;</span>, age=<span class="subst">&#123;self.age&#125;</span>&quot;</span></span><br><span class="line">		</span><br><span class="line">student = Student(<span class="string">&quot;周杰轮&quot;</span>, <span class="number">11</span>)</span><br><span class="line"><span class="built_in">print</span>(student)         <span class="comment"># 结果:Student类对象，name=周杰轮，age=11</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">str</span>(student))    <span class="comment"># 结果:Student类对象，name=周杰轮，age=l1</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="lt-小于符号魔术方法"><a href="#lt-小于符号魔术方法" class="headerlink" title="__lt__小于符号魔术方法"></a><code>__lt__</code>小于符号魔术方法</h2><p> 两个对象之间不可以直接进行比较<br> <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>:</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__init__</span> (<span class="variable language_">self</span>, name, age):</span><br><span class="line">	<span class="variable language_">self</span>.name = nameself.age = age</span><br><span class="line"></span><br><span class="line">stu1 = Student(<span class="string">&quot;周杰伦&quot;</span>,<span class="number">11</span>)</span><br><span class="line">stu2 = Student(<span class="string">&quot;林俊杰&quot;</span>,<span class="number">13</span>)</span><br><span class="line"><span class="built_in">print</span>(stul &lt; stu2)      <span class="comment"># 此处无法比较，会直接报错</span></span><br></pre></td></tr></table></figure><br> 此时需要在类中实现<code>__lt__</code>方法，即可同时完成:小于符号和大于符号2种比较<br> <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>:</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name, age</span>):</span><br><span class="line">		<span class="variable language_">self</span>.name = name</span><br><span class="line">		<span class="variable language_">self</span>.age = age</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__lt__</span>(<span class="params">self, other</span>):</span><br><span class="line">		<span class="keyword">return</span> <span class="variable language_">self</span>.age &lt; other.age</span><br><span class="line">stu1 = Student(<span class="string">&quot;周杰伦&quot;</span>,<span class="number">11</span>)</span><br><span class="line">stu2 = Student(<span class="string">&quot;林俊杰&quot;</span>,<span class="number">13</span>)</span><br><span class="line"><span class="built_in">print</span>(stu1 &lt; stu2)     <span class="comment"># 结果:True</span></span><br><span class="line"><span class="built_in">print</span>(stu1 &gt; stu2)     <span class="comment"># 结果:False</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="le-小于等于符号魔术方法"><a href="#le-小于等于符号魔术方法" class="headerlink" title="__le__小于等于符号魔术方法"></a><code>__le__</code>小于等于符号魔术方法</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>:</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__init__</span> (<span class="variable language_">self</span>, name, age):</span><br><span class="line">		<span class="variable language_">self</span>.name = name</span><br><span class="line">		<span class="variable language_">self</span>.age = age</span><br><span class="line"></span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">___le__</span>(<span class="params">self, other</span>):</span><br><span class="line">		<span class="keyword">return</span> <span class="variable language_">self</span>.age &lt;= other.age</span><br><span class="line">		</span><br><span class="line">stu1 = Student(<span class="string">&quot;周杰轮&quot;</span>,<span class="number">11</span>)</span><br><span class="line">stu2 = Student(<span class="string">&quot;林军杰&quot;</span>,<span class="number">13</span>)</span><br><span class="line"><span class="built_in">print</span>(stu1 &lt;= stu2)    <span class="comment"># 结果:True</span></span><br><span class="line"><span class="built_in">print</span>(stu2 &gt;= stu2)    <span class="comment"># 结果:False</span></span><br></pre></td></tr></table></figure>
-<h2 id="eq-比较运算符魔术方法"><a href="#eq-比较运算符魔术方法" class="headerlink" title="__eq__比较运算符魔术方法"></a><code>__eq__</code>比较运算符魔术方法</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>:</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__init__</span> (<span class="variable language_">self</span>, name, age):</span><br><span class="line">		<span class="variable language_">self</span>.name = name</span><br><span class="line">		<span class="variable language_">self</span>.age = age</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__eq__</span>(<span class="params">self, other</span>):</span><br><span class="line">	<span class="keyword">return</span> <span class="variable language_">self</span>.age == other.age</span><br><span class="line"></span><br><span class="line">stu1 = Student(<span class="string">&quot;周杰轮&quot;</span>,<span class="number">11</span>)</span><br><span class="line">stu2 = Student(<span class="string">&quot;林军杰&quot;</span>,<span class="number">11</span>)    </span><br><span class="line"><span class="built_in">print</span>(stu1 == stu2)    <span class="comment"># 结果:True</span></span><br></pre></td></tr></table></figure>
-<hr>
-<h1 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h1><p>面向对象包含3大主要特性：</p>
-<ul>
-<li>封装</li>
-<li>继承</li>
-<li>多态</li>
-</ul>
-<p>封装是指将现实世界事物在类中描述为属性和方法。</p>
-<p>现实事物的部分属性和行为是不公开对使用者开放的。同样在类中描述属性和方法的时候也需要达到这个要求</p>
-<p>定义私有成员：成员变量和成员方法的命名均以<code>__</code>作为开头</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Phone</span>:  </span><br><span class="line">    __current_voltage = <span class="number">1</span>  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__keep_single_core</span>(<span class="params">self</span>):  </span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;让cpu以单核模式运行&quot;</span>)</span><br></pre></td></tr></table></figure>
-<p>注意：类对象无法访问私有成员，类中的其它成员可以访问私有成员</p>
-<hr>
-<h1 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h1><h2 id="继承的基础语法"><a href="#继承的基础语法" class="headerlink" title="继承的基础语法"></a>继承的基础语法</h2><p>继承:将从父类那里继承(复制)来成员变量和成员方法(<strong>不含私有</strong>)</p>
-<p>子类构建的类对象，可以</p>
-<ul>
-<li>有自己的成员变量和成员方法</li>
-<li>使用父类的成员变量和成员方法</li>
-</ul>
-<h2 id="单继承和多继承"><a href="#单继承和多继承" class="headerlink" title="单继承和多继承"></a>单继承和多继承</h2><p>类的单继承语法：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">类名</span>(<span class="title class_ inherited__">父类名</span>):</span><br><span class="line">	类内容体</span><br></pre></td></tr></table></figure>
-
-<p>类的多继承语法：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">类名</span>(父类<span class="number">1</span>, 父类<span class="number">2</span>, ..., 父类N):</span><br></pre></td></tr></table></figure>
-<p><strong>注意</strong>：多继承中，如果父类有同名方法或属性，先继承的优先级高于后继承</p>
-<h2 id="pass"><a href="#pass" class="headerlink" title="pass"></a>pass</h2><p>pass是占位语句，用来保证函数(方法)或类定义的完整性，表示无内容，空的意思</p>
-<hr>
-<h1 id="复写和使用父类成员"><a href="#复写和使用父类成员" class="headerlink" title="复写和使用父类成员"></a>复写和使用父类成员</h1><h2 id="复写"><a href="#复写" class="headerlink" title="复写"></a>复写</h2><p>对父类的成员属性或成员方法进行重新定义</p>
-<h2 id="调用父类成员"><a href="#调用父类成员" class="headerlink" title="调用父类成员"></a>调用父类成员</h2><p>一旦复写父类成员，那么类对象调用成员的时候，就会调用复写后的新成员。<br>如果需要使用被复写的父类的成员，需要特殊的调用方式:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 方式1:调用父类成员</span></span><br><span class="line">使用成员变量:父类名.成员变量</span><br><span class="line">使用成员方法:父类名.成员方法(<span class="variable language_">self</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 方式2:使用super()调用父类成员</span></span><br><span class="line">使用成员变量:<span class="built_in">super</span>().成员变量</span><br><span class="line">使用成员方法:<span class="built_in">super</span>().成员方法()</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="类型注解"><a href="#类型注解" class="headerlink" title="类型注解"></a>类型注解</h1><p>类型注解支持:</p>
-<ol>
-<li>变量的类型注解</li>
-<li>函数(方法)的形参和返回值的类型注解</li>
-</ol>
-<h2 id="变量的类型注解"><a href="#变量的类型注解" class="headerlink" title="变量的类型注解"></a>变量的类型注解</h2><p>语法1:<strong>变量:类型</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 基础数据类型注解</span></span><br><span class="line">var_1: <span class="built_in">int</span> = <span class="number">10</span></span><br><span class="line">var_2: <span class="built_in">float</span> = <span class="number">3.1415926</span></span><br><span class="line">var_3: <span class="built_in">bool</span> = <span class="literal">True</span></span><br><span class="line">Var_4: <span class="built_in">str</span> = <span class="string">&quot;itheima”</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># 基础容器类型注解</span></span><br><span class="line"><span class="string">my_list: list = [1, 2, 3]      </span></span><br><span class="line"><span class="string">my_tuple: tuple = (1, 2, 3)</span></span><br><span class="line"><span class="string">my_set: set = &#123;1, 2, 3&#125;</span></span><br><span class="line"><span class="string">my_dict: dict = &#123;&quot;</span>itheima<span class="string">&quot;: 666&#125;</span></span><br><span class="line"><span class="string">my_str: str = &quot;</span>itheima<span class="string">&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># 容器类型详细注解</span></span><br><span class="line"><span class="string">my_list: list[int] = [1, 2, 3]</span></span><br><span class="line"><span class="string">my_tuple: tuple[str, int, bool] = (&quot;</span>itheima<span class="string">&quot;, 666, True)</span></span><br><span class="line"><span class="string">my_set: set[int] = &#123;1, 2, 3&#125;</span></span><br><span class="line"><span class="string">my_dict: dict[str, int] = &#123;&quot;</span>itheima<span class="string">&quot;: 666&#125;</span></span><br><span class="line"><span class="string"># 注意:元组类型设置类型详细注解，需要将每一个元素都标记出来</span></span><br><span class="line"><span class="string"># 注意:字典类型设置类型详细注解，需要2个类型，第一个是key第二个是value</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># 类对象类型注解</span></span><br><span class="line"><span class="string">class Student:</span></span><br><span class="line"><span class="string">	pass</span></span><br><span class="line"><span class="string">stu: Student = Student()</span></span><br></pre></td></tr></table></figure>
-<p>语法2:在注释中，<strong>#type:类型</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在注释中进行类型注解</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>:</span><br><span class="line">	<span class="keyword">pass</span></span><br><span class="line">var_1 = random.randint(<span class="number">1</span>, <span class="number">10</span>)     <span class="comment"># type:<span class="built_in">int</span></span></span><br><span class="line">var_2 = json.loads(data)          <span class="comment"># type: <span class="built_in">dict</span>[<span class="built_in">str</span>, <span class="built_in">int</span>]</span></span><br><span class="line">var_3 = func()                    <span class="comment"># type: Student</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>注意</strong>:类型注解只是提示性的，并非决定性的。数据类型和注解类型无法对应也不会导致编译错误</p>
-<h2 id="函数-方法-的类型注解"><a href="#函数-方法-的类型注解" class="headerlink" title="函数(方法)的类型注解"></a>函数(方法)的类型注解</h2><h3 id="形参的类型注解"><a href="#形参的类型注解" class="headerlink" title="形参的类型注解"></a>形参的类型注解</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">x: <span class="built_in">int</span>, y: <span class="built_in">int</span></span>):</span><br><span class="line">	<span class="keyword">return</span> x + y</span><br><span class="line">	</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">func</span>(<span class="params">data: <span class="built_in">list</span></span>):</span><br><span class="line">	<span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
-<h3 id="返回值的类型注解"><a href="#返回值的类型注解" class="headerlink" title="返回值的类型注解"></a>返回值的类型注解</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">函数方法名</span>(<span class="params">形参: 类型，......, 形参:类型</span>) -&gt; 返回值类型:</span><br><span class="line">	<span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
-<h2 id="Union联合类型注解"><a href="#Union联合类型注解" class="headerlink" title="Union联合类型注解"></a>Union联合类型注解</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 变量的联合类型注解</span></span><br><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">Union</span></span><br><span class="line"></span><br><span class="line">my_list: <span class="built_in">list</span>[union[<span class="built_in">str</span>, <span class="built_in">int</span>]] = [<span class="number">1</span>, <span class="number">2</span>, <span class="string">&quot;itheima&quot;</span>, <span class="string">&quot;itcast&quot;</span>]</span><br><span class="line">my_dict: <span class="built_in">dict</span>[<span class="built_in">str</span>, <span class="type">Union</span>[<span class="built_in">str</span>, <span class="built_in">int</span>]] = &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;周杰伦&quot;</span>, <span class="string">&quot;age&quot;</span>:<span class="number">31</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 函数(方法)的联合类型注解</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">func</span>(<span class="params">data: union[<span class="built_in">int</span>, <span class="built_in">str</span>]</span>) -&gt; union[<span class="built_in">int</span>, <span class="built_in">str</span>]:</span><br><span class="line">	<span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h1><p>多态常用在继承关系上。</p>
-<ul>
-<li>以父类做定义声明</li>
-<li>以子类做实际工作</li>
-<li>用以获得同一行为，不同状态<br>这种写法，就叫做抽象类(也可以称之为接口)</li>
-</ul>
-<p><strong>抽象类</strong>:含有抽象方法的类称之为抽象类<br><strong>抽象方法</strong>:方法体是空实现的(pass)称之为抽象方法</p>
-<div class="note default simple"><p><strong>Repository</strong></p>
-<p>本章示例代码已归档至 GitHub，可用于本地复现、调试与扩展。</p>
-<p><a class="btn-beautify " href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage2_OOP/01_Object-Oriented" title="查看本章源码"><i class="fab fa-github"></i><span>查看本章源码</span></a></p>
-</div>]]></content>
-      <categories>
-        <category>Python 技术笔记</category>
-        <category>面向对象程序设计</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>基础语法</tag>
-        <tag>面向对象</tag>
-        <tag>OOP</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python 数据库编程：SQL 语法与 MySQL 实践</title>
-    <url>/2026/05/21/python-learning/Stage2_OOP/python-s2-02-SQL/</url>
-    <content><![CDATA[<h1 id="基础命令"><a href="#基础命令" class="headerlink" title="基础命令"></a>基础命令</h1><p>SQL语言分类：</p>
-<ul>
-<li>DDL (Data Definition Language)数据定义</li>
-<li>DML (Data Manipulation Language)数据操作</li>
-<li>DCL(Data Control Language)数据控制</li>
-<li>DQL (Data Query Language)数据查询</li>
-</ul>
-<p>MySQL命令行环境下的基础命令:</p>
-<table>
-<thead>
-<tr>
-<th align="center">SQL命令</th>
-<th align="center">结果</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">mysql -uroot -p</td>
-<td align="center">以root用户，通过密码进行登录</td>
-</tr>
-<tr>
-<td align="center">show databases；</td>
-<td align="center">查看有哪些数据库</td>
-</tr>
-<tr>
-<td align="center">use 数据库名;</td>
-<td align="center">使用某个数据库</td>
-</tr>
-<tr>
-<td align="center">show tables;</td>
-<td align="center">查看数据库内有哪些表</td>
-</tr>
-<tr>
-<td align="center">exit</td>
-<td align="center">退出MySQL的命令行环境</td>
-</tr>
-</tbody></table>
-<hr>
-<h1 id="SQL的语法特征"><a href="#SQL的语法特征" class="headerlink" title="SQL的语法特征"></a>SQL的语法特征</h1><ol>
-<li>大小写不敏感</li>
-<li>可以单行或多行书写，最后以<code>;</code>号结束</li>
-<li>SQL支持注释:<ul>
-<li>单行注释：– 注释内容(–后面一定要有一个空格)</li>
-<li>单行注释：# 注释内容(#后面可以不加空格，推荐加上)</li>
-<li>多行注释：<code>/* 注释内容 */</code></li>
-</ul>
-</li>
-</ol>
-<hr>
-<h1 id="DDL-数据定义"><a href="#DDL-数据定义" class="headerlink" title="DDL-数据定义"></a>DDL-数据定义</h1><h2 id="库管理"><a href="#库管理" class="headerlink" title="库管理"></a>库管理</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 查看数据库</span></span><br><span class="line"><span class="keyword">SHOW</span> DATABASES;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 使用数据库</span></span><br><span class="line">USE 数据库名称;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 创建数据库</span></span><br><span class="line"><span class="keyword">CREATE</span> DATABASE 数据库名称[CHARSET UTF8];</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 删除数据库</span></span><br><span class="line"><span class="keyword">DROP</span> DATABASE 数据库名称;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 查看当前使用的数据库</span></span><br><span class="line"><span class="keyword">SELECT</span> DATABASE();</span><br></pre></td></tr></table></figure>
-<h2 id="表管理"><a href="#表管理" class="headerlink" title="表管理"></a>表管理</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 查看有哪些表(需要先选择数据库)</span></span><br><span class="line"><span class="keyword">SHOW</span> TABLES；</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 创建表</span></span><br><span class="line"><span class="keyword">CREATE TABLE</span> 表名称(</span><br><span class="line">	列名称 列类型，</span><br><span class="line">	列名称 列类型，</span><br><span class="line">	......</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 删除表</span></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> 表名称;</span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> IF <span class="keyword">EXISTS</span> 表名称;</span><br></pre></td></tr></table></figure>
-<p>列类型：</p>
-<table>
-<thead>
-<tr>
-<th align="center">列名称</th>
-<th align="center">列类型</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">int</td>
-<td align="center">整数</td>
-</tr>
-<tr>
-<td align="center">float</td>
-<td align="center">浮点数</td>
-</tr>
-<tr>
-<td align="center">varchar(长度)</td>
-<td align="center">文本，长度为数字，做最大长度限制，最大可填255</td>
-</tr>
-<tr>
-<td align="center">date</td>
-<td align="center">日期类型</td>
-</tr>
-<tr>
-<td align="center">timestamp</td>
-<td align="center">时间戳类型</td>
-</tr>
-</tbody></table>
-<hr>
-<h1 id="DML-数据操作"><a href="#DML-数据操作" class="headerlink" title="DML-数据操作"></a>DML-数据操作</h1><h2 id="INSERT数据插入"><a href="#INSERT数据插入" class="headerlink" title="INSERT数据插入"></a>INSERT数据插入</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"># []代表可以省略的内容</span><br><span class="line"><span class="keyword">INSERT INTO</span> 表[(列<span class="number">1</span>, 列<span class="number">2</span>, ..., 列N)] <span class="keyword">VALUES</span>(值<span class="number">1</span>, 值<span class="number">2</span>, ..., 值N)[, (值<span class="number">1</span>, 值<span class="number">2</span>, ..., 值N),...,(值<span class="number">1</span>, 值<span class="number">2</span>, ..., 值N)]</span><br></pre></td></tr></table></figure>
-<h2 id="DELETE数据删除"><a href="#DELETE数据删除" class="headerlink" title="DELETE数据删除"></a>DELETE数据删除</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"># []代表可以省略的内容</span><br><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> 表名称 [<span class="keyword">WHERE</span>条件判断]</span><br><span class="line"></span><br><span class="line"><span class="comment">/*  </span></span><br><span class="line"><span class="comment">条件判断：列 操作符 值</span></span><br><span class="line"><span class="comment">操作符： = &lt; &gt; &lt;= &gt;= !=等等，</span></span><br><span class="line"><span class="comment">如：id = 5  id &lt; 3  id &gt;= 6  id != 5</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
-<h2 id="UPDATE-数据更新"><a href="#UPDATE-数据更新" class="headerlink" title="UPDATE 数据更新"></a>UPDATE 数据更新</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> 表名 <span class="keyword">SET</span> 列<span class="operator">=</span>值 [<span class="keyword">WHERE</span> 条件判断]</span><br></pre></td></tr></table></figure>
-<p><strong>注意：字符串的值出现在SQL语句中，必须要用单引号包围起来。</strong></p>
-<hr>
-<h1 id="DCL-数据控制"><a href="#DCL-数据控制" class="headerlink" title="DCL-数据控制"></a>DCL-数据控制</h1><hr>
-<h1 id="DQL-数据查询"><a href="#DQL-数据查询" class="headerlink" title="DQL-数据查询"></a>DQL-数据查询</h1><h2 id="基础查询"><a href="#基础查询" class="headerlink" title="基础查询"></a>基础查询</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"># 基础查询的语法</span><br><span class="line"><span class="keyword">SELECT</span> 字段列表<span class="operator">|</span><span class="operator">*</span><span class="keyword">FROM</span> 表</span><br><span class="line"># 过滤查询的语法</span><br><span class="line"><span class="keyword">SELECT</span> 字段列表<span class="operator">|</span><span class="operator">*</span><span class="keyword">FROM</span> 表 <span class="keyword">WHERE</span> 条件判断</span><br></pre></td></tr></table></figure>
-<h2 id="分组聚合"><a href="#分组聚合" class="headerlink" title="分组聚合"></a>分组聚合</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> 字段<span class="operator">|</span>聚合函数 <span class="keyword">FROM</span> 表 [<span class="keyword">WHERE</span> 条件] <span class="keyword">GROUP</span> <span class="keyword">BY</span> 列 </span><br><span class="line">聚合函数有:</span><br><span class="line"><span class="operator">-</span> <span class="built_in">SUM</span>(列) 求和</span><br><span class="line"><span class="operator">-</span> <span class="built_in">AVG</span>(列) 求平均值</span><br><span class="line"><span class="operator">-</span> <span class="built_in">MIN</span>(列) 求最小值</span><br><span class="line"><span class="operator">-</span> <span class="built_in">MAX</span>(列) 求最大值</span><br><span class="line"><span class="operator">-</span> <span class="built_in">COUNT</span>(列<span class="operator">|</span><span class="operator">*</span>) 求数量</span><br></pre></td></tr></table></figure>
-<p>注意：</p>
-<ul>
-<li>一个SQL中可以写多个聚合</li>
-<li>GROUP BY中出现了哪个列，哪个列才能出现在SELECT中的非聚合中</li>
-</ul>
-<h2 id="排序分页"><a href="#排序分页" class="headerlink" title="排序分页"></a>排序分页</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"># 只写n表示：只显示几条数据</span><br><span class="line"># n和m都写表示：跳过前n行，从第n <span class="operator">+</span> <span class="number">1</span>条开始往下取m条</span><br><span class="line"><span class="keyword">SELECT</span> 列<span class="operator">|</span>聚合函数<span class="operator">|</span><span class="operator">*</span> <span class="keyword">FROM</span> 表</span><br><span class="line"><span class="keyword">WHERE</span> ...</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> ...</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> ... [<span class="keyword">ASC</span> <span class="operator">|</span> <span class="keyword">DESC</span>]</span><br><span class="line">LIMIT n[, m]</span><br></pre></td></tr></table></figure>
-<p>注意：</p>
-<ul>
-<li>WHERE、GROUP BY、ORDER BY、LIMIT均可按需求省略</li>
-<li>SELECT和FROM是必写的</li>
-<li>执行顺序:FROM -&gt;WHERE -&gt;GROUP BY和聚合函数 -&gt;SELECT -&gt;ORDER BY -&gt;LIMIT</li>
-</ul>
-<hr>
-<h1 id="Python操作MySQL"><a href="#Python操作MySQL" class="headerlink" title="Python操作MySQL"></a>Python操作MySQL</h1><h2 id="基础使用"><a href="#基础使用" class="headerlink" title="基础使用"></a>基础使用</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 导包</span></span><br><span class="line"><span class="keyword">from</span> pymysql <span class="keyword">import</span> Connection</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取链接对象</span></span><br><span class="line">链接对象 = Connection(主机，端口，账户，密码)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 得到游标对象</span></span><br><span class="line">游标对象 = 链接对象.cursor()</span><br><span class="line">链接对象.select_db(<span class="string">&quot;&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 执行SQL语句</span></span><br><span class="line">游标对象.execute(<span class="string">&quot;&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 得到全部的查询结果（封装在元组内）</span></span><br><span class="line">results = 游标对象.fetchall()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭和数据库的连接</span></span><br><span class="line">链接对象.close()</span><br></pre></td></tr></table></figure>
-<h2 id="数据插入"><a href="#数据插入" class="headerlink" title="数据插入"></a>数据插入</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 导包</span></span><br><span class="line"><span class="keyword">from</span> pymysql <span class="keyword">import</span> Connection</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取链接对象</span></span><br><span class="line">链接对象 = Connection(主机，端口，账户，密码)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 得到游标对象</span></span><br><span class="line">游标对象 = conn.cursor()</span><br><span class="line">链接对象.select_db(<span class="string">&quot;&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 执行SQL语句 </span></span><br><span class="line">游标对象.execute(<span class="string">&quot;&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 确认提交</span></span><br><span class="line">链接对象.commit()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭和数据库的连接</span></span><br><span class="line">链接对象.close()</span><br></pre></td></tr></table></figure>
-<p>也可以通过代码设置自动提交，无需手动commit</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">链接对象 = Connection(</span><br><span class="line">	主机，</span><br><span class="line">	端口，</span><br><span class="line">	账户，</span><br><span class="line">	密码</span><br><span class="line">	autocommit = <span class="literal">True</span>	<span class="comment"># 设置自动提交</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-
-<div class="note default simple"><p><strong>Repository</strong></p>
-<p>本章示例代码已归档至 GitHub，可用于本地复现、调试与扩展。</p>
-<p><a class="btn-beautify " href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage2_OOP/02_SQL" title="查看本章源码"><i class="fab fa-github"></i><span>查看本章源码</span></a></p>
-</div>
-]]></content>
-      <categories>
-        <category>Python 技术笔记</category>
-        <category>数据库与后端开发</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>SQL</tag>
-        <tag>MySQL</tag>
       </tags>
   </entry>
 </search>
