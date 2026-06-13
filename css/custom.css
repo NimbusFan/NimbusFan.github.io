@@ -829,3 +829,33 @@ a:hover {
     background: transparent !important;
     border: none !important;
 }
+
+
+/* ===================================================== */
+/* 更稳的中文字体方案 */
+/* ===================================================== */
+
+body,
+#body-wrap,
+#content-inner,
+#aside-content,
+#article-container,
+#recent-posts .article-title,
+#recent-posts .content,
+.card-widget,
+#site-name,
+#site-title {
+    font-family:
+        "PingFang SC",
+        "Hiragino Sans GB",
+        "Microsoft YaHei",
+        "Noto Sans CJK SC",
+        "Source Han Sans SC",
+        "Helvetica Neue",
+        Arial,
+        sans-serif !important;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
