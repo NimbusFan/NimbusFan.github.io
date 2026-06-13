@@ -1,10 +1,468 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Hexo 博客搭建：GitHub Pages 部署与 Butterfly 主题配置</title>
+    <url>/2026/03/11/daily/Hexo%20%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%EF%BC%9AGitHub%20Pages%20%E4%B8%8E%20Butterfly%20%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在学习和开发过程中，零散的代码片段、配置记录和排错经验很容易被遗忘。相比只把笔记保存在本地，我更希望搭建一个可以长期维护、方便检索、也能够对外展示的技术博客。</p>
+<p>最终我选择了 <strong>Hexo + GitHub Pages + Butterfly</strong> 这一套方案：</p>
+<ul>
+<li><strong>Hexo</strong>：生成静态博客，部署简单，生态成熟；</li>
+<li><strong>GitHub Pages</strong>：免费托管静态网页，适合个人技术博客；</li>
+<li><strong>Butterfly</strong>：基于 Hexo 的高可配置主题，视觉效果和功能扩展都比较完善。</li>
+</ul>
+<p>这篇文章记录博客从初始化、本地预览、GitHub Pages 部署，到 Butterfly 主题配置过程中遇到的问题和解决方法。</p>
+<hr>
+<h1 id="一、环境准备"><a href="#一、环境准备" class="headerlink" title="一、环境准备"></a>一、环境准备</h1><p>在开始之前，需要先安装以下工具：</p>
+<table>
+<thead>
+<tr>
+<th>工具</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Node.js</td>
+<td>提供 npm 环境，用于安装 Hexo 和相关依赖</td>
+</tr>
+<tr>
+<td>Git</td>
+<td>用于拉取主题、管理代码和部署到 GitHub</td>
+</tr>
+<tr>
+<td>Hexo</td>
+<td>静态博客生成器</td>
+</tr>
+<tr>
+<td>GitHub Pages</td>
+<td>博客网页托管平台</td>
+</tr>
+</tbody></table>
+<p>安装完成后，可以在终端中检查版本：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">node -v</span><br><span class="line">npm -v</span><br><span class="line">git --version</span><br></pre></td></tr></table></figure>
+
+<p>确认环境正常后，安装 Hexo 命令行工具：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="二、初始化-Hexo-项目"><a href="#二、初始化-Hexo-项目" class="headerlink" title="二、初始化 Hexo 项目"></a>二、初始化 Hexo 项目</h1><p>创建博客项目：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo init myblog</span><br><span class="line"><span class="built_in">cd</span> myblog</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
+
+<p>启动本地服务：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+
+<p>浏览器访问：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">http://localhost:4000/</span><br></pre></td></tr></table></figure>
+
+<p>如果能够看到 Hexo 默认页面，说明本地博客已经成功运行。</p>
+<hr>
+<h1 id="三、初始化时的网络超时问题"><a href="#三、初始化时的网络超时问题" class="headerlink" title="三、初始化时的网络超时问题"></a>三、初始化时的网络超时问题</h1><p>在执行 <code>hexo init myblog</code> 时，可能会遇到 GitHub 连接超时：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">fatal: unable to access <span class="string">&#x27;https://github.com/hexojs/hexo-starter.git/&#x27;</span>:</span><br><span class="line">Connection timed out after 300030 milliseconds</span><br></pre></td></tr></table></figure>
+
+<p>这个问题通常不是 Hexo 本身的问题，而是终端访问 GitHub 不稳定导致的。浏览器能打开 GitHub，不代表命令行中的 Git 或 npm 一定能正常访问。</p>
+<p>可以采用两种方式处理。</p>
+<h2 id="方式一：使用-npm-镜像源安装依赖"><a href="#方式一：使用-npm-镜像源安装依赖" class="headerlink" title="方式一：使用 npm 镜像源安装依赖"></a>方式一：使用 npm 镜像源安装依赖</h2><p>进入项目目录后，使用国内镜像源安装依赖：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install --registry=https://registry.npmmirror.com</span><br></pre></td></tr></table></figure>
+
+<h2 id="方式二：手动克隆-Hexo-Starter"><a href="#方式二：手动克隆-Hexo-Starter" class="headerlink" title="方式二：手动克隆 Hexo Starter"></a>方式二：手动克隆 Hexo Starter</h2><p>如果 <code>hexo init</code> 一直失败，可以手动克隆 starter 项目：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/hexojs/hexo-starter.git myblog</span><br><span class="line"><span class="built_in">cd</span> myblog</span><br><span class="line">npm install --registry=https://registry.npmmirror.com</span><br></pre></td></tr></table></figure>
+
+<p>随后继续执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="四、部署到-GitHub-Pages"><a href="#四、部署到-GitHub-Pages" class="headerlink" title="四、部署到 GitHub Pages"></a>四、部署到 GitHub Pages</h1><h2 id="1-创建-GitHub-Pages-仓库"><a href="#1-创建-GitHub-Pages-仓库" class="headerlink" title="1. 创建 GitHub Pages 仓库"></a>1. 创建 GitHub Pages 仓库</h2><p>如果 GitHub 用户名是 <code>NimbusFan</code>，则仓库名应为：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">NimbusFan.github.io</span><br></pre></td></tr></table></figure>
+
+<p>完整仓库地址类似：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">https://github.com/NimbusFan/NimbusFan.github.io</span><br></pre></td></tr></table></figure>
+
+<p>GitHub Pages 对用户主页仓库的命名有固定要求，必须使用：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">用户名.github.io</span><br></pre></td></tr></table></figure>
+
+<p>否则部署后可能无法通过 <code>https://用户名.github.io/</code> 访问。</p>
+<hr>
+<h2 id="2-安装部署插件"><a href="#2-安装部署插件" class="headerlink" title="2. 安装部署插件"></a>2. 安装部署插件</h2><p>Hexo 默认不会自动部署到 GitHub，需要安装部署插件：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="3-修改-Hexo-根目录配置"><a href="#3-修改-Hexo-根目录配置" class="headerlink" title="3. 修改 Hexo 根目录配置"></a>3. 修改 Hexo 根目录配置</h2><p>打开 Hexo 根目录下的 <code>_config.yml</code>，找到 <code>deploy</code> 配置项：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">git@github.com:NimbusFan/NimbusFan.github.io.git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
+
+<p>这里推荐使用 SSH 地址，而不是 HTTPS 地址。HTTPS 在推送过程中容易出现连接中断、认证失败或令牌问题。</p>
+<hr>
+<h1 id="五、配置-GitHub-SSH-密钥"><a href="#五、配置-GitHub-SSH-密钥" class="headerlink" title="五、配置 GitHub SSH 密钥"></a>五、配置 GitHub SSH 密钥</h1><p>如果部署时出现类似错误：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Please make sure you have the correct access rights</span><br><span class="line">and the repository exists.</span><br></pre></td></tr></table></figure>
+
+<p>通常说明当前电脑没有 GitHub 仓库的推送权限，需要配置 SSH 密钥。</p>
+<h2 id="1-生成-SSH-密钥"><a href="#1-生成-SSH-密钥" class="headerlink" title="1. 生成 SSH 密钥"></a>1. 生成 SSH 密钥</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;你的邮箱&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>一路回车即可。</p>
+<h2 id="2-复制公钥"><a href="#2-复制公钥" class="headerlink" title="2. 复制公钥"></a>2. 复制公钥</h2><p>Windows 下公钥通常位于：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">C:\Users\你的用户名\.ssh\id_rsa.pub</span><br></pre></td></tr></table></figure>
+
+<p>打开后复制全部内容。</p>
+<h2 id="3-添加到-GitHub"><a href="#3-添加到-GitHub" class="headerlink" title="3. 添加到 GitHub"></a>3. 添加到 GitHub</h2><p>进入 GitHub：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Settings -&gt; SSH and GPG keys -&gt; New SSH key</span><br></pre></td></tr></table></figure>
+
+<p>将刚才复制的公钥粘贴进去并保存。</p>
+<h2 id="4-测试连接"><a href="#4-测试连接" class="headerlink" title="4. 测试连接"></a>4. 测试连接</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+
+<p>如果看到类似下面的提示，说明 SSH 配置成功：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Hi NimbusFan! You<span class="string">&#x27;ve successfully authenticated.</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="六、生成并部署博客"><a href="#六、生成并部署博客" class="headerlink" title="六、生成并部署博客"></a>六、生成并部署博客</h1><p>完成配置后，执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+<p>也可以合并为：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
+
+<p>部署成功后，访问：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">https://nimbusfan.github.io/</span><br></pre></td></tr></table></figure>
+
+<p>如果页面没有立即更新，可以等待一到三分钟，或者使用浏览器强制刷新：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Ctrl + F5</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="七、安装-Butterfly-主题"><a href="#七、安装-Butterfly-主题" class="headerlink" title="七、安装 Butterfly 主题"></a>七、安装 Butterfly 主题</h1><p>Hexo 默认主题比较基础，适合快速验证环境，但不太适合作为长期维护的技术博客。我最终选择了 Butterfly 主题。</p>
+<p>进入博客根目录后执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/jerryc127/hexo-theme-butterfly.git themes/butterfly</span><br></pre></td></tr></table></figure>
+
+<p>安装 Butterfly 需要的渲染器：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-renderer-pug hexo-renderer-stylus --save</span><br></pre></td></tr></table></figure>
+
+<p>然后打开 Hexo 根目录下的 <code>_config.yml</code>，修改主题：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">butterfly</span></span><br></pre></td></tr></table></figure>
+
+<p>重新生成并启动：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="八、使用独立主题配置文件"><a href="#八、使用独立主题配置文件" class="headerlink" title="八、使用独立主题配置文件"></a>八、使用独立主题配置文件</h1><p>Butterfly 的配置项很多，不建议直接长期修改：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">themes/butterfly/_config.yml</span><br></pre></td></tr></table></figure>
+
+<p>更推荐在 Hexo 根目录下创建：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">_config.butterfly.yml</span><br></pre></td></tr></table></figure>
+
+<p>然后将主题配置复制到这个文件中进行修改。</p>
+<p>这样做有两个好处：</p>
+<ol>
+<li>主题升级时，不容易覆盖自己的配置；</li>
+<li>站点配置和主题配置分离，后期维护更清晰。</li>
+</ol>
+<p>常见结构如下：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">myblog/</span><br><span class="line">├── _config.yml</span><br><span class="line">├── _config.butterfly.yml</span><br><span class="line">├── source/</span><br><span class="line">├── themes/</span><br><span class="line">│   └── butterfly/</span><br><span class="line">└── package.json</span><br></pre></td></tr></table></figure>
+
+<p>其中：</p>
+<ul>
+<li><code>_config.yml</code>：Hexo 站点基础配置；</li>
+<li><code>_config.butterfly.yml</code>：Butterfly 主题配置；</li>
+<li><code>source/</code>：文章、页面、图片和自定义资源；</li>
+<li><code>themes/</code>：主题文件。</li>
+</ul>
+<hr>
+<h1 id="九、配置过程中遇到的典型问题"><a href="#九、配置过程中遇到的典型问题" class="headerlink" title="九、配置过程中遇到的典型问题"></a>九、配置过程中遇到的典型问题</h1><h2 id="1-修改配置后页面没有变化"><a href="#1-修改配置后页面没有变化" class="headerlink" title="1. 修改配置后页面没有变化"></a>1. 修改配置后页面没有变化</h2><p>常见原因有三个：</p>
+<p>第一，Hexo 没有重新生成：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+
+<p>第二，浏览器缓存没有清理：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Ctrl + F5</span><br></pre></td></tr></table></figure>
+
+<p>第三，配置文件改错了位置。</p>
+<p>Butterfly 相关配置应优先检查：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">_config.butterfly.yml</span><br></pre></td></tr></table></figure>
+
+<p>而不是只检查主题目录中的 <code>_config.yml</code>。</p>
+<hr>
+<h2 id="2-GitHub-链接仍然跳转到默认地址"><a href="#2-GitHub-链接仍然跳转到默认地址" class="headerlink" title="2. GitHub 链接仍然跳转到默认地址"></a>2. GitHub 链接仍然跳转到默认地址</h2><p>在配置社交链接时，可能会遇到这样的问题：已经把 GitHub 地址改成自己的账号，但页面上仍然跳转到主题默认的 <code>github.com/xxxxxx</code>。</p>
+<p>这种情况通常说明主题中不止一个位置配置了 GitHub 链接。</p>
+<p>可以在项目根目录中全局搜索：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">findstr /S /N <span class="string">&quot;xxxxxx&quot;</span> *.yml</span><br></pre></td></tr></table></figure>
+
+<p>如果是在 VS Code 中，也可以直接使用全局搜索：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Ctrl + Shift + F</span><br></pre></td></tr></table></figure>
+
+<p>搜索关键词：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">xxxxxx</span><br></pre></td></tr></table></figure>
+
+<p>找到所有残留配置后，再逐一修改。</p>
+<p>这个问题本质上不是缓存问题，而是配置没有改完整。</p>
+<hr>
+<h2 id="3-部署失败但本地预览正常"><a href="#3-部署失败但本地预览正常" class="headerlink" title="3. 部署失败但本地预览正常"></a>3. 部署失败但本地预览正常</h2><p>如果 <code>hexo s</code> 本地能正常打开，但 <code>hexo d</code> 失败，说明问题通常出在部署环节，而不是文章或主题本身。</p>
+<p>优先检查：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">git@github.com:NimbusFan/NimbusFan.github.io.git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
+
+<p>还需要确认：</p>
+<ul>
+<li>GitHub 仓库是否存在；</li>
+<li>仓库名是否为 <code>NimbusFan.github.io</code>；</li>
+<li>当前电脑是否配置了正确的 SSH Key；</li>
+<li>本地 Git 是否能正常连接 GitHub。</li>
+</ul>
+<p>可以使用：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+
+<p>进行验证。</p>
+<hr>
+<h1 id="十、个人博客的基本结构建议"><a href="#十、个人博客的基本结构建议" class="headerlink" title="十、个人博客的基本结构建议"></a>十、个人博客的基本结构建议</h1><p>完成基础搭建后，博客不应该只停留在“文章列表”状态。一个更完整的个人技术博客，至少可以包含以下页面：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Home</span><br><span class="line">Projects</span><br><span class="line">Resume</span><br><span class="line">Archives</span><br><span class="line">Tags</span><br><span class="line">Categories</span><br><span class="line">About</span><br></pre></td></tr></table></figure>
+
+<p>其中：</p>
+<ul>
+<li><code>Projects</code> 用于展示项目经历；</li>
+<li><code>Resume</code> 用于放置网页简历；</li>
+<li><code>About</code> 用于介绍个人方向、技术栈和联系方式；</li>
+<li><code>Archives / Tags / Categories</code> 用于文章管理和检索。</li>
+</ul>
+<p>对应页面可以通过以下命令创建：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page projects</span><br><span class="line">hexo new page resume</span><br><span class="line">hexo new page about</span><br></pre></td></tr></table></figure>
+
+<p>创建后，页面文件会出现在：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">source/projects/index.md</span><br><span class="line">source/resume/index.md</span><br><span class="line">source/about/index.md</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="十一、最终常用命令"><a href="#十一、最终常用命令" class="headerlink" title="十一、最终常用命令"></a>十一、最终常用命令</h1><p>本地预览：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+
+<p>部署到 GitHub Pages：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+<p>新建文章：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new <span class="string">&quot;文章标题&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>新建页面：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page 页面名称</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>个人博客建设</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+        <tag>Butterfly</tag>
+        <tag>静态博客</tag>
+        <tag>前端部署</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python 基础语法：变量、类型与表达式</title>
+    <url>/2026/03/12/python-learning/Stage1_Core_Basics/01-basic-syntax/</url>
+    <content><![CDATA[<h1 id="字面量"><a href="#字面量" class="headerlink" title="字面量"></a>字面量</h1><p>常用的值的类型：<br><img src="https://raw.githubusercontent.com/NimbusFan/blog-images/main/assets/%E5%B8%B8%E7%94%A8%E7%9A%84%E5%80%BC%E7%9A%84%E7%B1%BB%E5%9E%8B.png" alt="常用的值的类型.png"></p>
+<hr>
+<h1 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h1><p>单行注释：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 单行注释</span></span><br></pre></td></tr></table></figure>
+
+<p>多行注释：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    多行注释</span></span><br><span class="line"><span class="string">    使用一对三个双引号引起来</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = <span class="number">10</span>   <span class="comment"># 赋值</span></span><br><span class="line">a = a - <span class="number">10</span>  <span class="comment">#运算</span></span><br></pre></td></tr></table></figure>
+
+<p>print语句可以输出多份数据</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(内容<span class="number">1</span>，内容<span class="number">2</span>，......，内容N)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 直接查看数据类型</span></span><br><span class="line">string_type = <span class="built_in">type</span>(<span class="string">&quot;fanyunfei&quot;</span>)  </span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看变量的数据类型</span></span><br><span class="line">name = <span class="string">&quot;fanyunfei&quot;</span></span><br><span class="line">name_type = <span class="built_in">type</span>(name)  </span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="数据类型转换"><a href="#数据类型转换" class="headerlink" title="数据类型转换"></a>数据类型转换</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">int</span>()   <span class="comment"># 转整数</span></span><br><span class="line"><span class="built_in">float</span>()  <span class="comment"># 转浮点数</span></span><br><span class="line"><span class="built_in">str</span>()   <span class="comment"># 转字符串</span></span><br></pre></td></tr></table></figure>
+
+<p>注意：只含有数字的字符串才可转为整数&#x2F;浮点数，但浮点数形式的字符串无法直接转整数</p>
+<hr>
+<h1 id="标识符"><a href="#标识符" class="headerlink" title="标识符"></a>标识符</h1><h2 id="标识符命名规则："><a href="#标识符命名规则：" class="headerlink" title="标识符命名规则："></a>标识符命名规则：</h2><p>（1）内容限定：</p>
+<p>​    只允许出现中文、字母、数字、下划线。</p>
+<p>​    不推荐使用中文，不能以数字作为开头</p>
+<p>（2）大小写敏感</p>
+<p>（3）不可使用关键字</p>
+<h2 id="Python所有关键字"><a href="#Python所有关键字" class="headerlink" title="Python所有关键字"></a>Python所有关键字</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> keyword</span><br><span class="line"><span class="built_in">print</span>(keyword.kwlist)</span><br></pre></td></tr></table></figure>
+
+<p>python所有的关键字：</p>
+<p>‘False’, ‘None’, ‘True’, ‘and’, ‘as’, ‘assert’, ‘async’, ‘await’, ‘break’, ‘class’, ‘continue’, ‘def’, ‘del’, ‘elif’, ‘else’, ‘except’, ‘finally’, ‘for’, ‘from’, ‘global’, ‘if’, ‘import’, ‘in’, ‘is’, ‘lambda’, ‘nonlocal’, ‘not’, ‘or’, ‘pass’, ‘raise’, ‘return’, ‘try’, ‘while’, ‘with’, ‘yield’</p>
+<hr>
+<h1 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h1><h2 id="基础运算符"><a href="#基础运算符" class="headerlink" title="基础运算符"></a>基础运算符</h2><table>
+<thead>
+<tr>
+<th align="center">+</th>
+<th align="center">加</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">-</td>
+<td align="center">减</td>
+</tr>
+<tr>
+<td align="center">*</td>
+<td align="center">乘</td>
+</tr>
+<tr>
+<td align="center">&#x2F;</td>
+<td align="center">除</td>
+</tr>
+<tr>
+<td align="center">&#x2F;&#x2F;</td>
+<td align="center">整除</td>
+</tr>
+<tr>
+<td align="center">%</td>
+<td align="center">取余</td>
+</tr>
+<tr>
+<td align="center">**</td>
+<td align="center">指数</td>
+</tr>
+</tbody></table>
+<h2 id="复合赋值运算符"><a href="#复合赋值运算符" class="headerlink" title="复合赋值运算符"></a>复合赋值运算符</h2><table>
+<thead>
+<tr>
+<th align="center">+&#x3D;</th>
+<th align="center">c +&#x3D; a等效于c &#x3D; c + a</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">-&#x3D;</td>
+<td align="center">c -&#x3D; a等效于c &#x3D; c - a</td>
+</tr>
+<tr>
+<td align="center">*&#x3D;</td>
+<td align="center">c *&#x3D; a等效于c &#x3D; c * a</td>
+</tr>
+<tr>
+<td align="center">&#x2F;&#x3D;</td>
+<td align="center">c &#x2F;&#x3D; a等效于c &#x3D; c &#x2F; a</td>
+</tr>
+<tr>
+<td align="center">&#x2F;&#x2F;&#x3D;</td>
+<td align="center">c &#x2F;&#x2F;&#x3D; a等效于c &#x3D; c &#x2F;&#x2F; a</td>
+</tr>
+<tr>
+<td align="center">%&#x3D;</td>
+<td align="center">c %&#x3D; a等效于c &#x3D; c % a</td>
+</tr>
+<tr>
+<td align="center">**&#x3D;</td>
+<td align="center">c **&#x3D; a等效于c &#x3D; c ** a</td>
+</tr>
+</tbody></table>
+<hr>
+<h1 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h1><h2 id="字符串的三种定义方式"><a href="#字符串的三种定义方式" class="headerlink" title="字符串的三种定义方式"></a>字符串的三种定义方式</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">name = <span class="string">&#x27;fanyunfei&#x27;</span>  <span class="comment"># 单引号定义法</span></span><br><span class="line">name = <span class="string">&quot;fanyunfei&quot;</span>  <span class="comment">#双引号定义法</span></span><br><span class="line">name = <span class="string">&quot;&quot;&quot;fanyunfei&quot;&quot;&quot;</span>  <span class="comment">#三引号定义法，如果被变量接受，就作为字符串，如果不被接受就作为注释</span></span><br></pre></td></tr></table></figure>
+
+<p>引号的嵌套：（1）可以使用\进行转义，解除引号作用，变成普通字符串（2）单引号内可以写双引号，双引号内可以写单引号</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Hello\nWorld&quot;</span>)    <span class="comment"># \n,换行符</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Hello\tWorld&quot;</span>)    <span class="comment"># \t,制表符</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Hello&quot;</span>，end = <span class="string">&#x27;&#x27;</span>)  <span class="comment"># print输出后不换行</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="字符串拼接"><a href="#字符串拼接" class="headerlink" title="字符串拼接"></a>字符串拼接</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;fanyunfei&quot;</span> + <span class="string">&quot;英俊潇洒风流倜傥有钱多金智商高&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>注意：此方法无法和非字符串类型进行拼接</p>
+<h2 id="字符串格式化"><a href="#字符串格式化" class="headerlink" title="字符串格式化"></a>字符串格式化</h2><p>通过占位的形式拼接字符串。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">name = <span class="string">&quot;pitejingji&quot;</span></span><br><span class="line">set_up_year = <span class="number">2026</span></span><br><span class="line">stock_price = <span class="number">19.99</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;%s成立于 %d年，今天的股价是%f&quot;</span> %(name,set_up_year,stock_price))</span><br></pre></td></tr></table></figure>
+
+<h2 id="字符串格式化的精度控制"><a href="#字符串格式化的精度控制" class="headerlink" title="字符串格式化的精度控制"></a>字符串格式化的精度控制</h2><p>使用辅助符号”m.n”来控制数据的宽度和精度</p>
+<p>m，控制宽度，要求是数字(很少使用)，如果设置的宽度小于数字自身，不生效</p>
+<p>.n，控制小数点精度，要求是数字，会进行小数的四舍五入</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">num1 = <span class="number">12.3456</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;数字12.34宽度限制7，小数精度3，结果是：%7.3f&quot;</span> %num1)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;数字12.34宽度限制10，小数精度6，结果是：%10.6f&quot;</span> %num1)</span><br></pre></td></tr></table></figure>
+
+<h2 id="快速字符串格式化"><a href="#快速字符串格式化" class="headerlink" title="快速字符串格式化"></a>快速字符串格式化</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;name&#125;</span>成立于<span class="subst">&#123;set_up_year&#125;</span>年，今天的股价是<span class="subst">&#123;stock_price&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>注意：此方法不会做精度控制。</p>
+<h2 id="对表达式进行格式化"><a href="#对表达式进行格式化" class="headerlink" title="对表达式进行格式化"></a>对表达式进行格式化</h2><p>表达式指一个具有明确结果的代码语句。如1+1，type(“fanyunfei”)。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;1 + 1的结果是：%d&quot;</span> %(<span class="number">1</span> + <span class="number">1</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;1 + 1的结果是：<span class="subst">&#123;<span class="number">1</span> +<span class="number">1</span>&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;字符串在python中的类型是：%s&quot;</span> %<span class="built_in">type</span>(<span class="string">&quot;fanyunfei&quot;</span>))</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="数据输入"><a href="#数据输入" class="headerlink" title="数据输入"></a>数据输入</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">input</span>()    <span class="comment">#获取键盘输入的数据</span></span><br><span class="line"><span class="built_in">input</span>(提示信息)    <span class="comment"># 在使用者输入内容之前显示提示信息</span></span><br></pre></td></tr></table></figure>
+
+<p>注意：input得到的数据永远都是字符串类型。</p>
+<div class="note default simple"><p><strong>Repository</strong></p>
+<p>本章示例代码已归档至 GitHub，可用于本地复现、调试与扩展。</p>
+<p><a class="btn-beautify " href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/01_Data_Type" title="fab fa-github"><span>fab fa-github</span></a></p>
+</div>
+
+]]></content>
+      <categories>
+        <category>Python 技术笔记</category>
+        <category>基础语法与数据结构</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>基础语法</tag>
+        <tag>编程入门</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python 循环结构：while 与 for 的使用</title>
+    <url>/2026/03/14/python-learning/Stage1_Core_Basics/03-loop-statement/</url>
+    <content><![CDATA[<h1 id="While-循环"><a href="#While-循环" class="headerlink" title="While 循环"></a>While 循环</h1><p><code>while</code> 循环适用于“只要条件满足，就一直执行”的场景。</p>
+<h2 id="基础应用"><a href="#基础应用" class="headerlink" title="基础应用"></a>基础应用</h2><p><code>while</code> 循环的基础语法如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> 条件:</span><br><span class="line">	满足条件时要做的事情<span class="number">1</span></span><br><span class="line">    满足条件时要做的事情<span class="number">2</span></span><br><span class="line">    ...</span><br><span class="line">    满足条件时要做的事情N</span><br></pre></td></tr></table></figure>
+
+<p><strong>⚠️ 注意事项：</strong></p>
+<p><strong>条件类型：</strong> 条件的结果一定要是 <code>bool</code> 类型 。<br><strong>防止死循环：</strong> 必须要设置循环的终止条件 。<br><strong>层级关系：</strong> 严格通过空格缩进来判断代码的归属 。</p>
+<h2 id="While-循环嵌套"><a href="#While-循环嵌套" class="headerlink" title="While 循环嵌套"></a>While 循环嵌套</h2><p>在复杂的逻辑中，我们可以在循环内部再嵌套循环：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> 条件<span class="number">1</span>:</span><br><span class="line">    满足条件<span class="number">1</span>时要做的事情<span class="number">1</span></span><br><span class="line">    ... </span><br><span class="line">    <span class="keyword">while</span> 条件<span class="number">2</span>:</span><br><span class="line">        满足条件<span class="number">2</span>时要做的事情<span class="number">1</span></span><br><span class="line">        ... </span><br></pre></td></tr></table></figure>
+
+<p>注意：</p>
+<ul>
+<li>需要设置循环的终止条件</li>
+<li>通过空格缩进来判断归属</li>
+</ul>
+<hr>
+<h1 id="For-循环"><a href="#For-循环" class="headerlink" title="For 循环"></a>For 循环</h1><h2 id="基础语法"><a href="#基础语法" class="headerlink" title="基础语法"></a>基础语法</h2><p><code>for</code> 循环主要用于遍历（依次取出）数据集中的元素。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> 临时变量 <span class="keyword">in</span> 待处理数据集(序列):</span><br><span class="line">    循环满足条件时执行的代码</span><br></pre></td></tr></table></figure>
+
+<p>这里的“待处理数据集”，严格来说称之为<strong>序列类型</strong> 。</p>
+<p>序列类型是指其内容可以一个个依次取出的一种数据类型，包括：字符串、列表、元组等 。</p>
+<p><strong>⚠️ 注意事项：</strong></p>
+<ul>
+<li><p>无法像 <code>while</code> 那样自定义循环条件，只能被动取出数据处理 。</p>
+</li>
+<li><p>需要通过空格缩进来判断归属 。</p>
+</li>
+</ul>
+<h2 id="range-语句"><a href="#range-语句" class="headerlink" title="range 语句"></a>range 语句</h2><p><code>range</code> 函数是 <code>for</code> 循环的最佳拍档，用于快速生成数字序列：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">range</span>(num)：		<span class="comment">#获得一个从 0 开始，到 num-1 结束的数字序列 </span></span><br><span class="line"><span class="built_in">range</span>(num1, num2)：		<span class="comment">#获得一个从 num1 开始，到 num2-1 结束的数字序列 </span></span><br><span class="line"><span class="built_in">range</span>(num1, num2, step)：  <span class="comment">#获得一个从 num1 开始，到 num2-1 结束的数字序列，步长为 step (默认为 1) </span></span><br></pre></td></tr></table></figure>
+
+<h2 id="变量作用域"><a href="#变量作用域" class="headerlink" title="变量作用域"></a>变量作用域</h2><p><code>for</code> 循环中临时变量的作用域只被限定在循环内。<br><strong>⚠️ 注意事项：</strong></p>
+<ul>
+<li><p>虽然在 Python 中，你可以在作用域外访问临时变量，但极其不推荐这样做，这破坏了代码的封装性 。</p>
+</li>
+<li><p>如需访问临时变量，可以预先在循环外定义它</p>
+</li>
+</ul>
+<h2 id="For-循环的嵌套"><a href="#For-循环的嵌套" class="headerlink" title="For 循环的嵌套"></a>For 循环的嵌套</h2><p>与 <code>while</code> 类似，<code>for</code> 循环也支持嵌套：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> 临时变量 <span class="keyword">in</span> 待处理数据集(序列):</span><br><span class="line">    满足条件时要做的事情<span class="number">1</span></span><br><span class="line">    ... </span><br><span class="line">    <span class="keyword">for</span> 临时变量 <span class="keyword">in</span> 待处理数据集(序列):</span><br><span class="line">        满足条件时要做的事情<span class="number">1</span></span><br><span class="line">        ...</span><br></pre></td></tr></table></figure>
+
+<h2 id="Continue-和-Break"><a href="#Continue-和-Break" class="headerlink" title="Continue 和 Break"></a>Continue 和 Break</h2><h3 id="continue"><a href="#continue" class="headerlink" title="continue"></a>continue</h3><p><code>continue</code> 的作用是：<strong>中断本次循环，直接进入下一次循环</strong> 。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">100</span>): </span><br><span class="line">    语句<span class="number">1</span> </span><br><span class="line">    <span class="keyword">continue</span></span><br><span class="line">    语句<span class="number">2</span> 	<span class="comment"># 此行命令会被跳过</span></span><br></pre></td></tr></table></figure>
+
+<p><code>continue</code> 可用于 <code>for</code> 循环和 <code>while</code> 循环，效果一致 。</p>
+<h3 id="break"><a href="#break" class="headerlink" title="break"></a>break</h3><p><code>break</code> 的作用更加坚决：<strong>直接结束整个循环</strong> 。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">100</span>):</span><br><span class="line">    语句<span class="number">1</span></span><br><span class="line">    <span class="keyword">break</span> <span class="comment"># 跳出整个循环</span></span><br><span class="line">    语句<span class="number">2</span></span><br><span class="line">语句<span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+<p><code>break</code> 同样可用于 <code>for</code> 循环和 <code>while</code> 循环，效果完全一致 。</p>
+<blockquote>
+<p><strong>💡 Break 的底层作用规则：</strong><br>在 Python 以及绝大多数编程语言中，<code>break</code> 遵循以下逻辑：</p>
+<ol>
+<li><strong>寻找上级：</strong> 当程序运行到 <code>break</code> 时，向外层寻找最近的一个 <code>for/while</code> 循环 。</li>
+<li><strong>无视障碍：</strong> 在寻找的过程中，它会穿透所有的 <code>if</code>, <code>elif</code>, <code>else</code> 。</li>
+</ol>
+</blockquote>
+<hr>
+<div class="note default simple"><p><strong>Repository</strong></p>
+<p>本章示例代码已归档至 GitHub，可用于本地复现、调试与扩展。</p>
+<p><a class="btn-beautify " href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/03_Loop_Statements" title="查看本章源码"><i class="fab fa-github"></i><span>查看本章源码</span></a></p>
+</div>]]></content>
+      <categories>
+        <category>Python 技术笔记</category>
+        <category>基础语法与数据结构</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>基础语法</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Git &amp; GitHub：一文理清版本控制、分支、回退与协作流程</title>
     <url>/2026/06/13/daily/Git%20&amp;%20GitHub/</url>
     <content><![CDATA[<p>最近手头事情扎堆，新项目刚起步，老项目还得交接，每天在不同的 Repo里切来切去。决定挤出点时间，把 Git 版本控制逻辑学一下。</p>
-<p>本文根据 Git &amp; GitHub Crash Course for Beginners [2026]<a href="https://www.youtube.com/watch?v=mAFoROnOfHs"></a>整理，并结合实际开发中的常见场景进行了补充。</p>
+<p>本文根据 [Git &amp; GitHub Crash Course for Beginners [2026]]<br>(<a href="https://www.youtube.com/watch?v=mAFoROnOfHs)%E6%95%B4%E7%90%86%EF%BC%8C%E5%B9%B6%E7%BB%93%E5%90%88%E5%AE%9E%E9%99%85%E5%BC%80%E5%8F%91%E4%B8%AD%E7%9A%84%E5%B8%B8%E8%A7%81%E5%9C%BA%E6%99%AF%E8%BF%9B%E8%A1%8C%E4%BA%86%E8%A1%A5%E5%85%85%E3%80%82">https://www.youtube.com/watch?v=mAFoROnOfHs)整理，并结合实际开发中的常见场景进行了补充。</a></p>
 <p>Git 的作用，本质上是帮我们管理项目的变化。它会记录每一次修改，让代码的演进过程变得可追踪、可比较、可回退。无论是一个人写项目，还是多人协作开发，Git 都能让我们清楚地知道：代码改了什么、是谁改的、什么时候改的，以及需要时如何回到之前的版本。<code>add</code>、<code>commit</code>、<code>push</code>、<code>pull</code>、<code>merge</code> 这些命令。单独看每个命令并不难，但如果只零散地记命令，一旦遇到分支冲突、版本回退或者远程同步问题，很容易不知道该从哪里下手。因此我们要先理解 Git 背后的工作流：本地修改如何变成一次提交，提交历史如何被查看和回退，分支如何支撑并行开发，远程仓库如何连接团队成员，以及 Pull Request 如何在代码合并前提供审查和讨论的空间。</p>
 <hr>
 <h1 id="Git-工作流"><a href="#Git-工作流" class="headerlink" title="Git 工作流"></a>Git 工作流</h1><p>Git 的流程可以概括为一句话：</p>
@@ -435,392 +893,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Python 基础语法：变量、类型与表达式</title>
-    <url>/2026/03/12/python-learning/Stage1_Core_Basics/01-basic-syntax/</url>
-    <content><![CDATA[<h1 id="字面量"><a href="#字面量" class="headerlink" title="字面量"></a>字面量</h1><p>常用的值的类型：<br><img src="https://raw.githubusercontent.com/NimbusFan/blog-images/main/assets/%E5%B8%B8%E7%94%A8%E7%9A%84%E5%80%BC%E7%9A%84%E7%B1%BB%E5%9E%8B.png" alt="常用的值的类型.png"></p>
-<hr>
-<h1 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h1><p>单行注释：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 单行注释</span></span><br></pre></td></tr></table></figure>
-
-<p>多行注释：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    多行注释</span></span><br><span class="line"><span class="string">    使用一对三个双引号引起来</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = <span class="number">10</span>   <span class="comment"># 赋值</span></span><br><span class="line">a = a - <span class="number">10</span>  <span class="comment">#运算</span></span><br></pre></td></tr></table></figure>
-
-<p>print语句可以输出多份数据</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(内容<span class="number">1</span>，内容<span class="number">2</span>，......，内容N)</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 直接查看数据类型</span></span><br><span class="line">string_type = <span class="built_in">type</span>(<span class="string">&quot;fanyunfei&quot;</span>)  </span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看变量的数据类型</span></span><br><span class="line">name = <span class="string">&quot;fanyunfei&quot;</span></span><br><span class="line">name_type = <span class="built_in">type</span>(name)  </span><br></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="数据类型转换"><a href="#数据类型转换" class="headerlink" title="数据类型转换"></a>数据类型转换</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">int</span>()   <span class="comment"># 转整数</span></span><br><span class="line"><span class="built_in">float</span>()  <span class="comment"># 转浮点数</span></span><br><span class="line"><span class="built_in">str</span>()   <span class="comment"># 转字符串</span></span><br></pre></td></tr></table></figure>
-
-<p>注意：只含有数字的字符串才可转为整数&#x2F;浮点数，但浮点数形式的字符串无法直接转整数</p>
-<hr>
-<h1 id="标识符"><a href="#标识符" class="headerlink" title="标识符"></a>标识符</h1><h2 id="标识符命名规则："><a href="#标识符命名规则：" class="headerlink" title="标识符命名规则："></a>标识符命名规则：</h2><p>（1）内容限定：</p>
-<p>​    只允许出现中文、字母、数字、下划线。</p>
-<p>​    不推荐使用中文，不能以数字作为开头</p>
-<p>（2）大小写敏感</p>
-<p>（3）不可使用关键字</p>
-<h2 id="Python所有关键字"><a href="#Python所有关键字" class="headerlink" title="Python所有关键字"></a>Python所有关键字</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> keyword</span><br><span class="line"><span class="built_in">print</span>(keyword.kwlist)</span><br></pre></td></tr></table></figure>
-
-<p>python所有的关键字：</p>
-<p>‘False’, ‘None’, ‘True’, ‘and’, ‘as’, ‘assert’, ‘async’, ‘await’, ‘break’, ‘class’, ‘continue’, ‘def’, ‘del’, ‘elif’, ‘else’, ‘except’, ‘finally’, ‘for’, ‘from’, ‘global’, ‘if’, ‘import’, ‘in’, ‘is’, ‘lambda’, ‘nonlocal’, ‘not’, ‘or’, ‘pass’, ‘raise’, ‘return’, ‘try’, ‘while’, ‘with’, ‘yield’</p>
-<hr>
-<h1 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h1><h2 id="基础运算符"><a href="#基础运算符" class="headerlink" title="基础运算符"></a>基础运算符</h2><table>
-<thead>
-<tr>
-<th align="center">+</th>
-<th align="center">加</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">-</td>
-<td align="center">减</td>
-</tr>
-<tr>
-<td align="center">*</td>
-<td align="center">乘</td>
-</tr>
-<tr>
-<td align="center">&#x2F;</td>
-<td align="center">除</td>
-</tr>
-<tr>
-<td align="center">&#x2F;&#x2F;</td>
-<td align="center">整除</td>
-</tr>
-<tr>
-<td align="center">%</td>
-<td align="center">取余</td>
-</tr>
-<tr>
-<td align="center">**</td>
-<td align="center">指数</td>
-</tr>
-</tbody></table>
-<h2 id="复合赋值运算符"><a href="#复合赋值运算符" class="headerlink" title="复合赋值运算符"></a>复合赋值运算符</h2><table>
-<thead>
-<tr>
-<th align="center">+&#x3D;</th>
-<th align="center">c +&#x3D; a等效于c &#x3D; c + a</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">-&#x3D;</td>
-<td align="center">c -&#x3D; a等效于c &#x3D; c - a</td>
-</tr>
-<tr>
-<td align="center">*&#x3D;</td>
-<td align="center">c *&#x3D; a等效于c &#x3D; c * a</td>
-</tr>
-<tr>
-<td align="center">&#x2F;&#x3D;</td>
-<td align="center">c &#x2F;&#x3D; a等效于c &#x3D; c &#x2F; a</td>
-</tr>
-<tr>
-<td align="center">&#x2F;&#x2F;&#x3D;</td>
-<td align="center">c &#x2F;&#x2F;&#x3D; a等效于c &#x3D; c &#x2F;&#x2F; a</td>
-</tr>
-<tr>
-<td align="center">%&#x3D;</td>
-<td align="center">c %&#x3D; a等效于c &#x3D; c % a</td>
-</tr>
-<tr>
-<td align="center">**&#x3D;</td>
-<td align="center">c **&#x3D; a等效于c &#x3D; c ** a</td>
-</tr>
-</tbody></table>
-<hr>
-<h1 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h1><h2 id="字符串的三种定义方式"><a href="#字符串的三种定义方式" class="headerlink" title="字符串的三种定义方式"></a>字符串的三种定义方式</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">name = <span class="string">&#x27;fanyunfei&#x27;</span>  <span class="comment"># 单引号定义法</span></span><br><span class="line">name = <span class="string">&quot;fanyunfei&quot;</span>  <span class="comment">#双引号定义法</span></span><br><span class="line">name = <span class="string">&quot;&quot;&quot;fanyunfei&quot;&quot;&quot;</span>  <span class="comment">#三引号定义法，如果被变量接受，就作为字符串，如果不被接受就作为注释</span></span><br></pre></td></tr></table></figure>
-
-<p>引号的嵌套：（1）可以使用\进行转义，解除引号作用，变成普通字符串（2）单引号内可以写双引号，双引号内可以写单引号</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Hello\nWorld&quot;</span>)    <span class="comment"># \n,换行符</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Hello\tWorld&quot;</span>)    <span class="comment"># \t,制表符</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Hello&quot;</span>，end = <span class="string">&#x27;&#x27;</span>)  <span class="comment"># print输出后不换行</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="字符串拼接"><a href="#字符串拼接" class="headerlink" title="字符串拼接"></a>字符串拼接</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;fanyunfei&quot;</span> + <span class="string">&quot;英俊潇洒风流倜傥有钱多金智商高&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>注意：此方法无法和非字符串类型进行拼接</p>
-<h2 id="字符串格式化"><a href="#字符串格式化" class="headerlink" title="字符串格式化"></a>字符串格式化</h2><p>通过占位的形式拼接字符串。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">name = <span class="string">&quot;pitejingji&quot;</span></span><br><span class="line">set_up_year = <span class="number">2026</span></span><br><span class="line">stock_price = <span class="number">19.99</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;%s成立于 %d年，今天的股价是%f&quot;</span> %(name,set_up_year,stock_price))</span><br></pre></td></tr></table></figure>
-
-<h2 id="字符串格式化的精度控制"><a href="#字符串格式化的精度控制" class="headerlink" title="字符串格式化的精度控制"></a>字符串格式化的精度控制</h2><p>使用辅助符号”m.n”来控制数据的宽度和精度</p>
-<p>m，控制宽度，要求是数字(很少使用)，如果设置的宽度小于数字自身，不生效</p>
-<p>.n，控制小数点精度，要求是数字，会进行小数的四舍五入</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">num1 = <span class="number">12.3456</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;数字12.34宽度限制7，小数精度3，结果是：%7.3f&quot;</span> %num1)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;数字12.34宽度限制10，小数精度6，结果是：%10.6f&quot;</span> %num1)</span><br></pre></td></tr></table></figure>
-
-<h2 id="快速字符串格式化"><a href="#快速字符串格式化" class="headerlink" title="快速字符串格式化"></a>快速字符串格式化</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;name&#125;</span>成立于<span class="subst">&#123;set_up_year&#125;</span>年，今天的股价是<span class="subst">&#123;stock_price&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>注意：此方法不会做精度控制。</p>
-<h2 id="对表达式进行格式化"><a href="#对表达式进行格式化" class="headerlink" title="对表达式进行格式化"></a>对表达式进行格式化</h2><p>表达式指一个具有明确结果的代码语句。如1+1，type(“fanyunfei”)。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;1 + 1的结果是：%d&quot;</span> %(<span class="number">1</span> + <span class="number">1</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;1 + 1的结果是：<span class="subst">&#123;<span class="number">1</span> +<span class="number">1</span>&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;字符串在python中的类型是：%s&quot;</span> %<span class="built_in">type</span>(<span class="string">&quot;fanyunfei&quot;</span>))</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="数据输入"><a href="#数据输入" class="headerlink" title="数据输入"></a>数据输入</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">input</span>()    <span class="comment">#获取键盘输入的数据</span></span><br><span class="line"><span class="built_in">input</span>(提示信息)    <span class="comment"># 在使用者输入内容之前显示提示信息</span></span><br></pre></td></tr></table></figure>
-
-<p>注意：input得到的数据永远都是字符串类型。</p>
-<div class="note default simple"><p><strong>Repository</strong></p>
-<p>本章示例代码已归档至 GitHub，可用于本地复现、调试与扩展。</p>
-<p><a class="btn-beautify " href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/01_Data_Type" title="fab fa-github"><span>fab fa-github</span></a></p>
-</div>
-
-]]></content>
-      <categories>
-        <category>Python 技术笔记</category>
-        <category>基础语法与数据结构</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>基础语法</tag>
-        <tag>编程入门</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo 博客搭建：GitHub Pages 部署与 Butterfly 主题配置</title>
-    <url>/2026/03/11/daily/Hexo%20%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%EF%BC%9AGitHub%20Pages%20%E4%B8%8E%20Butterfly%20%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在学习和开发过程中，零散的代码片段、配置记录和排错经验很容易被遗忘。相比只把笔记保存在本地，我更希望搭建一个可以长期维护、方便检索、也能够对外展示的技术博客。</p>
-<p>最终我选择了 <strong>Hexo + GitHub Pages + Butterfly</strong> 这一套方案：</p>
-<ul>
-<li><strong>Hexo</strong>：生成静态博客，部署简单，生态成熟；</li>
-<li><strong>GitHub Pages</strong>：免费托管静态网页，适合个人技术博客；</li>
-<li><strong>Butterfly</strong>：基于 Hexo 的高可配置主题，视觉效果和功能扩展都比较完善。</li>
-</ul>
-<p>这篇文章记录博客从初始化、本地预览、GitHub Pages 部署，到 Butterfly 主题配置过程中遇到的问题和解决方法。</p>
-<hr>
-<h1 id="一、环境准备"><a href="#一、环境准备" class="headerlink" title="一、环境准备"></a>一、环境准备</h1><p>在开始之前，需要先安装以下工具：</p>
-<table>
-<thead>
-<tr>
-<th>工具</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Node.js</td>
-<td>提供 npm 环境，用于安装 Hexo 和相关依赖</td>
-</tr>
-<tr>
-<td>Git</td>
-<td>用于拉取主题、管理代码和部署到 GitHub</td>
-</tr>
-<tr>
-<td>Hexo</td>
-<td>静态博客生成器</td>
-</tr>
-<tr>
-<td>GitHub Pages</td>
-<td>博客网页托管平台</td>
-</tr>
-</tbody></table>
-<p>安装完成后，可以在终端中检查版本：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">node -v</span><br><span class="line">npm -v</span><br><span class="line">git --version</span><br></pre></td></tr></table></figure>
-
-<p>确认环境正常后，安装 Hexo 命令行工具：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="二、初始化-Hexo-项目"><a href="#二、初始化-Hexo-项目" class="headerlink" title="二、初始化 Hexo 项目"></a>二、初始化 Hexo 项目</h1><p>创建博客项目：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo init myblog</span><br><span class="line"><span class="built_in">cd</span> myblog</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
-
-<p>启动本地服务：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
-
-<p>浏览器访问：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">http://localhost:4000/</span><br></pre></td></tr></table></figure>
-
-<p>如果能够看到 Hexo 默认页面，说明本地博客已经成功运行。</p>
-<hr>
-<h1 id="三、初始化时的网络超时问题"><a href="#三、初始化时的网络超时问题" class="headerlink" title="三、初始化时的网络超时问题"></a>三、初始化时的网络超时问题</h1><p>在执行 <code>hexo init myblog</code> 时，可能会遇到 GitHub 连接超时：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">fatal: unable to access <span class="string">&#x27;https://github.com/hexojs/hexo-starter.git/&#x27;</span>:</span><br><span class="line">Connection timed out after 300030 milliseconds</span><br></pre></td></tr></table></figure>
-
-<p>这个问题通常不是 Hexo 本身的问题，而是终端访问 GitHub 不稳定导致的。浏览器能打开 GitHub，不代表命令行中的 Git 或 npm 一定能正常访问。</p>
-<p>可以采用两种方式处理。</p>
-<h2 id="方式一：使用-npm-镜像源安装依赖"><a href="#方式一：使用-npm-镜像源安装依赖" class="headerlink" title="方式一：使用 npm 镜像源安装依赖"></a>方式一：使用 npm 镜像源安装依赖</h2><p>进入项目目录后，使用国内镜像源安装依赖：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install --registry=https://registry.npmmirror.com</span><br></pre></td></tr></table></figure>
-
-<h2 id="方式二：手动克隆-Hexo-Starter"><a href="#方式二：手动克隆-Hexo-Starter" class="headerlink" title="方式二：手动克隆 Hexo Starter"></a>方式二：手动克隆 Hexo Starter</h2><p>如果 <code>hexo init</code> 一直失败，可以手动克隆 starter 项目：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/hexojs/hexo-starter.git myblog</span><br><span class="line"><span class="built_in">cd</span> myblog</span><br><span class="line">npm install --registry=https://registry.npmmirror.com</span><br></pre></td></tr></table></figure>
-
-<p>随后继续执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="四、部署到-GitHub-Pages"><a href="#四、部署到-GitHub-Pages" class="headerlink" title="四、部署到 GitHub Pages"></a>四、部署到 GitHub Pages</h1><h2 id="1-创建-GitHub-Pages-仓库"><a href="#1-创建-GitHub-Pages-仓库" class="headerlink" title="1. 创建 GitHub Pages 仓库"></a>1. 创建 GitHub Pages 仓库</h2><p>如果 GitHub 用户名是 <code>NimbusFan</code>，则仓库名应为：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">NimbusFan.github.io</span><br></pre></td></tr></table></figure>
-
-<p>完整仓库地址类似：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">https://github.com/NimbusFan/NimbusFan.github.io</span><br></pre></td></tr></table></figure>
-
-<p>GitHub Pages 对用户主页仓库的命名有固定要求，必须使用：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">用户名.github.io</span><br></pre></td></tr></table></figure>
-
-<p>否则部署后可能无法通过 <code>https://用户名.github.io/</code> 访问。</p>
-<hr>
-<h2 id="2-安装部署插件"><a href="#2-安装部署插件" class="headerlink" title="2. 安装部署插件"></a>2. 安装部署插件</h2><p>Hexo 默认不会自动部署到 GitHub，需要安装部署插件：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="3-修改-Hexo-根目录配置"><a href="#3-修改-Hexo-根目录配置" class="headerlink" title="3. 修改 Hexo 根目录配置"></a>3. 修改 Hexo 根目录配置</h2><p>打开 Hexo 根目录下的 <code>_config.yml</code>，找到 <code>deploy</code> 配置项：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">git@github.com:NimbusFan/NimbusFan.github.io.git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
-
-<p>这里推荐使用 SSH 地址，而不是 HTTPS 地址。HTTPS 在推送过程中容易出现连接中断、认证失败或令牌问题。</p>
-<hr>
-<h1 id="五、配置-GitHub-SSH-密钥"><a href="#五、配置-GitHub-SSH-密钥" class="headerlink" title="五、配置 GitHub SSH 密钥"></a>五、配置 GitHub SSH 密钥</h1><p>如果部署时出现类似错误：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Please make sure you have the correct access rights</span><br><span class="line">and the repository exists.</span><br></pre></td></tr></table></figure>
-
-<p>通常说明当前电脑没有 GitHub 仓库的推送权限，需要配置 SSH 密钥。</p>
-<h2 id="1-生成-SSH-密钥"><a href="#1-生成-SSH-密钥" class="headerlink" title="1. 生成 SSH 密钥"></a>1. 生成 SSH 密钥</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;你的邮箱&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>一路回车即可。</p>
-<h2 id="2-复制公钥"><a href="#2-复制公钥" class="headerlink" title="2. 复制公钥"></a>2. 复制公钥</h2><p>Windows 下公钥通常位于：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">C:\Users\你的用户名\.ssh\id_rsa.pub</span><br></pre></td></tr></table></figure>
-
-<p>打开后复制全部内容。</p>
-<h2 id="3-添加到-GitHub"><a href="#3-添加到-GitHub" class="headerlink" title="3. 添加到 GitHub"></a>3. 添加到 GitHub</h2><p>进入 GitHub：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Settings -&gt; SSH and GPG keys -&gt; New SSH key</span><br></pre></td></tr></table></figure>
-
-<p>将刚才复制的公钥粘贴进去并保存。</p>
-<h2 id="4-测试连接"><a href="#4-测试连接" class="headerlink" title="4. 测试连接"></a>4. 测试连接</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
-
-<p>如果看到类似下面的提示，说明 SSH 配置成功：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Hi NimbusFan! You<span class="string">&#x27;ve successfully authenticated.</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="六、生成并部署博客"><a href="#六、生成并部署博客" class="headerlink" title="六、生成并部署博客"></a>六、生成并部署博客</h1><p>完成配置后，执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
-
-<p>也可以合并为：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
-
-<p>部署成功后，访问：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">https://nimbusfan.github.io/</span><br></pre></td></tr></table></figure>
-
-<p>如果页面没有立即更新，可以等待一到三分钟，或者使用浏览器强制刷新：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Ctrl + F5</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="七、安装-Butterfly-主题"><a href="#七、安装-Butterfly-主题" class="headerlink" title="七、安装 Butterfly 主题"></a>七、安装 Butterfly 主题</h1><p>Hexo 默认主题比较基础，适合快速验证环境，但不太适合作为长期维护的技术博客。我最终选择了 Butterfly 主题。</p>
-<p>进入博客根目录后执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/jerryc127/hexo-theme-butterfly.git themes/butterfly</span><br></pre></td></tr></table></figure>
-
-<p>安装 Butterfly 需要的渲染器：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-renderer-pug hexo-renderer-stylus --save</span><br></pre></td></tr></table></figure>
-
-<p>然后打开 Hexo 根目录下的 <code>_config.yml</code>，修改主题：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">butterfly</span></span><br></pre></td></tr></table></figure>
-
-<p>重新生成并启动：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="八、使用独立主题配置文件"><a href="#八、使用独立主题配置文件" class="headerlink" title="八、使用独立主题配置文件"></a>八、使用独立主题配置文件</h1><p>Butterfly 的配置项很多，不建议直接长期修改：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">themes/butterfly/_config.yml</span><br></pre></td></tr></table></figure>
-
-<p>更推荐在 Hexo 根目录下创建：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">_config.butterfly.yml</span><br></pre></td></tr></table></figure>
-
-<p>然后将主题配置复制到这个文件中进行修改。</p>
-<p>这样做有两个好处：</p>
-<ol>
-<li>主题升级时，不容易覆盖自己的配置；</li>
-<li>站点配置和主题配置分离，后期维护更清晰。</li>
-</ol>
-<p>常见结构如下：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">myblog/</span><br><span class="line">├── _config.yml</span><br><span class="line">├── _config.butterfly.yml</span><br><span class="line">├── source/</span><br><span class="line">├── themes/</span><br><span class="line">│   └── butterfly/</span><br><span class="line">└── package.json</span><br></pre></td></tr></table></figure>
-
-<p>其中：</p>
-<ul>
-<li><code>_config.yml</code>：Hexo 站点基础配置；</li>
-<li><code>_config.butterfly.yml</code>：Butterfly 主题配置；</li>
-<li><code>source/</code>：文章、页面、图片和自定义资源；</li>
-<li><code>themes/</code>：主题文件。</li>
-</ul>
-<hr>
-<h1 id="九、配置过程中遇到的典型问题"><a href="#九、配置过程中遇到的典型问题" class="headerlink" title="九、配置过程中遇到的典型问题"></a>九、配置过程中遇到的典型问题</h1><h2 id="1-修改配置后页面没有变化"><a href="#1-修改配置后页面没有变化" class="headerlink" title="1. 修改配置后页面没有变化"></a>1. 修改配置后页面没有变化</h2><p>常见原因有三个：</p>
-<p>第一，Hexo 没有重新生成：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
-
-<p>第二，浏览器缓存没有清理：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Ctrl + F5</span><br></pre></td></tr></table></figure>
-
-<p>第三，配置文件改错了位置。</p>
-<p>Butterfly 相关配置应优先检查：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">_config.butterfly.yml</span><br></pre></td></tr></table></figure>
-
-<p>而不是只检查主题目录中的 <code>_config.yml</code>。</p>
-<hr>
-<h2 id="2-GitHub-链接仍然跳转到默认地址"><a href="#2-GitHub-链接仍然跳转到默认地址" class="headerlink" title="2. GitHub 链接仍然跳转到默认地址"></a>2. GitHub 链接仍然跳转到默认地址</h2><p>在配置社交链接时，可能会遇到这样的问题：已经把 GitHub 地址改成自己的账号，但页面上仍然跳转到主题默认的 <code>github.com/xxxxxx</code>。</p>
-<p>这种情况通常说明主题中不止一个位置配置了 GitHub 链接。</p>
-<p>可以在项目根目录中全局搜索：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">findstr /S /N <span class="string">&quot;xxxxxx&quot;</span> *.yml</span><br></pre></td></tr></table></figure>
-
-<p>如果是在 VS Code 中，也可以直接使用全局搜索：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Ctrl + Shift + F</span><br></pre></td></tr></table></figure>
-
-<p>搜索关键词：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">xxxxxx</span><br></pre></td></tr></table></figure>
-
-<p>找到所有残留配置后，再逐一修改。</p>
-<p>这个问题本质上不是缓存问题，而是配置没有改完整。</p>
-<hr>
-<h2 id="3-部署失败但本地预览正常"><a href="#3-部署失败但本地预览正常" class="headerlink" title="3. 部署失败但本地预览正常"></a>3. 部署失败但本地预览正常</h2><p>如果 <code>hexo s</code> 本地能正常打开，但 <code>hexo d</code> 失败，说明问题通常出在部署环节，而不是文章或主题本身。</p>
-<p>优先检查：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">git@github.com:NimbusFan/NimbusFan.github.io.git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
-
-<p>还需要确认：</p>
-<ul>
-<li>GitHub 仓库是否存在；</li>
-<li>仓库名是否为 <code>NimbusFan.github.io</code>；</li>
-<li>当前电脑是否配置了正确的 SSH Key；</li>
-<li>本地 Git 是否能正常连接 GitHub。</li>
-</ul>
-<p>可以使用：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
-
-<p>进行验证。</p>
-<hr>
-<h1 id="十、个人博客的基本结构建议"><a href="#十、个人博客的基本结构建议" class="headerlink" title="十、个人博客的基本结构建议"></a>十、个人博客的基本结构建议</h1><p>完成基础搭建后，博客不应该只停留在“文章列表”状态。一个更完整的个人技术博客，至少可以包含以下页面：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Home</span><br><span class="line">Projects</span><br><span class="line">Resume</span><br><span class="line">Archives</span><br><span class="line">Tags</span><br><span class="line">Categories</span><br><span class="line">About</span><br></pre></td></tr></table></figure>
-
-<p>其中：</p>
-<ul>
-<li><code>Projects</code> 用于展示项目经历；</li>
-<li><code>Resume</code> 用于放置网页简历；</li>
-<li><code>About</code> 用于介绍个人方向、技术栈和联系方式；</li>
-<li><code>Archives / Tags / Categories</code> 用于文章管理和检索。</li>
-</ul>
-<p>对应页面可以通过以下命令创建：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page projects</span><br><span class="line">hexo new page resume</span><br><span class="line">hexo new page about</span><br></pre></td></tr></table></figure>
-
-<p>创建后，页面文件会出现在：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">source/projects/index.md</span><br><span class="line">source/resume/index.md</span><br><span class="line">source/about/index.md</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="十一、最终常用命令"><a href="#十一、最终常用命令" class="headerlink" title="十一、最终常用命令"></a>十一、最终常用命令</h1><p>本地预览：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
-
-<p>部署到 GitHub Pages：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
-
-<p>新建文章：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new <span class="string">&quot;文章标题&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>新建页面：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page 页面名称</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>个人博客建设</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-        <tag>Butterfly</tag>
-        <tag>静态博客</tag>
-        <tag>前端部署</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Python 条件判断与逻辑控制</title>
     <url>/2026/03/13/python-learning/Stage1_Core_Basics/02-condition-statement/</url>
     <content><![CDATA[<h1 id="布尔类型和比较运算符"><a href="#布尔类型和比较运算符" class="headerlink" title="布尔类型和比较运算符"></a>布尔类型和比较运算符</h1><h2 id="布尔类型"><a href="#布尔类型" class="headerlink" title="布尔类型"></a>布尔类型</h2><p>在 Python 中，布尔类型的字面量用 <code>True</code> 表示真，<code>False</code> 表示假。</p>
@@ -905,78 +977,6 @@
         <tag>Python</tag>
         <tag>基础语法</tag>
         <tag>逻辑控制</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python 循环结构：while 与 for 的使用</title>
-    <url>/2026/03/14/python-learning/Stage1_Core_Basics/03-loop-statement/</url>
-    <content><![CDATA[<h1 id="While-循环"><a href="#While-循环" class="headerlink" title="While 循环"></a>While 循环</h1><p><code>while</code> 循环适用于“只要条件满足，就一直执行”的场景。</p>
-<h2 id="基础应用"><a href="#基础应用" class="headerlink" title="基础应用"></a>基础应用</h2><p><code>while</code> 循环的基础语法如下：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> 条件:</span><br><span class="line">	满足条件时要做的事情<span class="number">1</span></span><br><span class="line">    满足条件时要做的事情<span class="number">2</span></span><br><span class="line">    ...</span><br><span class="line">    满足条件时要做的事情N</span><br></pre></td></tr></table></figure>
-
-<p><strong>⚠️ 注意事项：</strong></p>
-<p><strong>条件类型：</strong> 条件的结果一定要是 <code>bool</code> 类型 。<br><strong>防止死循环：</strong> 必须要设置循环的终止条件 。<br><strong>层级关系：</strong> 严格通过空格缩进来判断代码的归属 。</p>
-<h2 id="While-循环嵌套"><a href="#While-循环嵌套" class="headerlink" title="While 循环嵌套"></a>While 循环嵌套</h2><p>在复杂的逻辑中，我们可以在循环内部再嵌套循环：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> 条件<span class="number">1</span>:</span><br><span class="line">    满足条件<span class="number">1</span>时要做的事情<span class="number">1</span></span><br><span class="line">    ... </span><br><span class="line">    <span class="keyword">while</span> 条件<span class="number">2</span>:</span><br><span class="line">        满足条件<span class="number">2</span>时要做的事情<span class="number">1</span></span><br><span class="line">        ... </span><br></pre></td></tr></table></figure>
-
-<p>注意：</p>
-<ul>
-<li>需要设置循环的终止条件</li>
-<li>通过空格缩进来判断归属</li>
-</ul>
-<hr>
-<h1 id="For-循环"><a href="#For-循环" class="headerlink" title="For 循环"></a>For 循环</h1><h2 id="基础语法"><a href="#基础语法" class="headerlink" title="基础语法"></a>基础语法</h2><p><code>for</code> 循环主要用于遍历（依次取出）数据集中的元素。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> 临时变量 <span class="keyword">in</span> 待处理数据集(序列):</span><br><span class="line">    循环满足条件时执行的代码</span><br></pre></td></tr></table></figure>
-
-<p>这里的“待处理数据集”，严格来说称之为<strong>序列类型</strong> 。</p>
-<p>序列类型是指其内容可以一个个依次取出的一种数据类型，包括：字符串、列表、元组等 。</p>
-<p><strong>⚠️ 注意事项：</strong></p>
-<ul>
-<li><p>无法像 <code>while</code> 那样自定义循环条件，只能被动取出数据处理 。</p>
-</li>
-<li><p>需要通过空格缩进来判断归属 。</p>
-</li>
-</ul>
-<h2 id="range-语句"><a href="#range-语句" class="headerlink" title="range 语句"></a>range 语句</h2><p><code>range</code> 函数是 <code>for</code> 循环的最佳拍档，用于快速生成数字序列：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">range</span>(num)：		<span class="comment">#获得一个从 0 开始，到 num-1 结束的数字序列 </span></span><br><span class="line"><span class="built_in">range</span>(num1, num2)：		<span class="comment">#获得一个从 num1 开始，到 num2-1 结束的数字序列 </span></span><br><span class="line"><span class="built_in">range</span>(num1, num2, step)：  <span class="comment">#获得一个从 num1 开始，到 num2-1 结束的数字序列，步长为 step (默认为 1) </span></span><br></pre></td></tr></table></figure>
-
-<h2 id="变量作用域"><a href="#变量作用域" class="headerlink" title="变量作用域"></a>变量作用域</h2><p><code>for</code> 循环中临时变量的作用域只被限定在循环内。<br><strong>⚠️ 注意事项：</strong></p>
-<ul>
-<li><p>虽然在 Python 中，你可以在作用域外访问临时变量，但极其不推荐这样做，这破坏了代码的封装性 。</p>
-</li>
-<li><p>如需访问临时变量，可以预先在循环外定义它</p>
-</li>
-</ul>
-<h2 id="For-循环的嵌套"><a href="#For-循环的嵌套" class="headerlink" title="For 循环的嵌套"></a>For 循环的嵌套</h2><p>与 <code>while</code> 类似，<code>for</code> 循环也支持嵌套：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> 临时变量 <span class="keyword">in</span> 待处理数据集(序列):</span><br><span class="line">    满足条件时要做的事情<span class="number">1</span></span><br><span class="line">    ... </span><br><span class="line">    <span class="keyword">for</span> 临时变量 <span class="keyword">in</span> 待处理数据集(序列):</span><br><span class="line">        满足条件时要做的事情<span class="number">1</span></span><br><span class="line">        ...</span><br></pre></td></tr></table></figure>
-
-<h2 id="Continue-和-Break"><a href="#Continue-和-Break" class="headerlink" title="Continue 和 Break"></a>Continue 和 Break</h2><h3 id="continue"><a href="#continue" class="headerlink" title="continue"></a>continue</h3><p><code>continue</code> 的作用是：<strong>中断本次循环，直接进入下一次循环</strong> 。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">100</span>): </span><br><span class="line">    语句<span class="number">1</span> </span><br><span class="line">    <span class="keyword">continue</span></span><br><span class="line">    语句<span class="number">2</span> 	<span class="comment"># 此行命令会被跳过</span></span><br></pre></td></tr></table></figure>
-
-<p><code>continue</code> 可用于 <code>for</code> 循环和 <code>while</code> 循环，效果一致 。</p>
-<h3 id="break"><a href="#break" class="headerlink" title="break"></a>break</h3><p><code>break</code> 的作用更加坚决：<strong>直接结束整个循环</strong> 。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">100</span>):</span><br><span class="line">    语句<span class="number">1</span></span><br><span class="line">    <span class="keyword">break</span> <span class="comment"># 跳出整个循环</span></span><br><span class="line">    语句<span class="number">2</span></span><br><span class="line">语句<span class="number">3</span></span><br></pre></td></tr></table></figure>
-
-<p><code>break</code> 同样可用于 <code>for</code> 循环和 <code>while</code> 循环，效果完全一致 。</p>
-<blockquote>
-<p><strong>💡 Break 的底层作用规则：</strong><br>在 Python 以及绝大多数编程语言中，<code>break</code> 遵循以下逻辑：</p>
-<ol>
-<li><strong>寻找上级：</strong> 当程序运行到 <code>break</code> 时，向外层寻找最近的一个 <code>for/while</code> 循环 。</li>
-<li><strong>无视障碍：</strong> 在寻找的过程中，它会穿透所有的 <code>if</code>, <code>elif</code>, <code>else</code> 。</li>
-</ol>
-</blockquote>
-<hr>
-<div class="note default simple"><p><strong>Repository</strong></p>
-<p>本章示例代码已归档至 GitHub，可用于本地复现、调试与扩展。</p>
-<p><a class="btn-beautify " href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/03_Loop_Statements" title="查看本章源码"><i class="fab fa-github"></i><span>查看本章源码</span></a></p>
-</div>]]></content>
-      <categories>
-        <category>Python 技术笔记</category>
-        <category>基础语法与数据结构</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>基础语法</tag>
       </tags>
   </entry>
   <entry>
@@ -1643,43 +1643,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Python 数据处理：JSON 解析与 Pyecharts 可视化</title>
-    <url>/2026/03/26/python-learning/Stage1_Core_Basics/09-basic-comprehensive-Case/</url>
-    <content><![CDATA[<h1 id="JSON数据格式"><a href="#JSON数据格式" class="headerlink" title="JSON数据格式"></a>JSON数据格式</h1><h2 id="什么是JSON"><a href="#什么是JSON" class="headerlink" title="什么是JSON"></a>什么是JSON</h2><p>一种在各个编程语言中流通的数据格式，负责不同编程语言中的数据传递和交互。<br>JSON无非就是一个单独的字典或一个内部元素都是字典的列表。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># json数据的格式可以是：</span></span><br><span class="line">	&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;admin&quot;</span>, <span class="string">&quot;age&quot;</span>:<span class="number">18</span>&#125;</span><br><span class="line">	</span><br><span class="line"><span class="comment"># 也可以是：</span></span><br><span class="line">	[(<span class="string">&quot;name&quot;</span>:<span class="string">&quot;admin&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">18</span>&#125;,(<span class="string">&quot;name&quot;</span>:<span class="string">&quot;root&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">16</span>&#125;,(<span class="string">&quot;name&quot;</span>:<span class="string">&quot;张三&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">20</span>]]</span><br></pre></td></tr></table></figure>
-<h2 id="对JSON进行数据转换"><a href="#对JSON进行数据转换" class="headerlink" title="对JSON进行数据转换"></a>对JSON进行数据转换</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 导入json模块</span></span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line"><span class="comment"># 准备符合json格式要求的python数据</span></span><br><span class="line">data=[&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;老王&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">16</span>&#125;, &#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;张三&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">20</span>&#125;]</span><br><span class="line"></span><br><span class="line"><span class="comment"># json.dumps(data)方法把python数据转化为json数据</span></span><br><span class="line">data = json.dumps(data)</span><br><span class="line"><span class="comment"># 显示出中文</span></span><br><span class="line">data = json.dumps(data，ensure_ascii=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># json.loads(data)方法把json数据转化为python数据</span></span><br><span class="line">data =json.loads(data)</span><br></pre></td></tr></table></figure>
-<hr>
-<h1 id="pyecharts模块介绍"><a href="#pyecharts模块介绍" class="headerlink" title="pyecharts模块介绍"></a>pyecharts模块介绍</h1><ol>
-<li>开发可视化图表使用的技术栈是:<br> Echarts框架的Python版本:PyEcharts包</li>
-<li>如何安装PyEcharts包:<br> pip install pyecharts</li>
-<li>如何查看官方示例<br> 打开官方画廊:<a href="https://gallery.pyecharts.org/#/README">https://gallery.pyecharts.org/#/README</a></li>
-</ol>
-<hr>
-<h1 id="pyecharts快速入门"><a href="#pyecharts快速入门" class="headerlink" title="pyecharts快速入门"></a>pyecharts快速入门</h1><h2 id="构建基础折线图"><a href="#构建基础折线图" class="headerlink" title="构建基础折线图"></a>构建基础折线图</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 导包，导入Line功能构建折线图对象</span></span><br><span class="line"><span class="keyword">from</span> pyecharts.charts <span class="keyword">import</span> Line</span><br><span class="line"></span><br><span class="line"><span class="comment"># 得到折线图对象</span></span><br><span class="line">line = Line()</span><br><span class="line"><span class="comment"># 添加x轴数据</span></span><br><span class="line">line.add_xaxis([<span class="string">&quot;中国&quot;</span>，<span class="string">&quot;美国&quot;</span>,<span class="string">&quot;英国&quot;</span>])</span><br><span class="line"><span class="comment"># 添加y轴数据</span></span><br><span class="line">line.add_yaxis(<span class="string">&quot;GDP&quot;</span>, [<span class="number">30</span>, <span class="number">20</span> ,<span class="number">10</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment">#生成图表</span></span><br><span class="line">line.renderO</span><br></pre></td></tr></table></figure>
-<h2 id="使用全局配置项设置属性"><a href="#使用全局配置项设置属性" class="headerlink" title="使用全局配置项设置属性"></a>使用全局配置项设置属性</h2><p>pyecharts模块中有很多的配置选项，常用到2个类别的选项: </p>
-<ul>
-<li><strong>全局配置选项</strong></li>
-<li><strong>系列配置选项</strong></li>
-</ul>
-<p>全局配置选项可以通过<strong>set_global_opts</strong>方法来进行配置，相应的选项和选项的功能如下:<br><img src="https://raw.githubusercontent.com/NimbusFan/blog-images/main/assets/pyecharts%E5%85%A8%E5%B1%80%E9%85%8D%E7%BD%AE.png" alt="pyecharts全局配置.png"></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 通过全局配置项设置属性</span></span><br><span class="line">line.set_global_opts(</span><br><span class="line">	title_opts=TitleOpts(<span class="string">&quot;测试&quot;</span>,pos_left=<span class="string">&quot;center&quot;</span>,pos_bottom=<span class="string">&quot;1%&quot;</span>),</span><br><span class="line">	legend_opts=Legendopts(is_show=<span class="literal">True</span>),</span><br><span class="line">	toolbox_opts=ToolboxOpts(is_show=<span class="literal">True</span>),</span><br><span class="line">	visualmap_opts=VisualMapOpts(is_show=<span class="literal">True</span>),</span><br><span class="line">	tooltip_opts=TooltipOpts(is_show=<span class="literal">True</span>),</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-
-<div class="note default simple"><p><strong>Repository</strong></p>
-<p>本章示例代码已归档至 GitHub，可用于本地复现、调试与扩展。</p>
-<p><a class="btn-beautify " href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/09_Basic_Comprehensive_Case" title="查看本章源码"><i class="fab fa-github"></i><span>查看本章源码</span></a></p>
-</div>]]></content>
-      <categories>
-        <category>Python 技术笔记</category>
-        <category>基础语法与数据结构</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>JSON</tag>
-        <tag>数据可视化</tag>
-        <tag>PyEcharts</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Python 异常处理与模块化开发</title>
     <url>/2026/03/24/python-learning/Stage1_Core_Basics/08-exceptions-modules-packageson/</url>
     <content><![CDATA[<h1 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h1><p>1.什么是异常:<br>程序运行的过程中出现了错误<br>2.bug是什么意思:<br>就是指异常的意思，历史上因为小虫子(bug)导致计算机失灵的案例，所以延续至今，bug就代表软件出现错误。</p>
@@ -1766,6 +1729,62 @@
         <tag>Python</tag>
         <tag>异常处理</tag>
         <tag>模块与包</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python 函数进阶：作用域、参数与匿名函数</title>
+    <url>/2026/03/17/python-learning/Stage1_Core_Basics/06-advanced-functions/</url>
+    <content><![CDATA[<h1 id="函数多返回值"><a href="#函数多返回值" class="headerlink" title="函数多返回值"></a>函数多返回值</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test_return</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>, <span class="string">&quot;Hello&quot;</span>, <span class="literal">True</span></span><br><span class="line">x, y, z = test_return()</span><br><span class="line"><span class="built_in">print</span>(x, y, z)</span><br></pre></td></tr></table></figure>
+
+<h1 id="函数多种传参方式"><a href="#函数多种传参方式" class="headerlink" title="函数多种传参方式"></a>函数多种传参方式</h1><h2 id="位置参数"><a href="#位置参数" class="headerlink" title="位置参数"></a>位置参数</h2><p>调用函数时根据函数定义的参数位置来传递参数</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">user_info</span>(<span class="params">name, age, gender</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;姓名是：<span class="subst">&#123;name&#125;</span>,年龄是：<span class="subst">&#123;age&#125;</span>,性别是：<span class="subst">&#123;gender&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 位置参数</span></span><br><span class="line">user_info(<span class="string">&#x27;小明&#x27;</span>, <span class="number">20</span>, <span class="string">&#x27;男&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="关键字参数"><a href="#关键字参数" class="headerlink" title="关键字参数"></a>关键字参数</h2><p>调用函数时通过“键 &#x3D; 值”的形式传递参数，消除参数的顺序需求</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">user_info</span>(<span class="params">name, age, gender</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;您的名字是:<span class="subst">&#123;name&#125;</span>，年龄是:<span class="subst">&#123;age&#125;</span>,性别是:<span class="subst">&#123;gender&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#关键字传参</span></span><br><span class="line">user_info(name=<span class="string">&quot;小明&quot;</span>,age=<span class="number">20</span>,gender=<span class="string">&quot;男&quot;</span>)</span><br><span class="line"><span class="comment"># 可以不按照固定顺序</span></span><br><span class="line">user_info(age=<span class="number">20</span>,gender=<span class="string">&quot;男&quot;</span>,name=<span class="string">&quot;小明&quot;</span>)</span><br><span class="line"><span class="comment">#可以和位置参数混用，位置参数必须在前，且匹配参数顺序</span></span><br><span class="line">user_info(<span class="string">&quot;小明&quot;</span>,age=<span class="number">20</span>,gender=<span class="string">&quot;男&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="不定长参数"><a href="#不定长参数" class="headerlink" title="不定长参数"></a>不定长参数</h2><p>不定长参数也叫可变参数.用于不确定调用的时候会传递多少个参数(不传参也可以)的场景</p>
+<p>不定长参数的类型:</p>
+<h3 id="（1）位置传递"><a href="#（1）位置传递" class="headerlink" title="（1）位置传递"></a>（1）位置传递</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">user_info</span>(<span class="params">*args</span>):</span><br><span class="line">    <span class="built_in">print</span>(args)</span><br><span class="line"></span><br><span class="line"><span class="comment"># (&#x27;TOM&#x27;,)</span></span><br><span class="line">user_info(<span class="string">&#x27;TOM&#x27;</span>)</span><br><span class="line"><span class="comment"># (&#x27;TOM&#x27;, 18)</span></span><br><span class="line">user_info(<span class="string">&#x27;TOM&#x27;</span>, <span class="number">18</span>)</span><br></pre></td></tr></table></figure>
+
+<p>注意:传进的所有参数都会被args变量收集，它会根据传进参数的位置合并为一个元组(tuple)，args是元组类型</p>
+<h3 id="（2）关键字传递"><a href="#（2）关键字传递" class="headerlink" title="（2）关键字传递"></a>（2）关键字传递</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">user_info</span>(<span class="params">**kwargs</span>):</span><br><span class="line">    <span class="built_in">print</span>(kwargs)</span><br><span class="line"></span><br><span class="line"><span class="comment"># &#123;&#x27;name&#x27; : &#x27;TOM&#x27;, &#x27;age&#x27; : 18, &#x27;id&#x27; : 110&#125;</span></span><br><span class="line">user_info(name=<span class="string">&#x27;TOM&#x27;</span>, age=<span class="number">18</span>, <span class="built_in">id</span>=<span class="number">110</span>)</span><br></pre></td></tr></table></figure>
+
+<p>传入的参数是“键&#x3D;值”格式，被kwargs接收后根据“键&#x3D;值”组成字典</p>
+<h2 id="缺省参数"><a href="#缺省参数" class="headerlink" title="缺省参数"></a>缺省参数</h2><p>缺省参数也叫默认参数，调用函数时可不传该默认参数的值,如果传入该参数的值，则修改默认参数值</p>
+<p>注意:<strong>函数定义和调用时，所有位置参数必须出现在默认参数前</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">user_info</span>(<span class="params">name,age,gender = <span class="string">&#x27;男&#x27;</span></span>):</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&#x27;您的名字是<span class="subst">&#123;name&#125;</span>，年龄是<span class="subst">&#123;age&#125;</span>，性别是<span class="subst">&#123;gender&#125;</span>&#x27;</span>)</span><br><span class="line">user_info(<span class="string">&#x27;TOM&#x27;</span>, <span class="number">20</span>)</span><br><span class="line">user_info(<span class="string">&#x27;Rose&#x27;</span>, <span class="number">18</span>, <span class="string">&#x27;女&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h1 id="匿名函数"><a href="#匿名函数" class="headerlink" title="匿名函数"></a>匿名函数</h1><h2 id="函数作为参数传递"><a href="#函数作为参数传递" class="headerlink" title="函数作为参数传递"></a>函数作为参数传递</h2><p>函数本身作为参数，传入另一个函数中进行使用。</p>
+<p>将函数传入的作用在于:传入计算逻辑，而非传入数据。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test_func</span>(<span class="params">func</span>):</span><br><span class="line">    result = func(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;func参数的类型是”：<span class="subst">&#123;func&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;计算结果：<span class="subst">&#123;result&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">compute</span>(<span class="params">x, y</span>):</span><br><span class="line">    <span class="keyword">return</span> x + y</span><br><span class="line"></span><br><span class="line">test_func(compute)</span><br></pre></td></tr></table></figure>
+
+<h2 id="lambda匿名函数"><a href="#lambda匿名函数" class="headerlink" title="lambda匿名函数"></a>lambda匿名函数</h2><p>函数的定义中:</p>
+<ul>
+<li>def关键字，可以定义带有名称的函数,可以基于名称<strong>重复使用</strong></li>
+<li>lambda关键字，可以定义匿名函数(无名称),只可<strong>临时使用一次</strong>。</li>
+</ul>
+<p>匿名函数定义语法:</p>
+<p>1ambda 传入参数:函数体(一行代码)</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test_func</span>(<span class="params">compute</span>):</span><br><span class="line">    result = compute(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">    <span class="built_in">print</span>(result)</span><br><span class="line"></span><br><span class="line">test_func(<span class="keyword">lambda</span> x, y: x + y)        <span class="comment">#结果:3</span></span><br></pre></td></tr></table></figure>
+
+<p>注意事项：</p>
+<ul>
+<li>匿名函数用于临时构建一个函数，只用一次的场景</li>
+<li>匿名函数的定义中，函数体只能写一行代码，如果函数体要写多行代码，不可用lambda匿名函数，应使用def定义带名函数</li>
+</ul>
+<div class="note default simple"><p><strong>Repository</strong></p>
+<p>本章示例代码已归档至 GitHub，可用于本地复现、调试与扩展。</p>
+<p><a class="btn-beautify " href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/06_Advanced_Functions" title="查看本章源码"><i class="fab fa-github"></i><span>查看本章源码</span></a></p>
+</div>]]></content>
+      <categories>
+        <category>Python 技术笔记</category>
+        <category>基础语法与数据结构</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>进阶语法</tag>
+        <tag>函数</tag>
+        <tag>Lambda</tag>
       </tags>
   </entry>
   <entry>
@@ -2002,6 +2021,127 @@
       </tags>
   </entry>
   <entry>
+    <title>Python 大数据处理：PySpark RDD 编程基础</title>
+    <url>/2026/05/28/python-learning/Stage3_PySpark/01-PySpark/</url>
+    <content><![CDATA[<h1 id="基础准备"><a href="#基础准备" class="headerlink" title="基础准备"></a>基础准备</h1><p>PySpark的编程模型：</p>
+<ol>
+<li>通过SparkContext对象，完成数据输入</li>
+<li>输入数据后得到RDD对象，对RDD对象进行迭代计算</li>
+<li>最终通过RDD对象的成员方法，完成数据输出工作</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pyspark <span class="keyword">import</span> SparkConf, SparkContext  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># 创建SparkConf对象————链式调用</span></span><br><span class="line">conf = SparkConf().setMaster(<span class="string">&quot;local[*]&quot;</span>).setAppName(<span class="string">&quot;test_spark_app&quot;</span>)  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># 以下这段等同于上面这一行的作用,  </span></span><br><span class="line"><span class="comment"># conf = SparkConf()  </span></span><br><span class="line"><span class="comment"># conf.setMaster(&quot;local[*]&quot;)  </span></span><br><span class="line"><span class="comment"># conf.setAppName(&quot;test_spark_app&quot;)  </span></span><br><span class="line">  </span><br><span class="line"><span class="comment"># 基于SparkConf类对象创建SparkContext对象  </span></span><br><span class="line">sc = SparkContext(conf = conf)  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># 打印PySpark的运行版本  </span></span><br><span class="line"><span class="built_in">print</span>(sc.version)  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># 停止SparkContext对象的运行(停止PySpark程序)  </span></span><br><span class="line">sc.stop()</span><br></pre></td></tr></table></figure>
+<p>PySpark的功能都是从SparkContext对象作为开始</p>
+<hr>
+<h1 id="数据输入"><a href="#数据输入" class="headerlink" title="数据输入"></a>数据输入</h1><p>RDD对象称之为分布式弹性数据集，是PySpark中数据计算的载体，它可以:</p>
+<ul>
+<li>提供数据存储</li>
+<li>提供数据计算的各类方法</li>
+<li>数据计算的方法，返回值依旧是RDD(RDD迭代计算)<br>后续对数据进行各类计算，都是基于RDD对象进行</li>
+</ul>
+<p>输入数据到Spark(即得到RDD对象)：</p>
+<ul>
+<li>通过SparkContext的parallelize成员方法，将Python数据容器转换为RDD对象</li>
+<li>通过SparkContext的textFile成员方法，读取文本文件得到RDD对象</li>
+</ul>
+<hr>
+<h1 id="数据计算"><a href="#数据计算" class="headerlink" title="数据计算"></a>数据计算</h1><h2 id="map方法"><a href="#map方法" class="headerlink" title="map方法"></a>map方法</h2><p>map算子(成员方法)</p>
+<ul>
+<li>接受一个处理函数，可用lambda表达式快速编写</li>
+<li>对RDD内的元素逐个处理，并返回一个新的RDD<br>链式调用</li>
+<li>对于返回值是新RDD的算子，可以通过链式调用的方式多次调用算子</li>
+</ul>
+<h2 id="flatMap方法"><a href="#flatMap方法" class="headerlink" title="flatMap方法"></a>flatMap方法</h2><ul>
+<li>计算逻辑和map一样</li>
+<li>比map多一个解除一层嵌套的功能。</li>
+</ul>
+<h2 id="reduceByKey方法"><a href="#reduceByKey方法" class="headerlink" title="reduceByKey方法"></a>reduceByKey方法</h2><ul>
+<li>接受一个处理函数，对数据进行两两计算</li>
+</ul>
+<h2 id="filter方法"><a href="#filter方法" class="headerlink" title="filter方法"></a>filter方法</h2><ul>
+<li>接收一个处理函数，可用lambda快速编写</li>
+<li>函数对RDD数据逐个处理，得到True的保留至返回值的RDD中</li>
+</ul>
+<h2 id="distinct方法"><a href="#distinct方法" class="headerlink" title="distinct方法"></a>distinct方法</h2><ul>
+<li>完成对RDD内数据的去重操作</li>
+</ul>
+<h2 id="sortBy方法"><a href="#sortBy方法" class="headerlink" title="sortBy方法"></a>sortBy方法</h2><ul>
+<li>接收一个处理函数，可用lambda快速编写</li>
+<li>函数表示用来决定排序的依据</li>
+<li>可以控制升序或降序</li>
+<li>全局排序需要设置分区数为1</li>
+</ul>
+<hr>
+<h1 id="数据输出"><a href="#数据输出" class="headerlink" title="数据输出"></a>数据输出</h1><h2 id="输出为Python对象"><a href="#输出为Python对象" class="headerlink" title="输出为Python对象"></a>输出为Python对象</h2><ul>
+<li>collect:将RDD内容转换为list</li>
+<li>reduce:对RDD内容进行自定义聚合</li>
+<li>take:取出RDD的前N个元素组成list</li>
+<li>count:统计RDD元素个数</li>
+</ul>
+<h2 id="输出到文件中"><a href="#输出到文件中" class="headerlink" title="输出到文件中"></a>输出到文件中</h2><p>RDD输出到文件的方法：</p>
+<ul>
+<li>rdd.saveAsTextFile(路径)</li>
+<li>输出的结果是一个文件夹</li>
+<li>有几个分区就输出多少个结果文件<br>如何修改RDD分区：</li>
+<li>SparkConf对象设置conf.set(“spark.default.parallelism”, “1”)</li>
+<li>创建RDD的时候，sc.parallelize方法传入numSlices参数为1</li>
+</ul>
+<div class="note default simple"><p><strong>Repository</strong></p>
+<p>本章示例代码已归档至 GitHub，可用于本地复现、调试与扩展。</p>
+<p><a class="btn-beautify " href="https://github.com/NimbusFan/My-Second-Brain/tree/main/myblog/source/_posts/python-learning/Stage3_PySpark" title="查看本章源码"><i class="fab fa-github"></i><span>查看本章源码</span></a></p>
+</div>
+
+]]></content>
+      <categories>
+        <category>Python 技术笔记</category>
+        <category>大数据与分布式计算</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>PySpark</tag>
+        <tag>Spark</tag>
+        <tag>RDD</tag>
+        <tag>分布式计算</tag>
+        <tag>数据处理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python 数据处理：JSON 解析与 Pyecharts 可视化</title>
+    <url>/2026/03/26/python-learning/Stage1_Core_Basics/09-basic-comprehensive-Case/</url>
+    <content><![CDATA[<h1 id="JSON数据格式"><a href="#JSON数据格式" class="headerlink" title="JSON数据格式"></a>JSON数据格式</h1><h2 id="什么是JSON"><a href="#什么是JSON" class="headerlink" title="什么是JSON"></a>什么是JSON</h2><p>一种在各个编程语言中流通的数据格式，负责不同编程语言中的数据传递和交互。<br>JSON无非就是一个单独的字典或一个内部元素都是字典的列表。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># json数据的格式可以是：</span></span><br><span class="line">	&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;admin&quot;</span>, <span class="string">&quot;age&quot;</span>:<span class="number">18</span>&#125;</span><br><span class="line">	</span><br><span class="line"><span class="comment"># 也可以是：</span></span><br><span class="line">	[(<span class="string">&quot;name&quot;</span>:<span class="string">&quot;admin&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">18</span>&#125;,(<span class="string">&quot;name&quot;</span>:<span class="string">&quot;root&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">16</span>&#125;,(<span class="string">&quot;name&quot;</span>:<span class="string">&quot;张三&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">20</span>]]</span><br></pre></td></tr></table></figure>
+<h2 id="对JSON进行数据转换"><a href="#对JSON进行数据转换" class="headerlink" title="对JSON进行数据转换"></a>对JSON进行数据转换</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 导入json模块</span></span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line"><span class="comment"># 准备符合json格式要求的python数据</span></span><br><span class="line">data=[&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;老王&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">16</span>&#125;, &#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;张三&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">20</span>&#125;]</span><br><span class="line"></span><br><span class="line"><span class="comment"># json.dumps(data)方法把python数据转化为json数据</span></span><br><span class="line">data = json.dumps(data)</span><br><span class="line"><span class="comment"># 显示出中文</span></span><br><span class="line">data = json.dumps(data，ensure_ascii=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># json.loads(data)方法把json数据转化为python数据</span></span><br><span class="line">data =json.loads(data)</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="pyecharts模块介绍"><a href="#pyecharts模块介绍" class="headerlink" title="pyecharts模块介绍"></a>pyecharts模块介绍</h1><ol>
+<li>开发可视化图表使用的技术栈是:<br> Echarts框架的Python版本:PyEcharts包</li>
+<li>如何安装PyEcharts包:<br> pip install pyecharts</li>
+<li>如何查看官方示例<br> 打开官方画廊:<a href="https://gallery.pyecharts.org/#/README">https://gallery.pyecharts.org/#/README</a></li>
+</ol>
+<hr>
+<h1 id="pyecharts快速入门"><a href="#pyecharts快速入门" class="headerlink" title="pyecharts快速入门"></a>pyecharts快速入门</h1><h2 id="构建基础折线图"><a href="#构建基础折线图" class="headerlink" title="构建基础折线图"></a>构建基础折线图</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 导包，导入Line功能构建折线图对象</span></span><br><span class="line"><span class="keyword">from</span> pyecharts.charts <span class="keyword">import</span> Line</span><br><span class="line"></span><br><span class="line"><span class="comment"># 得到折线图对象</span></span><br><span class="line">line = Line()</span><br><span class="line"><span class="comment"># 添加x轴数据</span></span><br><span class="line">line.add_xaxis([<span class="string">&quot;中国&quot;</span>，<span class="string">&quot;美国&quot;</span>,<span class="string">&quot;英国&quot;</span>])</span><br><span class="line"><span class="comment"># 添加y轴数据</span></span><br><span class="line">line.add_yaxis(<span class="string">&quot;GDP&quot;</span>, [<span class="number">30</span>, <span class="number">20</span> ,<span class="number">10</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment">#生成图表</span></span><br><span class="line">line.renderO</span><br></pre></td></tr></table></figure>
+<h2 id="使用全局配置项设置属性"><a href="#使用全局配置项设置属性" class="headerlink" title="使用全局配置项设置属性"></a>使用全局配置项设置属性</h2><p>pyecharts模块中有很多的配置选项，常用到2个类别的选项: </p>
+<ul>
+<li><strong>全局配置选项</strong></li>
+<li><strong>系列配置选项</strong></li>
+</ul>
+<p>全局配置选项可以通过<strong>set_global_opts</strong>方法来进行配置，相应的选项和选项的功能如下:<br><img src="https://raw.githubusercontent.com/NimbusFan/blog-images/main/assets/pyecharts%E5%85%A8%E5%B1%80%E9%85%8D%E7%BD%AE.png" alt="pyecharts全局配置.png"></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 通过全局配置项设置属性</span></span><br><span class="line">line.set_global_opts(</span><br><span class="line">	title_opts=TitleOpts(<span class="string">&quot;测试&quot;</span>,pos_left=<span class="string">&quot;center&quot;</span>,pos_bottom=<span class="string">&quot;1%&quot;</span>),</span><br><span class="line">	legend_opts=Legendopts(is_show=<span class="literal">True</span>),</span><br><span class="line">	toolbox_opts=ToolboxOpts(is_show=<span class="literal">True</span>),</span><br><span class="line">	visualmap_opts=VisualMapOpts(is_show=<span class="literal">True</span>),</span><br><span class="line">	tooltip_opts=TooltipOpts(is_show=<span class="literal">True</span>),</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<div class="note default simple"><p><strong>Repository</strong></p>
+<p>本章示例代码已归档至 GitHub，可用于本地复现、调试与扩展。</p>
+<p><a class="btn-beautify " href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/09_Basic_Comprehensive_Case" title="查看本章源码"><i class="fab fa-github"></i><span>查看本章源码</span></a></p>
+</div>]]></content>
+      <categories>
+        <category>Python 技术笔记</category>
+        <category>基础语法与数据结构</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>JSON</tag>
+        <tag>数据可视化</tag>
+        <tag>PyEcharts</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Python 进阶编程：闭包、装饰器与并发网络基础</title>
     <url>/2026/05/29/python-learning/Stage4_Advanced_Techniques/01-advanced-techniques/</url>
     <content><![CDATA[<h1 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h1><p>闭包：</p>
@@ -2224,146 +2364,6 @@
         <tag>Socket</tag>
         <tag>正则表达式</tag>
         <tag>递归</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python 大数据处理：PySpark RDD 编程基础</title>
-    <url>/2026/05/28/python-learning/Stage3_PySpark/01-PySpark/</url>
-    <content><![CDATA[<h1 id="基础准备"><a href="#基础准备" class="headerlink" title="基础准备"></a>基础准备</h1><p>PySpark的编程模型：</p>
-<ol>
-<li>通过SparkContext对象，完成数据输入</li>
-<li>输入数据后得到RDD对象，对RDD对象进行迭代计算</li>
-<li>最终通过RDD对象的成员方法，完成数据输出工作</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pyspark <span class="keyword">import</span> SparkConf, SparkContext  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># 创建SparkConf对象————链式调用</span></span><br><span class="line">conf = SparkConf().setMaster(<span class="string">&quot;local[*]&quot;</span>).setAppName(<span class="string">&quot;test_spark_app&quot;</span>)  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># 以下这段等同于上面这一行的作用,  </span></span><br><span class="line"><span class="comment"># conf = SparkConf()  </span></span><br><span class="line"><span class="comment"># conf.setMaster(&quot;local[*]&quot;)  </span></span><br><span class="line"><span class="comment"># conf.setAppName(&quot;test_spark_app&quot;)  </span></span><br><span class="line">  </span><br><span class="line"><span class="comment"># 基于SparkConf类对象创建SparkContext对象  </span></span><br><span class="line">sc = SparkContext(conf = conf)  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># 打印PySpark的运行版本  </span></span><br><span class="line"><span class="built_in">print</span>(sc.version)  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># 停止SparkContext对象的运行(停止PySpark程序)  </span></span><br><span class="line">sc.stop()</span><br></pre></td></tr></table></figure>
-<p>PySpark的功能都是从SparkContext对象作为开始</p>
-<hr>
-<h1 id="数据输入"><a href="#数据输入" class="headerlink" title="数据输入"></a>数据输入</h1><p>RDD对象称之为分布式弹性数据集，是PySpark中数据计算的载体，它可以:</p>
-<ul>
-<li>提供数据存储</li>
-<li>提供数据计算的各类方法</li>
-<li>数据计算的方法，返回值依旧是RDD(RDD迭代计算)<br>后续对数据进行各类计算，都是基于RDD对象进行</li>
-</ul>
-<p>输入数据到Spark(即得到RDD对象)：</p>
-<ul>
-<li>通过SparkContext的parallelize成员方法，将Python数据容器转换为RDD对象</li>
-<li>通过SparkContext的textFile成员方法，读取文本文件得到RDD对象</li>
-</ul>
-<hr>
-<h1 id="数据计算"><a href="#数据计算" class="headerlink" title="数据计算"></a>数据计算</h1><h2 id="map方法"><a href="#map方法" class="headerlink" title="map方法"></a>map方法</h2><p>map算子(成员方法)</p>
-<ul>
-<li>接受一个处理函数，可用lambda表达式快速编写</li>
-<li>对RDD内的元素逐个处理，并返回一个新的RDD<br>链式调用</li>
-<li>对于返回值是新RDD的算子，可以通过链式调用的方式多次调用算子</li>
-</ul>
-<h2 id="flatMap方法"><a href="#flatMap方法" class="headerlink" title="flatMap方法"></a>flatMap方法</h2><ul>
-<li>计算逻辑和map一样</li>
-<li>比map多一个解除一层嵌套的功能。</li>
-</ul>
-<h2 id="reduceByKey方法"><a href="#reduceByKey方法" class="headerlink" title="reduceByKey方法"></a>reduceByKey方法</h2><ul>
-<li>接受一个处理函数，对数据进行两两计算</li>
-</ul>
-<h2 id="filter方法"><a href="#filter方法" class="headerlink" title="filter方法"></a>filter方法</h2><ul>
-<li>接收一个处理函数，可用lambda快速编写</li>
-<li>函数对RDD数据逐个处理，得到True的保留至返回值的RDD中</li>
-</ul>
-<h2 id="distinct方法"><a href="#distinct方法" class="headerlink" title="distinct方法"></a>distinct方法</h2><ul>
-<li>完成对RDD内数据的去重操作</li>
-</ul>
-<h2 id="sortBy方法"><a href="#sortBy方法" class="headerlink" title="sortBy方法"></a>sortBy方法</h2><ul>
-<li>接收一个处理函数，可用lambda快速编写</li>
-<li>函数表示用来决定排序的依据</li>
-<li>可以控制升序或降序</li>
-<li>全局排序需要设置分区数为1</li>
-</ul>
-<hr>
-<h1 id="数据输出"><a href="#数据输出" class="headerlink" title="数据输出"></a>数据输出</h1><h2 id="输出为Python对象"><a href="#输出为Python对象" class="headerlink" title="输出为Python对象"></a>输出为Python对象</h2><ul>
-<li>collect:将RDD内容转换为list</li>
-<li>reduce:对RDD内容进行自定义聚合</li>
-<li>take:取出RDD的前N个元素组成list</li>
-<li>count:统计RDD元素个数</li>
-</ul>
-<h2 id="输出到文件中"><a href="#输出到文件中" class="headerlink" title="输出到文件中"></a>输出到文件中</h2><p>RDD输出到文件的方法：</p>
-<ul>
-<li>rdd.saveAsTextFile(路径)</li>
-<li>输出的结果是一个文件夹</li>
-<li>有几个分区就输出多少个结果文件<br>如何修改RDD分区：</li>
-<li>SparkConf对象设置conf.set(“spark.default.parallelism”, “1”)</li>
-<li>创建RDD的时候，sc.parallelize方法传入numSlices参数为1</li>
-</ul>
-<div class="note default simple"><p><strong>Repository</strong></p>
-<p>本章示例代码已归档至 GitHub，可用于本地复现、调试与扩展。</p>
-<p><a class="btn-beautify " href="https://github.com/NimbusFan/My-Second-Brain/tree/main/myblog/source/_posts/python-learning/Stage3_PySpark" title="查看本章源码"><i class="fab fa-github"></i><span>查看本章源码</span></a></p>
-</div>
-
-]]></content>
-      <categories>
-        <category>Python 技术笔记</category>
-        <category>大数据与分布式计算</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>PySpark</tag>
-        <tag>Spark</tag>
-        <tag>RDD</tag>
-        <tag>分布式计算</tag>
-        <tag>数据处理</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python 函数进阶：作用域、参数与匿名函数</title>
-    <url>/2026/03/17/python-learning/Stage1_Core_Basics/06-advanced-functions/</url>
-    <content><![CDATA[<h1 id="函数多返回值"><a href="#函数多返回值" class="headerlink" title="函数多返回值"></a>函数多返回值</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test_return</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>, <span class="string">&quot;Hello&quot;</span>, <span class="literal">True</span></span><br><span class="line">x, y, z = test_return()</span><br><span class="line"><span class="built_in">print</span>(x, y, z)</span><br></pre></td></tr></table></figure>
-
-<h1 id="函数多种传参方式"><a href="#函数多种传参方式" class="headerlink" title="函数多种传参方式"></a>函数多种传参方式</h1><h2 id="位置参数"><a href="#位置参数" class="headerlink" title="位置参数"></a>位置参数</h2><p>调用函数时根据函数定义的参数位置来传递参数</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">user_info</span>(<span class="params">name, age, gender</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;姓名是：<span class="subst">&#123;name&#125;</span>,年龄是：<span class="subst">&#123;age&#125;</span>,性别是：<span class="subst">&#123;gender&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 位置参数</span></span><br><span class="line">user_info(<span class="string">&#x27;小明&#x27;</span>, <span class="number">20</span>, <span class="string">&#x27;男&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
-<h2 id="关键字参数"><a href="#关键字参数" class="headerlink" title="关键字参数"></a>关键字参数</h2><p>调用函数时通过“键 &#x3D; 值”的形式传递参数，消除参数的顺序需求</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">user_info</span>(<span class="params">name, age, gender</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;您的名字是:<span class="subst">&#123;name&#125;</span>，年龄是:<span class="subst">&#123;age&#125;</span>,性别是:<span class="subst">&#123;gender&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#关键字传参</span></span><br><span class="line">user_info(name=<span class="string">&quot;小明&quot;</span>,age=<span class="number">20</span>,gender=<span class="string">&quot;男&quot;</span>)</span><br><span class="line"><span class="comment"># 可以不按照固定顺序</span></span><br><span class="line">user_info(age=<span class="number">20</span>,gender=<span class="string">&quot;男&quot;</span>,name=<span class="string">&quot;小明&quot;</span>)</span><br><span class="line"><span class="comment">#可以和位置参数混用，位置参数必须在前，且匹配参数顺序</span></span><br><span class="line">user_info(<span class="string">&quot;小明&quot;</span>,age=<span class="number">20</span>,gender=<span class="string">&quot;男&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<h2 id="不定长参数"><a href="#不定长参数" class="headerlink" title="不定长参数"></a>不定长参数</h2><p>不定长参数也叫可变参数.用于不确定调用的时候会传递多少个参数(不传参也可以)的场景</p>
-<p>不定长参数的类型:</p>
-<h3 id="（1）位置传递"><a href="#（1）位置传递" class="headerlink" title="（1）位置传递"></a>（1）位置传递</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">user_info</span>(<span class="params">*args</span>):</span><br><span class="line">    <span class="built_in">print</span>(args)</span><br><span class="line"></span><br><span class="line"><span class="comment"># (&#x27;TOM&#x27;,)</span></span><br><span class="line">user_info(<span class="string">&#x27;TOM&#x27;</span>)</span><br><span class="line"><span class="comment"># (&#x27;TOM&#x27;, 18)</span></span><br><span class="line">user_info(<span class="string">&#x27;TOM&#x27;</span>, <span class="number">18</span>)</span><br></pre></td></tr></table></figure>
-
-<p>注意:传进的所有参数都会被args变量收集，它会根据传进参数的位置合并为一个元组(tuple)，args是元组类型</p>
-<h3 id="（2）关键字传递"><a href="#（2）关键字传递" class="headerlink" title="（2）关键字传递"></a>（2）关键字传递</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">user_info</span>(<span class="params">**kwargs</span>):</span><br><span class="line">    <span class="built_in">print</span>(kwargs)</span><br><span class="line"></span><br><span class="line"><span class="comment"># &#123;&#x27;name&#x27; : &#x27;TOM&#x27;, &#x27;age&#x27; : 18, &#x27;id&#x27; : 110&#125;</span></span><br><span class="line">user_info(name=<span class="string">&#x27;TOM&#x27;</span>, age=<span class="number">18</span>, <span class="built_in">id</span>=<span class="number">110</span>)</span><br></pre></td></tr></table></figure>
-
-<p>传入的参数是“键&#x3D;值”格式，被kwargs接收后根据“键&#x3D;值”组成字典</p>
-<h2 id="缺省参数"><a href="#缺省参数" class="headerlink" title="缺省参数"></a>缺省参数</h2><p>缺省参数也叫默认参数，调用函数时可不传该默认参数的值,如果传入该参数的值，则修改默认参数值</p>
-<p>注意:<strong>函数定义和调用时，所有位置参数必须出现在默认参数前</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">user_info</span>(<span class="params">name,age,gender = <span class="string">&#x27;男&#x27;</span></span>):</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&#x27;您的名字是<span class="subst">&#123;name&#125;</span>，年龄是<span class="subst">&#123;age&#125;</span>，性别是<span class="subst">&#123;gender&#125;</span>&#x27;</span>)</span><br><span class="line">user_info(<span class="string">&#x27;TOM&#x27;</span>, <span class="number">20</span>)</span><br><span class="line">user_info(<span class="string">&#x27;Rose&#x27;</span>, <span class="number">18</span>, <span class="string">&#x27;女&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
-<h1 id="匿名函数"><a href="#匿名函数" class="headerlink" title="匿名函数"></a>匿名函数</h1><h2 id="函数作为参数传递"><a href="#函数作为参数传递" class="headerlink" title="函数作为参数传递"></a>函数作为参数传递</h2><p>函数本身作为参数，传入另一个函数中进行使用。</p>
-<p>将函数传入的作用在于:传入计算逻辑，而非传入数据。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test_func</span>(<span class="params">func</span>):</span><br><span class="line">    result = func(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;func参数的类型是”：<span class="subst">&#123;func&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;计算结果：<span class="subst">&#123;result&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">compute</span>(<span class="params">x, y</span>):</span><br><span class="line">    <span class="keyword">return</span> x + y</span><br><span class="line"></span><br><span class="line">test_func(compute)</span><br></pre></td></tr></table></figure>
-
-<h2 id="lambda匿名函数"><a href="#lambda匿名函数" class="headerlink" title="lambda匿名函数"></a>lambda匿名函数</h2><p>函数的定义中:</p>
-<ul>
-<li>def关键字，可以定义带有名称的函数,可以基于名称<strong>重复使用</strong></li>
-<li>lambda关键字，可以定义匿名函数(无名称),只可<strong>临时使用一次</strong>。</li>
-</ul>
-<p>匿名函数定义语法:</p>
-<p>1ambda 传入参数:函数体(一行代码)</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test_func</span>(<span class="params">compute</span>):</span><br><span class="line">    result = compute(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">    <span class="built_in">print</span>(result)</span><br><span class="line"></span><br><span class="line">test_func(<span class="keyword">lambda</span> x, y: x + y)        <span class="comment">#结果:3</span></span><br></pre></td></tr></table></figure>
-
-<p>注意事项：</p>
-<ul>
-<li>匿名函数用于临时构建一个函数，只用一次的场景</li>
-<li>匿名函数的定义中，函数体只能写一行代码，如果函数体要写多行代码，不可用lambda匿名函数，应使用def定义带名函数</li>
-</ul>
-<div class="note default simple"><p><strong>Repository</strong></p>
-<p>本章示例代码已归档至 GitHub，可用于本地复现、调试与扩展。</p>
-<p><a class="btn-beautify " href="https://github.com/NimbusFan/Python-Zero-to-Hero/tree/main/Stage1_Core_Basics/06_Advanced_Functions" title="查看本章源码"><i class="fab fa-github"></i><span>查看本章源码</span></a></p>
-</div>]]></content>
-      <categories>
-        <category>Python 技术笔记</category>
-        <category>基础语法与数据结构</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>进阶语法</tag>
-        <tag>函数</tag>
-        <tag>Lambda</tag>
       </tags>
   </entry>
 </search>
