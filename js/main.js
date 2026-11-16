@@ -512,6 +512,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!($article && (isToc || isAnchor))) return
 
+    const readingOffset = () => parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 120
     let $tocLink, $cardToc, autoScrollToc, $tocPercentage, isExpand
 
     if (isToc) {
@@ -527,7 +528,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!target) return
 
         e.preventDefault()
-        btf.scrollToDest(btf.getEleTop(document.getElementById(decodeURI(target.getAttribute('href')).replace('#', ''))), 300)
+        const heading = document.getElementById(decodeURIComponent(target.hash.slice(1)))
+        if (!heading) return
+        window.scrollTo({
+          top: heading.getBoundingClientRect().top + window.scrollY - readingOffset(),
+          behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+        })
         if (window.innerWidth < 900) {
           $cardTocLayout.classList.remove('open')
         }
@@ -540,11 +546,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const itemOffsetTop = item.offsetTop
         const itemHeight = item.clientHeight
         const scrollTop = $cardToc.scrollTop
-        const offset = itemOffsetTop - scrollTop
         const middlePosition = (sidebarHeight - itemHeight) / 2
 
-        if (offset !== middlePosition) {
-          $cardToc.scrollTop = scrollTop + (offset - middlePosition)
+        if (itemOffsetTop < scrollTop + 12 || itemOffsetTop + itemHeight > scrollTop + sidebarHeight - 12) {
+          $cardToc.scrollTop = Math.max(0, itemOffsetTop - middlePosition)
         }
       }
 
@@ -554,30 +559,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // find head position & add active class
     const $articleList = $article.querySelectorAll('h1,h2,h3,h4,h5,h6')
-    let detectItem = ''
-
-    // Optimization: Cache header positions
-    let headerList = []
-    const updateHeaderPositions = () => {
-      headerList = Array.from($articleList).map(ele => ({
-        ele,
-        top: btf.getEleTop(ele),
-        id: ele.id
-      }))
-    }
-
-    updateHeaderPositions()
-    btf.addEventListenerPjax(window, 'resize', btf.throttle(updateHeaderPositions, 200))
+    let detectItem = -1
 
     const findHeadPosition = top => {
-      if (top === 0) return false
-
       let currentId = ''
-      let currentIndex = ''
+      let currentIndex = -1
+      const offset = readingOffset() + 1
 
-      for (let i = 0; i < headerList.length; i++) {
-        const item = headerList[i]
-        if (top > item.top - 80) {
+      // Read current positions so loaded images and fonts cannot stale the outline.
+      for (let i = 0; i < $articleList.length; i++) {
+        const item = $articleList[i]
+        if (top > 0 && item.getBoundingClientRect().top <= offset) {
           currentId = item.id ? '#' + encodeURI(item.id) : ''
           currentIndex = i
         } else {
@@ -593,10 +585,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (isToc) {
         $cardToc.querySelectorAll('.active').forEach(i => i.classList.remove('active'))
+        $cardToc.querySelector('[aria-current="location"]')?.removeAttribute('aria-current')
 
         if (currentId) {
           const currentActive = $tocLink[currentIndex]
+          if (!currentActive) return
           currentActive.classList.add('active')
+          currentActive.setAttribute('aria-current', 'location')
 
           setTimeout(() => autoScrollToc(currentActive), 0)
 
@@ -621,6 +616,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 100)
 
     btf.addEventListenerPjax(window, 'scroll', tocScrollFn, { passive: true })
+    btf.addEventListenerPjax($article, 'load', tocScrollFn, true)
+    btf.addEventListenerPjax(window, 'resize', () => {
+      tocScrollFn()
+      const active = isToc && $cardToc.querySelector('.toc-link.active')
+      if (active) autoScrollToc(active)
+    })
+    tocScrollFn()
   }
 
   const handleThemeChange = mode => {

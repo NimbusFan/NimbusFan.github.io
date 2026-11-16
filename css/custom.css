@@ -1,861 +1,381 @@
-/* ===================================================== */
-/* 1. 分类目录样式优化：墨绿色大厂风格 */
-/* ===================================================== */
-
-/* 全局配色变量，后面想改颜色只改这里 */
-
+/* Yunfei — site palette, navigation, reading layout and theme integration. */
 :root {
-    --cb-primary: #3b3430;        /* 主色：暖灰黑 */
-    --cb-primary-light: #8a8178;
-    --cb-accent: #b98b5f;         /* 强调色：香槟金 */
-
-    --cb-page-bg: #f3efe8;
-    --cb-page-bg-2: #fbfaf7;
-
-    --cb-card-bg: #fffdf8;
-    --cb-card-bg-side: #f6f1e9;
-
-    --cb-text: #2f2a26;
-    --cb-muted: #7a7169;
-    --cb-border: rgba(59, 52, 48, 0.14);
-    --cb-line: rgba(59, 52, 48, 0.16);
-    --cb-bg-soft: rgba(185, 139, 95, 0.12);
+  --yf-bg: #f5f4f0;
+  --yf-text: #30312f;
+  --yf-muted: #706f68;
+  --yf-line: #dcdad3;
+  --yf-accent: #8a4b45;
+  --yf-tag-bg: #8a4b45;
+  --yf-tag-text: #fff8f1;
+  --yf-surface: #faf9f6;
+  --yf-nav-bg: rgba(245, 244, 240, .94);
+  --yf-soft: rgba(138, 75, 69, .08);
+  --yf-selection-bg: #decfc7;
+  --yf-code-bg: #efeee8;
+  --yf-code-tools: #e6e3dc;
 }
-
-
-/* 分类页：分类名称 */
-.category-lists .category-list a {
-    font-size: 1.16rem;
-    font-weight: 700;
-    color: var(--cb-text) !important;
-    transition: color 0.25s ease, transform 0.25s ease;
-}
-
-/* 分类页：文章数量 */
-.category-lists .category-list .category-list-count {
-    font-size: 1rem;
-    color: var(--cb-muted) !important;
-    font-weight: 500;
-}
-
-/* 分类项整体间距 */
-.category-lists .category-list .category-list-item {
-    line-height: 1.65 !important;
-    margin-bottom: 9px !important;
-}
-
-/* 分类 hover：更像产品站，不用亮蓝色 */
-.category-lists .category-list a:hover,
-#aside-content .card-categories a:hover {
-    color: var(--cb-primary) !important;
-}
-
-/* ===================================================== */
-/* 2. 父级目录图标：墨绿色开启文件夹 */
-/* ===================================================== */
-
-.category-lists .category-list > .category-list-item > a::before,
-#aside-content .card-categories ul > .card-category-list-item > a::before {
-    content: '\f07c' !important; 
-    font-family: 'Font Awesome 5 Free', 'Font Awesome 6 Free', 'FontAwesome' !important;
-    font-weight: 900 !important;
-    margin-right: 8px !important;
-    color: var(--cb-primary) !important;
-    opacity: 0.95;
-}
-
-/* ===================================================== */
-/* 3. 子级目录图标：高级灰闭合文件夹 */
-/* ===================================================== */
-
-.category-lists .category-list-child .category-list-item > a::before,
-#aside-content .card-categories ul .child .card-category-list-item > a::before {
-    content: '\f07b' !important;
-    font-family: 'Font Awesome 5 Free', 'Font Awesome 6 Free', 'FontAwesome' !important;
-    font-weight: 900 !important;
-    margin-right: 8px !important;
-    color: var(--cb-muted) !important;
-    opacity: 0.85;
-}
-
-/* 子级目录 hover 时，图标也变成墨绿色 */
-.category-lists .category-list-child .category-list-item > a:hover::before,
-#aside-content .card-categories ul .child .card-category-list-item > a:hover::before {
-    color: var(--cb-primary) !important;
-}
-
-/* ===================================================== */
-/* 4. 层级缩进与树状引导线 */
-/* ===================================================== */
-
-.category-lists .category-list-child,
-#aside-content .card-categories ul .child {
-    padding-left: 16px !important;
-    margin-top: 7px !important;
-    margin-left: 7px !important;
-    border-left: 2px solid var(--cb-line) !important;
-}
-
-/* 子级分类文字稍微收一点，更有层级感 */
-.category-lists .category-list-child .category-list-item > a,
-#aside-content .card-categories ul .child .card-category-list-item > a {
-    font-size: 1.04rem;
-    font-weight: 600;
-    color: var(--cb-muted) !important;
-}
-
-/* ===================================================== */
-/* 5. 侧边栏分类卡片优化 */
-/* ===================================================== */
-
-#aside-content .card-categories .card-category-list-item {
-    border-radius: 10px;
-    transition: background 0.25s ease, transform 0.25s ease;
-}
-
-/* 侧边栏分类 hover 背景 */
-#aside-content .card-categories .card-category-list-item:hover {
-    background: var(--cb-bg-soft);
-    transform: translateX(3px);
-}
-
-/* 侧边栏分类文字 */
-#aside-content .card-categories .card-category-list-item a {
-    color: var(--cb-text) !important;
-    font-weight: 600;
-}
-
-/* 侧边栏分类数量 */
-#aside-content .card-categories .card-category-list-count {
-    color: var(--cb-muted) !important;
-    font-weight: 500;
-}
-
-/* ===================================================== */
-/* 6. 分类页整体更柔和 */
-/* ===================================================== */
-
-.category-lists {
-    color: var(--cb-text);
-}
-
-/* 分类页标题、侧边栏标题统一墨绿色 */
-.category-lists .category-title,
-.card-widget .item-headline span,
-.card-widget .item-headline i {
-    color: var(--cb-primary) !important;
-}
-
-
-/* ===== Cloud & Byte 自定义大厂风格美化 ===== */
-
-/* 1. 全局背景：避免纯白 */
-body {
-  background:
-    radial-gradient(circle at top left, rgba(185, 139, 95, 0.12), transparent 30%),
-    linear-gradient(180deg, #fbfaf7 0%, #f3efe8 100%) !important;
-  color: #2f3437;
-}
-
-/* 2. 主体宽度：减少左右大空白 */
-.layout {
-  max-width: 1320px !important;
-}
-
-/* 3. 首页文章区域更宽一些 */
-@media screen and (min-width: 900px) {
-  #recent-posts {
-    width: calc(100% - 310px) !important;
-  }
-
-  #aside-content {
-    width: 290px !important;
-  }
-}
-
-/* 4. 卡片质感：不要死白，增加轻微玻璃感 */
-#recent-posts > .recent-post-item,
-.card-widget,
-#post,
-#page,
-#archive,
-#tag,
-#category {
-  background: rgba(255, 255, 255, 0.86) !important;
-  border: 1px solid rgba(47, 93, 80, 0.08);
-  border-radius: 18px !important;
-  box-shadow: 0 10px 30px rgba(31, 41, 55, 0.08) !important;
-    /* 毛玻璃效果 */
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
-}
-
-/* 5. 鼠标悬浮时卡片更有产品感 */
-#recent-posts > .recent-post-item:hover,
-.card-widget:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 16px 40px rgba(31, 41, 55, 0.12) !important;
-  transition: all 0.25s ease;
-}
-
-/* 6. 链接颜色：去掉默认亮蓝 */
-a {
-  color: var(--cb-primary);
-}
-
-a:hover {
-  color: var(--cb-accent) !important;
-}
-
-/* 7. 首页文章标题 */
-#recent-posts > .recent-post-item > .recent-post-info > .article-title {
-  color: #1f2937 !important;
-  font-weight: 700;
-}
-
-/* 8. 侧边栏标题更稳重 */
-.card-widget .item-headline span,
-.card-widget .item-headline i {
-  color: var(--cb-primary) !important;
-}
-
-/* 9. 标签不要太花，统一风格 */
-.card-tag-cloud a {
-  border-radius: 999px;
-  padding: 4px 10px;
-  background: rgba(47, 93, 80, 0.08);
-  color: var(--cb-primary) !important;
-  margin: 4px;
-}
-
-/* 10. 顶部导航栏更干净 */
-#nav {
-  background: rgba(255, 255, 255, 0.72) !important;
-    /* 毛玻璃效果 */
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
-}
-
-#nav a {
-  color: #1f2937 !important;
-}
-
-#nav a:hover {
-  color: var(--cb-primary) !important;
-}
-
-/* ===================================================== */
-/* 代码块样式优化：暖灰黑 + 香槟金 */
-/* ===================================================== */
-
-/* 整个代码块外壳 */
-figure.highlight {
-    margin: 1.4rem 0 !important;
-    border-radius: 16px !important;
-    overflow: hidden !important;
-    background: #f7f3ec !important;
-    border: 1px solid rgba(59, 52, 48, 0.12) !important;
-    box-shadow: 0 10px 28px rgba(47, 42, 38, 0.08) !important;
-}
-
-/* 顶部语言栏 */
-figure.highlight .highlight-tools {
-    background: #ece5da !important;
-    border-bottom: 1px solid rgba(59, 52, 48, 0.10) !important;
-    height: 38px !important;
-    line-height: 38px !important;
-}
-
-/* 左上角语言名称，比如 PYTHON */
-figure.highlight .code-lang {
-    color: #3b3430 !important;
-    font-size: 0.82rem !important;
-    font-weight: 800 !important;
-    letter-spacing: 0.6px !important;
-    text-transform: uppercase !important;
-}
-
-/* 折叠箭头 */
-figure.highlight .expand {
-    color: #8a8178 !important;
-}
-
-/* 复制按钮 */
-figure.highlight .copy-button {
-    color: #8a8178 !important;
-}
-
-figure.highlight .copy-button:hover {
-    color: #b98b5f !important;
-}
-
-/* 代码主体背景 */
-figure.highlight table,
-figure.highlight pre,
-figure.highlight .code,
-figure.highlight .gutter {
-    background: #f7f3ec !important;
-}
-
-/* 代码主体 */
-figure.highlight pre {
-    padding: 14px 0 !important;
-    margin: 0 !important;
-    color: #2f2a26 !important;
-    font-size: 0.92rem !important;
-    line-height: 1.85 !important;
-    font-family: "JetBrains Mono", "Fira Code", "Cascadia Code", Consolas, monospace !important;
-}
-
-/* 行号区域 */
-figure.highlight .gutter {
-    width: 48px !important;
-    color: #a79d92 !important;
-    -webkit-user-select: none !important;
-    -moz-user-select: none !important;
-    -ms-user-select: none !important;
-    user-select: none !important;
-    border-right: 1px solid rgba(59, 52, 48, 0.08) !important;
-}
-
-/* 行号文字 */
-figure.highlight .gutter pre {
-    color: #a79d92 !important;
-    text-align: right !important;
-    padding-right: 12px !important;
-}
-
-/* 代码区域 */
-figure.highlight .code pre {
-    padding-left: 16px !important;
-    padding-right: 18px !important;
-}
-
-/* 代码选中效果 */
-figure.highlight ::selection {
-    background: rgba(185, 139, 95, 0.28) !important;
-}
-
-/* 行内代码，比如 `print()` */
-#article-container code {
-    color: #8a5a2b !important;
-    background: rgba(185, 139, 95, 0.12) !important;
-    border: 1px solid rgba(185, 139, 95, 0.16) !important;
-    border-radius: 6px !important;
-    padding: 2px 6px !important;
-    font-size: 0.88em !important;
-}
-
-/* 代码块里的 code 不要套行内代码样式 */
-figure.highlight code {
-    color: inherit !important;
-    background: transparent !important;
-    border: none !important;
-    padding: 0 !important;
-}
-
-/* 代码块 hover 时稍微浮起 */
-figure.highlight:hover {
-    box-shadow: 0 14px 34px rgba(47, 42, 38, 0.11) !important;
-    transform: translateY(-1px);
-    transition: all 0.22s ease;
-}
-
-/* 12. 页脚不要太突兀 */
-#footer {
-  background: transparent !important;
-  color: #6b7280;
-}
-
-/* ===================================================== */
-/* 2. 首页整体布局与背景层次优化 */
-/* ===================================================== */
-/* 页面整体背景：不要纯白 */
-html,
-body,
-#body-wrap {
-    background:
-        radial-gradient(circle at 8% 20%, rgba(185, 139, 95, 0.12), transparent 26%),
-        radial-gradient(circle at 92% 34%, rgba(214, 167, 92, 0.12), transparent 24%),
-        linear-gradient(180deg, var(--cb-page-bg-2) 0%, var(--cb-page-bg) 100%) !important;
-    color: var(--cb-text);
-}
-
-/* 内容区宽度：略微加宽，但不失控 */
-.layout {
-    max-width: 1360px !important;
-    padding-left: 28px !important;
-    padding-right: 28px !important;
-}
-
-/* 大屏下，主内容和右侧栏重新分配比例 */
-@media screen and (min-width: 1200px) {
-    #recent-posts {
-        width: calc(100% - 350px) !important;
-    }
-
-    #aside-content {
-        width: 320px !important;
-    }
-}
-
-/* 超宽屏再稍微放开一点 */
-@media screen and (min-width: 1600px) {
-    .layout {
-        max-width: 1480px !important;
-    }
-}
-
-/* 文章卡片：从纯白改成米白 */
-#recent-posts > .recent-post-item {
-    background: var(--cb-card-bg) !important;
-    border: 1px solid var(--cb-border);
-    border-radius: 20px !important;
-    box-shadow: 0 14px 34px rgba(31, 41, 55, 0.07) !important;
-    min-height: 168px;
-    transition: all 0.25s ease;
-}
-
-/* 文章卡片 hover 增加左侧强调线 */
-#recent-posts > .recent-post-item:hover {
-    transform: translateY(-3px);
-    border-left: 5px solid var(--cb-primary);
-    box-shadow: 0 20px 46px rgba(31, 41, 55, 0.12) !important;
-}
-
-/* 右侧栏卡片：比文章卡片略深，形成层次 */
-.card-widget {
-    background: var(--cb-card-bg-side) !important;
-    border: 1px solid var(--cb-border);
-    border-radius: 20px !important;
-    box-shadow: 0 12px 30px rgba(31, 41, 55, 0.06) !important;
-}
-
-/* ===================================================== */
-/* 作者头像：从圆形头像改为 3:4 方角照片 */
-/* ===================================================== */
-
-#aside-content .card-info .avatar-img,
-#aside-content .card-info img.avatar-img {
-    width: 126px !important;
-    height: 168px !important;
-    border-radius: 16px !important;
-    object-fit: cover !important;
-    box-shadow: 0 10px 24px rgba(47, 42, 38, 0.14) !important;
-    border: 3px solid rgba(255, 253, 248, 0.9) !important;
-}
-
-/* 去掉 Butterfly 默认圆形头像效果 */
-#aside-content .card-info .avatar-img img {
-    border-radius: 16px !important;
-    object-fit: cover !important;
-}
-
-/* 鼠标悬浮时不旋转，只轻微放大 */
-#aside-content .card-info .avatar-img:hover,
-#aside-content .card-info img.avatar-img:hover,
-#aside-content .card-info .avatar-img:hover img,
-#aside-content .card-info img.avatar-img:hover img {
-    transform: scale(1.02) !important;
-    rotate: 0deg !important;
-}
-
-
-/* 右侧栏标题颜色统一 */
-.card-widget .item-headline span,
-.card-widget .item-headline i {
-    color: var(--cb-primary) !important;
-}
-
-/* 链接颜色：去掉默认蓝色 */
-a {
-    color: var(--cb-primary);
-}
-
-a:hover {
-    color: var(--cb-accent) !important;
-}
-
-/* 文章标题更稳重 */
-#recent-posts > .recent-post-item > .recent-post-info > .article-title {
-    color: #1f2933 !important;
-    font-weight: 700;
-    letter-spacing: 0.2px;
-}
-
-/* 文章摘要文字不要太淡 */
-#recent-posts .content {
-    color: #4b5563 !important;
-    line-height: 1.9;
-}
-
-/* 顶部导航栏：轻微半透明 */
-#nav {
-    background: rgba(247, 248, 243, 0.78) !important;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-}
-
-#nav a,
-#nav #site-name {
-    color: #1f2933 !important;
-    font-weight: 600;
-}
-
-#nav a:hover,
-#nav #site-name:hover {
-    color: var(--cb-primary) !important;
-}
-
-/* ===================================================== */
-/* 3. 首页 Hero 区域优化：降低高度，增加质感 */
-/* ===================================================== */
-
-/* 首页顶部大图不要占满一整屏 */
-#page-header.full_page {
-    height: 58vh !important;
-    min-height: 440px !important;
-}
-
-/* 顶部遮罩颜色调柔和，不要整片发绿 */
-#page-header::before {
-    background: rgba(45, 39, 35, 0.38) !important;
-}
-
-/* 首页标题 */
-#site-title {
-    font-size: 3rem !important;
-    font-weight: 800 !important;
-    letter-spacing: 0.5px;
-    text-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
-}
-
-/* 首页副标题 */
-#site-subtitle {
-    font-size: 1.15rem !important;
-    margin-top: 14px !important;
-    opacity: 0.92;
-}
-
-/* 下滑箭头不要太突兀 */
-.scroll-down-effects {
-    color: rgba(255, 255, 255, 0.82) !important;
-}
-
-
-/* ===================================================== */
-/* 4. 文章底部：上一篇/下一篇 + Related Articles 浅色化 */
-/*    适配 Butterfly 的 pagination-related 结构 */
-/* ===================================================== */
-
-/* 外层容器不要带深色背景 */
-#pagination,
-#pagination.pagination-post,
-.relatedPosts,
-.relatedPosts .relatedPosts-list {
-    background: transparent !important;
-    box-shadow: none !important;
-}
-
-/* 上一篇/下一篇、相关文章的真正卡片 */
-#pagination.pagination-post > a,
-#pagination.pagination-post > a.pagination-related,
-#pagination .pagination-related,
-.relatedPosts > .relatedPosts-list > a,
-.relatedPosts > .relatedPosts-list > a.pagination-related,
-.relatedPosts > .relatedPosts-list > div,
-.relatedPosts > .relatedPosts-list > div > a,
-.relatedPosts .pagination-related {
-    background: #fbfaf5 !important;
-    background-color: #fbfaf5 !important;
-    background-image: none !important;
-    border: 1px solid var(--cb-line) !important;
-    border-radius: 16px !important;
-    box-shadow: 0 10px 26px rgba(31, 41, 55, 0.08) !important;
-    color: #263238 !important;
-    text-shadow: none !important;
-    overflow: hidden !important;
-}
-
-/* 清除主题自带深色遮罩 */
-#pagination.pagination-post > a::before,
-#pagination.pagination-post > a::after,
-#pagination .pagination-related::before,
-#pagination .pagination-related::after,
-.relatedPosts > .relatedPosts-list > a::before,
-.relatedPosts > .relatedPosts-list > a::after,
-.relatedPosts > .relatedPosts-list > div::before,
-.relatedPosts > .relatedPosts-list > div::after,
-.relatedPosts > .relatedPosts-list > div > a::before,
-.relatedPosts > .relatedPosts-list > div > a::after,
-.relatedPosts .pagination-related::before,
-.relatedPosts .pagination-related::after {
-    content: none !important;
-    background: transparent !important;
-    background-image: none !important;
-    opacity: 0 !important;
-    filter: none !important;
-}
-
-/* 关键：隐藏封面层。深色通常就是 cover 层造成的 */
-#pagination .cover,
-#pagination img.cover,
-#pagination [class*="cover"],
-.relatedPosts .cover,
-.relatedPosts img.cover,
-.relatedPosts [class*="cover"] {
-    display: none !important;
-    background: none !important;
-    background-image: none !important;
-    opacity: 0 !important;
-    filter: none !important;
-}
-
-/* 文字层改为深色 */
-#pagination .pagination-related,
-#pagination .pagination-related *,
-.relatedPosts .pagination-related,
-.relatedPosts .pagination-related *,
-.relatedPosts .relatedPosts-list a,
-.relatedPosts .relatedPosts-list a *,
-.relatedPosts .relatedPosts-list div,
-.relatedPosts .relatedPosts-list div * {
-    color: #263238 !important;
-    text-shadow: none !important;
-}
-
-/* PREVIOUS / NEXT / 日期等弱化文字 */
-#pagination .pagination-related .label,
-#pagination .pagination-related .info-item-1,
-.relatedPosts .pagination-related .info-item-1,
-.relatedPosts .date {
-    color: #6b7280 !important;
-    font-weight: 600 !important;
-}
-
-/* 标题加粗 */
-#pagination .pagination-related .info-item-2,
-.relatedPosts .pagination-related .info-item-2,
-.relatedPosts .title {
-    color: #263238 !important;
-    font-weight: 700 !important;
-}
-
-/* hover 时保持浅色，不回到深色 */
-#pagination.pagination-post > a:hover,
-#pagination .pagination-related:hover,
-.relatedPosts > .relatedPosts-list > a:hover,
-.relatedPosts > .relatedPosts-list > div:hover,
-.relatedPosts > .relatedPosts-list > div > a:hover,
-.relatedPosts .pagination-related:hover {
-    background: #ffffff !important;
-    background-image: none !important;
-    border-color: rgba(185, 139, 95, 0.38) !important;
-    box-shadow: 0 16px 34px rgba(31, 41, 55, 0.12) !important;
-    transform: translateY(-3px);
-}
-
-
-/* ===================================================== */
-/* About 页面：技术栈徽标 */
-/* ===================================================== */
-
-/* ===================================================== */
-/* About 页面：技术栈徽标 */
-/* ===================================================== */
-
-#page .about-tech-stack {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    gap: 9px 10px !important;
-    align-items: center !important;
-    margin: 14px 0 30px 0 !important;
-}
-
-#page .about-tech-stack span {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    padding: 5px 12px !important;
-    border-radius: 999px !important;
-    border: 1px solid rgba(59, 52, 48, 0.16) !important;
-    background: rgba(246, 241, 233, 0.92) !important;
-    color: #2f2a26 !important;
-    font-size: 0.86rem !important;
-    font-weight: 600 !important;
-    line-height: 1.4 !important;
-    letter-spacing: 0.1px !important;
-    box-shadow: 0 4px 12px rgba(47, 42, 38, 0.045) !important;
-    white-space: nowrap !important;
-}
-
-#page .about-tech-stack span:hover {
-    border-color: rgba(185, 139, 95, 0.42) !important;
-    background: rgba(185, 139, 95, 0.13) !important;
-    transform: translateY(-1px) !important;
-    transition: all 0.2s ease !important;
-}
-
-
-/* ===================================================== */
-/* 夜间模式适配：修复浅色卡片上白字不可见问题 */
-/* ===================================================== */
-
 [data-theme="dark"] {
-    --cb-primary: #d8c3a5;
-    --cb-accent: #c9a46b;
+  --yf-bg: #1c1d1b;
+  --yf-text: #e3dfd6;
+  --yf-muted: #aaa79f;
+  --yf-line: #3a3b35;
+  --yf-accent: #ca9788;
+  --yf-tag-bg: #73473d;
+  --yf-tag-text: #f0ddd6;
+  --yf-surface: #242520;
+  --yf-nav-bg: rgba(39, 40, 36, .94);
+  --yf-soft: rgba(202, 151, 136, .10);
+  --yf-selection-bg: #62443d;
+  --yf-code-bg: #20211d;
+  --yf-code-tools: #2b2c26;
+}
+/* Use Butterfly's variables so code tokens and components keep their own colors. */
+:root, [data-theme="dark"] {
+  --global-bg: var(--yf-bg);
+  --font-color: var(--yf-text);
+  --text-highlight-color: var(--yf-text);
+  --card-bg: var(--yf-bg);
+  --card-meta: var(--yf-muted);
+  --card-box-shadow: none;
+  --card-hover-box-shadow: none;
+  --sidebar-bg: var(--yf-bg);
+  --sidebar-menu-bg: var(--yf-surface);
+  --search-bg: var(--yf-surface);
+  --search-input-color: var(--yf-text);
+  --search-a-color: var(--yf-text);
+  --blockquote-color: var(--yf-muted);
+  --blockquote-bg: var(--yf-soft);
+  --scrollbar-color: var(--yf-accent);
+  --toc-link-color: var(--yf-muted);
+  --hl-color: var(--yf-text);
+  --hl-bg: var(--yf-code-bg);
+  --hltools-bg: var(--yf-code-tools);
+  --hltools-color: var(--yf-muted);
+  --hlnumber-bg: var(--yf-code-bg);
+  --hlnumber-color: var(--yf-muted);
+}
+html { scroll-padding-top: 120px; }
+body {
+  background: var(--yf-bg);
+  color: var(--yf-text);
+  font: 15px/1.8 -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+a, .container a { color: var(--yf-text); }
+a:hover, .container a:hover { color: var(--yf-accent); }
+button, summary, a { -webkit-tap-highlight-color: transparent; }
+button { font: inherit; }
+:focus-visible { outline: 2px solid var(--yf-accent); outline-offset: 5px; }
+/* Set both colors: Butterfly's default selection foreground is near-white. */
+::selection { background: var(--yf-selection-bg); color: var(--yf-text); text-shadow: none; }
+.wordmark-dark, .theme-sun { display: none; }
+[data-theme="dark"] .wordmark-light, [data-theme="dark"] .theme-moon { display: none; }
+[data-theme="dark"] .wordmark-dark, [data-theme="dark"] .theme-sun { display: block; }
 
-    --cb-page-bg: #181614;
-    --cb-page-bg-2: #211e1b;
+/* Persistent header: wide and transparent at the top, compact after scrolling. */
+#page-header.not-top-img { height: 112px; margin: 0; background: none; }
+#page-header::before { display: none; }
+#body-wrap #page-header #nav {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 91;
+  display: flex;
+  width: calc(100% - 80px);
+  max-width: 1160px;
+  height: 64px;
+  padding: 0 10px 0 20px;
+  border: 1px solid transparent;
+  border-radius: 40px;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  opacity: 1;
+  animation: none;
+  font-size: 15px;
+  transition: max-width .42s cubic-bezier(.22,1,.36,1), background .3s, border-color .3s, box-shadow .3s;
+  will-change: auto;
+}
+#body-wrap #page-header #nav.is-scrolled {
+  max-width: 1080px;
+  border-color: var(--yf-line);
+  background: var(--yf-nav-bg);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, .035);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+#body-wrap #page-header #nav #blog-info > a {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  text-shadow: none;
+}
+#nav .wordmark { width: 112px; height: 40px; object-fit: contain; }
+#nav #menus { display: flex; align-items: center; gap: 19px; }
+#nav .menus_items { display: flex; gap: 28px; order: 1; }
+#nav .menus_item { padding: 0; margin: 0; }
+#body-wrap #nav .site-page { color: var(--yf-text); font-size: 15px; text-shadow: none; }
+#nav .menus_item > a { display: block; padding: 5px 0; }
+#nav .menus_item > a::after {
+  bottom: 0;
+  height: 2px;
+  background: var(--yf-accent);
+  transform: scaleX(0);
+  width: 100%;
+  transition: transform .2s;
+}
+#nav .menus_item > a:hover::after, #nav .menus_item > a[aria-current="page"]::after { transform: scaleX(1); }
+#nav #search-button { order: 2; margin-left: 5px; padding-left: 12px; border-left: 1px solid var(--yf-line); }
+#nav #theme-toggle { order: 3; }
+#nav #toggle-menu { order: 4; }
+#nav .nav-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 40px;
+  padding: 7px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--yf-text);
+  cursor: pointer;
+}
+#nav .nav-icon:hover { color: var(--yf-accent); background: var(--yf-soft); }
+#nav .nav-icon svg { width: 23px; height: 23px; }
+#nav.hide-menu .menus_items { display: none; }
+#nav:not(.hide-menu) #toggle-menu { display: none; }
+#sidebar-menus { padding: 36px 24px; color: var(--yf-text); }
+.mobile-wordmark { display: block; margin-bottom: 30px; }
+.mobile-wordmark img { width: 112px; height: 40px; }
+#sidebar-menus .menus_item { margin: 12px 0; }
+.mobile-extra { display: grid; gap: 15px; margin-top: 30px; padding-top: 24px; border-top: 1px solid var(--yf-line); font-size: 14px; }
 
-    --cb-card-bg: #24211e;
-    --cb-card-bg-side: #2b2723;
+/* One reading grid, shared by home, articles and taxonomy pages. */
+#content-inner.layout {
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr);
+  gap: 64px;
+  align-items: start;
+  width: calc(100% - 80px);
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 40px 0 64px;
+}
+#content-inner.layout > div:first-child {
+  grid-column: 2;
+  order: initial;
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+}
+#content-inner > #aside-content {
+  grid-column: 1;
+  grid-row: 1;
+  width: auto;
+  min-width: 0;
+  padding: 0 25px 0 0;
+  border-right: 1px solid var(--yf-line);
+}
+.profile-photo { display: block; width: 180px; max-width: 100%; height: auto; border-radius: 4px; object-fit: contain; }
+.profile-name { margin: 15px 0 3px; font-size: 19px; line-height: 1.5; font-weight: 400; }
+.profile-focus { margin: 0; font-size: 12px; color: var(--yf-muted); }
+.profile-links { position: relative; display: flex; gap: 22px; margin-top: 16px; font-size: 13px; }
+.profile-contact { position: relative; }
+.profile-contact summary { cursor: pointer; list-style: none; }
+.profile-contact summary::-webkit-details-marker { display: none; }
+.profile-contact summary:hover { color: var(--yf-accent); }
+.contact-popover { position: absolute; left: 0; top: 30px; z-index: 20; width: max-content; max-width: calc(100vw - 40px); padding: 15px; border: 1px solid var(--yf-line); border-radius: 6px; background: var(--yf-surface); box-shadow: 0 4px 14px rgba(0,0,0,.06); }
+.contact-address { display: block; overflow-wrap: anywhere; }
+.contact-actions { display: flex; align-items: center; gap: 20px; margin-top: 12px; }
+.contact-actions button { padding: 4px 9px; border: 1px solid var(--yf-line); border-radius: 3px; background: transparent; color: var(--yf-text); cursor: pointer; }
+.contact-actions button:hover { color: var(--yf-accent); border-color: var(--yf-accent); }
+.contact-status { margin: 8px 0 0; color: var(--yf-muted); font-size: 12px; }
+.contact-status:empty { display: none; }
+.profile-section { margin-top: 26px; padding-top: 20px; border-top: 1px solid var(--yf-line); }
+.profile-section h2 { margin: 0 0 12px; color: var(--yf-muted); font-size: 13px; font-weight: 400; }
+.profile-categories { display: grid; gap: 8px; font-size: 14px; }
+.profile-categories h2 { margin-bottom: 3px; }
+.profile-category { position: relative; padding-left: 15px; }
+.profile-category.is-active { color: var(--yf-accent); }
+.profile-category.is-active::before { content: ""; position: absolute; top: 10px; left: 0; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+.profile-project a { font-size: 14px; }
+.profile-project p { margin: 4px 0 0; color: var(--yf-muted); font-size: 12px; }
+#aside-content .sticky_layout { top: 112px; margin-top: 26px; }
+#aside-content .card-widget { margin: 0; padding: 18px 0; border-radius: 0; box-shadow: none; background: var(--yf-bg); }
+#aside-content #card-toc .toc-content { position: relative; margin: 0; width: 100%; }
+#aside-content #card-toc .toc-content > * { margin: 0 !important; }
+#aside-content #card-toc .toc-content .toc-link.active { background: var(--yf-soft); color: var(--yf-accent); }
+html.hide-aside #content-inner, #content-inner.hide-aside { grid-template-columns: minmax(0, 1fr); max-width: 900px; }
+html.hide-aside #content-inner > div:first-child, #content-inner.hide-aside > div:first-child { grid-column: 1; }
+html.hide-aside #content-inner > #aside-content { display: none; }
 
-    --cb-text: #eee6da;
-    --cb-muted: #b7ada2;
-    --cb-border: rgba(216, 195, 165, 0.16);
-    --cb-line: rgba(216, 195, 165, 0.18);
-    --cb-bg-soft: rgba(201, 164, 107, 0.14);
+/* Dates + topic, title, then a short excerpt. No cover cards. */
+.feed-toolbar { display: flex; align-items: center; justify-content: space-between; padding-bottom: 20px; border-bottom: 1px solid var(--yf-line); }
+.feed-toolbar h1 { margin: 0; font-size: 19px; font-weight: 400; line-height: 1.5; }
+.feed-filter { position: relative; font-size: 14px; }
+.feed-filter summary { list-style: none; cursor: pointer; padding: 3px 4px; }
+.feed-filter summary::-webkit-details-marker { display: none; }
+.feed-filter summary::after { content: ""; display: inline-block; width: 6px; height: 6px; border-right: 1px solid; border-bottom: 1px solid; transform: rotate(45deg); vertical-align: 3px; margin-left: 13px; }
+.feed-filter nav { position: absolute; right: 0; top: 36px; z-index: 10; display: grid; min-width: 190px; max-height: 350px; overflow-y: auto; padding: 10px; border: 1px solid var(--yf-line); border-radius: 6px; background: var(--yf-surface); box-shadow: 0 5px 16px rgba(0,0,0,.05); }
+.feed-filter nav a { padding: 7px 10px; border-radius: 3px; }
+.feed-filter nav a:hover { background: var(--yf-soft); }
+#recent-posts .recent-post-item {
+  display: block;
+  height: auto;
+  overflow: visible;
+  margin: 0;
+  padding: 28px 0;
+  border: 0;
+  border-bottom: 1px solid var(--yf-line);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  transition: none;
+}
+#recent-posts .recent-post-item:hover { box-shadow: none; transform: none; }
+#recent-posts .recent-post-item > .recent-post-info { width: 100%; padding: 0; }
+#recent-posts .recent-post-item .article-meta-wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin: 0 0 9px; font-size: 12px; color: var(--yf-muted); line-height: 22px; }
+#recent-posts .recent-post-item .article-meta-wrap a.article-topic { padding: 0 9px; border-radius: 12px; background: var(--yf-tag-bg); color: var(--yf-tag-text); font-size: 11px; line-height: 21px; }
+#recent-posts .recent-post-item .article-meta-wrap a.article-topic:hover { opacity: .85; text-decoration: none; }
+.article-pinned { font-size: 11px; }
+#recent-posts .recent-post-info h2 { margin: 0 0 6px; font-weight: 400; line-height: 1.5; }
+#recent-posts .recent-post-item .recent-post-info .article-title { display: block; color: var(--yf-text); font-size: 22px; font-weight: 400; line-height: 1.5; overflow-wrap: anywhere; }
+#recent-posts .recent-post-item .recent-post-info .article-title:hover { color: var(--yf-accent); }
+#recent-posts .recent-post-item .recent-post-info .content { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: auto; margin: 0; color: var(--yf-muted); font-size: 14px; line-height: 1.8; }
+#pagination .pagination { display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 28px; text-align: center; }
+#pagination .pagination > * { position: relative; display: inline-flex; align-items: center; justify-content: center; flex: 0 0 36px; width: 36px; height: 36px; margin: 0; padding: 0; border: 0; border-radius: 0; box-shadow: none; background: transparent; color: var(--yf-text); font-size: 14px; line-height: 1; }
+#pagination .pagination svg { display: block; flex: none; }
+#pagination .pagination .page-number.current { background: transparent; color: var(--yf-accent); }
+#pagination .pagination .page-number.current::after { content: ''; position: absolute; bottom: 0; left: 50%; width: 16px; height: 2px; background: currentColor; transform: translateX(-50%); }
+#pagination .pagination > *:not(.space):hover { background: var(--yf-soft); color: var(--yf-accent); }
+
+/* Article and utility pages keep the same calm reading surface. */
+#post > #post-info { margin-bottom: 32px; }
+#post > #post-info .post-title { border-bottom: 0; font-size: 30px; font-weight: 500; line-height: 1.5; }
+#post > #post-info #post-meta, #post > #post-info #post-meta a { color: var(--yf-muted); font-size: 12px; }
+#article-container { font-size: 15px; line-height: 1.95; }
+#article-container h1, #article-container h2, #article-container h3, #article-container h4 { color: var(--yf-text); font-weight: 500; }
+#article-container :not(pre) > code { color: var(--yf-accent); background: var(--yf-soft); padding: 2px 5px; border-radius: 3px; }
+#article-container a { text-decoration-color: var(--yf-line); text-underline-offset: 4px; }
+.container figure.highlight { margin: 24px 0; border: 1px solid var(--yf-line); border-radius: 6px; box-shadow: none; background: var(--yf-code-bg); }
+.container figure.highlight pre { font-family: "Cascadia Code", Consolas, monospace !important; font-size: 13px; line-height: 1.8; }
+.container figure.highlight .highlight-tools { height: 32px; border-bottom: 1px solid var(--yf-line); }
+.container figure.highlight .code-lang { font-size: 11px; font-weight: 500; }
+.container figure.highlight .code pre { padding-left: 14px; padding-right: 14px; }
+.container figure.highlight .gutter { border-right: 1px solid var(--yf-line); }
+#article-container table th, #article-container table td { border-color: var(--yf-line); }
+#article-container table thead { background: var(--yf-soft); }
+#article-container blockquote { border-left-color: var(--yf-accent); }
+/* Repository cards only appear on posts with an explicit repository link. */
+#post .code-source {
+  margin: 36px 0 24px;
+  padding: 22px 0;
+  border-top: 1px solid var(--yf-line);
+  border-bottom: 1px solid var(--yf-line);
+  color: var(--yf-text);
+  text-decoration: none;
+  transition: border-color .2s, background .2s;
+}
+#post .code-source:hover { border-color: var(--yf-accent); background: var(--yf-soft); }
+#post .code-source-repository { display: grid; grid-template-columns: 24px minmax(0, 1fr) auto; align-items: center; gap: 20px; color: var(--yf-text); text-decoration: none; }
+.code-source-icon { display: flex; color: var(--yf-accent); }
+.code-source-content { display: grid; min-width: 0; gap: 3px; }
+.code-source-label { color: var(--yf-accent); font-size: 12px; line-height: 1.5; }
+.code-source-name { font-family: "Cascadia Code", Consolas, monospace; overflow-wrap: anywhere; }
+.code-source-name { font-size: 14px; font-weight: 500; line-height: 1.7; }
+.code-source-topic { color: var(--yf-muted); font-size: 12px; line-height: 1.7; overflow-wrap: anywhere; }
+.code-source-action { display: flex; align-items: center; gap: 8px; padding: 4px 8px; border: 1px solid var(--yf-line); border-radius: 4px; color: var(--yf-accent); font-size: 12px; white-space: nowrap; }
+#post .code-source:hover .code-source-action { color: var(--yf-accent); }
+#post .code-source svg { flex: none; }
+#post .tag_share .post-meta__tags { border-color: var(--yf-line); color: var(--yf-accent); }
+#pagination.pagination-post { background: transparent; box-shadow: none; }
+#pagination .pagination-related { border: 1px solid var(--yf-line); border-radius: 4px; background: var(--yf-surface); color: var(--yf-text); }
+.pagination-related .cover { display: none; }
+.pagination-related .info .info-1, .pagination-related .info .info-2, .pagination-related .info .info-1 .info-item-2 { color: var(--yf-text); }
+.pagination-related .info .info-1 .info-item-1 { color: var(--yf-muted); }
+#pagination .pagination-related:hover { background: var(--yf-soft); }
+#page .page-title, #archive .article-sort-title { font-size: 26px; font-weight: 400; }
+.category-lists .category-list a { color: var(--yf-text); }
+.category-lists .category-list-count { color: var(--yf-muted); }
+#page .about-tech-stack { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 26px; }
+#page .about-tech-stack span { padding: 3px 10px; border: 1px solid var(--yf-line); border-radius: 4px; color: var(--yf-text); font-size: 12px; }
+#local-search .search-dialog { border: 1px solid var(--yf-line); border-radius: 8px; }
+#local-search .search-dialog .search-nav { color: var(--yf-text); }
+#local-search .search-dialog input { color: var(--yf-text); }
+#rightside > div > button { border: 1px solid var(--yf-line); border-radius: 4px; background: var(--yf-surface); color: var(--yf-muted); }
+/* Theme toggle lives in the header; retain the native action for theme integrations. */
+#rightside #darkmode { display: none; }
+#footer { width: calc(100% - 80px); max-width: 1160px; margin: auto; padding: 20px 0 30px; border-top: 1px solid var(--yf-line); background: transparent; color: var(--yf-muted); }
+#footer .site-footer { display: flex; justify-content: space-between; gap: 20px; color: var(--yf-muted); font-size: 12px; }
+#footer .site-footer nav { display: flex; gap: 24px; }
+#footer .site-footer a { color: var(--yf-muted); }
+#footer .site-footer a:hover { color: var(--yf-accent); }
+
+/* Keep the author panel and reading outline in separate viewport-sized areas. */
+@media (min-width: 901px) {
+  #content-inner > #aside-content {
+    position: sticky;
+    top: 152px;
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100dvh - 176px);
+  }
+  #aside-content .profile-sidebar { min-height: 0; overflow-y: auto; overscroll-behavior-y: contain; scrollbar-width: thin; scrollbar-color: var(--yf-line) transparent; }
+  #content-inner > #aside-content.has-toc { height: calc(100dvh - 176px); }
+  #aside-content.has-toc .profile-sidebar { flex: 0 1 auto; max-height: 50%; }
+  #aside-content.has-toc .profile-photo { width: min(100%, 15vh); }
+  #aside-content.has-toc .sticky_layout { position: static; display: flex; flex: 1; min-height: 0; margin-top: 20px; }
+  #aside-content.has-toc #card-toc { display: flex; flex: 1; flex-direction: column; min-height: 0; width: 100%; padding: 16px 0 0; }
+  #aside-content.has-toc #card-toc .item-headline { flex: none; }
+  #aside-content.has-toc #card-toc .toc-content { flex: 1; min-height: 0; max-height: none; overflow-y: auto; overscroll-behavior-y: contain; scrollbar-width: thin; scrollbar-color: var(--yf-line) transparent; }
+  #aside-content .contact-popover { position: fixed; }
 }
 
-/* 夜间模式整体背景 */
-[data-theme="dark"] html,
-[data-theme="dark"] body,
-[data-theme="dark"] #body-wrap {
-    background:
-        radial-gradient(circle at 8% 20%, rgba(201, 164, 107, 0.08), transparent 26%),
-        linear-gradient(180deg, #211e1b 0%, #181614 100%) !important;
-    color: var(--cb-text) !important;
+@media (max-width: 1100px) {
+  #content-inner.layout { grid-template-columns: 160px minmax(0, 1fr); gap: 36px; }
+  #content-inner > #aside-content { padding-right: 22px; }
 }
-
-/* 夜间模式：文章页、页面、侧边栏、卡片 */
-[data-theme="dark"] #post,
-[data-theme="dark"] #page,
-[data-theme="dark"] #archive,
-[data-theme="dark"] #tag,
-[data-theme="dark"] #category,
-[data-theme="dark"] .card-widget,
-[data-theme="dark"] #recent-posts > .recent-post-item {
-    background: var(--cb-card-bg) !important;
-    border-color: var(--cb-border) !important;
-    color: var(--cb-text) !important;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.24) !important;
+@media (max-width: 900px) {
+  #content-inner.layout { display: flex; flex-direction: column; gap: 30px; padding-top: 22px; }
+  #content-inner.layout > div:first-child { order: 1; }
+  #content-inner > #aside-content { order: 0; width: 100%; padding: 0 0 24px; border-right: 0; border-bottom: 1px solid var(--yf-line); }
+  .profile-identity { display: grid; grid-template-columns: 72px minmax(0,1fr); align-items: center; gap: 20px; }
+  .profile-photo { width: 72px; }
+  .profile-name { margin-top: 0; font-size: 18px; }
+  .profile-links { margin-top: 8px; }
+  .profile-contact { position: static; }
+  .contact-popover { max-width: 100%; }
+  .profile-section { display: none; }
+  #aside-content .sticky_layout { margin: 0; }
+  #aside-content #card-toc { padding: 20px; border: 1px solid var(--yf-line); border-radius: 6px; background: var(--yf-surface); }
+  #aside-content #card-toc .toc-content { width: 100%; margin: 0; }
 }
-
-/* 夜间模式：正文文字 */
-[data-theme="dark"] #article-container,
-[data-theme="dark"] #article-container p,
-[data-theme="dark"] #article-container li,
-[data-theme="dark"] #article-container span,
-[data-theme="dark"] #article-container div {
-    color: var(--cb-text) !important;
+@media (max-width: 600px) {
+  #page-header.not-top-img { height: 92px; }
+  #body-wrap #page-header #nav { top: 12px; width: calc(100% - 32px); height: 58px; padding-left: 14px; padding-right: 6px; }
+  #nav .wordmark { width: 96px; height: 36px; }
+  #nav #menus { gap: 3px; }
+  #nav #search-button { padding-left: 6px; margin-left: 0; border-left: 0; }
+  #nav .nav-icon { width: 34px; height: 38px; padding: 7px; }
+  #content-inner.layout { width: calc(100% - 40px); padding-top: 20px; padding-bottom: 40px; }
+  #recent-posts .recent-post-item { padding: 23px 0; }
+  #recent-posts .recent-post-item .recent-post-info .article-title { font-size: 19px; }
+  #recent-posts .recent-post-item .recent-post-info .content { font-size: 13px; }
+  #recent-posts .recent-post-item .article-meta-wrap { gap: 8px 12px; }
+  #post > #post-info .post-title { font-size: 25px; }
+  #article-container { font-size: 14px; }
+  #post .code-source { margin-top: 28px; padding: 18px 0; }
+  #post .code-source-repository { gap: 12px; }
+  .code-source-name { font-size: 12px; }
+  .code-source-action { gap: 4px; }
+  #footer { width: calc(100% - 40px); }
 }
-
-/* 夜间模式：标题 */
-[data-theme="dark"] #article-container h1,
-[data-theme="dark"] #article-container h2,
-[data-theme="dark"] #article-container h3,
-[data-theme="dark"] #article-container h4,
-[data-theme="dark"] #article-container h5,
-[data-theme="dark"] #article-container h6 {
-    color: #f4ecdf !important;
-}
-
-/* 夜间模式：弱化文字 */
-[data-theme="dark"] #article-container blockquote,
-[data-theme="dark"] #article-container .post-meta,
-[data-theme="dark"] #article-container .post-copyright,
-[data-theme="dark"] #aside-content {
-    color: var(--cb-muted) !important;
-}
-
-/* 夜间模式：链接 */
-[data-theme="dark"] a {
-    color: #d8c3a5 !important;
-}
-
-[data-theme="dark"] a:hover {
-    color: #c9a46b !important;
-}
-
-/* 夜间模式：代码块 */
-[data-theme="dark"] figure.highlight {
-    background: #1f1c19 !important;
-    border-color: rgba(216, 195, 165, 0.14) !important;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28) !important;
-}
-
-/* 夜间模式：代码块顶部语言栏 */
-[data-theme="dark"] figure.highlight .highlight-tools {
-    background: #2b2723 !important;
-    border-bottom: 1px solid rgba(216, 195, 165, 0.12) !important;
-}
-
-[data-theme="dark"] figure.highlight .code-lang {
-    color: #eee6da !important;
-}
-
-/* 夜间模式：代码主体 */
-[data-theme="dark"] figure.highlight table,
-[data-theme="dark"] figure.highlight pre,
-[data-theme="dark"] figure.highlight .code,
-[data-theme="dark"] figure.highlight .gutter {
-    background: #1f1c19 !important;
-}
-
-/* 夜间模式：代码文字 */
-[data-theme="dark"] figure.highlight pre,
-[data-theme="dark"] figure.highlight code {
-    color: #eee6da !important;
-}
-
-/* 夜间模式：行号 */
-[data-theme="dark"] figure.highlight .gutter,
-[data-theme="dark"] figure.highlight .gutter pre {
-    color: #8f857b !important;
-    border-right-color: rgba(216, 195, 165, 0.10) !important;
-}
-
-/* 夜间模式：行内代码 */
-[data-theme="dark"] #article-container code {
-    color: #f0c987 !important;
-    background: rgba(201, 164, 107, 0.14) !important;
-    border-color: rgba(201, 164, 107, 0.22) !important;
-}
-
-/* 代码块里的 code 不要套行内代码样式 */
-[data-theme="dark"] figure.highlight code {
-    color: inherit !important;
-    background: transparent !important;
-    border: none !important;
-}
-
-
-/* ===================================================== */
-/* 更稳的中文字体方案 */
-/* ===================================================== */
-
-body,
-#body-wrap,
-#content-inner,
-#aside-content,
-#article-container,
-#recent-posts .article-title,
-#recent-posts .content,
-.card-widget,
-#site-name,
-#site-title {
-    font-family:
-        "PingFang SC",
-        "Hiragino Sans GB",
-        "Microsoft YaHei",
-        "Noto Sans CJK SC",
-        "Source Han Sans SC",
-        "Helvetica Neue",
-        Arial,
-        sans-serif !important;
-
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
+@media (prefers-reduced-motion: reduce) {
+  #body-wrap #page-header #nav { transition: none; }
+  html { scroll-behavior: auto; }
 }
