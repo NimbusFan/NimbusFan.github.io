@@ -1,0 +1,421 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>TwinSync：Windows 双向文件同步的设计与实现 | Yunfei</title><meta name="author" content="Fan Yunfei"><meta name="copyright" content="Fan Yunfei"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f5f4f0"><meta name="description" content="从 TwinSync 的原生 C# 实现出发，梳理双机同步中的增量扫描、文件状态判定、冲突保留、断点续传与安全提交。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TwinSync：Windows 双向文件同步的设计与实现">
+<meta property="og:url" content="https://nimbusfan.github.io/twinsync/index.html">
+<meta property="og:site_name" content="Yunfei">
+<meta property="og:description" content="从 TwinSync 的原生 C# 实现出发，梳理双机同步中的增量扫描、文件状态判定、冲突保留、断点续传与安全提交。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://nimbusfan.github.io/img/system/avatar.jpg">
+<meta property="article:published_time" content="2026-11-15T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-11-15T16:00:00.000Z">
+<meta property="article:author" content="Fan Yunfei">
+<meta property="article:tag" content="CSharp">
+<meta property="article:tag" content="TwinSync">
+<meta property="article:tag" content="Windows">
+<meta property="article:tag" content="文件同步">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://nimbusfan.github.io/img/system/avatar.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "TwinSync：Windows 双向文件同步的设计与实现",
+  "url": "https://nimbusfan.github.io/twinsync/",
+  "image": "https://nimbusfan.github.io/img/system/avatar.jpg",
+  "datePublished": "2026-11-15T16:00:00.000Z",
+  "dateModified": "2026-11-15T16:00:00.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Fan Yunfei",
+      "url": "https://NimbusFan.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/system/favicon.svg"><link rel="canonical" href="https://nimbusfan.github.io/twinsync/index.html"><link rel="alternate" type="application/rss+xml" title="Yunfei RSS" href="/feed.xml"><link rel="preconnect" href="//unpkg.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#1c1d1b')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f5f4f0')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://unpkg.com/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'TwinSync：Windows 双向文件同步的设计与实现',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/custom.css"><meta name="generator" content="Hexo 8.1.1"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><a class="mobile-wordmark" href="/" aria-label="Yunfei 首页"><img class="wordmark-light" src="/img/system/wordmark.svg" alt="Yunfei" width="112" height="40"/><img class="wordmark-dark" src="/img/system/wordmark-dark.svg" alt="Yunfei" width="112" height="40"/></a><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/projects/"><span> 项目</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><span> 关于</span></a></div></div><nav class="mobile-extra" aria-label="更多页面"><a href="/categories/">分类</a><a href="/archives/">归档</a><a href="/tags/">标签</a><a href="/resume/">简历</a></nav></div></div><div class="post" id="body-wrap" data-page-type="post"><header class="not-top-img" id="page-header"><nav id="nav" aria-label="主导航"><span id="blog-info"><a class="nav-site-title" href="/" aria-label="Yunfei 首页"><img class="wordmark wordmark-light" src="/img/system/wordmark.svg" alt="Yunfei" width="112" height="40"><img class="wordmark wordmark-dark" src="/img/system/wordmark-dark.svg" alt="Yunfei" width="112" height="40"></a></span><div id="menus"><div id="search-button"><button class="search nav-icon" type="button" aria-label="搜索文章" title="搜索文章（/）"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.8" cy="10.8" r="7"></circle><path d="m16 16 4.5 4.5"></path></svg></button></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/projects/"><span> 项目</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><span> 关于</span></a></div></div><button class="nav-icon" id="theme-toggle" type="button" aria-label="切换至夜间模式" aria-pressed="false"><svg class="theme-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20.8 14A9 9 0 0 1 10 3.2 9 9 0 1 0 20.8 14Z"></path></svg><svg class="theme-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 1v3m0 16v3M1 12h3m16 0h3M4.2 4.2l2.1 2.1m11.4 11.4 2.1 2.1M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"></path></svg></button><div id="toggle-menu"><button class="site-page nav-icon" type="button" aria-label="展开导航菜单"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">TwinSync：Windows 双向文件同步的设计与实现</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-11-15T16:00:00.000Z" title="发表于 2026-11-16 00:00:00">2026-11-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-11-15T16:00:00.000Z" title="更新于 2026-11-16 00:00:00">2026-11-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E8%B7%B5/">项目实践</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">4.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>17分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="container post-content" id="article-container"><p>TwinSync 是一个 Windows 双机文件同步工具。指定两台电脑的某一个文件夹，配对后自动后台同步。</p>
+<p>项目地址：<a target="_blank" rel="noopener" href="https://github.com/NimbusFan/TwinSync">https://github.com/NimbusFan/TwinSync</a></p>
+<span id="more"></span>
+
+<h2 id="运行结构与使用范围"><a href="#运行结构与使用范围" class="headerlink" title="运行结构与使用范围"></a>运行结构与使用范围</h2><p>TwinSync 面向 Windows 10&#x2F;11，依赖 .NET Framework 4.7.2 或更高版本。两台电脑各自运行后台进程，直接交换文件清单和内容；管理页面默认通过 <code>http://127.0.0.1:55220</code> 访问。</p>
+<p><img src="/img/TwinSync/architecture.svg" alt="TwinSync 双机结构：两端分别运行本机管理页面、C# 后台进程和授权目录，经 TLS 直接通信"></p>
+<p><em>图 1：管理界面和同步核心分开运行。两端通过共享文件夹 ID 对应同一组内容，本地目录可以不同。</em></p>
+<p>例如，电脑 A 选择 <code>D:\Work\Notes</code>，电脑 B 选择 <code>E:\Shared\Notes</code>，两者仍能建立同一组同步关系。设备之间不需要约定相同的盘符，也不会把对方传来的绝对路径直接当成本机写入位置。</p>
+<p>这套结构不要求额外部署中央文件服务器，但要求设备之间网络可达。局域网发现可以帮助填写地址，不负责跨越 NAT，也不提供云端中继。电脑离线期间，另一端的编辑先保留在本机，等双方恢复连接后再核对。</p>
+<p>后台运行依附于当前 Windows 用户会话，登录启动使用当前用户的启动项；它不是安装成系统服务后、无需用户登录就运行的模式。浏览器退出与后台进程退出，也需要区分。</p>
+<p><img src="/img/TwinSync/overview-light.png" alt="TwinSync 浅色管理界面，展示同步概览、文件夹和设备连接"></p>
+<p><em>图 2：仓库中的管理界面示例，使用演示数据。文件数量与容量用于展示界面，不是吞吐量测试结果。</em></p>
+<h2 id="首次安装与双机配置"><a href="#首次安装与双机配置" class="headerlink" title="首次安装与双机配置"></a>首次安装与双机配置</h2><p>安装包和源码包放在 <a target="_blank" rel="noopener" href="https://github.com/NimbusFan/TwinSync/releases">GitHub Releases</a>。核对时最新公开预发布版本为 <a target="_blank" rel="noopener" href="https://github.com/NimbusFan/TwinSync/releases/tag/v1.0.0-beta.2"><code>v1.0.0-beta.2</code></a>，属于测试版本。</p>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>TwinSyncSetup.exe</code></td>
+<td>在两台 Windows 电脑上安装和使用</td>
+</tr>
+<tr>
+<td><code>TwinSync-source.zip</code></td>
+<td>查看源码、文档、回归用例并自行构建</td>
+</tr>
+</tbody></table>
+<p>首次运行需要分别为两台电脑命名。接着在设备页查看对端地址、端口、完整设备指纹和一次性配对码，核对指纹后完成配对。最后添加文件夹，选择同步方向及共享设备；接收方收到邀请后，要在自己的电脑上选择目录并确认。</p>
+<p>同步方向按本机视角理解：</p>
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th>本机行为</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>双向</td>
+<td>根据双方文件状态发送或接收变更</td>
+</tr>
+<tr>
+<td>仅发送</td>
+<td>发送本机变更，拒绝远端写入和删除</td>
+</tr>
+<tr>
+<td>仅接收</td>
+<td>不主动向对端推送本机变更；本地编辑仍需参与状态核对</td>
+</tr>
+</tbody></table>
+<p>“仅接收”不等于把文件夹变成只读，也不等于每轮无条件覆盖本地内容。两个设备的方向设置需要一起看，否则可能出现一边希望发送、另一边又拒绝接收的情况。</p>
+<p>首次验证用一个测试目录即可：新建文件、修改内容、断开连接后再恢复，最后测试删除和双方编辑。尤其要记住，<strong>同步会传播被授权的删除，不能代替独立备份</strong>。安装和日常操作的完整步骤见<a target="_blank" rel="noopener" href="https://github.com/NimbusFan/TwinSync/blob/main/docs/usage.md">项目使用指南</a>。</p>
+<h2 id="文件变化的检测与增量扫描"><a href="#文件变化的检测与增量扫描" class="headerlink" title="文件变化的检测与增量扫描"></a>文件变化的检测与增量扫描</h2><p>一个直观实现是定时递归整个文件夹，再计算所有文件的哈希。它容易理解，但目录变大后，即使只修改一个小文件，也可能反复遍历大量无关路径。</p>
+<p>TwinSync 将变化检测拆成两步：<code>FileSystemWatcher</code> 提供待核对的路径，扫描器再读取磁盘状态并更新索引。事件回调不直接执行文件同步。</p>
+<p><img src="/img/TwinSync/reconcile.svg" alt="TwinSync 的扫描与同步决策流程，从文件事件、路径队列和本地索引进入清单比较，再分为确认、推送、拉取或跳过"></p>
+<p><em>图 3：事件用于缩小核对范围，索引和磁盘内容才参与后续同步决策。箭头表示处理顺序，不代表每一步都在同一线程中完成。</em></p>
+<p><code>ScanQueue</code> 用不区分大小写的集合收集路径，同一路径多次变化只需进入一次待扫描集合。扫描时还会合并嵌套范围：如果已经要检查整个子目录，就不必再对其中每个文件单独发起一次遍历。</p>
+<p>重命名同时加入旧路径与新路径。当前索引以相对路径标识文件，因此重命名通常表现为旧路径删除、新路径出现；它没有独立的文件身份追踪，不能据此承诺重命名一定零传输。</p>
+<p>文件事件也不能承担完整性保证，所以实现中保留了全量核对的退路：</p>
+<ul>
+<li>监听器报错、配置变化或队列积累过多时，标记下一轮全量扫描。</li>
+<li>监听正常时，仍以约 600 秒为阈值安排全量核对；监听不可用时缩短到约 30 秒。</li>
+<li>手动同步要求全量核对；扫描失败后，待处理范围会重新放回队列。</li>
+</ul>
+<p>这里的“全量扫描”指遍历整个目录，不必然意味着重新哈希每个文件。普通扫描会用长度与修改时间判断能否复用已有哈希；针对事件路径的扫描则要求重算内容哈希。元数据可以减少读取开销，却不能证明内容永远没有变化。</p>
+<p>这种设计把平时的开销集中到变化路径，同时为遗漏事件保留周期性核对。具体实现见 <a target="_blank" rel="noopener" href="https://github.com/NimbusFan/TwinSync/blob/8481d9e1b52e0216de17afcd803a00b76e59e1a5/native/core/ScanQueue.cs"><code>ScanQueue.cs</code></a> 与 <a target="_blank" rel="noopener" href="https://github.com/NimbusFan/TwinSync/blob/8481d9e1b52e0216de17afcd803a00b76e59e1a5/native/core/Scanner.cs"><code>Scanner.cs</code></a>。</p>
+<h2 id="文件索引与同步决策"><a href="#文件索引与同步决策" class="headerlink" title="文件索引与同步决策"></a>文件索引与同步决策</h2><h3 id="内容、版本和删除标记"><a href="#内容、版本和删除标记" class="headerlink" title="内容、版本和删除标记"></a>内容、版本和删除标记</h3><p>同步需要知道的不只是文件是否存在。当前索引记录了以下关键字段：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>path</code></td>
+<td>相对共享目录的路径</td>
+</tr>
+<tr>
+<td><code>hash</code>、<code>size</code></td>
+<td>文件内容的 SHA-256 与字节数</td>
+</tr>
+<tr>
+<td><code>mtimeMs</code></td>
+<td>文件修改时间，用于元数据判断及可选的冲突策略</td>
+</tr>
+<tr>
+<td><code>rev</code>、<code>origin</code></td>
+<td>逻辑修订号及产生该版本的设备</td>
+</tr>
+<tr>
+<td><code>baseHash</code></td>
+<td>用于判断本地内容是否变化的比较基线</td>
+</tr>
+<tr>
+<td><code>deleted</code></td>
+<td>删除标记，表示这条路径有需要传播的删除状态</td>
+</tr>
+</tbody></table>
+<p>删除不能简单实现成“把条目从索引移除”。否则，对端只能看到本机没有这个文件，无法区分它是尚未接收过，还是已经被明确删除。TwinSync 保留删除条目，更新修订号，并记录删除前的内容基线。</p>
+<h3 id="清单比较与目录方向"><a href="#清单比较与目录方向" class="headerlink" title="清单比较与目录方向"></a>清单比较与目录方向</h3><p>每轮核对取得对端文件清单，再对两边的路径取并集。每条路径根据内容、版本次序与目录模式，得到四类动作：</p>
+<table>
+<thead>
+<tr>
+<th>动作</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>same</code></td>
+<td>内容一致或双方均已删除，更新必要的确认信息</td>
+</tr>
+<tr>
+<td><code>push</code></td>
+<td>将本机文件或删除状态发给对端</td>
+</tr>
+<tr>
+<td><code>pull</code></td>
+<td>接收对端文件或删除状态</td>
+</tr>
+<tr>
+<td><code>none</code></td>
+<td>目录方向不允许执行本轮传输</td>
+</tr>
+</tbody></table>
+<p>普通版本排序依次比较 <code>rev</code>、<code>origin</code>、<code>hash</code>，给相同修订号的不同版本一个稳定次序。修改时间主要在双方都修改、且选择“较新版本”策略时参与比较。</p>
+<p>稳定排序解决的是“两边如何作出一致选择”，不代表程序知道哪个版本更符合用户意图。<code>rev</code> 也不是实际时间，更不能仅凭数值较大就宣称它具有完整的因果信息。当前实现没有使用版本向量或文本三方合并，状态判断应在这个范围内理解。<a target="_blank" rel="noopener" href="https://github.com/NimbusFan/TwinSync/blob/8481d9e1b52e0216de17afcd803a00b76e59e1a5/native/core/SyncModel.cs">同步决策实现</a></p>
+<h2 id="双方编辑与冲突保留"><a href="#双方编辑与冲突保留" class="headerlink" title="双方编辑与冲突保留"></a>双方编辑与冲突保留</h2><p>假设两台电脑都确认过 <code>notes.md</code> 的内容 <code>h0</code>，随后离线编辑：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">共同确认的内容：h0</span><br><span class="line">电脑 A：h0 → hA</span><br><span class="line">电脑 B：h0 → hB</span><br></pre></td></tr></table></figure>
+
+<p>重新连接时，两边内容不同，而且都偏离了各自的基线。当前 <code>BothChanged</code> 的核心判断可以概括为：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">双方文件都存在且未删除</span><br><span class="line">且 local.hash != remote.hash</span><br><span class="line">且 local.hash != local.baseHash</span><br><span class="line">且 remote.hash != remote.baseHash</span><br></pre></td></tr></table></figure>
+
+<p>这里的基线也有实现边界：扫描产生新版本时记录前一内容的哈希，收到同步确认后再更新为确认内容。它并不是完整保存的共同祖先，更不能代替多端的因果历史。</p>
+<p>默认策略是保留冲突副本。接收较高次序的版本时，如果本机还有未确认修改，就先保留本机内容，再更新原路径并登记冲突。被拒绝的传入版本也可能产生需要处理的冲突记录，因此状态页需要展示冲突，不能把“所有任务执行完”直接等同于“没有需要用户处理的问题”。</p>
+<p>项目还提供按修改时间选择较新版本的策略。它适合用户明确接受这一规则的场景，但受两台机器的时钟影响；时间相同时仍需要稳定的比较规则。它无法理解“新增了一个关键参数”和“删掉了一段内容”哪个更重要。</p>
+<p>对文档和代码，保留副本通常比直接丢弃一边内容更容易事后处理。不过，冲突副本只是保留材料，不是自动合并结果；用户仍要比较内容并作出选择。</p>
+<h2 id="分块传输与断点续传"><a href="#分块传输与断点续传" class="headerlink" title="分块传输与断点续传"></a>分块传输与断点续传</h2><p>较大的文件传到一半断网，如果每次都从头发送，重连成本会随文件大小增加。TwinSync 将新版设备之间的传输拆成最大 <strong>4 MiB</strong> 的校验块，记录已确认的位置。</p>
+<p>续传不能只看临时文件有多大。一个有效的续传位置至少要满足：对应同一份目标内容，之前的分块已校验并落盘，而且接收权限仍然有效。</p>
+<p><img src="/img/TwinSync/safe-commit.svg" alt="TwinSync 的分块续传与安全提交示意，已确认分块可复用，中断块重传，完整校验和授权检查后才能替换正式文件"></p>
+<p><em>图 4：传输完成和正式文件提交是两个阶段。分块进度不能直接当作最终写入成功。</em></p>
+<p>上传时，接收端检查块的位置、长度和 SHA-256，写入临时文件并刷新到磁盘后，才保存新的续传位置。某一块中断或校验失败，就退回该块开始前的位置，不确认已经收到的半块内容。</p>
+<p>下载时使用 HTTP Range 请求指定区间，并验证响应区间和分块哈希。重连会重新核对已完成内容的前缀，全部接收后还要验证完整文件的 SHA-256。</p>
+<p>这带来一个明确的取舍：校验前缀需要重新读取部分磁盘内容，可以避免拿错误的临时文件继续拼接，但不是免费的恢复操作。分块也不等于差分同步：当前机制主要复用<strong>同一次内容传输中已经确认的部分</strong>，并不按相似块计算两份不同文件之间的最小字节差异。</p>
+<p>临时网络故障采用 1、2、4 秒间隔、最多三次自动重试；认证、授权和内容校验错误不会靠无限重试解决。传输状态还绑定文件内容、设备凭据和共享授权，暂停、撤销共享或更改目录后，旧任务不能直接沿用原授权提交。<a target="_blank" rel="noopener" href="https://github.com/NimbusFan/TwinSync/blob/8481d9e1b52e0216de17afcd803a00b76e59e1a5/native/core/ResumableTransfers.cs">续传接收端</a> · <a target="_blank" rel="noopener" href="https://github.com/NimbusFan/TwinSync/blob/8481d9e1b52e0216de17afcd803a00b76e59e1a5/native/core/PeerClient.cs">传输客户端</a></p>
+<h2 id="正式文件的提交保护"><a href="#正式文件的提交保护" class="headerlink" title="正式文件的提交保护"></a>正式文件的提交保护</h2><p>一次传输里，最值得谨慎处理的是最后一次写入。即使远端内容完全正确，也不能直接覆盖目标路径：从扫描到传输完成的这段时间，本机文件可能又被编辑过。</p>
+<p><code>AtomicFile</code> 将正式提交集中处理，主要检查三件事：</p>
+<ol>
+<li>临时文件的完整哈希与预期内容一致。</li>
+<li>正式文件仍是本轮预期的本地版本；原本不存在的路径也不能突然出现其他内容。</li>
+<li>当前设备、目录及写入操作仍有授权。</li>
+</ol>
+<p>已有正式文件通过 <code>File.Replace</code> 替换，新文件通过 <code>File.Move</code> 提交。覆盖路径还会根据版本设置保存历史内容；替换失败时，不退回“先删除旧文件，再移动新文件”的做法。</p>
+<p>后者看似是兼容性处理，却把一次失败变成了数据缺失：删除旧文件之后，如果移动新文件又失败，原位置将两份内容都没有。宁可明确报告失败、保留旧文件，也不应把这个风险藏在正常同步流程中。</p>
+<p>传输过程中撤销共享也是类似问题。任务创建时通过过权限检查，并不能证明几秒后仍有权限。实现使用授权代次和传输绑定，在分块处理及最终写入时重复检查；重新启用共享，也不会让旧任务的授权重新有效。<a target="_blank" rel="noopener" href="https://github.com/NimbusFan/TwinSync/blob/8481d9e1b52e0216de17afcd803a00b76e59e1a5/native/core/AtomicFile.cs">文件提交实现</a></p>
+<p>这种保护覆盖的是单文件提交，不是整个文件夹的事务。批量同步可能一部分成功、一部分失败，状态应保留失败路径和原因，后续按原范围处理。不能因为最后一个文件成功，就把整轮记录成成功。</p>
+<h2 id="配对、共享与本机管理"><a href="#配对、共享与本机管理" class="headerlink" title="配对、共享与本机管理"></a>配对、共享与本机管理</h2><p>设备发现、设备信任和目录授权是三个步骤。发现列表只能说明网络中出现了某个设备，不能直接允许它读取文件。</p>
+<p>TwinSync 在局域网通过 UDP <code>55221</code> 发布设备标识、名称与服务端口，发现包不携带配对码、令牌或本机目录。连接时使用 TLS 1.2，并固定核验完整的 SHA-256 证书指纹。指纹需要通过可信渠道核对，不能把尚未信任的网络响应当成它自己的可信证明。</p>
+<p>一次性配对码为六位、有效期十分钟，成功配对后轮换。配对建立设备关系，文件夹共享还需要用户单独确认：邀请只包含文件夹标识和显示信息，接收方自行选择本机目录。</p>
+<p>权限检查放在服务端，覆盖清单、读取、写入和删除等操作。路径校验拒绝父目录跳转、绝对路径和不允许的特殊路径，并检查符号链接或目录联接，避免请求通过授权目录中的跳转绕到其他位置。</p>
+<p>浏览器管理页则有另一组边界：默认只允许本机管理，检查 Host、Origin 与 CSRF 令牌。证书私钥及设备令牌由当前 Windows 用户的 DPAPI 保护；<strong>这不等于同步文件和历史版本已经加密</strong>，也不意味着整个身份数据目录可以直接复制到另一台电脑使用。</p>
+<p>这些机制的目标是收紧程序能够读取、写入和信任的范围，并非保证本机不会被控制。当前项目尚未经过独立安全审计，完整的保护范围与限制见<a target="_blank" rel="noopener" href="https://github.com/NimbusFan/TwinSync/blob/main/docs/security.md">安全说明</a>。</p>
+<h2 id="索引存储与性能取舍"><a href="#索引存储与性能取舍" class="headerlink" title="索引存储与性能取舍"></a>索引存储与性能取舍</h2><p>当前索引保存在 JSON 中，运行时用不区分大小写的字典按路径查找。这个方案依赖少、文件便于检查，但目录规模增长后，序列化和内存占用都需要单独测量。</p>
+<p>项目已经将索引保存改为流式写入，避免保存时再深拷贝一整份条目、再生成完整 JSON 字符串。加载时也解除解析数组对条目的容器关联，减少旧快照被间接保留。</p>
+<p>仓库的<a target="_blank" rel="noopener" href="https://github.com/NimbusFan/TwinSync/blob/main/docs/performance.md">性能记录</a>保留了一次 10,000 条合成索引的隔离测量：</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th align="right">原实现</th>
+<th align="right">流式保存实现</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>保存后托管内存</td>
+<td align="right">68.10 MiB</td>
+<td align="right">40.46 MiB</td>
+</tr>
+<tr>
+<td>单次保存时间</td>
+<td align="right">92 ms</td>
+<td align="right">27 ms</td>
+</tr>
+</tbody></table>
+<p>这组数据只说明当时那个索引测试程序中的变化。内存是在测试程序执行垃圾回收后读取的托管堆数值，保存时间是单次观察；它们不是整个应用的工作集，也不能推导出双机同步速度提高了多少。</p>
+<p>同样，管理页面使用浏览器，前台动画的开销应与后台同步进程分开看。关闭网页能消除该页面的动画开销，却不会消除扫描文件、计算哈希和传输内容的成本。后续更有价值的测量包括真实文件分布下的扫描时间、长时间传输峰值，以及大量小文件时的索引保存成本。</p>
+<h2 id="源码构建与回归验证"><a href="#源码构建与回归验证" class="headerlink" title="源码构建与回归验证"></a>源码构建与回归验证</h2><p>源码构建使用 Windows 的 C# 编译器，不需要 npm 或在线恢复前端依赖。仓库同时保留了同步、安全、安装和工作流回归脚本：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/NimbusFan/TwinSync.git</span><br><span class="line"><span class="built_in">Set-Location</span> .\TwinSync</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行仓库提供的回归检查</span></span><br><span class="line">powershell <span class="literal">-NoProfile</span> <span class="literal">-ExecutionPolicy</span> Bypass <span class="operator">-File</span> scripts/test.ps1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 构建安装器和源码包</span></span><br><span class="line">powershell <span class="literal">-NoProfile</span> <span class="literal">-ExecutionPolicy</span> Bypass <span class="operator">-File</span> scripts/build.ps1</span><br></pre></td></tr></table></figure>
+
+<p>输出为 <code>dist/TwinSyncSetup.exe</code> 与 <code>dist/TwinSync-source.zip</code>。运行前需要具备项目要求的 Windows 与 .NET Framework 环境。</p>
+<p>对同步工具，值得长期保留的用例是失败发生时的数据状态：</p>
+<ul>
+<li>两端指向不同本机目录，仍能正确共享同一组内容。</li>
+<li>修改时间与修订号次序相反时，冲突策略仍按约定执行。</li>
+<li>传输中断后，只有完成校验的分块可以续用。</li>
+<li>覆盖前本机发生新编辑，正式文件得到保留。</li>
+<li>传输途中暂停或撤销共享，旧任务不能在重新授权后继续提交。</li>
+<li>原子替换失败、版本恢复失败或部分文件失败时，界面返回可定位的结果。</li>
+</ul>
+<p>这些场景已有对应回归覆盖，但测试存在不等于所有真实环境都已经验证。当前实现仍受 Windows 文件系统、网络可达性和文件状态模型约束；它没有提供跨平台客户端、云端中继或自动文本合并。</p>
+<p>TwinSync 的核心取舍，是把同步拆成可以核对的几个阶段：检测变化、判断状态、传输内容、验证条件，最后才提交文件。这样在网络中断、双方编辑或权限变化时，程序可以说明本轮做到了哪里，以及为什么没有继续覆盖。</p>
+</article><section class="code-source" id="repository" aria-label="Repository"><a class="code-source-repository" href="https://github.com/NimbusFan/TwinSync" target="_blank" rel="noopener noreferrer" data-pjax="false" aria-label="查看仓库：NimbusFan/TwinSync"><span class="code-source-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m8 7-5 5 5 5m8-10 5 5-5 5m-3-13-2 16"></path></svg></span><span class="code-source-content"><span class="code-source-label">Repository</span><span class="code-source-name">NimbusFan/TwinSync</span><span class="code-source-topic">双向文件同步 · 原生 C# 实现</span></span><span class="code-source-action"><span>查看仓库</span><svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 15 15 5M5 5h10v10"></path></svg></span></a></section><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/TwinSync/">TwinSync</a><a class="post-meta__tags" href="/tags/%E6%96%87%E4%BB%B6%E5%90%8C%E6%AD%A5/">文件同步</a><a class="post-meta__tags" href="/tags/CSharp/">CSharp</a><a class="post-meta__tags" href="/tags/Windows/">Windows</a></div><div class="post-share"><div class="social-share" data-image="/img/system/avatar.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://unpkg.com/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://unpkg.com/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/11/16/Python/%E7%BA%BF%E7%A8%8B%E4%B8%8E%E4%BB%BB%E5%8A%A1%E5%8D%8F%E4%BD%9C/" title="Python 线程池：任务调度、异常传播与资源回收"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">Python 线程池：任务调度、异常传播与资源回收</div></div><div class="info-2"><div class="info-item-1">两个线程轮流打印字符串，可以说明任务同时处于运行状态，却没有回答实际代码里更重要的几个问题：任务结果放在哪里，一个任务失败是否影响其他任务，程序什么时候才算处理完成。 这里把一组文本文件交给线程池统计行数。输入很小，例子不用于证明加速；重点是让结果和失败都有明确的归属。示例使用 Python 3.10 及以上版本。 任务提交与结果归属123456789101112131415161718192021222324252627282930313233343536373839# thread-tasks.pyfrom concurrent.futures import ThreadPoolExecutor, as_completedfrom pathlib import Pathfrom tempfile import TemporaryDirectorydef count_lines(path: Path) -&gt; int:    with path.open(&quot;r&quot;, encoding=&quot;utf-8&quot;) as stream:       ...</div></div></div></a></nav></div><aside class="aside-content has-toc" id="aside-content" aria-label="作者与文章导航"><div class="profile-sidebar"><div class="profile-identity"><img class="profile-photo" src="/img/system/avatar.jpg" alt="Yunfei Fan" width="180" decoding="async"><div class="profile-details"><p class="profile-name">Yunfei Fan</p><p class="profile-focus">SLAM · 算法 · GIS</p><div class="profile-links"><a href="https://github.com/NimbusFan" target="_blank" rel="noopener noreferrer">GitHub ↗</a><details class="profile-contact"><summary>邮箱</summary><div class="contact-popover"><a class="contact-address" href="mailto:gisfanyunfei@gmail.com" data-pjax="false">gisfanyunfei@gmail.com</a><div class="contact-actions"><button type="button" data-copy-email="gisfanyunfei@gmail.com">复制地址</button><a href="mailto:gisfanyunfei@gmail.com" data-pjax="false">写邮件 ↗</a></div><p class="contact-status" role="status" aria-live="polite"></p></div></details></div></div></div><nav class="profile-section profile-categories" aria-label="文章分类"><h2>分类</h2><a class="profile-category" href="/" data-category="all">全部文章</a><a class="profile-category" href="/categories/Git/">Git</a><a class="profile-category" href="/categories/Python-%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">Python 技术笔记</a><a class="profile-category" href="/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">博客搭建</a><a class="profile-category" href="/categories/%E6%8A%80%E6%9C%AF%E5%AE%9E%E8%B7%B5/">技术实践</a><a class="profile-category" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a><a class="profile-category" href="/categories/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E8%B7%B5/">项目实践</a></nav><div class="profile-section profile-project"><h2>在做</h2><a href="/projects/#omnisearch">OmniSearch ↗</a><p>视觉检索与轨迹分析</p></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%84%E4%B8%8E%E4%BD%BF%E7%94%A8%E8%8C%83%E5%9B%B4"><span class="toc-number">1.</span> <span class="toc-text">运行结构与使用范围</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A6%96%E6%AC%A1%E5%AE%89%E8%A3%85%E4%B8%8E%E5%8F%8C%E6%9C%BA%E9%85%8D%E7%BD%AE"><span class="toc-number">2.</span> <span class="toc-text">首次安装与双机配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%8F%98%E5%8C%96%E7%9A%84%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%A2%9E%E9%87%8F%E6%89%AB%E6%8F%8F"><span class="toc-number">3.</span> <span class="toc-text">文件变化的检测与增量扫描</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%B4%A2%E5%BC%95%E4%B8%8E%E5%90%8C%E6%AD%A5%E5%86%B3%E7%AD%96"><span class="toc-number">4.</span> <span class="toc-text">文件索引与同步决策</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AE%B9%E3%80%81%E7%89%88%E6%9C%AC%E5%92%8C%E5%88%A0%E9%99%A4%E6%A0%87%E8%AE%B0"><span class="toc-number">4.1.</span> <span class="toc-text">内容、版本和删除标记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B8%85%E5%8D%95%E6%AF%94%E8%BE%83%E4%B8%8E%E7%9B%AE%E5%BD%95%E6%96%B9%E5%90%91"><span class="toc-number">4.2.</span> <span class="toc-text">清单比较与目录方向</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8C%E6%96%B9%E7%BC%96%E8%BE%91%E4%B8%8E%E5%86%B2%E7%AA%81%E4%BF%9D%E7%95%99"><span class="toc-number">5.</span> <span class="toc-text">双方编辑与冲突保留</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E5%9D%97%E4%BC%A0%E8%BE%93%E4%B8%8E%E6%96%AD%E7%82%B9%E7%BB%AD%E4%BC%A0"><span class="toc-number">6.</span> <span class="toc-text">分块传输与断点续传</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A3%E5%BC%8F%E6%96%87%E4%BB%B6%E7%9A%84%E6%8F%90%E4%BA%A4%E4%BF%9D%E6%8A%A4"><span class="toc-number">7.</span> <span class="toc-text">正式文件的提交保护</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E5%AF%B9%E3%80%81%E5%85%B1%E4%BA%AB%E4%B8%8E%E6%9C%AC%E6%9C%BA%E7%AE%A1%E7%90%86"><span class="toc-number">8.</span> <span class="toc-text">配对、共享与本机管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E5%AD%98%E5%82%A8%E4%B8%8E%E6%80%A7%E8%83%BD%E5%8F%96%E8%88%8D"><span class="toc-number">9.</span> <span class="toc-text">索引存储与性能取舍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BA%90%E7%A0%81%E6%9E%84%E5%BB%BA%E4%B8%8E%E5%9B%9E%E5%BD%92%E9%AA%8C%E8%AF%81"><span class="toc-number">10.</span> <span class="toc-text">源码构建与回归验证</span></a></li></ol></div></div></div></aside></main><footer id="footer"><div class="site-footer"><span>© 2026 Yunfei</span><nav aria-label="页脚导航"><a href="https://github.com/NimbusFan" target="_blank" rel="noopener noreferrer">GitHub</a><a href="/feed.xml" target="_blank" rel="noopener noreferrer" type="application/rss+xml" data-pjax="false" title="打开 RSS 订阅源">RSS</a></nav></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><div class="js-pjax"></div><script src="/js/custom.js" defer></script><script src="/js/vendor/pjax.min.js" defer="defer"></script><script>document.addEventListener('DOMContentLoaded', () => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"]):not([download]):not([href^="mailto:"]):not([href^="tel:"]):not([data-pjax="false"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => {
+      try {
+        fn()
+      } catch (err) {
+        console.debug('Pjax callback failed:', err)
+      }
+    })
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      false
+        ? pjax.loadUrl('/404.html')
+        : window.location.href = e.request.responseURL
+    }
+  })
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.5.4"></script></div></div></body></html>
