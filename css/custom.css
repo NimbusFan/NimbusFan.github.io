@@ -344,17 +344,22 @@ html.hide-aside #content-inner > #aside-content { display: none; }
     background: var(--yf-accent);
   }
   .sidebar-resize-handle::before { top: 0; bottom: 0; width: 1px; opacity: 0; }
-  .sidebar-resize-handle::after { top: 50%; width: 3px; height: 32px; transform: translateY(-50%); opacity: .4; }
-  .sidebar-resize-handle:hover::before, .sidebar-resize-handle:focus-visible::before, .is-resizing-sidebar .sidebar-resize-handle::before { opacity: .45; }
-  .sidebar-resize-handle:hover::after, .sidebar-resize-handle:focus-visible::after, .is-resizing-sidebar .sidebar-resize-handle::after { opacity: 1; }
+  .sidebar-resize-handle::after { top: 50%; width: 2px; height: 16px; transform: translateY(-50%); opacity: 0; }
+  .sidebar-resize-handle:hover::before, .sidebar-resize-handle:focus-visible::before, .is-resizing-sidebar .sidebar-resize-handle::before { opacity: .3; }
+  .sidebar-resize-handle:hover::after, .sidebar-resize-handle:focus-visible::after, .is-resizing-sidebar .sidebar-resize-handle::after { opacity: .8; }
   .sidebar-resize-handle:focus-visible { outline: none; }
-  .sidebar-resize-handle:focus-visible::after { outline: 2px solid var(--yf-accent); outline-offset: 4px; }
+  .sidebar-resize-handle:focus-visible::after { box-shadow: 0 0 0 3px var(--yf-soft); }
+  .is-resizing-sidebar .sidebar-resize-handle:focus-visible::after { box-shadow: none; }
 }
 html.is-resizing-sidebar, .is-resizing-sidebar * { cursor: col-resize !important; user-select: none !important; }
 html.is-resizing-sidebar #body-wrap #page-header #nav { transition: none; }
 
 /* Keep the author panel and reading outline in separate viewport-sized areas. */
 @media (min-width: 901px) {
+  .profile-identity { text-align: center; }
+  .profile-photo { margin-inline: auto; }
+  .profile-links { justify-content: center; }
+  .contact-popover { text-align: left; }
   #content-inner > #aside-content {
     position: sticky;
     top: 152px;
