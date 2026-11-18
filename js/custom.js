@@ -8,6 +8,7 @@
   const defaultSidebarWidth = 190
   let sidebarWidth = defaultSidebarWidth
   let sidebarDrag = null
+  const sidebarScrollTimers = new WeakMap()
   try {
     const saved = Number(localStorage.getItem(sidebarStorageKey))
     if (Number.isFinite(saved) && saved >= defaultSidebarWidth && saved <= 480) sidebarWidth = saved
@@ -17,8 +18,9 @@
     const style = getComputedStyle(root)
     const readingMax = parseFloat(style.getPropertyValue('--yf-reading-max-width'))
     const min = parseFloat(style.getPropertyValue('--yf-sidebar-default-width'))
+    const baseline = parseFloat(style.getPropertyValue('--yf-sidebar-baseline-width'))
     const gap = parseFloat(style.getPropertyValue('--yf-layout-gap'))
-    const readingWidth = Math.max(0, Math.min(readingMax, root.clientWidth - 80 - min - gap))
+    const readingWidth = Math.max(0, Math.min(readingMax, root.clientWidth - 80 - baseline - gap))
     const extra = Math.min(480 - defaultSidebarWidth, Math.max(0, root.clientWidth - 40 - min - gap - readingWidth))
     return { min, max: min + extra, readingWidth, gap }
   }
@@ -163,7 +165,15 @@
     if (event.target.matches('.profile-contact')) positionContactPopover()
   }, true)
   document.addEventListener('scroll', event => {
-    if (event.target instanceof Element && event.target.matches('.profile-sidebar')) positionContactPopover()
+    const pane = event.target
+    if (!(pane instanceof Element) || !pane.matches('#aside-content .profile-sidebar, #aside-content .toc-content')) return
+    pane.classList.add('is-scrolling')
+    clearTimeout(sidebarScrollTimers.get(pane))
+    sidebarScrollTimers.set(pane, setTimeout(() => {
+      pane.classList.remove('is-scrolling')
+      sidebarScrollTimers.delete(pane)
+    }, 650))
+    if (pane.matches('.profile-sidebar')) positionContactPopover()
   }, true)
   document.addEventListener('click', async event => {
     if (event.target.closest('#theme-toggle')) document.getElementById('darkmode')?.click()

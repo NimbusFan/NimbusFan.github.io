@@ -16,10 +16,12 @@
   --yf-reading-max-width: 906px;
   --yf-reading-width: var(--yf-reading-max-width);
   --yf-sidebar-default-width: 190px;
+  --yf-sidebar-baseline-width: 190px;
   --yf-sidebar-width: var(--yf-sidebar-default-width);
   --yf-layout-gap: 64px;
   --yf-layout-gutter: 80px;
   --yf-layout-width: calc(var(--yf-sidebar-width) + var(--yf-layout-gap) + var(--yf-reading-width));
+  --yf-resize-cursor: url('/img/system/resize-horizontal.svg') 10 10, ew-resize;
 }
 [data-theme="dark"] {
   --yf-bg: #1c1d1b;
@@ -35,6 +37,7 @@
   --yf-selection-bg: #62443d;
   --yf-code-bg: #20211d;
   --yf-code-tools: #2b2c26;
+  --yf-resize-cursor: url('/img/system/resize-horizontal-dark.svg') 10 10, ew-resize;
 }
 /* Use Butterfly's variables so code tokens and components keep their own colors. */
 :root, [data-theme="dark"] {
@@ -333,32 +336,37 @@ html.hide-aside #content-inner > #aside-content { display: none; }
     z-index: 2;
     display: block;
     width: 20px;
-    cursor: col-resize;
+    cursor: var(--yf-resize-cursor);
     touch-action: none;
   }
-  .sidebar-resize-handle::before, .sidebar-resize-handle::after {
+  .sidebar-resize-handle::before {
     content: "";
     position: absolute;
     left: 9px;
-    border-radius: 2px;
     background: var(--yf-accent);
   }
   .sidebar-resize-handle::before { top: 0; bottom: 0; width: 1px; opacity: 0; }
-  .sidebar-resize-handle::after { top: 50%; width: 2px; height: 16px; transform: translateY(-50%); opacity: 0; }
   .sidebar-resize-handle:hover::before, .sidebar-resize-handle:focus-visible::before, .is-resizing-sidebar .sidebar-resize-handle::before { opacity: .3; }
-  .sidebar-resize-handle:hover::after, .sidebar-resize-handle:focus-visible::after, .is-resizing-sidebar .sidebar-resize-handle::after { opacity: .8; }
   .sidebar-resize-handle:focus-visible { outline: none; }
-  .sidebar-resize-handle:focus-visible::after { box-shadow: 0 0 0 3px var(--yf-soft); }
-  .is-resizing-sidebar .sidebar-resize-handle:focus-visible::after { box-shadow: none; }
+  .sidebar-resize-handle:focus-visible::before { opacity: 1; box-shadow: 0 0 0 2px var(--yf-soft); }
 }
-html.is-resizing-sidebar, .is-resizing-sidebar * { cursor: col-resize !important; user-select: none !important; }
+html.is-resizing-sidebar, .is-resizing-sidebar * { cursor: var(--yf-resize-cursor) !important; user-select: none !important; }
 html.is-resizing-sidebar #body-wrap #page-header #nav { transition: none; }
 
 /* Keep the author panel and reading outline in separate viewport-sized areas. */
 @media (min-width: 901px) {
   .profile-identity { text-align: center; }
   .profile-photo { margin-inline: auto; }
-  .profile-links { justify-content: center; }
+  .profile-details { display: grid; justify-items: center; gap: 4px; margin-top: 12px; }
+  .profile-name { margin: 0; }
+  .profile-focus { line-height: 1.6; }
+  .profile-links { align-items: center; justify-content: center; gap: 20px; margin-top: 2px; font-size: 12px; line-height: 1.6; }
+  .profile-links > a, .profile-contact summary { color: var(--yf-muted); }
+  .profile-links > a:hover, .profile-contact summary:hover { color: var(--yf-accent); }
+  .profile-contact::before { content: '·'; position: absolute; left: -12px; color: var(--yf-line); pointer-events: none; }
+  #aside-content .profile-section { text-align: center; }
+  .profile-categories { justify-items: center; }
+  .profile-category { width: max-content; max-width: 100%; padding: 0 12px; }
   .contact-popover { text-align: left; }
   #content-inner > #aside-content {
     position: sticky;
@@ -367,20 +375,31 @@ html.is-resizing-sidebar #body-wrap #page-header #nav { transition: none; }
     flex-direction: column;
     max-height: calc(100dvh - 176px);
   }
-  #aside-content .profile-sidebar { min-height: 0; overflow-y: auto; overscroll-behavior-y: contain; scrollbar-width: thin; scrollbar-color: var(--yf-line) transparent; }
+  #aside-content .profile-sidebar { min-height: 0; padding-inline: 6px; overflow-y: auto; overscroll-behavior-y: contain; scrollbar-gutter: stable both-edges; }
   #content-inner > #aside-content.has-toc { height: calc(100dvh - 176px); }
   #aside-content.has-toc .profile-sidebar { flex: 0 1 auto; max-height: 50%; }
   #aside-content.has-toc .profile-photo { width: min(100%, 15vh); }
   #aside-content.has-toc .sticky_layout { position: static; display: flex; flex: 1; min-height: 0; margin-top: 20px; }
   #aside-content.has-toc #card-toc { display: flex; flex: 1; flex-direction: column; min-height: 0; width: 100%; padding: 16px 0 0; }
   #aside-content.has-toc #card-toc .item-headline { flex: none; }
-  #aside-content.has-toc #card-toc .toc-content { flex: 1; min-height: 0; max-height: none; overflow-y: auto; overscroll-behavior-y: contain; scrollbar-width: thin; scrollbar-color: var(--yf-line) transparent; }
+  #aside-content.has-toc #card-toc .toc-content { flex: 1; min-height: 0; max-height: none; overflow-y: auto; overscroll-behavior-y: contain; }
+  #aside-content .profile-sidebar, #aside-content #card-toc .toc-content { scrollbar-width: auto; scrollbar-color: auto; }
+  #aside-content :is(.profile-sidebar, .toc-content)::-webkit-scrollbar { width: 4px; }
+  #aside-content :is(.profile-sidebar, .toc-content)::-webkit-scrollbar-thumb { background: transparent; border-radius: 2px; }
+  #aside-content :is(.profile-sidebar, .toc-content):is(:hover, .is-scrolling)::-webkit-scrollbar-thumb { background: var(--yf-line); }
   #aside-content .contact-popover { position: fixed; }
+}
+@supports (-moz-appearance: none) {
+  #aside-content :is(.profile-sidebar, .toc-content) { scrollbar-width: thin; scrollbar-color: transparent transparent; }
+  #aside-content :is(.profile-sidebar, .toc-content):is(:hover, .is-scrolling) { scrollbar-color: var(--yf-line) transparent; }
 }
 
 @media (max-width: 1100px) {
-  :root { --yf-sidebar-default-width: 160px; --yf-layout-gap: 36px; }
+  :root { --yf-sidebar-baseline-width: 160px; --yf-layout-gap: 36px; }
   #content-inner > #aside-content { padding-right: 22px; }
+}
+@media (min-width: 901px) and (max-width: 1100px) {
+  :root { --yf-layout-gutter: 50px; }
 }
 @media (max-width: 900px) {
   #content-inner.layout { display: flex; flex-direction: column; gap: 30px; padding-top: 22px; }
