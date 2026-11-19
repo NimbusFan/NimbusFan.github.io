@@ -225,7 +225,11 @@ button { font: inherit; }
 #aside-content #card-toc .toc-percentage { position: absolute; right: 0; top: 50%; float: none; margin: 0; transform: translateY(-50%); font-size: 12px; }
 #aside-content #card-toc .toc-content { text-align: center; scrollbar-gutter: stable both-edges; }
 #aside-content #card-toc .toc-content ol { padding: 0; }
-#aside-content #card-toc .toc-content .toc-item > .toc-child { margin-inline: 0; padding-inline: 0; border-left: 0; }
+#aside-content #card-toc .toc-content > .toc > .toc-item > .toc-link { font-size: 14px; font-weight: 500; }
+#aside-content #card-toc .toc-content > .toc > .toc-item + .toc-item { margin-top: 6px; }
+#aside-content #card-toc .toc-content .toc-item > .toc-child { margin: 6px 0 10px 10px; padding: 0 0 0 10px; border-left: 1px solid var(--yf-line); text-align: left; font-size: 13px; }
+#aside-content #card-toc .toc-content > .toc > .toc-item > .toc-child { width: fit-content; max-width: calc(100% - 12px); margin: 8px auto 14px; }
+#aside-content #card-toc .toc-content .toc-child .toc-link { font-weight: 400; overflow-wrap: anywhere; }
 html.hide-aside #content-inner, #content-inner.hide-aside { grid-template-columns: minmax(0, 1fr); max-width: 900px; }
 html.hide-aside #content-inner > div:first-child, #content-inner.hide-aside > div:first-child { grid-column: 1; }
 html.hide-aside #content-inner > #aside-content { display: none; }
