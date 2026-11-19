@@ -220,6 +220,12 @@ button { font: inherit; }
 #aside-content #card-toc .toc-content { position: relative; margin: 0; width: 100%; }
 #aside-content #card-toc .toc-content > * { margin: 0 !important; }
 #aside-content #card-toc .toc-content .toc-link.active { background: var(--yf-soft); color: var(--yf-accent); }
+#aside-content #card-toc .item-headline { position: relative; display: flex; align-items: center; justify-content: center; gap: 6px; }
+#aside-content #card-toc .item-headline > span { margin-left: 0; }
+#aside-content #card-toc .toc-percentage { position: absolute; right: 0; top: 50%; float: none; margin: 0; transform: translateY(-50%); font-size: 12px; }
+#aside-content #card-toc .toc-content { text-align: center; scrollbar-gutter: stable both-edges; }
+#aside-content #card-toc .toc-content ol { padding: 0; }
+#aside-content #card-toc .toc-content .toc-item > .toc-child { margin-inline: 0; padding-inline: 0; border-left: 0; }
 html.hide-aside #content-inner, #content-inner.hide-aside { grid-template-columns: minmax(0, 1fr); max-width: 900px; }
 html.hide-aside #content-inner > div:first-child, #content-inner.hide-aside > div:first-child { grid-column: 1; }
 html.hide-aside #content-inner > #aside-content { display: none; }
