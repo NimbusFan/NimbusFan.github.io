@@ -513,12 +513,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!($article && (isToc || isAnchor))) return
 
     const readingOffset = () => parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 120
-    let $tocLink, $cardToc, autoScrollToc, $tocPercentage, isExpand
+    let $tocLinkById, $cardToc, autoScrollToc, $tocPercentage, isExpand
 
     if (isToc) {
       const $cardTocLayout = document.getElementById('card-toc')
       $cardToc = $cardTocLayout.querySelector('.toc-content')
-      $tocLink = $cardToc.querySelectorAll('.toc-link')
+      $tocLinkById = new Map([...$cardToc.querySelectorAll('.toc-link')].map(link => [decodeURIComponent(link.hash.slice(1)), link]))
       $tocPercentage = $cardTocLayout.querySelector('.toc-percentage')
       isExpand = $cardToc.classList.contains('is-expand')
 
@@ -558,50 +558,50 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // find head position & add active class
-    const $articleList = $article.querySelectorAll('h1,h2,h3,h4,h5,h6')
-    let detectItem = -1
+    const $articleList = [...$article.querySelectorAll('h1,h2,h3,h4,h5,h6')]
+      .filter(heading => heading.id && (!isToc || $tocLinkById.has(heading.id)))
+    let detectedHeading
 
     const findHeadPosition = top => {
-      let currentId = ''
-      let currentIndex = -1
+      let currentHeading = null
       const offset = readingOffset() + 1
 
       // Read current positions so loaded images and fonts cannot stale the outline.
       for (let i = 0; i < $articleList.length; i++) {
         const item = $articleList[i]
         if (top > 0 && item.getBoundingClientRect().top <= offset) {
-          currentId = item.id ? '#' + encodeURI(item.id) : ''
-          currentIndex = i
+          currentHeading = item
         } else {
           break
         }
       }
 
-      if (detectItem === currentIndex) return
+      const currentActive = isToc && currentHeading ? $tocLinkById.get(currentHeading.id) : null
+      const branch = []
+      if (currentActive && !isExpand) {
+        let parent = currentActive.parentElement
+        while (parent && !parent.matches('.toc')) {
+          if (parent.matches('.toc-item')) branch.push(parent)
+          parent = parent.parentElement
+        }
+      }
+      const branchIsOpen = !isToc || (!currentActive && !$cardToc.querySelector('.toc-link.active')) ||
+        (currentActive?.classList.contains('active') && branch.every(item => item.classList.contains('is-active-branch')))
+      if (detectedHeading === currentHeading && branchIsOpen) return
 
-      if (isAnchor) btf.updateAnchor(currentId)
+      if (isAnchor) btf.updateAnchor(currentHeading ? '#' + encodeURI(currentHeading.id) : '')
 
-      detectItem = currentIndex
+      detectedHeading = currentHeading
 
       if (isToc) {
-        $cardToc.querySelectorAll('.active').forEach(i => i.classList.remove('active'))
+        $cardToc.querySelectorAll('.active, .is-active-branch').forEach(item => item.classList.remove('active', 'is-active-branch'))
         $cardToc.querySelector('[aria-current="location"]')?.removeAttribute('aria-current')
 
-        if (currentId) {
-          const currentActive = $tocLink[currentIndex]
-          if (!currentActive) return
+        if (currentActive) {
           currentActive.classList.add('active')
           currentActive.setAttribute('aria-current', 'location')
-
+          branch.forEach(item => item.classList.add('active', 'is-active-branch'))
           setTimeout(() => autoScrollToc(currentActive), 0)
-
-          if (!isExpand) {
-            let parent = currentActive.parentNode
-            while (!parent.matches('.toc')) {
-              if (parent.matches('li')) parent.classList.add('active')
-              parent = parent.parentNode
-            }
-          }
         }
       }
     }
